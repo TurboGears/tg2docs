@@ -1,0 +1,30 @@
+
+.fieldhelp {
+	display: block;
+	position: absolute;
+	visibility: hidden;
+	z-index: 99;
+}
+
+.fieldcol:hover .fieldhelp {
+	visibility: visible;
+}
+
+.fieldcol:hover .fieldhelp:hover {
+	visibility: hidden;
+}
+
+.fieldhelp_top {
+	border-bottom: 18pt solid #fc3;
+	border-left: 9pt solid transparent;
+	border-right: 9pt solid transparent;
+	display: block;
+	font-size: 0;
+	line-height: 0;
+	width: 0;
+}
+
+.fieldhelp_main {
+	background-color: #fc3;
+	padding: 2pt 4pt;
+}
