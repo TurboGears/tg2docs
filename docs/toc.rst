@@ -131,6 +131,7 @@ Recipes
 
    main/Auth/Authentication
    main/TGandPyAMF
+   main/TGandFirePython
    main/RoutesIntegration
    main/StaticFile
    main/Mako
