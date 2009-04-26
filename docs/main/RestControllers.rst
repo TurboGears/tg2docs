@@ -52,9 +52,9 @@ express the needs of the Tutorial.  Here is the Model used to develop this contr
 
     class Director(DeclarativeBase):
         __tablename__ = "directors"
-        movie_id = Column(Integer, primary_key=True)
+        director_id = Column(Integer, primary_key=True)
         title = Column(String(100), nullable=False)
-        movies = relation(Movie, secondary_join=movie_directors_table, backref="directors")
+        movies = relation(Movie, secondary=movie_directors_table, backref="directors")
         
 I am isolating Movies, Genres, and Directors for the purpose of understanding How objects might relate to one another
 in a RESTful context.  For purposes of this demonstration, Movies can only have one Genre, but may be related to one
@@ -67,9 +67,11 @@ Lets provide a simple listing of the movies in our database.
 Our controller class is going to look like this::
 
     from tg.controllers import RestController
+    from tg.decorators import with_trailing_slash
 
     class MovieController(RestController):
     
+        @with_trailing_slash
         @expose('moviedemo.templates.movies.rest.get_all')
         def get_all(self):
             movies = DBSession.query(Movie).all()
