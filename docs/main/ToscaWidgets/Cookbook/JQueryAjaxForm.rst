@@ -58,9 +58,9 @@ for doing javascript based validations if needed. (*Default:* None)
 
 A simple AjaxForm widget may be instantiated as::
 
-    from tw.jquery import ActiveForm
+    from tw.jquery import AjaxForm
 
-    ajax_form = ActiveForm(id="myAjaxForm",
+    ajax_form = AjaxForm(id="myAjaxForm",
                         fields=CommentFields(),
                         target="output",
                         action="do_search")
@@ -73,9 +73,11 @@ The form can then be served up to the user via a controller method like this::
        pylons.c.form = myAjaxForm
        return dict(value=kw)
 
-And your template form would display your form like this::
+In your template you need to pickup your form from the template context for rendering. Also create a target div ("output" in this case) to display the output::
 
    ${tmpl_context.form(show_labels=True, value=value)}
+
+   <div id="output"></div>
 
 And here is the resulting field when viewed from a browser:
 
@@ -89,7 +91,7 @@ The template generates the necessary javascript code to send the Ajax Request wh
 for generating the response would be something like::
 
     @expose()
-    @validate(ajax_form, error_handler=entry)
+    @validate(ajax_form)
     def do_search(self, **kw):
         return "<p>Recieved Data:<br/>%(name)s<br/>%(email)s<br/>%(comment)s<br/>%(notify)s<br/></p>" % kw
 
