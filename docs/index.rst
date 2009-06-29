@@ -17,28 +17,31 @@ TG2 represents a change from some of the components in TurboGears 1, but
 we've now invested in a set of components that we think will continue to be at
 the center of python web development for years to come.
 
-Getting Started with TurboGears
-==================================
+Documentation is broken into several components. Feel free to jump directly
+to the place you need to be, or read the information below sequentially.
 
-Get TurboGears 2 installed, learn how to create a new TurboGears project in a
-single command, and of course explore the obligatory "Hello World" example,
-with a few fun treats thrown in, and move on to a more complete example of
-creating a very simple wiki. 
+Up and Running
+    Get TurboGears installed and serving up the main page for your new
+    project
 
-.. toctree::
-   :maxdepth: 2
+Tutorials
+    The obligatory "Hello World" example, coupled with several other
+    examples (and not all of them are purely TurboGears). These should help
+    answer some of the basic "How do I ... ?" questions.
 
-   main/DownloadInstall
-   main/QuickStart
-   main/Wiki20/wiki20
+Getting to Know TurboGears
+    Exploring the architecture of TurboGears. Learn what components come
+    with the default install of TurboGears, what components are installed
+    via the default quickstart, and how all of them tie together to serve
+    your site.
 
-Documentation Table of Contents
-=================================
+Recipes and FAQ
+    Simple code samples to answer commonly asked questions about
+    development and deployment of TurboGears
 
-.. toctree::
-   :maxdepth: 1
-   
-   toc
+Testimonials, White Papers, and Case Studies
+    A selection of papers and comments showing how TurboGears helped other
+    developers solve the problems they had.
 
 Indices and tables
 ==================
@@ -49,5 +52,7 @@ Indices and tables
  
 .. glossary::
 
-   WSGI 
+   WSGI_ 
       Web Server Gateway Interface
+
+.. _WSGI: http://www.wsgi.org/wsgi/
