@@ -12,8 +12,19 @@ Recipes and FAQ
    main/TGandFirePython
    main/RoutesIntegration
    main/StaticFile
-   main/Mako
-   main/Jinja
+   main/Templates/ChameleonGenshi
+   main/Templates/Genshi
+   main/Templates/Mako
+   main/Templates/Jinja
+   main/Templates/Alternative
+
+
+Widget Recipes
+==============
+.. toctree::
+   :maxdepth: 2
+
+   main/ToscaWidgets/Cookbook/TreeView.rst
 
 
 Recipes for Installation and Deployment
@@ -35,7 +46,7 @@ Performance and optimization:
    :maxdepth: 2
    
    main/GeneralPerformance
-   main/TemplatePerformance
+   main/Performance/TemplatePerformance
    main/DatabasePerformance
 
 

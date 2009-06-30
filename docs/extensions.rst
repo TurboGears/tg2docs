@@ -8,6 +8,7 @@ Extensions and Tools
       :maxdepth: 3
 
       main/Extensions/index
+      main/Extensions/SilverPlate/index
       
    .. toctree::
       :maxdepth: 2

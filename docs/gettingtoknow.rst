@@ -11,7 +11,6 @@ General Reference for MVC Components
    :maxdepth: 2
 
    main/Controllers
-   main/Genshi
    main/SQLAlchemy
    main/DatabaseMigration
 
@@ -43,7 +42,7 @@ How to track visitors with cookies.
    .. toctree::
       :maxdepth: 3
 
-       main/Session
+      main/Session
 
 
 Internationalization
@@ -67,4 +66,15 @@ All you want to know about the configuration system of TurboGears2.
       main/Config
 
 
+Libraries and Modules Shipped With TurboGears
+=============================================
 
+   .. toctree::
+      :maxdepth: 3
+
+      modules/pylons/index
+      modules/tgdecorators
+      modules/tgflash
+      modules/thirdparty/formencode_api
+      modules/thirdparty/webhelpers_paginate
+      modules/thirdparty/index

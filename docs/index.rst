@@ -51,12 +51,17 @@ to the place you need to be, or read the information below sequentially.
     A selection of papers and comments showing how TurboGears helped other
     developers solve the problems they had.
 
+:ref:`general-project-info`
+    Pieces of information about the TurboGears project, instead of about
+    the code.
+
 Indices and tables
 ==================
 
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+* :ref:`extendedtoc`
  
 .. glossary::
 

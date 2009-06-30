@@ -1,3 +1,9 @@
+.. _extendedtoc:
+
+==========================
+Extended Table of Contents
+==========================
+
 Getting Started with TurboGears
 ===============================
 
@@ -78,3 +84,20 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+
+
+Rough Draft Documentation
+=========================
+
+.. toctree::
+   :maxdepth: 3
+
+   main/RoughDocs/CreateDatabase
+   main/RoughDocs/DesignTemplate
+   main/RoughDocs/FormEncode
+   main/RoughDocs/I18N
+
+.. toctree::
+   :maxdepth: 0
+
+   index
