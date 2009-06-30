@@ -1,5 +1,5 @@
-TurboGears Documentation:
-=============================
+TurboGears Documentation
+========================
 
 TurboGears 2 is a reinvention of the TurboGears project to take advantage of
 new components, and to provide a fully customizable :term:`WSGI` (Web Server
@@ -20,26 +20,27 @@ the center of python web development for years to come.
 Documentation is broken into several components. Feel free to jump directly
 to the place you need to be, or read the information below sequentially.
 
-Up and Running
+
+:ref:`up-and-running`
     Get TurboGears installed and serving up the main page for your new
     project
 
-Tutorials
+:ref:`tutorials`
     The obligatory "Hello World" example, coupled with several other
     examples (and not all of them are purely TurboGears). These should help
     answer some of the basic "How do I ... ?" questions.
 
-Getting to Know TurboGears
+:ref:`getting-to-know`
     Exploring the architecture of TurboGears. Learn what components come
     with the default install of TurboGears, what components are installed
     via the default quickstart, and how all of them tie together to serve
     your site.
 
-Recipes and FAQ
+:ref:`recipes-and-faq`
     Simple code samples to answer commonly asked questions about
     development and deployment of TurboGears
 
-Testimonials, White Papers, and Case Studies
+:ref:`testimonials`
     A selection of papers and comments showing how TurboGears helped other
     developers solve the problems they had.
 
