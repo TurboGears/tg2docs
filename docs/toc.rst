@@ -10,7 +10,7 @@ Getting Started with TurboGears
 .. toctree::
    :maxdepth: 3
 
-   upandrunning
+   gettingstarted
 
 
 Tutorials
@@ -99,5 +99,7 @@ Rough Draft Documentation
 
 .. toctree::
    :maxdepth: 0
+
+:ref:`todolist`
 
    index

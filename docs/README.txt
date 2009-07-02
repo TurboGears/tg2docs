@@ -40,16 +40,6 @@ Finally, run ``make <builder>`` to generate docs::
 
     $ make html
 
-
-
-Document Migration Script
---------------------------
-
-There's a help script calls ``get_tgdoc.py`` to fetch rest docs from TurboGears wiki. Since TurboGears 2 documents are already migrated to sphinx-based document system, you don't need to use it anymore::
-
-    $ python get_tgdoc.py
-
-
 .. _sphinx: http://sphinx.pocoo.org/
 .. _sourceforge: http://sourceforge.net/project/showfiles.php?group_id=32455
 .. _reStructuredText: http://docutils.sourceforge.net/rst.html

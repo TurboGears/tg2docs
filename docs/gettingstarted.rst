@@ -1,8 +1,8 @@
-.. _up-and-running:
+.. _getting-started:
 
-==============
-Up and Running
-==============
+===============
+Getting Started
+===============
 
 .. toctree::
    :maxdepth: 3
