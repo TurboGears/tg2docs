@@ -12,3 +12,4 @@ Misc To Do Items From The Docs
 
 .. todo:: Understand "variable_provider": you define tg.config['variable_provider'] = callable and that returns a dict with all the variables you want in all templates.
 
+.. todo:: Add note for "validator=Schema(allow_extra_fields=True)" for ToscaWidgets and RestController classes
