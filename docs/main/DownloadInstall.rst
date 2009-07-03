@@ -19,6 +19,8 @@ Prerequisites for all methods
 Python
 ~~~~~~~~
 
+.. todo:: Write missing docs for installing tg2 using python 2.4 and python 2.6
+
 TurboGears works with any version of python between 2.4 and 2.6. The most widely deployed version of python at the moment of this writing is version 2.5.  Both python 2.4 and python 2.6 require additional steps which will be covered in the appropriate sections.  Python 3.0 is currently unsupported due to lack of support in many of our upstream packages.
 
 We recommend you use your system's default python install or follow the instructions provided here: http://python.org/download/
