@@ -26,6 +26,8 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 extensions = ['sphinx.ext.autodoc', 'sphinx.ext.intersphinx', 'sphinx.ext.todo']#, 'code_ext']
 
+todo_include_todos = True
+
 #add inter-sphinx crosslinks here
 intersphinx_mapping = {'http://docs.python.org/dev': None,
                        'http://www.pylonshq.com/docs/en/0.9.7/':None,

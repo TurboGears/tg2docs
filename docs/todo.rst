@@ -6,19 +6,11 @@ All To Do Items From The Docs
 
 .. todolist::
 
+----------------
 
-.. todo::
+.. todo:: Include navigation links (previous, next, index) on all pages
 
-Include navigation links (previous, next, index) on all pages
+.. todo:: Add lifecycle of TG project
 
-.. todo::
+.. todo:: Update install docs, since we now use pypi
 
-Change "Up and Running" to "getting started"
-
-.. todo::
-
-Add lifecycle of TG project
-
-.. todo::
-
-Update install docs, since we now use pypi

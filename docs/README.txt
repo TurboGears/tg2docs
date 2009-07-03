@@ -40,6 +40,15 @@ Finally, run ``make <builder>`` to generate docs::
 
     $ make html
 
+Sphinx v0.6.2 Issues
+--------------------
+
+After Sphinx v0.5.2, Sphinx has issues generating the documentation. The
+fix is to retrieve the latest 0.6 version from Mercurial, and install that
+version. That version can actually generate the docs just fine.
+
+It can be retrieved here: https://bitbucket.org/birkenfeld/sphinx-06/
+
 .. _sphinx: http://sphinx.pocoo.org/
 .. _sourceforge: http://sourceforge.net/project/showfiles.php?group_id=32455
 .. _reStructuredText: http://docutils.sourceforge.net/rst.html

@@ -100,6 +100,10 @@ Rough Draft Documentation
 .. toctree::
    :maxdepth: 0
 
-:ref:`todolist`
+All To Do Items From The Docs
+=============================
 
-   index
+.. toctree::
+   :maxdepth: 3
+
+   todo

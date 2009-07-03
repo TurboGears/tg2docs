@@ -63,6 +63,10 @@ to the place you need to be, or read the information below sequentially.
     Pieces of information about the TurboGears project, instead of about
     the code.
 
+:ref:`todolist`
+-------------------------------
+    The list of todo items for the documentation.
+
 Indices and tables
 ==================
 
