@@ -2,6 +2,8 @@
 Misc To Do Items From The Docs
 ==============================
 
+.. todo:: critique the toc, and other organization. lek
+
 .. todo:: Include navigation links (previous, next, index) on all pages
 
 .. todo:: Add lifecycle of TG project
