@@ -251,10 +251,10 @@ To make a sub-controller, all you need to do is make your sub-controller
 inherit from the object class.  However there's a SubController class ``Controller`` in
 your project's lib.base (HelloWorld/helloworld/lib/base.py) for you to use if you want a central place to add helper methods or other functionality to your SubControllers::
 
-    from lib.base import BaseController, Controller
+    from lib.base import BaseController
     from tg import redirect
 
-    class MovieController(Controller):
+    class MovieController(BaseController):
         @expose()
         def index(self):
             redirect('list/')

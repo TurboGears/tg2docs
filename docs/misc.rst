@@ -2,7 +2,7 @@
 Misc To Do Items From The Docs
 ==============================
 
-.. todo:: critique the toc, and other organization. lek
+.. todo:: critique the toc, and other organization. lek   - add a "what is turbogears"/faq - very early on. first?
 
 .. todo:: Include navigation links (previous, next, index) on all pages
 
