@@ -4,5 +4,7 @@
 Testimonials, White Papers, and Case Studies
 ============================================
 
-.. todo:: Review this file for todo items.
+.. todo:: Add testimonials
+
+.. todo:: Add cardlist manager whitepaper (from m.pedersen)
 

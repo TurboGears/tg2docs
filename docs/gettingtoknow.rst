@@ -79,5 +79,7 @@ Libraries and Modules Shipped With TurboGears
       modules/thirdparty/webhelpers_paginate
       modules/thirdparty/index
 
-.. todo:: Review this file for todo items.
+.. todo:: Validate that toctree maxdepth values are appropriate
+
+.. todo:: Rearrange the sections so that we have fewer headings, and make the headings more useful
 

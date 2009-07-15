@@ -12,5 +12,5 @@ Getting Started
 
 
 
-.. todo:: Review this file for todo items.
+.. todo:: Validate that toctree maxdepth values are appropriate
 

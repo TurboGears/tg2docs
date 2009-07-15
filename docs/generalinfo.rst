@@ -14,5 +14,5 @@ General Project Information
    main/License
    main/TGandPylons
 
-.. todo:: Review this file for todo items.
+.. todo:: Migrate all topics to better locations within the main pages, so as to remvoe this page
 

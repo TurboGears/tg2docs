@@ -17,5 +17,5 @@ Extensions and Tools
       main/LogSetup
       main/TGScheduler
 
-.. todo:: Review this file for todo items.
+.. todo:: Validate that all toctree maxdepth values are appropriate
 

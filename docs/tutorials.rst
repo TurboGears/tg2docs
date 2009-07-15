@@ -17,5 +17,9 @@ Tutorials
 
 
 
-.. todo:: Review this file for todo items.
+.. todo:: Validate that toctree maxdepth values are appropriate
+
+.. todo:: Add link to cardlist manager whitepaper (from m.pedersen)
+
+.. todo:: Add links to "recipes and faqs"
 

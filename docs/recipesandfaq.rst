@@ -47,6 +47,7 @@ Performance and optimization:
    main/Performance/TemplatePerformance
 
 
+.. todo:: Validate that toctree maxdepth values are appropriate
 
-.. todo:: Review this file for todo items.
+.. todo:: Rearrange headers, condensing as appropriate
 

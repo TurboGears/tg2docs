@@ -108,5 +108,7 @@ All To Do Items From The Docs
 
    todo
 
-.. todo:: Review this file for todo items.
+.. todo:: Validate that toctree maxdepth values are appropriate
+
+.. todo:: Validate that this toctree actually reflects what we want. Reduce it as necessary, reorg it, make it somewhat simpler.
 

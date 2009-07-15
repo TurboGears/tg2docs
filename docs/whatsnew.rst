@@ -11,5 +11,5 @@ What's New In TurboGears 2
 
 
 
-.. todo:: Review this file for todo items.
+.. todo:: Possibly move this into the "getting to know" page? Thoughts?
 

@@ -82,5 +82,7 @@ Indices and tables
 
 .. _WSGI: http://www.wsgi.org/wsgi/
 
-.. todo:: Review this file for todo items.
+.. todo:: Reduce total number of headings. Get rid of 'todolist', 'general project info'
+
+.. todo:: Maybe merge "what's new" into "getting to know" ? Thoughts?
 
