@@ -2,3 +2,6 @@
 =============================================
 
 .. automodule:: pylons.error
+
+.. todo:: Review this file for todo items.
+

@@ -203,3 +203,6 @@ Its time to see tgext.geo and tw.openlayers in action now. Run the paster comman
 
 Point your browser to http://localhost:8080 to view the map. Moving the mouse over up the countries show up data about the country in the *sidebar_top* div element.
 
+
+.. todo:: Review this file for todo items.
+

@@ -185,3 +185,6 @@ Hopefully this helps you understand the flow of the request through the stack, a
 For details on exactly how the stack is configured take a look at the configuration docs. 
 
 http://turbogears.org/2.0/docs/main/config.html
+
+.. todo:: Review this file for todo items.
+

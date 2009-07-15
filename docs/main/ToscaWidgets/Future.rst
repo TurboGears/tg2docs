@@ -17,3 +17,6 @@ With the current design, the widgets system needs to interact with the framework
  * Use request local storage
 
 This goes beyond being WSGI middleware and requires tighter binding. The lxml approach has the potential to reduce binding considerably.
+
+.. todo:: Review this file for todo items.
+

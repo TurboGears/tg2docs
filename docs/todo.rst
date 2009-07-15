@@ -95,3 +95,13 @@ On Spawning New Processes and Threads
 < peep1> ah, rather than started threads directly from the controller, I'll put a queue in there, see if it helps
 < peep3> goodgracious: you pretty much need to fork in some way. threads will be no good as the webserver will recycle it as you found out.
 
+On Adding Robots.txt
+--------------------
+
+< peep1> where should one place robots.txt in a tg2 installation?
+< peep1> ./public ?
+< peep2> that should work
+< peep2> according to pylons docs, public is searched *before* going through controllers
+< peep2> I assume this still applies with turbogears
+< peep1> y, that worked
+

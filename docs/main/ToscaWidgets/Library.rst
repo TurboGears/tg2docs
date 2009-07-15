@@ -77,3 +77,6 @@ WidgetBrowser
 -------------
 
 At some point we will add the capability to let the widget browser know how to instantiate a test-version of your widget and display it so that it can be integrated with toscawidgets.org
+
+.. todo:: Review this file for todo items.
+

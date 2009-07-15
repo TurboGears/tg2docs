@@ -502,3 +502,6 @@ The sample code for this documentation lives in a `repository <http://pythontuto
   python setup.py
   paster setup-app development.ini
   paster serve development.ini
+
+.. todo:: Review this file for todo items.
+

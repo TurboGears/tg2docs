@@ -103,3 +103,6 @@ First we modify the template to give a place to hold the data that comes back fr
 The 'response' javascript variable will hold an object which is your extracted json stream.  In this case, we are displaying the average rating.  It is important to note that the star widget uses jQuery library, and the '$' operator may not work the same in other libraries.
 
 .. image:: http://docs.turbogears.org/2.0/RoughDocs/ToscaWidgets/Using?action=AttachFile&do=get&target=stars_avg.png
+
+.. todo:: Review this file for todo items.
+

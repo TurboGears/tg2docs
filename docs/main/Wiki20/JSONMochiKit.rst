@@ -224,3 +224,6 @@ Voila! If you go to your `front page`_ and click on the page list link, you'll
 see the page list right there in the page.
 
 .. _front page: http://localhost:8080/
+
+.. todo:: Review this file for todo items.
+

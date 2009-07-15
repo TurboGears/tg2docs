@@ -125,3 +125,6 @@ You can update the catalog with the following command::
 
 .. _`Internationalization and Localization`: http://wiki.pylonshq.com/display/pylonsdocs/Internationalization+and+Localization
 .. _UserGuide: http://babel.edgewall.org/wiki/Documentation/index.html
+
+.. todo:: Review this file for todo items.
+

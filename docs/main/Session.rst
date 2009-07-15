@@ -52,3 +52,6 @@ and here is how to set a key in the session::
 You should note that you need to explicitly save the session in order for your
 keys to be stored in the session. 
 
+
+.. todo:: Review this file for todo items.
+

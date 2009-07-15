@@ -62,3 +62,6 @@ When the validation fails, the result looks something like this:
 
 .. image:: http://docs.turbogears.org/2.0/RoughDocs/ToscaWidgets/Cookbook/PasswordValidation?action=AttachFile&do=get&target=passwordverify.png
     :alt: registration form with validation errors.
+
+.. todo:: Review this file for todo items.
+

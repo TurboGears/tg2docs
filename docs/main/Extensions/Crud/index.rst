@@ -428,3 +428,6 @@ Example Project
 -----------------
 
 `Moviedemo <http://pythontutorials.googlecode.com/files/moviedemo.tar.gz>`_ was created while developing these documents.
+
+.. todo:: Review this file for todo items.
+
