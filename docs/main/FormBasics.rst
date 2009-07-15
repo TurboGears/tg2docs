@@ -71,3 +71,6 @@ To take advantage of this we can assign our original ``display_login`` page as t
 
 If there's a validation error, control will be passed to display_login, but this time there will be some data in tmpl_context so that when the form widget is rendered, it will get those validation error messages and display them for you.
 
+
+.. todo:: Review this file for todo items.
+

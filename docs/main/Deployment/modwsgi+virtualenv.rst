@@ -130,3 +130,6 @@ before the first request comes in to handle this, so you should add::
 to the end of the wsgi-script that starts your application.  
     
 This will fetch the index page of your app, thus assuring that it's ready to handle all of your requests immediately.  This avoids a problem where your controller page is not yet  loaded so widgets aren't initialized, but a request comes in for a widget resource the ToscaWidgets middleware doesn't have the widget registered yet. 
+
+.. todo:: Review this file for todo items.
+

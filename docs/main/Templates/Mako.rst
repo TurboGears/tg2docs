@@ -17,3 +17,5 @@ You can also set it as the default renderer by setting::
 The Mako docs cover template syntax very well, so we'll not repeat it, but if you're interested in using mako take a look here: 
 
 http://www.makotemplates.org/docs/syntax.html
+.. todo:: Review this file for todo items.
+

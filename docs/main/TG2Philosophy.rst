@@ -34,3 +34,6 @@ Meanwhile Pylons provides the power and flexibility of the underlying core.
 And like Ubuntu, we don't intend to hide that power and flexibility from advanced users, but we know that they want things set up to just work too.  
 
 Sensible defaults actually encourage code re-use within TurboGears because they make it possible for a group of TurboGears components to share assumptions about how things will work. 
+
+.. todo:: Review this file for todo items.
+

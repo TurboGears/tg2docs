@@ -105,3 +105,6 @@ The map can then be viewed in the browser. A screenshot is shown as example:
     :alt: example OpenLayers Map
 
 
+
+.. todo:: Review this file for todo items.
+

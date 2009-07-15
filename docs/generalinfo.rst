@@ -13,3 +13,6 @@ General Project Information
    main/Contributing
    main/License
    main/TGandPylons
+
+.. todo:: Migrate all topics to better locations within the main pages, so as to remvoe this page
+

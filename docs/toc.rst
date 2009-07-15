@@ -107,3 +107,8 @@ All To Do Items From The Docs
    :maxdepth: 3
 
    todo
+
+.. todo:: Validate that toctree maxdepth values are appropriate
+
+.. todo:: Validate that this toctree actually reflects what we want. Reduce it as necessary, reorg it, make it somewhat simpler.
+

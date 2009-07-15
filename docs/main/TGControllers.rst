@@ -70,3 +70,6 @@ and stopping traversal altogether.  This allows you to use actual objects with
 data in your controllers.
 
 Plus, it makes RESTful URLs much easier than they were in TurboGears 1.
+
+.. todo:: Review this file for todo items.
+

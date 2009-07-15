@@ -381,3 +381,6 @@ Download the example project
 .. note:: The comment feature has been disabled on this page due to heavy spamming. If you want to comment on the contents of this page, if you have questions, or want to report an error, please write to the TurboGears `mailing list`_.
 
 .. _mailing list: main/GettingHelp
+
+.. todo:: Review this file for todo items.
+

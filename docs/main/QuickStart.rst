@@ -115,3 +115,6 @@ Once you've got a quickstarted app going it's probably a good time to take a loo
 
 As you can see there are quite a few files generated. If you look inside them you'll discover that many of them are just stubs so that you'll have a standard place to put code as you build your project.
 
+
+.. todo:: Review this file for todo items.
+

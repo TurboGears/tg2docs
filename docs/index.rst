@@ -83,3 +83,8 @@ Indices and tables
       Web Server Gateway Interface
 
 .. _WSGI: http://www.wsgi.org/wsgi/
+
+.. todo:: Reduce total number of headings. Get rid of 'todolist', 'general project info'
+
+.. todo:: Maybe merge "what's new" into "getting to know" ? Thoughts?
+

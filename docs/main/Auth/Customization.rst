@@ -376,3 +376,6 @@ commenting) the following line from
 
 Then you may also want to delete those settings like ``base_config.sa_auth.*``
 -- they'll be ignored.
+
+.. todo:: Review this file for todo items.
+

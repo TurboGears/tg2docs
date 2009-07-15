@@ -399,3 +399,6 @@ What's next?
 If you are new to turbogears you will want to continue with the `Quick Start Guide <QuickStart.html>`_
 
 If you are a TG1 user be sure to check out our `What's new in TurboGears 2.0 <WhatsNew.html>`_ page to get a picture of what's changed in TurboGears2 so far.
+
+.. todo:: Review this file for todo items.
+

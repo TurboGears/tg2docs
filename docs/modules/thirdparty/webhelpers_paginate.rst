@@ -9,3 +9,6 @@ Package Contents
 .. autoclass:: Page
 
 .. automethod:: Page.pager
+
+.. todo:: Review this file for todo items.
+

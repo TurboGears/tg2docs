@@ -353,3 +353,6 @@ so it's absolutely safe for you to stop TurboGears from configuring
 while still using the @require decorator and the ability to control access
 at the controller level.
 
+
+.. todo:: Review this file for todo items.
+

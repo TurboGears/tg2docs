@@ -13,3 +13,6 @@ The normal usage is to extend this class with your own, use ``__init__`` to buil
 `self.app` then overwrite ``delegate`` if you need to modify the environment, the response or any other mangling.
 
 For an extensive list of examples please see tgext.wsgiapps.
+
+.. todo:: Review this file for todo items.
+

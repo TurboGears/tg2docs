@@ -26,3 +26,6 @@ Legacy Buffet Functions
 .. autoexception:: TemplateEngineMissing
 .. autoclass:: MyghtyTemplatePlugin
     :members:
+
+.. todo:: Review this file for todo items.
+

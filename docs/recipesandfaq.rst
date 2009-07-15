@@ -33,7 +33,6 @@ Recipes for Installation and Deployment
 .. toctree::
    :maxdepth: 2
 
-   main/OfflineInstall
    main/Deployment
    main/Deployment/ModProxy
    main/Deployment/modwsgi+virtualenv
@@ -45,8 +44,10 @@ Performance and optimization:
 .. toctree::
    :maxdepth: 2
    
-   main/GeneralPerformance
    main/Performance/TemplatePerformance
-   main/DatabasePerformance
 
+
+.. todo:: Validate that toctree maxdepth values are appropriate
+
+.. todo:: Rearrange headers, condensing as appropriate
 
