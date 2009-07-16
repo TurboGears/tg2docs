@@ -14,6 +14,7 @@ Tutorials
    main/SimpleWidgetForm
    main/ToscaWidgets/forms
    main/Auth/index
+   main/bitbucket_tutorial
 
 
 
