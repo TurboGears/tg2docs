@@ -33,7 +33,9 @@ We assume you have the following basic pieces in place:
 
 Please see a BasicInstall_ if you do not have these.
 
-We also use mercurial_, which is a fast, lightweight source control management system.   You cand download it from the link above, or if you have ubuntu:
+We also use mercurial_, which is a fast, lightweight source control 
+management system.   
+You can download it from the link above, or if you have ubuntu:
 
     sudo apt-get install mercurial
 
