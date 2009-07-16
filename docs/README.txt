@@ -150,5 +150,6 @@ Note:  push required a login to bitbucket
 .. todo:: perhaps a better basic install for python, virtualenv, easy_setup
 .. todo:: review whether my discussion of hg, bitbucket and repositories makes
  sense, and whether mpdedersen's bitbucket tutorial covers all it needs to.
+.. todo:: review and edit, in general...
 
 
