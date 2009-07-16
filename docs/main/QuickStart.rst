@@ -36,7 +36,7 @@ The ``setup.py`` file has a section which explicitly declares the dependencies o
 
 Then in order to make sure all those dependencies are installed you will want to run:: 
 
-   $ python setup.py develop. 
+   $ python setup.py develop
 
 Another key piece of TG2 application setup infrastructure is the ``paster setup-app`` command which takes a 
 configuration file and runs your project's websetup code in that context. 
@@ -117,4 +117,6 @@ As you can see there are quite a few files generated. If you look inside them yo
 
 
 .. todo:: Review this file for todo items.
+.. todo:: debating whether mentioning setup-app twice is good.   seems redundant
+.. todo:: since we mention port, should we also mention changing host to 0.0.0.0 for serving to all network interfaces, not just localhost?   probably overkill here.
 
