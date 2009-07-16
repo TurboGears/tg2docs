@@ -18,6 +18,7 @@ Useful Links:
 * http://www.imagebin.ca/view/65iqpnZ.html
 * http://www.blog.pythonlibrary.org/?p=210
 * http://wiki.github.com/GothAlice/YAPWF/how-to-multiple-database-connections
+* http://www.blog.pythonlibrary.org/?p=230
 
 Testing Notes and Links
 -----------------------
