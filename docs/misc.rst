@@ -16,3 +16,6 @@ Misc To Do Items From The Docs
 
 .. todo:: Add note for "validator=Schema(allow_extra_fields=True)" for ToscaWidgets and RestController classes
 
+.. todo:: Add shell script which validates environment for building docs
+
+.. todo:: Add better notes in README.txt for setting up the virtual environment for this
