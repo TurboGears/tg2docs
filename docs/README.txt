@@ -45,9 +45,11 @@ Setup
 We recommend using a virtualenv for documentation development.
 Setup could be done without a virtualenv, but we don't recommend it.
 
-First, we setup the virtualenv and install the Turbogears 2.1 development branch, after first downloading it using mercurial.   
+First, we setup the virtualenv and install the Turbogears 2.1 development 
+branch, after first downloading it using mercurial.   
 
-Note:  you could of course use a different name than 'tgdocs', for your virtualenv, or a different directory than "src" for your work directory.
+Note:  you could of course use a different name than 'tgdocs', for your 
+virtualenv, or a different directory than "src" for your work directory.
  
     virtualenv 
     virtualenv --no-site-packages  tgdocs
@@ -69,7 +71,8 @@ pysvn
 memcache
    I believe this is needed for the documentation on caching
 
-Here is the command to download these packages.   Again, I'm assuming you are still in the virtualenv.
+Here is the command to download these packages.   Again, I'm assuming you are 
+still in the virtualenv.
 
    easy_install sqlalchemy pysvn memcache
 
@@ -78,7 +81,9 @@ After this, you should be able to verify your tg2.1 installation with
    paster tginfo
 
 
-We also need Sphinx_ which enables us to generate html from the rst files.  However, the documentation uses newer features of sphinx only found in the development branch, so far.   So, we get the source using mercurial. 
+We also need Sphinx_ which enables us to generate html from the rst files.  
+However, the documentation uses newer features of sphinx only found in 
+the development branch, so far.   So, we get the source using mercurial. 
 
     hg clone https://bitbucket.org/birkenfeld/sphinx-06/
     cd sphinx-06
@@ -99,11 +104,13 @@ But if you've made it this far, why not go all the way and
 contribute back to the effort?   
 
 :ref:`main/bitbucket_tutorial`
-You can read more about forking a project on bitbucket, and merging your changes back in
+You can read more about forking a project on bitbucket, and merging your 
+changes back in this tutorial.
 
 You need an account on bitbucket_ in order to fork a repository.  
 It is a painless process, which can be done by following the link.  
-you are logged in at bitbucket, go to the mpedersen repository, and click 'fork':
+Once you are logged in at bitbucket, go to the mpedersen repository, 
+and click 'fork':
     http://bitbucket.org/pedersen/tg_2_1_docs
 
 I recommend adding an extension to your fork like '-yourname', substituting
@@ -113,7 +120,9 @@ yourname, of course.   Then you can get your repository with:
     cd tg_2_1_docs-yourname/docs
     make html
 
-Note:  don't forget to substitute '-yourname' for what you used.   You will probably get a lot of warnings, but hopefully no errors.  The new html documentation should be in the _build/html directory.
+Note:  don't forget to substitute '-yourname' for what you used.   
+You will probably get a lot of warnings, but hopefully no errors.  
+The new html documentation should be in the _build/html directory.
 
     
 If you want to grab mpedersen's latest changes, later within your work directory
@@ -127,7 +136,7 @@ To merge in your changes.   Is this right???
     hg commit
     hg push
 
-Note:  push required login
+Note:  push required a login to bitbucket
 
 
 
@@ -139,6 +148,7 @@ Note:  push required login
 
 
 .. todo:: perhaps a better basic install for python, virtualenv, easy_setup
-.. todo:: review whether my discussion of hg and repositories makes sense, and whether mpdedersen's bitbucket info covers all it needs to.
+.. todo:: review whether my discussion of hg, bitbucket and repositories makes
+ sense, and whether mpdedersen's bitbucket tutorial covers all it needs to.
 
 
