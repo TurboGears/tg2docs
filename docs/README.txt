@@ -19,7 +19,7 @@ If you are interested in helping with the new turbogears docs, we recommend
 you touch base with mpedersen on the IRC channel #turbogears.  He appreciates
 any help you can give, and can help you get setup so he can more easily
 incorporate your modifications.   Below is the recommended 
-setup work best with the latest documentation efforts.
+setup to help work with the latest documentation efforts.
 
 
 Prerequisite
@@ -35,7 +35,7 @@ Please see a BasicInstall_ if you do not have these.
 
 We also use mercurial_, which is a fast, lightweight source control 
 management system.   
-You can download it from the link above, or if you have ubuntu:
+You can download it from the link in this file, or if you have ubuntu:
 
     sudo apt-get install mercurial
 
@@ -46,12 +46,12 @@ We recommend using a virtualenv for documentation development.
 Setup could be done without a virtualenv, but we don't recommend it.
 
 First, we setup the virtualenv and install the Turbogears 2.1 development 
-branch, after first downloading it using mercurial.   
+branch, after first downloading it using mercurial.   Below, we chose to 
+use the name "tgdocs" for our virtualenv directory, and used a subdirectory
+under that "src" for our work directory.   You could use different names if
+you must.
 
-Note:  you could of course use a different name than 'tgdocs', for your 
-virtualenv, or a different directory than "src" for your work directory.
- 
-    virtualenv 
+.. code-block:: bash
     virtualenv --no-site-packages  tgdocs
     cd tgdocs
     source bin/activate
@@ -62,12 +62,16 @@ virtualenv, or a different directory than "src" for your work directory.
     python setup.py develop
     cd ..
 
+Windows Note:   under windows, you use the "activate.bat" script to activate
+your virtualenv.  See BasicInstall_ if you need help with that.
+
 We need several additional packages to support documentation development:
 
 sqlalchemy 
    database support - not sure why tg-21 doesn't install this by default
 pysvn
-   required for the Wiki20 doc which pulls source code from svn
+   required for the Wiki20 doc which pulls source code from svn  
+   (note: this requirement is likely to go away soon)
 memcache
    I believe this is needed for the documentation on caching
 
@@ -83,15 +87,16 @@ After this, you should be able to verify your tg2.1 installation with
 
 We also need Sphinx_ which enables us to generate html from the rst files.  
 However, the documentation uses newer features of sphinx only found in 
-the development branch, so far.   So, we get the source using mercurial. 
+the development branch, right now.   So, we get the source using mercurial. 
 
+.. code-block:: bash
     hg clone https://bitbucket.org/birkenfeld/sphinx-06/
     cd sphinx-06
     python setup.py develop
     cd ..
 
 
-Finally, we are ready to setup the documentation.   
+Finally, we are ready to set up the documentation.   
 If you feel ready and willing to assist with the documentation efforts,
 I hope you have contacted mpedersen via IRC (see above).   In order to help 
 with the documentation, you get a bitbucket_ account, and create a fork of 
@@ -99,23 +104,25 @@ mpedersen's base documentation repository.  This way, mpedersen can more
 easily merge your changes in with the new documenation.
 
 Note:  you may set up the documentation without creating your
-own fork of mpedersen's repository, as detailed below.  
-But if you've made it this far, why not go all the way and 
-contribute back to the effort?   
+own fork of mpedersen's repository, but if you've made it this far, 
+why not go all the way and contribute back to the effort?   
 
-:ref:`main/bitbucket_tutorial`
-You can read more about forking a project on bitbucket, and merging your 
-changes back in this tutorial.
+mpedersen wrote a nice bitbucket_tutorial_, which has screen shots and 
+further explanation on how to fork and get and post updates with bitbucket.
+We try to provide the basic information here, but you can work through
+that tutorial for additional details.
 
 You need an account on bitbucket_ in order to fork a repository.  
 It is a painless process, which can be done by following the link.  
 Once you are logged in at bitbucket, go to the mpedersen repository, 
 and click 'fork':
+
     http://bitbucket.org/pedersen/tg_2_1_docs
 
 I recommend adding an extension to your fork like '-yourname', substituting
 yourname, of course.   Then you can get your repository with:
 
+.. code-block:: bash
     hg clone http://bitbucket.org/laurin/tg_2_1_docs-yourname/
     cd tg_2_1_docs-yourname/docs
     make html
@@ -123,6 +130,16 @@ yourname, of course.   Then you can get your repository with:
 Note:  don't forget to substitute '-yourname' for what you used.   
 You will probably get a lot of warnings, but hopefully no errors.  
 The new html documentation should be in the _build/html directory.
+
+Windows Note:  on windows, you typically don't have a "make" command available
+to you.   Here are the commands you'd use instead.   
+The first command only needs to be run once - to create the 
+destination directories.   You may also want to read about one person's WindowsInstall_.
+
+.. code-block:: cmd
+    mkdir _build\html _build\doctrees
+    sphinx-build -b html -d _build\doctrees   . _build\html
+
 
     
 If you want to grab mpedersen's latest changes, later within your work directory
@@ -132,11 +149,21 @@ If you want to grab mpedersen's latest changes, later within your work directory
 
 To merge in your changes.   Is this right???
 
+.. code-block:: bash
     hg merge
     hg commit
     hg push
 
-Note:  push required a login to bitbucket
+Note:  push required a login to bitbucket.   You may also find you need to 
+commit any local changes you've made first (it gives a "not updating" warning
+if this is the case).
+
+The above commands update *your* repository.   In order to get your changes
+into the "main" repository that mpedersen maintains, you need to initiate
+a "pull request" as detailed in his bitbucket_tutorial_.
+
+Thanks very much for considering helping out with the turbogears documentation
+efforts!
 
 
 
@@ -145,11 +172,18 @@ Note:  push required a login to bitbucket
 .. _reStructuredText: http://docutils.sourceforge.net/rst.html
 .. _bitbucket: http://bitbucket.org/account/signup/
 .. _BasicInstall: http://pylonsbook.com/en/1.0/deployment.html#setting-up-a-virtual-python-environment
+.. _WindowsInstall: http://www.blog.pythonlibrary.org/?p=230
+.. _bitbucket_tutorial: main/bitbucket_tutorial.html
 
 
 .. todo:: perhaps a better basic install for python, virtualenv, easy_setup
 .. todo:: review whether my discussion of hg, bitbucket and repositories makes
  sense, and whether mpdedersen's bitbucket tutorial covers all it needs to.
+   (note:   I think they make basic sense, but...   I'm not an expert)
 .. todo:: review and edit, in general...
+    big edit issue:  this now seems like too much for a readme, and I've 
+    started using rst type commands.   Perhaps the commands should be broken 
+    off into a tutorial, and provide a link to the tutorial.   
+    I still recommend highlighting some of the volunteer opportunities.  
 
 
