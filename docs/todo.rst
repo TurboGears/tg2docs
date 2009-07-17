@@ -106,3 +106,8 @@ On Adding Robots.txt
 < peep2> I assume this still applies with turbogears
 < peep1> y, that worked
 
+On How To Limit Routes To Specific Languages
+--------------------------------------------
+
+< peep> map.connect('/{lang}/{controller}/', requirements=dict(lang='bg|en|ro|ru'))
+
