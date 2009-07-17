@@ -21,7 +21,6 @@ from docutils.statemachine import ViewList
 
 from sphinx import util
 
-import pysvn
 import nose
 from mercurial import hg, ui
 
@@ -79,20 +78,6 @@ class HgClient:
         return self.repo.changectx(revision).filectx(path).data()
 
     
-class SVNClient:
-    """ Class that represents a Subversion client """
-    def __init__(self):
-        self.client = pysvn.Client()
-
-    def get_file(self, path, revision='HEAD'):
-        if revision == 'HEAD':
-            return self.client.cat(path,
-                                   pysvn.Revision(pysvn.opt_revision_kind.head))
-        else:
-            return self.client.cat(path,
-                                   pysvn.Revision(pysvn.opt_revision_kind.number,
-                                                  str(revision)))
-
 
 def get_file(path, revision = None, type = None, repository = None):
     """ Read file from local filesystem or from a SCM repository. """

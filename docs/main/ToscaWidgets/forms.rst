@@ -101,7 +101,7 @@ template. So we add the following at the top of ``controllers/root.py``::
 Then we add an exposed method ``new()`` to the ``RootController`` class
 in the same controller file:
 
-.. literalinclude:: tosca_forms/toscasample/controllers/root.py
+.. code:: tosca_forms/toscasample/controllers/root.py
   :section: new
 
 To run the application, surf to
@@ -300,7 +300,7 @@ of our ``controllers/root.py`` file::
 Then we can add an exposed ``create()`` method to the ``RootController``
 class in the same controller file, directly after the ``new()`` method:
 
-.. literalinclude:: tosca_forms/toscasample/controllers/root.py
+.. code:: tosca_forms/toscasample/controllers/root.py
   :section: create
 
 Note that we have created the ``create_movie_form`` instance with
@@ -319,7 +319,7 @@ When the form validation passes, the ``create()`` method redirects
 to an exposed ``list()`` method for displaying the list of movies,
 but we haven't created that method yet.  It can look like this:
 
-.. literalinclude:: tosca_forms/toscasample/controllers/root.py
+.. code:: tosca_forms/toscasample/controllers/root.py
   :section: list
 
 To show the movie list, we also need to add a template named

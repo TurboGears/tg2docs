@@ -25,3 +25,5 @@ Misc To Do Items From The Docs
 .. todo:: Add notes to "easy_install tgext.geo" to main readme
 
 .. todo:: Add notes to "easy_install -i http://dev.camptocamp.com/packages/mapfish/1.1/index --allow-hosts=dev.camptocamp.com mapfish==1.1" to get mapfish for tgext.geo
+
+.. todo:: Add notes to "easy_install python-memcached"

@@ -72,10 +72,9 @@ sections are marked off with ``[]``'s.
         detail in the `Paste Deploy documentation 
         <http://pythonpaste.org/deploy/>`_.
 
-.. literalinclude:: ../project_code/wiki_root/development.ini
+.. code:: ../project_code/wiki_root/development.ini
     :language: ini
-    :start-after: ##{default}
-    :end-before: ##{server}
+    :section: default
 
 If want to add some configuration option (let's say
 an administrator's email) here is how you would do. First you would

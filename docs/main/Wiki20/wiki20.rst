@@ -459,12 +459,12 @@ This is a basic XHTML page with three substitutions:
 2.  In the second ``<div>`` element, we substitute the page
     name again with Genshi's ``py:replace``:
 
-	.. literalinclude:: wiki_root/snapshots/1/wiki20/templates/page.html
+	.. code:: wiki_root/snapshots/1/wiki20/templates/page.html
 		:section: PageName
 
 3.  In the third ``<div>``, we put in the contents of our ``wikipage``:
 
-	.. literalinclude:: wiki_root/snapshots/1/wiki20/templates/page.html
+	.. code:: wiki_root/snapshots/1/wiki20/templates/page.html
 		:section: PageContent
 
 When you refresh the output web page you should see "initial data" displayed on the page.
@@ -490,17 +490,17 @@ is an editing page. Here are the changes for ``edit.html``.
 
 #. Change the title in the header to reflect that we are editing the page:
 
-	.. literalinclude:: wiki_root/trunk/wiki20/templates/edit.html
+	.. code:: wiki_root/trunk/wiki20/templates/edit.html
 		:section: Head
 
 #. Change the div that displays the page:
 
-	.. literalinclude:: wiki_root/snapshots/1/wiki20/templates/page.html
+	.. code:: wiki_root/snapshots/1/wiki20/templates/page.html
 		:section: PageContent
 
    with a div that contains a standard HTML form:
 
-	.. literalinclude:: wiki_root/trunk/wiki20/templates/edit.html
+	.. code:: wiki_root/trunk/wiki20/templates/edit.html
 		:section: Form
 
 .. highlight:: python
