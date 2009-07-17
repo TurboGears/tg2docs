@@ -1,0 +1,365 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<meta name="robots" content="noindex,nofollow">
+
+<title>2.0/RoughDocs/ToscaWidgets/Cookbook/ExtItemSelector - TurboGears Documentation</title>
+<script type="text/javascript" src="/wiki/common/js/common.js"></script>
+
+<script type="text/javascript">
+<!--// common functions
+
+// We keep here the state of the search box
+searchIsDisabled = false;
+
+function searchChange(e) {
+    // Update search buttons status according to search box content.
+    // Ignore empty or whitespace search term.
+    var value = e.value.replace(/\s+/, '');
+    if (value == '' || searchIsDisabled) { 
+        searchSetDisabled(true);
+    } else {
+        searchSetDisabled(false);
+    }
+}
+
+function searchSetDisabled(flag) {
+    // Enable or disable search
+    document.getElementById('fullsearch').disabled = flag;
+    document.getElementById('titlesearch').disabled = flag;
+}
+
+function searchFocus(e) {
+    // Update search input content on focus
+    if (e.value == 'Search') {
+        e.value = '';
+        e.className = '';
+        searchIsDisabled = false;
+    }
+}
+
+function searchBlur(e) {
+    // Update search input content on blur
+    if (e.value == '') {
+        e.value = 'Search';
+        e.className = 'disabled';
+        searchIsDisabled = true;
+    }
+}
+
+function actionsMenuInit(title) {
+    // Initialize action menu
+    for (i = 0; i < document.forms.length; i++) {
+        var form = document.forms[i];
+        if (form.className == 'actionsmenu') {
+            // Check if this form needs update
+            var div = form.getElementsByTagName('div')[0];
+            var label = div.getElementsByTagName('label')[0];
+            if (label) {
+                // This is the first time: remove label and do buton.
+                div.removeChild(label);
+                var dobutton = div.getElementsByTagName('input')[0];
+                div.removeChild(dobutton);
+                // and add menu title
+                var select = div.getElementsByTagName('select')[0];
+                var item = document.createElement('option');
+                item.appendChild(document.createTextNode(title));
+                item.value = 'show';
+                select.insertBefore(item, select.options[0]);
+                select.selectedIndex = 0;
+            }
+        }
+    }
+}
+//-->
+</script>
+
+
+<link rel="stylesheet" type="text/css" charset="utf-8" media="all" href="/wiki/turbogears/css/common.css">
+<link rel="stylesheet" type="text/css" charset="utf-8" media="screen" href="/wiki/turbogears/css/screen.css">
+<link rel="stylesheet" type="text/css" charset="utf-8" media="print" href="/wiki/turbogears/css/print.css">
+<link rel="stylesheet" type="text/css" charset="utf-8" media="projection" href="/wiki/turbogears/css/projection.css">
+<link rel="alternate" title="TurboGears Documentation Recent Changes" href="/RecentChanges?action=rss_rc&amp;ddiffs=1&amp;unique=1" type="application/rss+xml">
+
+<link rel="Start" href="/FrontPage">
+<link rel="Alternate" title="Wiki Markup" href="/2.0/RoughDocs/ToscaWidgets/Cookbook/ExtItemSelector?action=raw">
+<link rel="Alternate" media="print" title="Print View" href="/2.0/RoughDocs/ToscaWidgets/Cookbook/ExtItemSelector?action=print">
+<link rel="Up" href="/2.0/RoughDocs/ToscaWidgets/Cookbook">
+<link rel="Appendix" title="itemselector1.png" href="/2.0/RoughDocs/ToscaWidgets/Cookbook/ExtItemSelector?action=AttachFile&amp;do=view&amp;target=itemselector1.png">
+<link rel="Search" href="/FindPage">
+<link rel="Index" href="/TitleIndex">
+<link rel="Glossary" href="/WordIndex">
+<link rel="Help" href="/HelpOnFormatting">
+</head>
+
+<body  lang="en" dir="ltr">
+
+<div id="header">
+
+
+<form id="searchform" method="get" action="">
+<div>
+<input type="hidden" name="action" value="fullsearch">
+<input type="hidden" name="context" value="180">
+<label for="searchinput">Search:</label>
+<input id="searchinput" type="text" name="value" value="" size="20"
+    onfocus="searchFocus(this)" onblur="searchBlur(this)"
+    onkeyup="searchChange(this)" onchange="searchChange(this)" alt="Search">
+<input id="titlesearch" name="titlesearch" type="submit"
+    value="Titles" alt="Search Titles">
+<input id="fullsearch" name="fullsearch" type="submit"
+    value="Text" alt="Search Full Text">
+</div>
+</form>
+<script type="text/javascript">
+<!--// Initialize search form
+var f = document.getElementById('searchform');
+f.getElementsByTagName('label')[0].style.display = 'none';
+var e = document.getElementById('searchinput');
+searchChange(e);
+searchBlur(e);
+//-->
+</script>
+
+<ul id="username"><li><a href="/2.0/RoughDocs/ToscaWidgets/Cookbook/ExtItemSelector?action=login" id="login">Login</a></li></ul>
+<div id="locationline">
+
+
+<ul id="pagelocation">
+<li><a href="/2.0">2.0</a></li><li><a href="/2.0/RoughDocs">RoughDocs</a></li><li><a href="/2.0/RoughDocs/ToscaWidgets">ToscaWidgets</a></li><li><a href="/2.0/RoughDocs/ToscaWidgets/Cookbook">Cookbook</a></li><li><a class="backlink" title="Click to do a full-text search for this title" href="/2.0/RoughDocs/ToscaWidgets/Cookbook/ExtItemSelector?action=fullsearch&amp;value=linkto%3A%222.0/RoughDocs/ToscaWidgets/Cookbook/ExtItemSelector%22&amp;context=180">ExtItemSelector</a></li>
+</ul>
+
+</div>
+
+
+<ul id="navibar">
+<li class="wikilink"><a href="/RecentChanges">RecentChanges</a></li><li class="wikilink"><a href="/FindPage">FindPage</a></li><li class="wikilink"><a href="/HelpContents">HelpContents</a></li><li class="current"><a href="/2.0/RoughDocs/ToscaWidgets/Cookbook/ExtItemSelector">ExtItemSelector</a></li>
+</ul>
+
+<div id="pageline"><hr style="display:none;"></div>
+<div id="message">
+<p>Attachment 'itemselector1.png_alt_exampleItemSelector' does not exist!</p>
+<div class="buttons"><a href="/2.0/RoughDocs/ToscaWidgets/Cookbook/ExtItemSelector?action=show">Clear message</a></div>
+
+</div>
+
+<ul class="editbar"><li><span class="disabled">Immutable Page</span></li><li><a href="/2.0/RoughDocs/ToscaWidgets/Cookbook/ExtItemSelector?action=info">Info</a></li><li><a href="/2.0/RoughDocs/ToscaWidgets/Cookbook/ExtItemSelector?action=AttachFile">Attachments</a></li><li>
+<form class="actionsmenu" method="get" action="">
+<div>
+    <label>More Actions:</label>
+    <select name="action"
+        onchange="if ((this.selectedIndex != 0) &&
+                      (this.options[this.selectedIndex].disabled == false)) {
+                this.form.submit();
+            }
+            this.selectedIndex = 0;">
+        <option value="raw">Raw Text</option>
+<option value="print">Print View</option>
+<option value="RenderAsDocbook">Render as Docbook</option>
+<option value="refresh">Delete Cache</option>
+<option value="show" disabled class="disabled">------------</option>
+<option value="SpellCheck">Check Spelling</option>
+<option value="LikePages">Like Pages</option>
+<option value="LocalSiteMap">Local Site Map</option>
+<option value="show" disabled class="disabled">------------</option>
+<option value="RenamePage" disabled class="disabled">Rename Page</option>
+<option value="DeletePage" disabled class="disabled">Delete Page</option>
+<option value="show" disabled class="disabled">------------</option>
+<option value="MyPages">My Pages</option>
+<option value="SubscribeUser">Subscribe User</option>
+<option value="show" disabled class="disabled">------------</option>
+<option value="Despam">Remove Spam</option>
+<option value="PackagePages">Package Pages</option>
+    </select>
+    <input type="submit" value="Do">
+</div>
+<script type="text/javascript">
+<!--// Init menu
+actionsMenuInit('More Actions:');
+//-->
+</script>
+</form>
+</li></ul>
+
+</div>
+
+<div id="page" lang="en" dir="ltr">
+<div dir="ltr" id="content" lang="en"><span class="anchor" id="top"></span>
+<h1>ExtJS ItemSelector Widget</h1>
+<div class="section">
+<h3><a id="installation" name="installation">Installation</a></h3>
+<pre>easy_install tw.extjs</pre></div>
+<div class="section">
+<h3><a id="usage" name="usage">Usage</a></h3>
+<p>The ItemSelector widget aka SelectShuttle allows selection / deselection of multiple items from a select list. The ExtJS ItemSelector widget supports powerful features like drag and drop and ordering of selected items. The basic usage of this widget is demonstrated below. The widget uses the following parameters:</p>
+<div class="section">
+<h4><a id="parameters" name="parameters">Parameters:</a></h4>
+<table border="1" class="docutils">
+<colgroup>
+<col width="27%" />
+<col width="49%" />
+<col width="23%" />
+</colgroup>
+<tbody valign="top">
+<tr><td><strong>Name</strong></td>
+<td><strong>Description</strong></td>
+<td><strong>Default</strong></td>
+</tr>
+<tr><td>divID</td>
+<td>The id of the element containing the widget.</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>url</td>
+<td>The url of the form action</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>width</td>
+<td>Width of the Form Panel container in px.</td>
+<td>'auto'</td>
+</tr>
+<tr><td>fieldLabel</td>
+<td>Label for the ItemSelector Field.</td>
+<td>None</td>
+</tr>
+<tr><td>labelWidth</td>
+<td>The width of the field label in pixels.</td>
+<td>'auto'</td>
+</tr>
+<tr><td>fromData</td>
+<td>A list of source selection items.</td>
+<td>[]</td>
+</tr>
+<tr><td>toData</td>
+<td>A list of destination selection items.</td>
+<td>[] (Each item in the
+fromData and toData
+lists is a data
+record represented
+as a list (typically
+containing a value
+and a description))</td>
+</tr>
+<tr><td>msWidth</td>
+<td>The width of the MultiSelect field in px.</td>
+<td>200</td>
+</tr>
+<tr><td>msHeight</td>
+<td>The height of the MultiSelect field in px.</td>
+<td>300</td>
+</tr>
+<tr><td>dataFields</td>
+<td>A list of fields used for storing the data.</td>
+<td>[0, 1]</td>
+</tr>
+<tr><td>valueField</td>
+<td>Field for storing the values.</td>
+<td>0</td>
+</tr>
+<tr><td>displayField</td>
+<td>Field that is displayed.</td>
+<td>1</td>
+</tr>
+<tr><td>fromLegend</td>
+<td>Legend for the source select Field.</td>
+<td>None</td>
+</tr>
+<tr><td>toLegend</td>
+<td>Legend for the destination select Field.</td>
+<td>None</td>
+</tr>
+<tr><td>submitText</td>
+<td>Text for the submit button.</td>
+<td>'Submit'</td>
+</tr>
+<tr><td>resetText</td>
+<td>Text for the reset button.</td>
+<td>'Reset'</td>
+</tr>
+</tbody>
+</table>
+<p>The widget can be instantiated as follows:</p>
+<pre>from tw.extjs import ItemSelector
+
+from_data = [[&quot;AL&quot;,&quot;Alabama&quot;], [&quot;AK&quot;,&quot;Alaska&quot;], [&quot;AZ&quot;,&quot;Arizona&quot;], [&quot;AR&quot;,&quot;Arkansas&quot;], [&quot;CA&quot;,&quot;California&quot;], .... [&quot;WY&quot;,&quot;Wyoming&quot;]]
+to_data = []
+
+item_selector = ItemSelector(divID='item_selector_div',
+                         width=550,
+                         url='/save',
+                         fieldLabel='States',
+                         labelWidth=40,
+                         fromData=from_data,
+                         toData=to_data,
+                         msWidth=200,
+                         msHeight=200,
+                         dataFields=['code','desc'],
+                         valueField='code',
+                         displayField='desc',
+                         fromLegend='Available',
+                         toLegend='Selected',
+                         submitText='Save',
+                         resetText='Reset')</pre><p>It can be then served up to the user via a controller method like this:</p>
+<pre>&#64;expose('mypackage.templates.myformtemplate')
+def index(self, **kw):
+    pylons.c.field = item_selector
+    return dict()</pre><p>The widget can then be displayed in the template like this:</p>
+<pre>${tmpl_context.field()}</pre><p>This brings up the ItemSelector on the browser. It allows shuttling of items between the source and destination Fields and ordering of items selected in the destination field using the arrow keys or by dragging and dropping the items at the correct place. This is how it looks in the browser:</p>
+<blockquote>
+<img alt="example ItemSelector" src="http://docs.turbogears.org/2.0/RoughDocs/ToscaWidgets/Cookbook/ExtItemSelector?action=AttachFile&amp;do=get&amp;target=itemselector1.png" style="width: 500px;" />
+</blockquote>
+</div>
+</div>
+<span class="anchor" id="bottom"></span></div>
+<div id="pagebottom"></div>
+</div>
+
+
+<div id="footer">
+<ul class="editbar"><li><span class="disabled">Immutable Page</span></li><li><a href="/2.0/RoughDocs/ToscaWidgets/Cookbook/ExtItemSelector?action=info">Info</a></li><li><a href="/2.0/RoughDocs/ToscaWidgets/Cookbook/ExtItemSelector?action=AttachFile">Attachments</a></li><li>
+<form class="actionsmenu" method="get" action="">
+<div>
+    <label>More Actions:</label>
+    <select name="action"
+        onchange="if ((this.selectedIndex != 0) &&
+                      (this.options[this.selectedIndex].disabled == false)) {
+                this.form.submit();
+            }
+            this.selectedIndex = 0;">
+        <option value="raw">Raw Text</option>
+<option value="print">Print View</option>
+<option value="RenderAsDocbook">Render as Docbook</option>
+<option value="refresh">Delete Cache</option>
+<option value="show" disabled class="disabled">------------</option>
+<option value="SpellCheck">Check Spelling</option>
+<option value="LikePages">Like Pages</option>
+<option value="LocalSiteMap">Local Site Map</option>
+<option value="show" disabled class="disabled">------------</option>
+<option value="RenamePage" disabled class="disabled">Rename Page</option>
+<option value="DeletePage" disabled class="disabled">Delete Page</option>
+<option value="show" disabled class="disabled">------------</option>
+<option value="MyPages">My Pages</option>
+<option value="SubscribeUser">Subscribe User</option>
+<option value="show" disabled class="disabled">------------</option>
+<option value="Despam">Remove Spam</option>
+<option value="PackagePages">Package Pages</option>
+    </select>
+    <input type="submit" value="Do">
+</div>
+<script type="text/javascript">
+<!--// Init menu
+actionsMenuInit('More Actions:');
+//-->
+</script>
+</form>
+</li></ul>
+
+<ul id="credits">
+<li><a href="http://moinmoin.wikiwikiweb.de/">MoinMoin Powered</a></li><li><a href="http://www.python.org/">Python Powered</a></li><li><a href="http://validator.w3.org/check?uri=referer">Valid HTML 4.01</a></li>
+</ul>
+
+
+</div>
+</body>
+</html>
+

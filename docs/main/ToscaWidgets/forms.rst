@@ -38,7 +38,7 @@ Add the following line at the bottom of ``model/__init__.py``::
 Now create a new Python module ``model/movie.py`` as follows:
 
 .. highlight:: python
-.. code:: tosca_forms/toscasample/model/movie.py
+.. literalinclude:: tosca_forms/toscasample/model/movie.py
 
 Our movie has a smattering of the different standard data types so that we can
 show off some simple ToscaWidgets form widgets.
@@ -60,7 +60,7 @@ should be on the same level as the ``controllers`` and ``model``
 subdirectories.  Inside the ``widgets`` subdirectory, we create a module
 ``movie_form.py`` containing the following very simple form widget:
 
-.. code:: tosca_forms/toscasample/widgets/movie_form_1.py
+.. literalinclude:: tosca_forms/toscasample/widgets/movie_form_1.py
 
 In ToscaWidgets, every widget can have child widgets. This is particularly
 useful for forms, which are generally made up of form field widgets.
@@ -86,7 +86,7 @@ in the main ``templates`` directory that will be usable as input page for
 other model objects, too:
 
 .. highlight:: html+genshi
-.. code:: tosca_forms/toscasample/templates/new_form.html
+.. literalinclude:: tosca_forms/toscasample/templates/new_form.html
 .. highlight:: python
 
 Finally, We will also need a controller for displaying our input form.
@@ -101,7 +101,7 @@ template. So we add the following at the top of ``controllers/root.py``::
 Then we add an exposed method ``new()`` to the ``RootController`` class
 in the same controller file:
 
-.. code:: tosca_forms/toscasample/controllers/root.py
+.. literalinclude:: tosca_forms/toscasample/controllers/root.py
   :section: new
 
 To run the application, surf to
@@ -164,7 +164,7 @@ After such customization, our ``widget.movie_form`` module may now look
 like this:
 
 .. highlight:: python
-.. code:: tosca_forms/toscasample/widgets/movie_form_2.py
+.. literalinclude:: tosca_forms/toscasample/widgets/movie_form_2.py
 
 The declarative notation we used earlier is a bit cumbersome in combination
 with spacers or labels, so we provided the fields simply as a list.
@@ -185,7 +185,7 @@ ToscaWidget forms already come with a ``help_text`` attribute. So let's add
 some help texts in our ``widget.movie_form`` module and see what will happen:
 
 .. highlight:: python
-.. code:: tosca_forms/toscasample/widgets/movie_form_3.py
+.. literalinclude:: tosca_forms/toscasample/widgets/movie_form_3.py
 
 The result is not very appealing.  Our help texts are simply inserted as
 span elements after their corresponding field elements:
@@ -232,14 +232,14 @@ We also create a CSS file ``tooltips.css`` that we put into the ``public/css``
 directory of our project:
 
 .. highlight:: css
-.. code:: tosca_forms/toscasample/public/css/tooltips.css
+.. literalinclude:: tosca_forms/toscasample/public/css/tooltips.css
 
 We can now specify our custom template and CSS file in the ``template`` and
 ``css`` attributes of our form widget.  The ``widget.movie_form`` module
 will look as follows after this step:
 
 .. highlight:: python
-.. code:: tosca_forms/toscasample/widgets/movie_form_5.py
+.. literalinclude:: tosca_forms/toscasample/widgets/movie_form_5.py
 
 This was all that needed to be done to get the following nice effect when
 you hover with the mouse over one of the input fields:
@@ -276,7 +276,7 @@ defined in the widget.  Our new ``widget.movie_form`` module with validation
 looks something like this:
 
 .. highlight:: python
-.. code:: tosca_forms/toscasample/widgets/movie_form_6.py
+.. literalinclude:: tosca_forms/toscasample/widgets/movie_form_6.py
 
 Note that we removed the date format from the CalendarDatePicker again.
 This is because the DateConverter will take whatever date is entered in
@@ -300,7 +300,7 @@ of our ``controllers/root.py`` file::
 Then we can add an exposed ``create()`` method to the ``RootController``
 class in the same controller file, directly after the ``new()`` method:
 
-.. code:: tosca_forms/toscasample/controllers/root.py
+.. literalinclude:: tosca_forms/toscasample/controllers/root.py
   :section: create
 
 Note that we have created the ``create_movie_form`` instance with
@@ -319,7 +319,7 @@ When the form validation passes, the ``create()`` method redirects
 to an exposed ``list()`` method for displaying the list of movies,
 but we haven't created that method yet.  It can look like this:
 
-.. code:: tosca_forms/toscasample/controllers/root.py
+.. literalinclude:: tosca_forms/toscasample/controllers/root.py
   :section: list
 
 To show the movie list, we also need to add a template named
@@ -327,7 +327,7 @@ To show the movie list, we also need to add a template named
 contain as little as this:
 
 .. highlight:: html+genshi
-.. code:: tosca_forms/toscasample/templates/movie_list.html
+.. literalinclude:: tosca_forms/toscasample/templates/movie_list.html
 .. highlight:: python
 
 As an exercise, you can try to make the movies in the list editable by adding

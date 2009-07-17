@@ -72,7 +72,7 @@ Note that some items have class="closed". These would show up as collapsed nodes
 
 Here is the resulting field when viewed from a browser:
 
-.. image:: http://docs.turbogears.org/2.0/RoughDocs/ToscaWidgets/Cookbook/TreeView?action=AttachFile&do=get&target=treeview.png
+.. image:: ../images/treeview.png
        :alt: example TreeView
 
 

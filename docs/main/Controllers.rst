@@ -240,7 +240,7 @@ Template files can thus house all markup information, maintaining clean
 separation from controller code.
 
 SubControllers and the URL Hierarchy
------------------------------------
+------------------------------------
 
 Sometimes your web-app needs a URL structure that's more than one level deep.
 
@@ -304,11 +304,13 @@ if you are a frequent python programmer.  Here is the basic approach:
 
  * The dispatcher gobbles up as much of the URL as it can to find the correct controller method associated with your request.
  * The remaining url items are then mapped to the parameters in the method.
- * If there are still remaining parameters they are mapped to *args in the method signature.
+ * If there are still remaining parameters they are mapped to \*args in the method signature.
  * If there are named parameters, (as in a form request, or a GET request with parameters), they are mapped to the
-   args which match their names, and if there are leftovers, they are placed in **kw.
+   args which match their names, and if there are leftovers, they are placed in \**kw.
 
-Here is and example controller and a chart outlining the way urls are mapped to it's methods::
+Here is and example controller and a chart outlining the way urls are mapped to it's methods:
+
+.. code-block:: python
 
     class WikiController(TGController):
     

@@ -215,8 +215,10 @@ send the failed data back to the form so the user can correct it::
         return dict(values=kw, genres=genres, directors=directors)
 
 That "directors" bit is in there to convert the directors over to a list if only one is selected in the select box.
-**kw holds the values from the rejected form, which we pass back into the template. Adding in the validation errors 
-and rejected form values from our controller, our template looks like this::
+\**kw holds the values from the rejected form, which we pass back into the template. Adding in the validation errors 
+and rejected form values from our controller, our template looks like this:
+
+.. code-block:: html
 
   <form method="POST" action="./">
     <table>

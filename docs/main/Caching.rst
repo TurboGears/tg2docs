@@ -32,6 +32,7 @@ time-consuming or resource-intensive lookup and returns an object that can be
 pickled (list, dict, tuple, etc.):
 
 .. code-block:: python
+
     @expose()
     def some_action(self, day): 
         # hypothetical action that uses a 'day' variable as its key 

@@ -81,8 +81,7 @@ In your template you need to pickup your form from the template context for rend
 
 And here is the resulting field when viewed from a browser:
 
-.. image:: 
-       http://docs.turbogears.org/2.0/RoughDocs/ToscaWidgets/Cookbook/JQueryAjaxForm?action=AttachFile&do=get&target=ajaxform1.png
+.. image:: ../images/ajaxform1.png
     :alt: example AjaxForm
 
 
@@ -99,8 +98,7 @@ The output would be rendered inside a div element called *output*, which is the 
 
 looks like after the form has been successfully submitted:
 
-.. image:: 
-       http://docs.turbogears.org/2.0/RoughDocs/ToscaWidgets/Cookbook/JQueryAjaxForm?action=AttachFile&do=get&target=ajaxform2.png
+.. image:: ../images/ajaxform2.png
     :alt: example AjaxForm
 
 

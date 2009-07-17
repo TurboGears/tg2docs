@@ -104,7 +104,9 @@ Now you should be able to see your webpage in full TurboGears glory
 at the address configured as ``ServerName`` above.
 
 To be able to relocate your application without problems, make sure you
-create your URLs properly (see `1.0/GettingStarted/URLs`_).
+create your URLs properly (see 1.0/GettingStarted/URLs).
+
+.. todo:: Fix ModProxy. Had reference to 1.0/GettingStarted/URLs and this needs to be updated for 2.1
 
 
 Setting the Correct Charset

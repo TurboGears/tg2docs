@@ -58,7 +58,7 @@ In the template, call the widget to display it.
 
 Here is what the resulting widget looks like:
 
-.. image:: http://docs.turbogears.org/2.0/RoughDocs/ToscaWidgets/Using?action=AttachFile&do=get&target=stars.png
+.. image:: images/stars.png
 
 
 Now, star widget doesn't do any good without some kind of server interaction.  For this tutorial we are going to just simply keep track of the average as the user's click the stars in memory.  This could be later modified to support some sort of crafty database interaction.
@@ -102,7 +102,7 @@ First we modify the template to give a place to hold the data that comes back fr
 
 The 'response' javascript variable will hold an object which is your extracted json stream.  In this case, we are displaying the average rating.  It is important to note that the star widget uses jQuery library, and the '$' operator may not work the same in other libraries.
 
-.. image:: http://docs.turbogears.org/2.0/RoughDocs/ToscaWidgets/Using?action=AttachFile&do=get&target=stars_avg.png
+.. image:: images/stars_avg.png
 
 .. todo:: Review this file for todo items.
 

@@ -17,7 +17,7 @@ First lets take into consideration a very simple registration form::
 
 Here is how the form is rendered:
 
-.. image:: http://docs.turbogears.org/2.0/RoughDocs/ToscaWidgets/Cookbook/PasswordValidation?action=AttachFile&do=get&target=simple_register.png
+.. image:: ../images/simple_register.png
     :alt: simple registration form
 
 Now we will add a validator to the form before it is passed into the controller.  The validator code looks like this::
@@ -60,7 +60,7 @@ Notice the validate decorator, which makes a call-back to the "registration" met
 
 When the validation fails, the result looks something like this:
 
-.. image:: http://docs.turbogears.org/2.0/RoughDocs/ToscaWidgets/Cookbook/PasswordValidation?action=AttachFile&do=get&target=passwordverify.png
+.. image:: ../images/passwordverify.png
     :alt: registration form with validation errors.
 
 .. todo:: Review this file for todo items.

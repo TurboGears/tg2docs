@@ -19,3 +19,9 @@ Misc To Do Items From The Docs
 .. todo:: Add shell script which validates environment for building docs
 
 .. todo:: Add better notes in README.txt for setting up the virtual environment for this
+
+.. todo:: Add docs for adding jquery, mochikit, and other resources to pages.
+
+.. todo:: Add notes to "easy_install tgext.geo" to main readme
+
+.. todo:: Add notes to "easy_install -i http://dev.camptocamp.com/packages/mapfish/1.1/index --allow-hosts=dev.camptocamp.com mapfish==1.1" to get mapfish for tgext.geo

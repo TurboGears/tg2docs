@@ -35,7 +35,7 @@ TreeView
  `(ExtTreeView Tutorial) <Cookbook/ExtTreeView.html>`_
 
 
- .. image:: http://docs.turbogears.org/2.0/RoughDocs/ToscaWidgets/Cookbook/ExtItemSelector?action=AttachFile&do=get&target=itemselector1.png
+ .. image:: images/itemselector1.png
    :height: 140
 
 ItemSelector
@@ -45,7 +45,7 @@ ItemSelector
  `(ItemSelector Tutorial) <Cookbook/ExtItemSelector.html>`_
 
 
- .. image:: http://docs.turbogears.org/2.0/RoughDocs/ToscaWidgets/Cookbook/ExtSingleSelectCombo?action=AttachFile&do=get&target=singleselectcombo-small.png
+ .. image:: images/singleselectcombo-small.png
    :height: 120
 
 SingleSelectCombo
@@ -57,7 +57,7 @@ SingleSelectCombo
 jQuery
 ~~~~~~~
 
- .. image:: http://docs.turbogears.org/2.0/RoughDocs/ToscaWidgets/Cookbook/AutoComplete?action=AttachFile&do=get&target=autocomplete_small.png
+ .. image:: images/autocomplete_small.png
     :align: right
     :alt: example AutoComplete Field
 
@@ -69,7 +69,7 @@ AutoComplete Field
  `(AutoComplete Tutorial) <Cookbook/AutoComplete.html>`_
 
 
- .. image:: http://docs.turbogears.org/2.0/RoughDocs/ToscaWidgets/Cookbook/FlexiGrid?action=AttachFile&do=get&target=flexigrid.png
+ .. image:: images/flexigrid.png
    :align: right
    :height: 120
 
@@ -92,7 +92,7 @@ Flot
 TODO: Write XXX 
 
 
- .. image:: http://docs.turbogears.org/2.0/RoughDocs/ToscaWidgets/Cookbook/TreeView?action=AttachFile&do=get&target=treeview.png
+ .. image:: images/treeview.png
    :align: right
    :height: 120
 
@@ -111,7 +111,7 @@ Ajax Graphs
 TODO: Write XXX 
 
  
- .. image :: http://docs.turbogears.org/2.0/RoughDocs/ToscaWidgets/Using?action=AttachFile&do=get&target=stars.png
+ .. image :: images/stars.png
     :align: right
 
 Ajax Star Rating
@@ -138,7 +138,7 @@ Need some basic widgets here.
 JSUnit
 ~~~~~~
 
- .. image:: http://docs.turbogears.org/2.0/RoughDocs/ToscaWidgets/Cookbook/JSUnit?action=AttachFile&do=get&target=jsunit.png
+ .. image:: images/jsunit.png
     :align: right
     :height: 120
     :alt: example JSUnit Widget
@@ -179,7 +179,7 @@ tw.forms
 Basic Form usage (no ajax)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
- .. image:: http://docs.turbogears.org/2.0/RoughDocs/ToscaWidgets/Cookbook/PasswordValidation?action=AttachFile&do=get&target=passwordverify.png
+ .. image:: images/passwordverify.png
    :align: right
    :height: 80
 
@@ -189,7 +189,7 @@ Password Validation
 
  `(Password Validation Tutorial) <Cookbook/PasswordValidation.html>`_
 
- .. image:: http://docs.turbogears.org/2.0/RoughDocs/ToscaWidgets/Cookbook/ReCaptcha?action=AttachFile&do=get&target=recaptcha_field.jpg
+ .. image:: images/recaptcha_field.jpg
    :align: right
    :height: 80
 

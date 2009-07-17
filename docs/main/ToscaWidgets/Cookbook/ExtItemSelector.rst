@@ -100,8 +100,8 @@ The widget can then be displayed in the template like this::
 This brings up the ItemSelector on the browser. It allows shuttling of items between the source and destination Fields and ordering of items selected in the destination field using the arrow keys or by dragging and dropping the items at the correct place. This is how it looks in the browser:
 
 
- .. image:: http://docs.turbogears.org/2.0/RoughDocs/ToscaWidgets/Cookbook/ExtItemSelector?action=AttachFile&do=get&target=itemselector1.png
-       :alt: example ItemSelector
+ .. image:: ../images/itemselector1.png
+   :alt: example ItemSelector
    :width: 500
 
 
