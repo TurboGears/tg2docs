@@ -4,6 +4,8 @@
 Extended Table of Contents
 ==========================
 
+Return to the :ref:`mainindex`
+
 Getting Started with TurboGears
 ===============================
 
@@ -107,6 +109,8 @@ All To Do Items From The Docs
    :maxdepth: 3
 
    todo
+   misc
+   index
 
 .. todo:: Validate that toctree maxdepth values are appropriate
 

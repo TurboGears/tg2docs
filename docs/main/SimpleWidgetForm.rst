@@ -363,8 +363,10 @@ controller. You have also seen simple validators in action that simplify error
 handling for forms substantially.
 
 This tutorial only covers basic widget usage. If you'd like to know more,
-explore the `widgets overview`_ and the check out the `widget browser`_ in the
-`toolbox`_.
+explore the `widgets overview`_ and the check out the widget browser in the
+toolbox.
+
+.. todo:: previous paragraph referenced "widget browser" and "toolbox" as links. Need to reinstate as appropriate
 
 Download the example project
 ----------------------------

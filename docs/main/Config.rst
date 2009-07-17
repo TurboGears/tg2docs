@@ -72,7 +72,7 @@ sections are marked off with ``[]``'s.
         detail in the `Paste Deploy documentation 
         <http://pythonpaste.org/deploy/>`_.
 
-.. code:: wiki_root/trunk/development.ini
+.. code:: wiki_root/development.ini
     :language: ini
     :section: default
 
@@ -104,6 +104,7 @@ of the get() call.
 The correct way of loading boolean values for your use is 
 
 .. code-block:: python
+
    from paste.deploy.converters import asbool
    if asbool(config['enable_subsystem']):
       ... sub systems is enabled... 
@@ -122,7 +123,7 @@ Our hope is that 90% of applications don't need to edit any of the config module
 files, but for those who do, the most common file to change is 
 ``app_config.py`` 
 
-.. code:: wiki_root/trunk/wiki20/config/app_cfg.py
+.. code:: wiki_root/wiki20/config/app_cfg.py
     :language: python
 
 app_cfg.py exists primarily so that middleware.py and environment.py

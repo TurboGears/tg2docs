@@ -89,7 +89,7 @@ That takes care of the creation process.  It should now load and work on your pa
 
 Once you are done you will end up with a captcha on your page that looks like
 
-.. image:: http://docs.turbogears.org/2.0/RoughDocs/ToscaWidgets/Cookbook/ReCaptcha?action=AttachFile&do=get&target=recaptcha_field.jpg
+.. image:: ../images/recaptcha_field.jpg
 
 .. todo:: Review this file for todo items.
 

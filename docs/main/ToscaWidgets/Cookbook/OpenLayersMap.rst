@@ -101,7 +101,7 @@ The map is rendered in the template by calling it from the template context::
 
 The map can then be viewed in the browser. A screenshot is shown as example:
 
-.. image:: http://docs.turbogears.org/2.0/RoughDocs/ToscaWidgets/Cookbook/OpenLayersMap?action=AttachFile&do=get&target=openlayersmap.png
+.. image:: ../images/openlayersmap.png
     :alt: example OpenLayers Map
 
 

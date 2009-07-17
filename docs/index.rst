@@ -1,3 +1,5 @@
+.. _mainindex:
+
 TurboGears Documentation
 ========================
 

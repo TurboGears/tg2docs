@@ -64,8 +64,7 @@ The javascript files are typically placed in the public/javascript folder inside
 
 Pointing the browser to http://localhost:8080/runner shows up the test runner page. The tests are performed on hitting the *Run* button. The results are displayed nicely as shown below:
 
-.. image::
-       http://docs.turbogears.org/2.0/RoughDocs/ToscaWidgets/Cookbook/JSUnit?action=AttachFile&do=get&target=jsunit1.png
+.. image:: ../images/jsunit1.png
     :alt: example JSUnit Widget
 
 The final files for this tutorial can be downloaded here;
@@ -178,8 +177,7 @@ The template file for the testsuite method should include the test widget::
 
 Pointing the browser to http://localhost:8080/runner shows up the test runner page. The tests are performed on hitting the *Run* button. The results are displayed nicely as shown below:
 
-.. image::
-       http://docs.turbogears.org/2.0/RoughDocs/ToscaWidgets/Cookbook/JSUnit?action=AttachFile&do=get&target=jsunit.png
+.. image:: ../images/jsunit.png
     :alt: example JSUnit Widget
 
 The final files for this tutorial can be downloaded here;

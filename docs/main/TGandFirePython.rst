@@ -1,6 +1,6 @@
 
 Using FirePython with TurboGears2
-==============================
+=================================
 
 :Status: Work in progress
 
@@ -38,14 +38,14 @@ Your project should now be started, and you should be able to browse to it at ht
 Adding FirePython Support
 ----------------------------
 
-Now, you're ready to add FirePython Middleware to your app::
+Now, you're ready to add FirePython Middleware to your app:
 
 Edit firepythontest/config/middleware.py 
 
-  Add:
+Add
     from firepython.middleware import FirePythonWSGI
 
-  Insert After line "app = make_base_app(global_conf, full_stack=True, **app_conf)"
+Insert After line "app = make_base_app(global_conf, full_stack=True, \**app_conf)"
     app = FirePythonWSGI(app)
 
 This will wrap your Turbogears App with FirePython, and any/all Log messages will become available in Firebug.

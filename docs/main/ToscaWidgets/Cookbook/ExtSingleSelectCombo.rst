@@ -48,8 +48,7 @@ The widget can then be displayed in the template like this::
 
 This is how it looks like in the browser:
 
-.. image::
-       http://docs.turbogears.org/2.0/RoughDocs/ToscaWidgets/Cookbook/ExtSingleSelectCombo?action=AttachFile&do=get&target=singleselectcombo.png
+.. image:: ../images/singleselectcombo.png
     :alt: example SingleSelectCombo Field
 
 TO DO - The tutorial needs to be extended to::

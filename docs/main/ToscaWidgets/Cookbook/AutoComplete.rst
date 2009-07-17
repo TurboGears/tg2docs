@@ -57,7 +57,7 @@ And your template form would display your form like this::
 
 And here is the resulting field when viewed from a browser:
 
-.. image:: http://docs.turbogears.org/2.0/RoughDocs/ToscaWidgets/Cookbook?action=AttachFile&do=get&target=autocomplete1.png
+.. image:: ../images/autocomplete1.png
     :alt: example AutoComplete Field
 
 
@@ -92,7 +92,7 @@ We add a @validate decorator to the data retrieval function which redirects us b
 
 and here is what the widget looks like when the validation fails:
 
-.. image:: http://docs.turbogears.org/2.0/RoughDocs/ToscaWidgets/Cookbook/AutoComplete?action=AttachFile&do=get&target=autocomplete3.png
+.. image:: ../images/autocomplete3.png
     :alt: example Validation Failure
 
 

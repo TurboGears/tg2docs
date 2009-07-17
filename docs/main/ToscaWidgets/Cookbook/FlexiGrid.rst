@@ -111,7 +111,7 @@ While all keyword parameters are the same as those passed to the widget during i
 
 Finally the FlexiGrid will be rendered as:
 
-.. image:: http://docs.turbogears.org/2.0/RoughDocs/ToscaWidgets/Cookbook/FlexiGrid?action=AttachFile&do=get&target=flexigrid.png
+.. image:: ../images/flexigrid.png
     :alt: example FlexiGrid Field
 
 .. todo:: Review this file for todo items.

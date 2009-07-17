@@ -176,7 +176,10 @@ Overriding a Form
 ~~~~~~~~~~~~~~~~~~
 
 The classic example shows how to override the "new_form" of the User controller to match a common registration form,
-complete with password verification::
+complete with password verification:
+
+.. code-block:: python
+
     from tgext.admin.config import AdminConfig, CrudRestControllerConfig
     from sprox.formbase import AddRecordForm
     from formencode import Schema

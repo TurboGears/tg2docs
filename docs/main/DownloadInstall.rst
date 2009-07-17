@@ -283,7 +283,7 @@ When you are done working simply run the ``deactivate`` virtualenv shell command
 This isn't really needed but it's good practice if you want to switch your shell to do some other work.
 
 Installation using pip (experimental)
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 `pip`_ (or pip installs packages) is an experimental easy_install replacement. It provides many improvements over it's predecessor and aims to be a full replacement.
 
