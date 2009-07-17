@@ -1,3 +1,5 @@
+.. _bitbucket_tutorial:
+
 Using BitBucket's Mercurial Service with TurboGears
 ===================================================
 

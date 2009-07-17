@@ -1,3 +1,5 @@
+.. _building_docs:
+
 Documentation Generation Guide
 ==================================
 
@@ -108,10 +110,10 @@ easily merge your changes in with the new documenation.
     own fork of mpedersen's repository, but if you've made it this far, 
     why not go all the way and contribute back to the effort?   
 
-mpedersen wrote a nice bitbucket_tutorial_, which has screen shots and 
-further explanation on how to fork and get and post updates with bitbucket.
-We try to provide the basic information here, but you can work through
-that tutorial for additional details.
+mpedersen wrote a nice :ref:`bitbucket_tutorial`, which has screen shots and
+further explanation on how to fork and get and post updates with bitbucket.  We
+try to provide the basic information here, but you can work through that
+tutorial for additional details.
 
 You need an account on bitbucket_ in order to fork a repository.  
 It is a painless process, which can be done by following the link.  
@@ -139,7 +141,7 @@ yourname, of course.   Then you can get your repository with:
     destination directories.   You may also want to read about one person's 
     WindowsInstall_.
 
-.. code-block:: 
+.. code-block:: bash
 
     mkdir _build\html _build\doctrees
     sphinx-build -b html -d _build\doctrees   . _build\html
@@ -165,7 +167,7 @@ To merge in your changes.   Is this right???
 
 The above commands update *your* repository.   In order to get your changes
 into the "main" repository that mpedersen maintains, you need to initiate
-a "pull request" as detailed in his bitbucket_tutorial_.
+a "pull request" as detailed in his :ref:`bitbucket_tutorial`.
 
 Thanks very much for considering helping out with the turbogears documentation
 efforts!
@@ -178,7 +180,6 @@ efforts!
 .. _bitbucket: http://bitbucket.org/account/signup/
 .. _BasicInstall: http://pylonsbook.com/en/1.0/deployment.html#setting-up-a-virtual-python-environment
 .. _WindowsInstall: http://www.blog.pythonlibrary.org/?p=230
-.. _bitbucket_tutorial: main/bitbucket_tutorial.html
 
 
 .. todo:: perhaps a better basic install for python, virtualenv, easy_setup
