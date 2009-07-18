@@ -3,3 +3,6 @@ docs/_build/*
 sphinxlog.txt
 *.swp
 *.swo
+*.pyc
+docs/_static/ToscaWidgetsFormsExample.zip
+docs/_static/Wiki20_final.zip
