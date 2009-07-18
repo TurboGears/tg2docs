@@ -72,15 +72,19 @@ We need several additional packages to support documentation development:
 
 sqlalchemy 
    database support - not sure why tg-21 doesn't install this by default
-memcache
-   this is requirement for the way we generate docs
+python_memcached
+   this is requirement for the way we generate docs, provides memcache module
 mercurial
    make sure this module is installed in your virtualenv.  Needed, if you are starting from a fresh virtualenv.
+tgext.geo
+   we generate docs from some related packages, again tg-21 install did not install this by default
 
 Here is the command to download these packages.   Again, I'm assuming you are 
 still in the virtualenv.
 
-   easy_install sqlalchemy pysvn memcache mercurial
+   easy_install sqlalchemy python_memcached mercurial tgext.geo
+
+.. note::  tgext.geo may complain about not being able to install one of its dependencies: MapFish.   For our purposes, this does not effect creating docs for tgext.geo
 
 After this, you should be able to verify your tg2.1 installation with
  
@@ -191,5 +195,9 @@ efforts!
     started using rst type commands.   Perhaps the commands should be broken 
     off into a tutorial, and provide a link to the tutorial.   
     I still recommend highlighting some of the volunteer opportunities.  
+.. todo::  working towards no warnings.    found memcache install above is NOT 
+    good, and also need to install tgext.geo - however, one of dependencies 
+    for tgext.geo has problems...  error: Could not find suitable distribution
+    for Requirement.parse('MapFish>=1.1')
 
 
