@@ -21,7 +21,7 @@ Installation
 
 If you have problems there is a way to manually get `ReCaptcha <http://recaptcha.net/>`_ working, often recaptcha-client does not install properly:
 
-Download and install recaptcha-client on its own first.  If you want to try it all in one command using easy_install then you could try this (just doing _easy_install_ _recaptcha-client_ sometimes gives a broken egg)::
+Download and install recaptcha-client on its own first.  If you want to try it all in one command using easy_install then you could try this (just doing _easy_install_ _'recaptcha-client'_ sometimes gives a broken egg)::
 
  easy_install recaptcha-client
 
