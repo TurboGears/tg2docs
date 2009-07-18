@@ -38,6 +38,47 @@ Then in order to make sure all those dependencies are installed you will want to
 
    $ python setup.py develop
 
+If you have just installed turbogears and are in a relatively new virtualenv,
+expect to see a bit of output about additional packages being installed.
+
+
+Create the database
+-------------------
+
+Most applications will use a database, and since we specified we are using 
+"authentication" in our quickstart, we need a place to store users and 
+permissions.    Before you run your application for the first time, you 
+need to make sure the database is created and initialized.   The following
+command typically only needs to be run *once*::
+
+      $ paster setup-app development.ini
+
+With the quickstart command from above, you will see quite a bit of output
+which shows you the SQL commands that create the authentication tables and
+setup a default user/password for you.
+
+.. note:: The default user/password created with a quickstart application is:
+          user=manager,
+          password=managepass
+
+You don't need to understand all of this now, but that is a little background
+about how this command knows what to do.
+By default, the database is created using SQLite_, and the data is stored in a
+file, devdata.db, in the top level of your project.  The information about
+what database driver is used, and where the data is located is specified in 
+the development.ini file passed on the command line.   
+The code which adds the initial data rows is in helloword/web_setup.py. 
+The command "paster setup-app" ends up calling the function "setup_app" within
+this file.
+
+
+.. note:: from laurin, decide whether the above section sufficiently covers the
+   database creation process (at this time).   I think there is some really 
+   good information below, but I'm not sure it belongs in a "helloworld"
+   tutorial.   Especially the part using {yourproject}.   Ideally, I'd think
+   we'd want a brief page on each default folder, and how an application
+   starts...   I may be dreaming though...
+
 Another key piece of TG2 application setup infrastructure is the ``paster setup-app`` command which takes a 
 configuration file and runs your project's websetup code in that context. 
 This allows you to use setup-app to create database tables, 
@@ -56,12 +97,6 @@ adding data to your database.
       $ paster setup-app development.ini
 
 
-Run the server
----------------
-
-If this is the first time you're starting the application you have to run the following command to create and initialize your test database::
-
-    $ paster setup-app development.ini
 
 This will create the database using the information stored in the development.ini 
 file which by default makes single file SQLite database in the local file system. 
@@ -72,7 +107,13 @@ In a quickstarted project with Auth enabled setup-app creates a couple of basic 
 groups, and permissions for you to use as an example.  This code is found in {yourproject}.websetup.bootstrap.
 This code also shows how you can add new data automatically to the database when the setup-app command is executed.. 
 
-At this point your project should be operational, and you're ready to start up the app.   To start a TurboGears 2 app, ``cd`` to the new directory (`helloworld`) and issue command ``paster serve`` to serve your new application::
+
+Run the server
+---------------
+
+At this point your project should be operational, and you're ready to start up the app.   To start a TurboGears 2 app, you need to be in the top level of 
+your project directory (`Helloworld`) and issue the command ``paster serve`` 
+to serve your new application::
 
     $ paster serve development.ini
 
@@ -115,8 +156,41 @@ Once you've got a quickstarted app going it's probably a good time to take a loo
 
 As you can see there are quite a few files generated. If you look inside them you'll discover that many of them are just stubs so that you'll have a standard place to put code as you build your project.
 
+What was covered
+----------------
+
+All applications created with turbogears 2, will typically run 3 commands
+to be properly setup:
+
+.. code-block:: bash
+
+   paster quickstart
+   python setup.py develop
+   paster setup-app development.ini
+
+The last command, which creates and initializes the database, often happens
+after the database is further defined.
+
+In order to run the server in development mode, you typically use the 
+following command::
+
+   paster serve --reload development.ini
+
+
+.. _SQLite:  http://www.sqlite.org
 
 .. todo:: Review this file for todo items.
-.. todo:: debating whether mentioning setup-app twice is good.   seems redundant
-.. todo:: since we mention port, should we also mention changing host to 0.0.0.0 for serving to all network interfaces, not just localhost?   probably overkill here.
+.. todo:: laurin added and modified a few things.   please review my changes  
+   most of it had to do with expected output from setup.py and setup-app
+.. todo:: is there a better way to format manager/managepass, perhaps putting
+   it on two separate lines?
+.. todo:: since we mention port, should we also mention changing host to 
+   0.0.0.0 for serving to all network interfaces, not just localhost?   
+   probably overkill here.    but maybe add somewhere else...
+.. todo:: ideally in a helloworld application, it seems we should write 
+   "helloworld" somewhere...   maybe I'm a traditionalist
+.. todo:: ideally, I'd like to see an expansion of the "explore a quickstarted 
+   application".    I think knowing how an application is laid out, 
+   gets initialized, starts up, and how some of the basic pieces fit together
+   is really valuable information.   Obviously it goes beyond intro material.
 
