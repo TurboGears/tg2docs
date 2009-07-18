@@ -55,17 +55,16 @@ command typically only needs to be run *once*::
 
 With the quickstart command from above, you will see quite a bit of output
 which shows you the SQL commands that create the authentication tables and
-setup a default user/password for you.
+setup a default user/password for you::
 
-.. note:: The default user/password created with a quickstart application is:
-          user=manager,
-          password=managepass
+      user: manager
+      password: managepass
 
-You don't need to understand all of this now, but that is a little background
-about how this command knows what to do.
+You don't need to understand all of this now, but here is a little background
+about how "paste setup-app" knows what to do.
 By default, the database is created using SQLite_, and the data is stored in a
 file, devdata.db, in the top level of your project.  The information about
-what database driver is used, and where the data is located is specified in 
+what database driver is used is specified in 
 the development.ini file passed on the command line.   
 The code which adds the initial data rows is in helloword/web_setup.py. 
 The command "paster setup-app" ends up calling the function "setup_app" within
@@ -117,7 +116,7 @@ to serve your new application::
 
     $ paster serve development.ini
 
-As soon as that's done point your browser at http://localhost:8080/ and you'll see a nice welcome page with the inform(flash) message and current time.
+As soon as that's done point your browser at http://localhost:8080/ and you'll see a nice welcome page.
 
 .. note::
     If you're exploring TurboGears 2 after using TurboGears 1 you may notice a few things:
@@ -176,6 +175,9 @@ following command::
 
    paster serve --reload development.ini
 
+Next, we'll explore different ways of adding content to our page, including
+`several approaches to the obligatory "Hello World" text <BasicMoves.html>`_.
+
 
 .. _SQLite:  http://www.sqlite.org
 
@@ -183,12 +185,10 @@ following command::
 .. todo:: laurin added and modified a few things.   please review my changes  
    most of it had to do with expected output from setup.py and setup-app
 .. todo:: is there a better way to format manager/managepass, perhaps putting
-   it on two separate lines?
+   it on two separate lines?   Hmmm...  two separate lines now, but I had to remove the "note".
 .. todo:: since we mention port, should we also mention changing host to 
    0.0.0.0 for serving to all network interfaces, not just localhost?   
    probably overkill here.    but maybe add somewhere else...
-.. todo:: ideally in a helloworld application, it seems we should write 
-   "helloworld" somewhere...   maybe I'm a traditionalist
 .. todo:: ideally, I'd like to see an expansion of the "explore a quickstarted 
    application".    I think knowing how an application is laid out, 
    gets initialized, starts up, and how some of the basic pieces fit together
