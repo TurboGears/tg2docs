@@ -21,11 +21,9 @@ constitutes the main functionality of the Controllers part of MVC.
 
 .. autoclass:: TGController
    :show-inheritance:
-   :members: __before__, __after__
    
 .. autoclass:: RestController
    :show-inheritance:
-   :members: __before__, __after__
    
 Useful Methods
 ----------------
@@ -44,9 +42,6 @@ Routes -- either in addition to object dispatch, or as an alternative.
 
 
 .. autoclass:: DecoratedController
-   :show-inheritance:
-
-.. autoclass:: ObjectDispatchController
    :show-inheritance:
 
 .. autoclass:: WSGIAppController

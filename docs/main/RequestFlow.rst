@@ -117,7 +117,7 @@ Nothing much on the way in.  Inject JS, and CSS resources used by widgets in the
 Core Middleware: 
 -----------------
 
-.. parsed_literal::
+.. parsed-literal::
 
     **Cache** - sets up the cache 
       **Session** - sets up the web session

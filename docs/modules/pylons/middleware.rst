@@ -23,21 +23,10 @@ The :data:`errorware` dictionary is constructed from the settings in the `DEFAUL
 
 Referenced classes
 ------------------
-Pylons middleware uses :class:`WebError` to effect the error-handling. The two classes implicated are:
- 
-ErrorMiddleware
-^^^^^^^^^^^^^^^
-.. automodule:: weberror.errormiddleware
+Pylons middleware uses :class:`WebError` to effect the error-handling. The two
+classes implicated are ErrorMiddleware and EvalException
 
-.. autoclass:: weberror.errormiddleware.ErrorMiddleware
-    :members:
-
-EvalException
-^^^^^^^^^^^^^
-.. automodule:: weberror.evalexception
-
-.. autoclass:: weberror.evalexception.EvalException
-    :members:
+.. todo:: link ErrorMiddleware and EvalException to the thirdpart/weberror.rst sections
 
 Legacy
 ------

@@ -27,5 +27,22 @@ Legacy Buffet Functions
 .. autoclass:: MyghtyTemplatePlugin
     :members:
 
+.. glossary::
+
+    app_globals
+        .. todo:: define this term
+
+    c
+        .. todo:: define this term
+
+    g
+        .. todo:: define this term
+
+    h
+        .. todo:: define this term
+
+    tmpl_content
+        .. todo:: define this term
+
 .. todo:: Review this file for todo items.
 

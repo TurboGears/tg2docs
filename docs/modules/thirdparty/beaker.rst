@@ -36,8 +36,6 @@ Container
 .. autoclass:: FileContainer
 .. autoclass:: FileNamespaceManager
 .. autoclass:: CreationAbortedError
-.. autofunction:: container_registry
-.. autofunction:: namespace_registry
 
 
 Database
@@ -82,8 +80,6 @@ Synchronization
 
 .. automodule:: beaker.synchronization
 .. autoclass:: NameLock
-.. autoclass:: Synchronizer
-.. autoclass:: SyncState
 .. autoclass:: SynchronizerImpl
 .. autoclass:: FileSynchronizer
 .. autoclass:: ConditionSynchronizer
@@ -95,7 +91,6 @@ Util
 
 .. automodule:: beaker.util
 .. autoclass:: SyncDict
-.. autoclass:: Registry
 .. autoclass:: WeakValuedRegistry
 .. autoclass:: ThreadLocal
 .. autofunction:: b64decode

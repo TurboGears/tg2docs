@@ -265,5 +265,10 @@ If memcached is running on the the default port of 11211:
     cache.get_value('yy', createfunc=lambda: slooow('yy'), expiretime=15)
     cache.get_value('zzz', createfunc=lambda: slooow('zzz'), expiretime=15)
 
+.. glossary::
+
+    ETag
+        .. todo:: Define this term
+
 .. todo:: Review this file for todo items.
 
