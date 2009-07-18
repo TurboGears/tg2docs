@@ -55,13 +55,13 @@ master_doc = 'toc'
 
 # General substitutions.
 project = 'TG2'
-copyright = '2008, TurboGears DocTeam'
+copyright = '2009, TurboGears DocTeam'
 
 # The default replacements for |version| and |release|, also used in various
 # other places throughout the built documents.
 #
 # The short X.Y version.
-version = '2.0'
+version = '2.1'
 # The full version, including alpha/beta/rc tags.
 
 release = tg_release_version

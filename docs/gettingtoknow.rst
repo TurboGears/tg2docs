@@ -4,6 +4,14 @@
 Getting To Know TurboGears
 ==========================
 
+What's New With The Latest Release
+==================================
+
+.. toctree::
+   :maxdepth: 1
+
+   whatsnew
+
 General Reference for MVC Components
 ======================================
 
@@ -79,6 +87,14 @@ Libraries and Modules Shipped With TurboGears
       modules/thirdparty/webhelpers_paginate
       modules/thirdparty/index
 
+General Project Information
+===========================
+
+   .. toctree::
+      :maxdepth: 2
+
+      generalinfo
+     
 .. todo:: Validate that toctree maxdepth values are appropriate
 
 .. todo:: Rearrange the sections so that we have fewer headings, and make the headings more useful

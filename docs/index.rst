@@ -36,16 +36,12 @@ to the place you need to be, or read the information below sequentially.
     examples (and not all of them are purely TurboGears). These should help
     answer some of the basic "How do I ... ?" questions.
 
-:ref:`whatsnew`
--------------------------------
-    Learn about the new features of TurboGears 2.
-
 :ref:`getting-to-know`
 -------------------------------
-    Exploring the architecture of TurboGears. Learn what components come
-    with the default install of TurboGears, what components are installed
-    via the default quickstart, and how all of them tie together to serve
-    your site.
+    Learn what's new in the latest TurboGears. Explore the architecture. Learn
+    what components come with the default install of TurboGears, what
+    components are installed via the default quickstart, and how all of them
+    tie together to serve your site.
 
 :ref:`recipes-and-faq`
 -------------------------------
@@ -62,15 +58,6 @@ to the place you need to be, or read the information below sequentially.
     A selection of papers and comments showing how TurboGears helped other
     developers solve the problems they had.
 
-:ref:`general-project-info`
--------------------------------
-    Pieces of information about the TurboGears project, instead of about
-    the code.
-
-:ref:`todolist`
--------------------------------
-    The list of todo items for the documentation.
-
 Indices and tables
 ==================
 
@@ -85,8 +72,4 @@ Indices and tables
       Web Server Gateway Interface
 
 .. _WSGI: http://www.wsgi.org/wsgi/
-
-.. todo:: Reduce total number of headings. Get rid of 'todolist', 'general project info'
-
-.. todo:: Maybe merge "what's new" into "getting to know" ? Thoughts?
 
