@@ -6,16 +6,22 @@ TurboGears 2 at a glance
 Introducing MVC (Model View Controller)
 ---------------------------------------
 
-This tutorial is an extension of the tutorial 
-`Quickstart a TurboGears 2 Project <QuickStart.html>`_.  
-In order to follow along properly, you should have
-already completed that tutorial, and be serving your project with::
+This tutorial is an extension of the tutorial :ref:`quickstarting`.  In order
+to follow along properly, you should have already completed that tutorial, and
+be serving your project with::
 
    paster serve --reload development.ini
 
-TurboGears 2, like TurboGears 1 and many other modern web frameworks, uses a pattern called "Model View Controller", or "MVC" pattern.  Basically the MVC pattern is an attempt to separate the code which handles what the user sees (the view) from the code that responds to user actions (the controller) and code that changes the state of data (the model). 
+TurboGears 2, like TurboGears 1 and many other modern web frameworks, uses a
+pattern called "Model View Controller", or "MVC" pattern.  Basically the MVC
+pattern is an attempt to separate the code which handles what the user sees
+(the view) from the code that responds to user actions (the controller) and
+code that changes the state of data (the model). 
 
-The goal of the MVC pattern is to help you create more flexible software, and since web-applications tend to have more user-interface changes than anything else, it's particularly designed so that you can change the `view` code without necessarily having to change anything else. 
+The goal of the MVC pattern is to help you create more flexible software, and
+since web-applications tend to have more user-interface changes than anything
+else, it's particularly designed so that you can change the `view` code without
+necessarily having to change anything else. 
 
 Here we'll explore some of the different approaches to displaying the 
 obligatory "Hello World" text.   In doing so, we'll introduce you to the 
@@ -28,9 +34,10 @@ Hello World using template
 In this first approach, we'll use the existing template that was provided
 by the quickstart application, and add a "Hello World" headline.
 
-To keep the tutorial small and simple, we make a assumption that you already have some knowledge about html tags.
+To keep the tutorial small and simple, we make an assumption that you already
+have some knowledge about html tags.
 
-Edit helloworld/templates/index.html, add a <h1> tag like this:
+Edit helloworld/templates/index.html, and add a <h1> tag like this:
 
 .. code-block:: html
 
@@ -43,7 +50,8 @@ Edit helloworld/templates/index.html, add a <h1> tag like this:
 The <h1> tag should be added just after the <body> tag of the template, so
 that the template is still a valid HTML file.   
 
-You can now point your browser at http://localhost:8080 to see the change. You should see "Hello, world!" text in h1 size.
+You can now point your browser at http://localhost:8080 to see the change. You
+should see "Hello, world!" text in h1 size.
 
 
 Hello World using static file
@@ -67,18 +75,27 @@ Browse http://localhost:8080/hello.html and see the page.
 Hello World using controller
 -------------------------------
 
-The controller defines how the server responds to user actions.   In the case of a web framework this almost always means HTTP requests of some kind (either directly initiated, or fired of by JavaScript as part of an Ajax app).   
+The controller defines how the server responds to user actions.   In the case
+of a web framework this almost always means HTTP requests of some kind (either
+directly initiated, or fired off by JavaScript as part of an Ajax app).   
 
-TurboGears 2 uses an `Object Publishing` system to determine what controller method will be called for a particular URL.  Basically you have RootController, with @exposed objects which define your URL hierarchy. This means that the index method of your RootController is called when you go to /index (or even just /).  We can tell our controller to respond at a new URL by defining a new method. 
+TurboGears 2 uses an `Object Publishing` system to determine what controller
+method will be called for a particular URL.  Basically you have RootController,
+with @exposed objects which define your URL hierarchy. This means that the
+index method of your RootController is called when you go to /index (or even
+just /).  We can tell our controller to respond at a new URL by defining a new
+method. 
 
-In this case we will add a new method called hello, which just returns a string.   TG2 allows us to bypass the template process and return a string directly to the http response, which will be returned to the browser directly.  
+In this case we will add a new method called hello, which just returns a
+string.   TG2 allows us to bypass the template process and return a string
+directly to the http response, which will be returned to the browser directly.  
 
 Edit helloworld/controllers/root.py:
 
 .. code-block:: python
 
   # skipped various imports here, these two are used in example below
-  #    (note: these should already be included by quickstart code)
+  #    (.. note:: these should already be included by quickstart code)
   from helloworld.lib.base import BaseController
   from tg import expose
 
@@ -118,16 +135,20 @@ To save a little time, we are re-using the existing index.html template.
           return dict(hello="Hello World via template replacement")
 
 
-TurboGears sees that the controller returned a dict, and that there's an template name defined in the @expose decorator.  TurboGears renders that template, turning the elements of the dictionary into local variables in the template's namespace.  That means that we've now got a 'hello' variable in our template which we can use when we call the new_hello method. 
+TurboGears sees that the controller returned a dict, and that there's a
+template name defined in the @expose decorator.  TurboGears renders that
+template, turning the elements of the dictionary into local variables in the
+template's namespace.  That means that we've now got a 'hello' variable in our
+template which we can use when we call the new_hello method. 
 
-The ``@expose`` decorator's first argument is the template name given in 
-"dotted" notation just like a python module.   
-TurboGears 2 uses the Genshi_ templating system by default, which uses the 
-filename extension of `.html`.
-So, in this case, 'helloworld.templates.index', translates to the file 
-`helloworld/template/index.html`.
+The ``@expose`` decorator's first argument is the template name given in
+"dotted" notation just like a python module.   TurboGears 2 uses the Genshi_
+templating system by default, which uses the filename extension of `.html`.
+So, in this case, 'helloworld.templates.index', translates to the file
+`helloworld/templates/index.html`.
 
-So let's edit helloworld/template/index.html to replace the h1 tag we added earlier with:
+So let's edit helloworld/templates/index.html to replace the h1 tag we added
+earlier with:
 
 .. code-block:: html
 
@@ -135,17 +156,23 @@ So let's edit helloworld/template/index.html to replace the h1 tag we added earl
 
 Browse http://localhost:8080/new_hello to see the change.
 
-The `py:content` attribute we added to the `<h1>` tag above is an example
-of a `Genshi template directive <http://genshi.edgewall.org/wiki/Documentation/0.5.x/xml-templates.html#id7>`_.   It directs genshi to replace the content
-of the h1 tag with the value of the `hello` variable.
+The `py:content` attribute we added to the `<h1>` tag above is an example of a
+`Genshi template directive
+<http://genshi.edgewall.org/wiki/Documentation/0.5.x/xml-templates.html#id7>`_.
+It directs genshi to replace the content of the h1 tag with the value of the
+`hello` variable.
 
-For each page on your site, you could have a controller method with a corresponding template file specified using the ``@expose`` decorator.  
+For each page on your site, you could have a controller method with a
+corresponding template file specified using the ``@expose`` decorator.  
 
-To create more skeletons for your templates, just copy the default index.html template that was generated when your project was created.
+To create more skeletons for your templates, just copy the default index.html
+template that was generated when your project was created.
 
-A Controller can return a dictionary to pass variables and other dynamic content to the template.
+A Controller can return a dictionary to pass variables and other dynamic
+content to the template.
 
-Not every template has dynamic content and therefore may not need arguments. In that case, just return an empty dictionary:
+Not every template has dynamic content and therefore may not need arguments. In
+that case, just return an empty dictionary:
 
 .. code-block:: python
 
@@ -162,14 +189,18 @@ Browse http://localhost:8080/ to see the error.   Here is a screenshot.
 
 .. image:: ../_static/basicmoves_oops.png
   
-This gives you an opportunity to explore the full stack trace interactively.  If you click on the little + icon, you can see what local variables are set at that frame in the call stack, and you can even use the text entry provided there to type in some python code to test what's happening at that level. 
+This gives you an opportunity to explore the full stack trace interactively.
+If you click on the little + icon, you can see what local variables are set at
+that frame in the call stack, and you can even use the text entry provided
+there to type in some python code to test what's happening at that level. 
 
 There is also a `>>` link near each line of source code, which allows you 
 expand that source code, and see a few surrounding lines.  The `view` link 
 lets you view the whole source code file.
 
-Here is screenshot after scrolling near the bottom of the debugger window,
-clicking the `>>` link near <Expresion u'hello'>, and the + icon after `lookup_name`.   To really confirm what was happening, we also entered a python
+Here is a screenshot after scrolling near the bottom of the debugger window,
+clicking the `>>` link near <Expresion u'hello'>, and the + icon after
+`lookup_name`.   To really confirm what was happening, we also entered a python
 command to look at the contents of the "data" variable (this is where
 lookup_name checks for template variables to display).
 
@@ -185,9 +216,10 @@ our index method as well.
   def index(self):
       return dict(hello='Hello variable from index')
 
-The interactive debugger is actually something that TurboGears 2 got 
-"for free" since it is now based on the Pylons_ framework.   You can read
-more about the `interactive debugger here <http://pylonsbook.com/en/1.0/tracking-down-problems-and-handling-errors.html>`_.
+The interactive debugger is actually something that TurboGears 2 got "for free"
+since it is now based on the Pylons_ framework.   You can read more about the
+`interactive debugger here
+<http://pylonsbook.com/en/1.0/tracking-down-problems-and-handling-errors.html>`_.
 
 Hello World using flash
 --------------------------------
@@ -235,9 +267,9 @@ the top of the file::
 
     <xi:include href="master.html" />
 
-Ideally, this would be a great spot to link to further information
-about genshi and more about what is included in the "default" master
-template...
+.. todo:: Ideally, this would be a great spot to link to further information
+    about genshi and more about what is included in the "default" master
+    template...
 
 
 What was covered
@@ -249,8 +281,8 @@ learned a little about Controllers, and got introduced to the MVC concept
 (Model View Controller).    We just scratched the surface on the V and C
 parts here.
 
-This would be a good spot to link to further information about templates
-and controllers...
+.. todo:: This would be a good spot to link to further information about templates
+    and controllers...
 
 and of course, the next step in the tutorial path!
 
