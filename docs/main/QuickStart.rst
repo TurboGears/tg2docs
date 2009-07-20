@@ -1,9 +1,9 @@
 .. _quickstarting:
 
-.. highlight:: bash
-
 Quickstarting a TurboGears 2 project
 ====================================
+
+.. highlight:: bash
 
 :Status: Work in progress
 
