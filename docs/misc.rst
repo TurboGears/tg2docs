@@ -2,15 +2,29 @@
 Misc To Do Items From The Docs
 ==============================
 
-.. todo:: critique the toc, and other organization. lek   - add a "what is turbogears"/faq - very early on. first?
+.. todo:: critique the toc, and other organization. 
+
+.. todo:: add a "what is turbogears"/faq - very early on. first?   
 
 .. todo:: Include navigation links (previous, next, index) on all pages
 
-.. todo:: Add lifecycle of TG project
+.. todo:: add prerequisites to all pages - well, especially tutorials
+
+.. todo:: include links to "read more" - especially true of tutorials that just scratch the surface  (this kind of replaces the "more linky" todo)
+
+.. todo::  parts is parts:   the text on the frontgage of a quickstart says:  "standing on the shoulders of giants, since 2007" - provide a main place to see what components are used (by default) in turbogears.   don't be afraid to mention TG2 is built on pylons now, and link to the pylonsbook for more info
+
+.. todo::  add (or find) exploration of quickstart - want to show how the pieces we are given "out of the box" fit together
+
+.. todo:: only after showing the default components - show what components can be easily switched in TG2, and how
+
+.. todo:: Add lifecycle of TG project.   laurin:  I wonder what is meant by this?
+
+.. todo:: highlight the test suite:  and the goodness of test driven development.   is this part of what is meant by "lifecycle"?
 
 .. todo:: Update install docs, since we now use pypi
 
-.. todo:: Compare Our Docs to `Django Docs <http://docs.djangoproject.com/en/dev/`, see where we can do better
+.. todo:: Compare Our Docs to `Django Docs <http://docs.djangoproject.com/en/dev/`, see where we can do better.   laurin: I say compare to pylons book!
 
 .. todo:: Understand "variable_provider": you define tg.config['variable_provider'] = callable and that returns a dict with all the variables you want in all templates.
 
@@ -22,8 +36,9 @@ Misc To Do Items From The Docs
 
 .. todo:: Add docs for adding jquery, mochikit, and other resources to pages.
 
-.. todo:: Add notes to "easy_install tgext.geo" to main readme
+.. todo:: laurin is following the tutorial path.   right now, I created a tutorials directory under _static.   perhaps, all tutorial images, etc should go in there?   just a thought.   
 
-.. todo:: Add notes to "easy_install -i http://dev.camptocamp.com/packages/mapfish/1.1/index --allow-hosts=dev.camptocamp.com mapfish==1.1" to get mapfish for tgext.geo
+.. todo:: clean up old tutorial static stuff:   hello-oops.jpg, hello-evalexception.jpg both seem to be old and not be exactly what the text is talking about.   Wiki20_final.zip is empty, and is now replaced by _static/tutorials/Wiki-20.zip 
+.. todo:: laurin is following the tutorial path.   right now, I created a tutorials directory under _static.   perhaps, all tutorial images, etc should go in there?   just a thought.   
 
-.. todo:: Add notes to "easy_install python-memcached"
+.. todo:: clean up old tutorial static stuff:   hello-oops.jpg, hello-evalexception.jpg both seem to be old and not be exactly what the text is talking about.   Wiki20_final.zip is empty, and is now replaced by _static/tutorials/Wiki-20.zip.     There are probably more "old" files...    

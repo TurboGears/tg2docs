@@ -3,8 +3,6 @@
 TurboGears Documentation
 ========================
 
-.. todo:: make docs more linky.   provide link to pylons, and why tg2 is now based on it.   eventually, I'd really like to see links to pylonsbook for specific "more information", and how turbogears is different/expands upon it
-
 TurboGears 2 is a reinvention of the TurboGears project to take advantage of
 new components, and to provide a fully customizable :term:`WSGI` (Web Server
 Gateway Interface) stack.   From the beginning TurboGears was designed to be a
@@ -66,6 +64,8 @@ Indices and tables
 * :ref:`search`
 * :ref:`extendedtoc`
  
+.. todo:: make docs more linky.   provide link to pylons, and why tg2 is now based on it.   eventually, I'd really like to see links to pylonsbook for specific "more information", and how turbogears is different/expands upon it
+
 .. glossary::
 
    WSGI_ 

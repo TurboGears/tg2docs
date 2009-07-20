@@ -84,7 +84,7 @@ still in the virtualenv.
 
    easy_install sqlalchemy python_memcached mercurial tgext.geo
 
-.. note::  tgext.geo may complain about not being able to install one of its dependencies: MapFish.   For our purposes, this does not effect creating docs for tgext.geo
+.. note::  tgext.geo may complain about not being able to install one of its dependencies: MapFish.   This is not critical for building the docs, but if this continues to be a problem you can install it with "easy_install -i http://dev.camptocamp.com/packages/mapfish/1.1/index --allow-hosts=dev.camptocamp.com mapfish==1.1".
 
 After this, you should be able to verify your tg2.1 installation with
  
