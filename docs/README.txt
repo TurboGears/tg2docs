@@ -24,6 +24,8 @@ Building Docs
 
 Please see the file :ref:`building_docs` for more information.
 
+For those of you reading this outside of a restructed text setup, please view
+the file building_docs.rst for more information.
+
 .. _Sphinx: http://sphinx.pocoo.org/
 
-.. todo:: decide whether this is a good text intro, and whether building_docs.rst is a good link

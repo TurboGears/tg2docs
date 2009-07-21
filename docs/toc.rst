@@ -25,15 +25,6 @@ Tutorials
    tutorials
 
 
-What's new in TG2
-=================
-
-.. toctree::
-   :maxdepth: 3
-
-   whatsnew
-
-
 Getting To Know TurboGears
 ==========================
 

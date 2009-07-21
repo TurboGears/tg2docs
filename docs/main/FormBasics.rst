@@ -1,5 +1,5 @@
-TurboGears Form handling overview:
-===================================
+TurboGears Form handling overview
+=================================
 
 The first thing to say about TurboGears form handling is that we turn form
 submission values into Controller params, and allow you to do whatever you 

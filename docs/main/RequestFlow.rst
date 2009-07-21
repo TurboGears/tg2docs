@@ -1,5 +1,5 @@
-A Request's flow through the TurboGears Stack:
-===============================================
+A Request's flow through the TurboGears Stack
+=============================================
 
 This document is intended to help you understand how the various components of TurboGears 2 work together, and what happens to a web-request on the way into your controller code. 
 
