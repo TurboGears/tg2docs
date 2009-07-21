@@ -1,4 +1,5 @@
 Using chameleon.genshi in tg2
 ===================================
-.. todo:: Review this file for todo items.
+
+.. todo:: Document how to install and use chameleon.genshi in tg2.1
 

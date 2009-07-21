@@ -28,7 +28,7 @@ and then specify that you want to use that particular engine in the ``@expose`` 
 We have docs on some of the specifics of each of these template engines: 
 
  .. toctree::
-    :maxdepth: 2
+    :maxdepth: 1
 
     Genshi
     ChameleonGenshi
@@ -39,6 +39,5 @@ We have docs on some of the specifics of each of these template engines:
 Writing your own render function
 ------------------------------------
 
-TODO
-.. todo:: Review this file for todo items.
+.. todo:: Document writing your own render function for templates
 

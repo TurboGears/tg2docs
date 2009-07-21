@@ -363,10 +363,11 @@ controller. You have also seen simple validators in action that simplify error
 handling for forms substantially.
 
 This tutorial only covers basic widget usage. If you'd like to know more,
-explore the `widgets overview`_ and the check out the widget browser in the
-toolbox.
+explore the `widgets overview`_.
 
-.. todo:: previous paragraph referenced "widget browser" and "toolbox" as links. Need to reinstate as appropriate
+.. todo:: previous paragraph referenced "widget browser" and "toolbox" as
+    links. These do not exist for tg2. Need to add them back in here when they are
+    eventually re-written.
 
 Download the example project
 ----------------------------
