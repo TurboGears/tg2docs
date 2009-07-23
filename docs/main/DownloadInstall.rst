@@ -20,6 +20,10 @@ Python
 ~~~~~~~~
 
 .. todo:: Write missing docs for installing tg2 using python 2.4 and python 2.6
+.. todo:: Isn't the only thing we need different for python 2.4 is 
+   manual install of sqlite?
+.. todo:: I seem to recall not having to do *anything* special for python 2.6,
+   except ignore a deprication warning or two (ToscaWidgets / PEAK)
 
 TurboGears works with any version of python between 2.4 and 2.6. The most widely deployed version of python at the moment of this writing is version 2.5.  Both python 2.4 and python 2.6 require additional steps which will be covered in the appropriate sections.  Python 3.0 is currently unsupported due to lack of support in many of our upstream packages.
 
@@ -35,6 +39,9 @@ If you don't know which version of python you have installed you can find out wi
 Installing setuptools
 ~~~~~~~~~~~~~~~~~~~~~~
 
+You may already have setuptools installed.   If you have the "easy_install" 
+command, you should be all set.
+
 On Windows
 """"""""""
 
@@ -45,14 +52,23 @@ On Unix
 
 .. code-block:: bash
 
-    $ wget http://peak.telecommunity.com/dist/ez_setup.py | sudo python
+    wget http://peak.telecommunity.com/dist/ez_setup.py | sudo python
 
-You may also use your system's package for setuptools.
+You may also use your system's package for setuptools.   Under ubuntu, the
+command is:
+
+.. code-block:: bash
+
+    sudo apt-get install python-setuptools
 
 On Unix (non-root)
 """"""""""""""""""
 
-TODO
+If you want to install on a unix based system, but don't have root privileges,
+the easiest thing to do is to install a virtual environment first.  Here 
+is an explanation of the `virtualenv install method`_.
+
+_`virtual install method`:  http://peak.telecommunity.com/DevCenter/EasyInstall#creating-a-virtual-python
 
 Post Install
 """"""""""""""
@@ -60,7 +76,7 @@ Post Install
 .. hint:: 
    You most likely want setuptools 0.6c9 or greater as this one provides fixes to work with svn1.5.  If you ever get an error regarding 'log' please run:
    
-   $ easy_install -U setuptools
+   easy_install -U setuptools
 
 To confirm this worked run:
    

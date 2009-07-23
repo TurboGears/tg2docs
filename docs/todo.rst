@@ -111,3 +111,9 @@ On How To Limit Routes To Specific Languages
 
 < peep> map.connect('/{lang}/{controller}/', requirements=dict(lang='bg|en|ro|ru'))
 
+
+google search!    including search key related sites:   tosca, sqlalchemy, 
+   genshi, etc...
+should we link more directly to toscawidget tutorials?   
+   either ask them to upgrade tutorials to tg2, or provide them a patch?
+

@@ -1,5 +1,4 @@
-.. archive:: wiki_root/trunk/
-  :file: Wiki20_final.zip
+.. archive:: wiki_root/trunk
 
 The TurboGears 2 Wiki Tutorial
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -10,10 +9,12 @@ TurboGears 2. It is designed to be your first experience with TurboGears 2.
 If you're not familiar with the concept of a wiki you might want to check out 
 `the Wikipedia entry <http://en.wikipedia.org/wiki/Wiki>`_.  Basically, a
 wiki is an easily-editable collaborative web content system that makes
-it trivial to link to pages and create new pages.
+it trivial to link to pages and create new pages.  Like other wiki systems,
+we are going to use CamelCase words to designate links to pages.
 
 If you have trouble with this tutorial ask for help on
-the `TurboGears discussion list`_. We're a friendly bunch and, depending
+the `TurboGears discussion list`_, or on the IRC channel #turbogears. 
+We're a friendly bunch and, depending
 what time of day you post, you'll get your answer in a few minutes to a
 few hours. If you search the mailing list or the web in general you'll
 probably get your answer even faster. **Please don't post your problem
@@ -21,7 +22,10 @@ reports as comments on this or any of the following pages of the
 tutorial**. Comments are for suggestions for improvement of the docs, 
 not for seeking support.
 
-If you want to see the final version you can download a copy of the wiki code  :arch:`here`.
+If you want to see the final version you can download a copy of the 
+`wiki code`_.
+
+.. _`wiki code`: ../../_static/tutorials/Wiki-20.zip
 
 .. _TurboGears discussion list: http://groups.google.com/group/turbogears
 
@@ -32,8 +36,8 @@ Setup
 
 To go through this tutorial, you'll need:
 
-#.  `Python 2.4 or 2.5 <http://www.python.org/download/>`_. Note that Mac
-    OSX 10.5 (Leopard) comes with Python 2.5 pre-installed; for 10.4 and
+#.  Python_ 2.4, 2.5 or 2.6.  Note that Mac OSX 10.5 (Leopard) 
+    comes with Python 2.5 pre-installed; for 10.4 and
     before, follow *Macintosh* in the above link.
 
 #.  `TurboGears 2.0
@@ -76,13 +80,14 @@ To go through this tutorial, you'll need:
 
         $ easy_install ipython
 
-This tutorial doesn't cover Python at all. Check the `Python
-Documentation <http://www.python.org/doc/>`_ page for more coverage of
-Python.
+This tutorial doesn't cover Python at all. Check the `Python Documentation`_
+page for more coverage of Python.
 
+.. _Python: http://www.python.org/download/
+.. _docutils: http://cheeseshop.python.org/pypi/docutils
 .. _ipython shell: http://ipython.scipy.org/
 .. _ipython docs: http://ipython.scipy.org/moin/Documentation
-.. _docutils: http://cheeseshop.python.org/pypi/docutils
+.. _Python Documentation: http://www.python.org/doc
 
 
 Quickstart
