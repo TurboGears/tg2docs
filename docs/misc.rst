@@ -42,3 +42,5 @@ Misc To Do Items From The Docs
 .. todo:: laurin is following the tutorial path.   right now, I created a tutorials directory under _static.   perhaps, all tutorial images, etc should go in there?   just a thought.   
 
 .. todo:: clean up old tutorial static stuff:   hello-oops.jpg, hello-evalexception.jpg both seem to be old and not be exactly what the text is talking about.   Wiki20_final.zip is empty, and is now replaced by _static/tutorials/Wiki-20.zip.     There are probably more "old" files...    
+
+.. todo:: document override_template for doing dynamic templates in a controller method

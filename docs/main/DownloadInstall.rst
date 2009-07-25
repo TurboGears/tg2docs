@@ -12,16 +12,14 @@ Prerequisites for all methods
 
   1. Python
   2. Setuptools
-  3. Database & Drivers
-  4. other dependencies
-  5. virtualenv
+  3. virtualenv
+  4. Database & Drivers
+  5. other dependencies
 
 Python
 ~~~~~~~~
 
-.. todo:: Write missing docs for installing tg2 using python 2.4 and python 2.6
-
-TurboGears works with any version of python between 2.4 and 2.6. The most widely deployed version of python at the moment of this writing is version 2.5.  Both python 2.4 and python 2.6 require additional steps which will be covered in the appropriate sections.  Python 3.0 is currently unsupported due to lack of support in many of our upstream packages.
+TurboGears works with any version of python between 2.4 and 2.6. The most widely deployed version of python at the moment of this writing is version 2.5.  Python 2.4 require additional steps which will be covered below where needed.  Python 3.0 is currently unsupported due to lack of support in many of our upstream packages.
 
 We recommend you use your system's default python install or follow the instructions provided here: http://python.org/download/
 
@@ -52,7 +50,7 @@ You may also use your system's package for setuptools.
 On Unix (non-root)
 """"""""""""""""""
 
-TODO
+.. todo:: write directions for installing without root privs
 
 Post Install
 """"""""""""""
@@ -71,6 +69,48 @@ To confirm this worked run:
     >>> setuptools.__version__
     '0.6c9'
 
+Installing Virtualenv
+~~~~~~~~~~~~~~~~~~~~~
+
+We strongly advise you to install all your TurboGears apps inside a virtualenv.  If you ask for support without a virtualenv to isolate your packages we will usually ask you to go get virtualenv before proceeding further.
+
+``virtualenv`` is a tool that you can use to keep your Python path clean and tidy.  It allows you to install new packages and all of their dependencies into a clean working environment, thus eliminating the possibility that installing turbogears or some other new package will break your existing Python environment.
+
+The other great advantage of virtualenv is that it allows you to run multiple versions of the same package in parallel which is great for running both the production version and the development version of an application on the same machine.
+
+People with a sys-admin background could consider virtualenv as a variation of an OS jail (chroot) which is also good for security as your installation is totally isolated. This makes virtualenv great for deploying production sites.
+
+installing ``virtualenv``:
+
+On Windows::
+
+    easy_install virtualenv
+
+On Unix:
+
+.. code-block:: bash
+
+    $ sudo easy_install virtualenv
+
+On Unix (non-root):
+
+.. code-block:: bash
+
+    $ easy_install --install-dir=$HOME/lib/python2.5/ --script-dir=$HOME/bin/ virtualenv
+
+will output something like:
+
+.. code-block:: text
+
+    Searching for virtualenv
+    Reading http://pypi.python.org/simple/virtualenv/
+    Best match: virtualenv 1.3.2
+    Downloading http://pypi.python.org/packages/2.5/v/virtualenv/virtualenv-1.3.2-py2.5.egg#md5=1db8cdd823739c79330a138327239551
+    Processing virtualenv-1.3.2-py2.5.egg
+    .....
+    Processing dependencies for virtualenv
+    Finished processing dependencies for virtualenv
+
 Installing Database and Drivers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -79,7 +119,11 @@ Installing Database and Drivers
 
 TurboGears uses SQLAlchemy as its default ORM (Object Relational Mapper) layer.  SQLAlchemy maintains excellent documentation on all the `engines supported`_.
 
-Python 2.4 users will also need to install pysqlite_ themselves in order to use the sqlite database in the default configuration
+Python 2.4 users will also need to install pysqlite_ themselves in order to use the sqlite database in the default configuration In addition, they will need to run
+
+.. code-block:: bash
+
+    easy_install hashlib
 
 .. _engines supported: http://www.sqlalchemy.org/docs/05/reference/dialects/index.html
 .. _pysqlite: http://pypi.python.org/pypi/pysqlite/
@@ -136,48 +180,6 @@ other Linux and unix
 """"""""""""""""""""""
 
 You'll need a working version of the GCC compiler installed, as well as the Python headers.  
-
-Installing Virtualenv
-~~~~~~~~~~~~~~~~~~~~~~~
-
-We strongly advise you to install all your TurboGears apps inside a virtualenv.  If you ask for support without a virtualenv to isolate your packages we will usually ask you to go get virtualenv before proceeding further.
-
-``virtualenv`` is a tool that you can use to keep your Python path clean and tidy.  It allows you to install new packages and all of their dependencies into a clean working environment, thus eliminating the possibility that installing turbogears or some other new package will break your existing Python environment.
-
-The other great advantage of virtualenv is that it allows you to run multiple versions of the same package in parallel which is great for running both the production version and the development version of an application on the same machine.
-
-People with a sys-admin background could consider virtualenv as a variation of an OS jail (chroot) which is also good for security as your installation is totally isolated. This makes virtualenv great for deploying production sites.
-
-installing ``virtualenv``:
-
-On Windows::
-
-    easy_install virtualenv
-
-On Unix:
-
-.. code-block:: bash
-
-    $ sudo easy_install virtualenv
-
-On Unix (non-root):
-
-.. code-block:: bash
-
-    $ easy_install --install-dir=$HOME/lib/python2.5/ --script-dir=$HOME/bin/ virtualenv
-
-will output something like:
-
-.. code-block:: text
-
-    Searching for virtualenv
-    Reading http://pypi.python.org/simple/virtualenv/
-    Best match: virtualenv 1.3.2
-    Downloading http://pypi.python.org/packages/2.5/v/virtualenv/virtualenv-1.3.2-py2.5.egg#md5=1db8cdd823739c79330a138327239551
-    Processing virtualenv-1.3.2-py2.5.egg
-    .....
-    Processing dependencies for virtualenv
-    Finished processing dependencies for virtualenv
 
 Installing TurboGears
 ------------------------
@@ -263,11 +265,18 @@ You'll be able to install the latest released version of TurboGears via:
     (tg2env)$ easy_install -i http://www.turbogears.org/2.0/downloads/current/index tg.devtools
 
 
-.. warning :: if you are upgrading from a previous TG2 version your command should be:
+.. warning:: if you are upgrading from a previous TG2 version your command should be:
 
     .. code-block:: bash
 
         (tg2env)$ easy_install -U -i http://www.turbogears.org/2.0/downloads/current/index tg.devtools
+
+
+.. warning:: If your Python is version 2.4, you must make sure to install Beaker 1.4 or higher. Though it should be automatic, you may need to run this command to get it:
+
+    .. code-block:: bash
+
+        easy_install -U beaker
 
 TurboGears and all of its dependencies should download and install themselves.
 (This may take several minutes.)
