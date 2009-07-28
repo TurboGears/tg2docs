@@ -16,9 +16,14 @@ General Project Information
 ===========================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
-   generalinfo
+   main/TG2Philosophy
+   main/RequestFlow
+   main/Contributing
+   main/License
+   main/TGandPylons
+   building_docs
      
 Development Tools
 =================

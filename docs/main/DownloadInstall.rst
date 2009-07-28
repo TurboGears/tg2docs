@@ -62,7 +62,7 @@ If you want to install on a unix based system, but don't have root privileges,
 the easiest thing to do is to install a virtual environment first.  Here 
 is an explanation of the `virtualenv install method`_.
 
-_`virtual install method`:  http://peak.telecommunity.com/DevCenter/EasyInstall#creating-a-virtual-python
+_`virtualenv install method`:  http://peak.telecommunity.com/DevCenter/EasyInstall#creating-a-virtual-python
 
 Post Install
 """"""""""""""

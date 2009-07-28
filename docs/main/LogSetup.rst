@@ -68,5 +68,3 @@ In this example 4 backup files are being kept and the log is rotated when the fi
 .. _logging.handlers: http://docs.python.org/lib/node410.html
 .. _Pylons logging wiki: http://wiki.pylonshq.com/display/pylonsdocs/Logging
 
-.. todo:: Review this file for todo items.
-

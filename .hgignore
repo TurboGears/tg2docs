@@ -1,5 +1,6 @@
 syntax:glob
 docs/_build/*
+docs/_static/*
 sphinxlog.txt
 *.swp
 *.swo

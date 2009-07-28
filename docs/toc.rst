@@ -63,14 +63,6 @@ Testimonials, White Papers, and Case Studies
    testimonials
 
 
-General Project Information
-=======================================
-
-.. toctree::
-   :maxdepth: 3
-
-   generalinfo
-
 Indices and tables
 ==================
 
