@@ -8,9 +8,10 @@ Extensions and Tools
       :maxdepth: 2
 
       main/Extensions/index
+
+   .. toctree::
+      :maxdepth: 1
+
       main/Caching
       main/LogSetup
-      main/TGScheduler
-
-.. todo:: Validate that all toctree maxdepth values are appropriate
 

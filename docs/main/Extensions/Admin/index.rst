@@ -31,6 +31,12 @@ the root controller::
     class RootController(BaseController):
         admin = AdminController(model, DBSession)
 
+To provide an even nicer (AJAX based) interface for tgext.admin, make sure to
+
+.. code-block:: bash
+
+    easy_install tw.dojo
+
 
 Using Multiple Databases
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -162,7 +168,7 @@ Modifying CRUD Controller Types
 
 In a similar manner that Sprox treats Model Fields, AdminConfig treats a grouping of Models.
 Each model has associated with it a CrudRestController.  This is a controller that performs
-all of the crud operations using RESTful URLs.  The attributes of AdminController which are
+all of the CRUD operations using RESTful URLs.  The attributes of AdminController which are
 not "index" define the models controller type within the context of AdminController.  AdminController
 performs a lookup to its AdminConfig to see what type of CrudRestController it should use
 when a request has come in which matches one of its models.  The url dispatch is set to
@@ -273,6 +279,3 @@ You may have keyed in on something.  TurboGears Admin can be utilized to support
 Since it is secured the same way the other TurboGears controllers on, you could use it for any user on your system.
 The myriad of ways you can override different parts of the system mean that this tool could be an excellent resource
 for rapid prototyping of a web application, or even as a provider of placeholder for future components.
-
-.. todo:: Review this file for todo items.
-

@@ -12,10 +12,12 @@ The TurboGears Admin System is a great way to get started with your database.
 Once your model is defined, this extension provides a set of pages to help you
 create, view, delete, and edit your database objects.
 
+.. todo:: Make this extension more prominent, more likely to be found
+
 .. image:: Admin/images/index_ss.png
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
    Admin/index
    
@@ -27,7 +29,7 @@ method for your model class.  tgext.crud provides the building blocks for utilit
 like tgext.admin and Catwalk.
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
    Crud/index
 
@@ -40,7 +42,7 @@ TurboGears2 provides a set of extensions to help utilize your Geo Spatial Data.
 .. image:: Geo/map_ss.png
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
    Geo/index
    
