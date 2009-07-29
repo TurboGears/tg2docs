@@ -5,12 +5,8 @@ Getting Started
 ===============
 
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 1
 
    main/DownloadInstall
    main/QuickStart
-
-
-
-.. todo:: Validate that toctree maxdepth values are appropriate
 

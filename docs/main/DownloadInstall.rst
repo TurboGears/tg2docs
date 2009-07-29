@@ -415,7 +415,7 @@ has changed to ``paster tginfo``.
 For a full list of turbogears commands see `Command Line reference <CommandLine.html>`_
 
 What's next?
-============
+------------
 
 If you are new to turbogears you will want to continue with the `Quick Start Guide <QuickStart.html>`_
 
