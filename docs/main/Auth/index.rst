@@ -107,11 +107,9 @@ If you need more power than that provided by the quickstart, or if you just
 want to customize some things, you may want to read the following pages:
 
 .. toctree::
-    :maxdepth: 2
+    :maxdepth: 1
 
     Authentication
     Authorization
     Customization
-
-.. todo:: Review this file for todo items.
 

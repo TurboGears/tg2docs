@@ -118,6 +118,3 @@ If you're looking for different authentication methods, you may want to visit
 plugin you're looking for is already available or how to create your own plugins.
 Then you should also check the :mod:`repoze.what` documentation to learn how to 
 setup the new settings.
-
-.. todo:: Review this file for todo items.
-
