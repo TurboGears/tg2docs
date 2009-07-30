@@ -33,11 +33,13 @@ We assume you have the following basic pieces in place:
 * virtualenv
 * easy_install
 
-Please see a BasicInstall_ if you do not have these.
+Please see BasicInstall_ if you do not have these.
 
 We also use Mercurial_, which is a fast, lightweight source control management
-system.   You can download it from the link in this file, or if you have
+system. You can download it from the link in this file, or if you have
 ubuntu:
+
+.. code-block:: bash
 
     sudo apt-get install mercurial
 
@@ -83,11 +85,15 @@ tgext.geo
 Here is the command to download these packages.   Again, I'm assuming you are 
 still in the virtualenv.
 
+.. code-block:: bash
+
    easy_install sqlalchemy python_memcached mercurial tgext.geo
 
 .. note::  tgext.geo may complain about not being able to install one of its dependencies: MapFish.   This is not critical for building the docs, but if this continues to be a problem you can install it with "easy_install -i http://dev.camptocamp.com/packages/mapfish/1.1/index --allow-hosts=dev.camptocamp.com mapfish==1.1".
 
 After this, you should be able to verify your tg2.1 installation with
+
+.. code-block:: bash
  
    paster tginfo
 
