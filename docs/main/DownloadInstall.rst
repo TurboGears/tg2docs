@@ -62,7 +62,7 @@ If you want to install on a unix based system, but don't have root privileges,
 the easiest thing to do is to install a virtual environment first.  Here 
 is an explanation of the `virtualenv install method`_.
 
-_`virtualenv install method`:  http://peak.telecommunity.com/DevCenter/EasyInstall#creating-a-virtual-python
+.. _`virtualenv install method`:  http://peak.telecommunity.com/DevCenter/EasyInstall#creating-a-virtual-python
 
 Post Install
 """"""""""""""
@@ -130,6 +130,16 @@ Installing Database and Drivers
     The installation of the database backend is a topic outside of the scope of this document.
 
 TurboGears uses SQLAlchemy as its default ORM (Object Relational Mapper) layer.  SQLAlchemy maintains excellent documentation on all the `engines supported`_.
+
+Here are the easy_install commands for two of the most common free SQL databases.   We provide these here because they are very common, yet the pypi_ packages have different names than you might expect.
+
+.. code-block:: bash
+
+    easy_install MySQL-python
+
+    easy_install PyGreSQL
+
+.. _pypi: http://pypi.python.org
 
 Python 2.4 users will also need to install pysqlite_ themselves in order to use the sqlite database in the default configuration In addition, they will need to run
 
@@ -415,7 +425,7 @@ has changed to ``paster tginfo``.
 For a full list of turbogears commands see `Command Line reference <CommandLine.html>`_
 
 What's next?
-------------
+============
 
 If you are new to turbogears you will want to continue with the `Quick Start Guide <QuickStart.html>`_
 

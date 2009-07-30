@@ -119,19 +119,19 @@ looks for files in directories based on these names.
 
 Now ``paster`` will spit out a bunch of stuff::
 
-    Selected and implied templates:
-      TurboGears2#turbogears2
-      TurboGears 2.0 Template
-
-    ...etc...
-
-    running compile_catalog
-    1 of 1 messages (100%) translated in 'wiki20/i18n/ru/LC_MESSAGES/wiki20.po'
-    compiling catalog 'wiki20/i18n/ru/LC_MESSAGES/wiki20.po' to 'wiki20/i18n/ru/LC_MESSAGES/wiki20.mo'
-
+  Selected and implied templates:
+    tg.devtools#turbogears2  TurboGears 2.0 Standard Quickstart Template
+  
+  ...etc...
+  
+  reading manifest file 'Wiki_20.egg-info/SOURCES.txt'
+  reading manifest template 'MANIFEST.in'
+  writing manifest file 'Wiki_20.egg-info/SOURCES.txt'
 
 This creates a few files in a directory tree just below your current
-directory. Go in there and take a look around::
+directory.   You will notice that the quickstart created a directory without
+spaces for convenience:  project name "Wiki 20" resulted in the directory name
+"Wiki-20".  Go in there and take a look around::
 
     $ cd Wiki-20
 
@@ -152,7 +152,9 @@ by typing::
     $ paster shell development.ini
 
 If ipython is installed within your virtual environment, it will be the
-default shell.
+default shell.  Right now, we're not going to do much with the shell, but
+you may find other tutorials which use it to add data to the database.
+
 
 Controller and View
 =================================
@@ -254,6 +256,12 @@ Wiki Model and Database
 `__init__.py` file, which makes that directory name into a python
 module (so you can use ``import model``).
 
+Since a wiki is basically a linked collection of pages, we'll define a
+``Page`` class as the name of our model. Create a new file called `page.py` 
+in the ``Wiki-20/wiki20/model/`` directory:
+
+.. code:: wiki_root/wiki20/model/page.py
+
 In order to easily use our model within the application, modify the
 `Wiki-20/wiki20/model/__init__.py` file to add ``Page`` and ``pages_table``
 to the module. Add the following line
@@ -265,12 +273,7 @@ to the module. Add the following line
 
 .. warning:: It's very important that this line is at the end because ``pages_table`` requires the rest of the model to be initialized before it can be imported:
 
-Since a wiki is basically a linked collection of pages, we'll define a
-``Page`` class as the name of our model. Create a new file called `page.py` in the
-``Wiki-20/wiki20/model/`` directory:
-
-.. code:: wiki_root/wiki20/model/page.py
-
+Let's investigate our model a little more.   You 
 The ``MetaData`` object is automatically created by the ``paste`` command
 inside the ``__init__.py`` file. It's a "single point of truth" that keeps all the
 information necessary to connect to and use the database. It includes the

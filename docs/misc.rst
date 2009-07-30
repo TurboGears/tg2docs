@@ -14,7 +14,7 @@ Misc To Do Items From The Docs
 
 .. todo::  parts is parts:   the text on the frontgage of a quickstart says:  "standing on the shoulders of giants, since 2007" - provide a main place to see what components are used (by default) in turbogears.   don't be afraid to mention TG2 is built on pylons now, and link to the pylonsbook for more info
 
-.. todo::  add (or find) exploration of quickstart - want to show how the pieces we are given "out of the box" fit together
+.. todo::  add (or find) exploration of quickstart - want to show how the pieces we are given "out of the box" fit together.   Possibly expanding upon mramm/percious' pycon-tg-tutorial:  http://bitbucket.org/mramm/pycon-tg-tutorial/, particularly the pages:   quickstart, looking_around, genshi_in_10, sqlalchemy_in_10
 
 .. todo:: only after showing the default components - show what components can be easily switched in TG2, and how
 

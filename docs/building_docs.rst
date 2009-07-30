@@ -49,16 +49,19 @@ can work without the virtualenv, we do not recommend it, do not support,
 and do not document the methods to do so.
 
 First, we setup the virtualenv and install the Turbogears 2.1 development 
-branch, after first downloading it using Mercurial_.   Below, we chose to 
-use the name "tgdocs" for our virtualenv directory, and used a subdirectory
-under that "src" for our work directory.   You could use different names if
-you must.
+branch, after first downloading it using Mercurial_.   I include a step
+for installing mercurial, which you can skip if you already have it.   
+
+Below, we chose to use the name "tgdocs" for our virtualenv directory, and 
+used a subdirectory under that "src" for our work directory.   
+You could use different names if you must.    
 
 .. code-block:: bash
 
     virtualenv --no-site-packages  tgdocs
     cd tgdocs
     source bin/activate
+    easy_install mercurial
     mkdir src
     cd src
     hg clone http://bitbucket.org/mramm/tg-21/
@@ -75,17 +78,21 @@ sqlalchemy
    database support - not sure why tg-21 doesn't install this by default
 python_memcached
    this is requirement for the way we generate docs, provides memcache module
-Mercurial_
-   make sure this module is installed in your virtualenv.  Needed, if you are starting from a fresh virtualenv.
 tgext.geo
    we generate docs from some related packages, again tg-21 install did not install this by default
 
 Here is the command to download these packages.   Again, I'm assuming you are 
 still in the virtualenv.
 
-   easy_install sqlalchemy python_memcached mercurial tgext.geo
+.. code-block:: bash
 
-.. note::  tgext.geo may complain about not being able to install one of its dependencies: MapFish.   This is not critical for building the docs, but if this continues to be a problem you can install it with "easy_install -i http://dev.camptocamp.com/packages/mapfish/1.1/index --allow-hosts=dev.camptocamp.com mapfish==1.1".
+   easy_install sqlalchemy python_memcached tgext.geo
+
+.. note::  tgext.geo may complain about not being able to install one of its 
+   dependencies: MapFish.   This is not critical for building the docs, but 
+   if this continues to be a problem you can install it with::
+
+       easy_install -i http://dev.camptocamp.com/packages/mapfish/1.1/index --allow-hosts=dev.camptocamp.com mapfish==1.1
 
 After this, you should be able to verify your tg2.1 installation with
  
@@ -159,7 +166,6 @@ To merge in your changes:
 
 .. code-block:: bash
 
-    hg merge
     hg commit
     hg push
 
@@ -169,7 +175,8 @@ To merge in your changes:
 
 The above commands update *your* repository.   In order to get your changes
 into the "main" repository that mpedersen maintains, you need to initiate
-a "pull request" as detailed in his :ref:`bitbucket_tutorial`.
+a "pull request".   You can read more about using bitbucket in this tutorial:
+:ref:`bitbucket_tutorial`.
 
 Thank you very much for helping out with the turbogears documentation
 efforts!

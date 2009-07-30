@@ -169,9 +169,33 @@ description of why they should pull from you.
 When they accept it, your changes will become part of the official
 repository on BitBucket_.
 
+Keeping up to date
+-------------------
+
+Of course, youre upstream maintainer is going to be making changes, and
+incorporating other people's changes too - so you want to get those 
+periodically.    You issue a pull request with the update flag for this:
+
+.. code-block:: bash
+
+    hg pull -u http://bitbucket.org/pedersen/tg_2_1_docs/
+
+Of course, this is a little bit to remember to type all the time.   To make
+it easier, you can add an alias to an hg config file, .hg/hgrc::
+    
+     pedersen = http://bitbucket.org/pedersen/tg_2_1_docs
+
+Then, you can simply type the following, to keep up to date:
+
+.. code-block:: bash
+
+    hg pull -u pedersen
+
+
+
 That's it in a nutshell. Mercurial_ offers much more than what is shown
 here, but this is enough to get you started. I definitely recommend you
-read the `Mercurial book`_, as it will show you how to customize
+read the `Mercurial book`_, as it will show you how to further customize
 Mercurial_'s configuration to be exactly what you want it to be.
 
 .. _BitBucket: http://www.bitbucket.org/
