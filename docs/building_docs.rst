@@ -147,11 +147,12 @@ yourname, of course.   Then you can get your repository with:
     to you.   Here are the commands you'd use instead.   
     The first command only needs to be run once - to create the 
     destination directories.   You may also want to read about one person's 
-    WindowsInstall_.::
+    WindowsInstall_.
+    
+    	.. code-block:: bash
 	
 	    mkdir _build\html _build\doctrees
-	    sphinx-build -b html -d _build\doctrees . _build\html
-
+	    sphinx-build -b html -d _build\doctrees. _build\html
 
     
 If you want to grab mpedersen's latest changes, later within your work directory
