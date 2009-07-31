@@ -13,6 +13,7 @@ Tutorials
    main/movie_tutorial.rst
    main/SimpleWidgetForm
    main/ToscaWidgets/forms
+   main/Pagination/index
    main/Auth/index
    main/bitbucket_tutorial
 
