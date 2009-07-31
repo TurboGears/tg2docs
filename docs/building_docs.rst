@@ -33,11 +33,13 @@ We assume you have the following basic pieces in place:
 * virtualenv
 * easy_install
 
-Please see a BasicInstall_ if you do not have these.
+Please see BasicInstall_ if you do not have these.
 
 We also use Mercurial_, which is a fast, lightweight source control management
-system.   You can download it from the link in this file, or if you have
+system. You can download it from the link in this file, or if you have
 ubuntu:
+
+.. code-block:: bash
 
     sudo apt-get install mercurial
 
@@ -86,6 +88,7 @@ still in the virtualenv.
 
 .. code-block:: bash
 
+
    easy_install sqlalchemy python_memcached tgext.geo
 
 .. note::  tgext.geo may complain about not being able to install one of its 
@@ -95,6 +98,8 @@ still in the virtualenv.
        easy_install -i http://dev.camptocamp.com/packages/mapfish/1.1/index --allow-hosts=dev.camptocamp.com mapfish==1.1
 
 After this, you should be able to verify your tg2.1 installation with
+
+.. code-block:: bash
  
    paster tginfo
 
@@ -149,12 +154,11 @@ yourname, of course.   Then you can get your repository with:
     The first command only needs to be run once - to create the 
     destination directories.   You may also want to read about one person's 
     WindowsInstall_.
-
-.. code-block:: bash
-
-    mkdir _build\html _build\doctrees
-    sphinx-build -b html -d _build\doctrees   . _build\html
-
+    
+    	.. code-block:: bash
+	
+	    mkdir _build\html _build\doctrees
+	    sphinx-build -b html -d _build\doctrees. _build\html
 
     
 If you want to grab mpedersen's latest changes, later within your work directory
