@@ -44,3 +44,5 @@ Misc To Do Items From The Docs
 .. todo:: clean up old tutorial static stuff:   hello-oops.jpg, hello-evalexception.jpg both seem to be old and not be exactly what the text is talking about.   Wiki20_final.zip is empty, and is now replaced by _static/tutorials/Wiki-20.zip.     There are probably more "old" files...    
 
 .. todo:: document override_template for doing dynamic templates in a controller method
+
+.. todo:: port http://docs.turbogears.org/1.0/FileUploadTutorial to TG2
