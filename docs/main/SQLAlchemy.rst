@@ -1,3 +1,5 @@
+.. _sqlalchemy_and_model:
+
 Working with SQLAlchemy and your data model
 ===========================================
 

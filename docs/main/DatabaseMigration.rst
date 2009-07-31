@@ -19,8 +19,8 @@ This document assumes that you have an existing TurboGears 2 project
 that uses the built-in support for SQLAlchemy.  If you
 are not yet at that stage, you may want to review the following:
 
-* `http://turbogears.org/2.0/docs/main/QuickStart.html`_ - Quickstarting a TurboGears 2 project
-* `http://turbogears.org/2.0/docs/main/SQLAlchemy.html`_ - Working with SQLAlchemy and your data model
+* :ref:`quickstarting`
+* :ref:`sqlalchemy_and_model`
 
 .. _http://turbogears.org/2.0/docs/main/QuickStart.html: http://turbogears.org/2.0/docs/main/QuickStart.html
 .. _http://turbogears.org/2.0/docs/main/SQLAlchemy.html: http://turbogears.org/2.0/docs/main/SQLAlchemy.html
@@ -226,6 +226,3 @@ TurboGears project should be sent to the `TurboGears mailing list`_.
 .. _`sqlalchemy-migrate documentation`: http://code.google.com/p/sqlalchemy-migrate/w/list
 .. _`TurboGears SQLAlchemy documentation`: http://turbogears.org/2.0/docs/main/SQLAlchemy.html
 .. _`TurboGears mailing list`: http://groups.google.com/group/turbogears
-
-.. todo:: Review this file for todo items.
-

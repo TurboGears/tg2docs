@@ -31,6 +31,8 @@ be able to do the following items easily:
 
 6. Notify the upstream maintainer of your changes, to get them included
 
+7. Keep your local fork up to date
+
 All of that sounds like a lot, but you'd be surprised how easy it really
 is.
 
@@ -172,7 +174,7 @@ repository on BitBucket_.
 Keeping up to date
 -------------------
 
-Of course, youre upstream maintainer is going to be making changes, and
+Of course, your upstream maintainer is going to be making changes, and
 incorporating other people's changes too - so you want to get those 
 periodically.    You issue a pull request with the update flag for this:
 
