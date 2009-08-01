@@ -46,3 +46,6 @@ Misc To Do Items From The Docs
 .. todo:: document override_template for doing dynamic templates in a controller method
 
 .. todo:: port http://docs.turbogears.org/1.0/FileUploadTutorial to TG2
+
+.. todo:: make sure to explain how to use "paster --daemon"
+
