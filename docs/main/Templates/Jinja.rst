@@ -1,11 +1,11 @@
 Using Jinja in TG2
 ===================
 
-.. warning: Currently Jinja does not support dotted notation so if you're using
-    Jinja you will have to turn it off in app_cfg.py::
+Currently Jinja does not support dotted notation so if you're using
+Jinja you will have to turn it off in app_cfg.py::
 
-  base_config.use_dotted_templatenames = False
-
+   base_config.use_dotted_templatenames = False
+   
 This means you'll write expose statements with path strings:: 
 
    @expose('index.html')
