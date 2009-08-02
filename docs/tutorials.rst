@@ -16,6 +16,7 @@ Tutorials
    main/AuthorizeTutorial
    main/Auth/index
    main/bitbucket_tutorial
+   main/MultipleDatabases
 
 
 
