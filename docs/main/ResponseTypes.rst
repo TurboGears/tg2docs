@@ -65,14 +65,14 @@ By providing the @expose decorator with a "CUSTOM_CONTENT_TYPE" indicator we are
 Here is an example of how to return a simple .csv file that the browser will treat as an attachment::
 
 
-    import pylons
+    from tg import request, response
     from tg.controllers import CUSTOM_CONTENT_TYPE
  
     class MyController:
         @expose(content_type=CUSTOM_CONTENT_TYPE)
         def stats(self):
-            pylons.request['Content-Type'] = 'text/csv'
-            pylons.request['Content-Disposition'] = 'attachment;filename=stats.csv'
+            response.content_type = 'text/csv'
+            response.headerlist.append(('Content-Disposition','attachment;filename=stats.csv'))
             return '1,2,3'
 
 .. todo:: Review this file for todo items.
