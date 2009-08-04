@@ -1,4 +1,6 @@
-How to install TurboGears 2
+.. _downloadinstall:
+
+How To Install TurboGears 2
 ===========================
 
 This document provides several methods of installing TurboGears; the method you choose will depend on your level of experience and platform.

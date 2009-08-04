@@ -7,7 +7,7 @@ Recipes and FAQ
 .. toctree::
    :maxdepth: 2
 
-   main/Auth/Authentication
+   main/Auth/index
    main/TGandPyAMF
    main/TGandFirePython
    main/RoutesIntegration
