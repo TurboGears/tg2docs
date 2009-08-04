@@ -41,7 +41,7 @@ To go through this tutorial, you'll need:
     before, follow *Macintosh* in the above link.
 
 #.  `TurboGears 2.0
-    <DownloadInstall>`_ or higher.
+    <../DownloadInstall>`_ or higher.
 
 #.  docutils_ 0.4 or later,
     which is used for the wiki's formatting. ``docutils`` is not a required
@@ -476,6 +476,17 @@ This is a basic XHTML page with three substitutions:
 		:section: PageContent
 
 When you refresh the output web page you should see "initial data" displayed on the page.
+
+.. note:: py.replace_ replaces entire tag (including start and end tags) with
+   the value of the variable provided.  
+
+   .. _py.replace: http://genshi.edgewall.org/wiki/Documentation/xml-templates.html#id8
+
+.. admonition:: For the curious...
+
+   Do you wonder what those html comments like ##{PageContent} are?  
+   They do not matter for this tutorial and are only to help the documentation 
+   (you're soaking in it!) isolate certain lines of code to display, like above.
 
 .. _editing_pages:
 
