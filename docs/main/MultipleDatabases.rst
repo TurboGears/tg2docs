@@ -1,4 +1,4 @@
-Using multiple databases in TurboGears
+Using Multiple Databases In TurboGears
 ======================================
 
 :Status: RoughDoc
@@ -6,26 +6,34 @@ Using multiple databases in TurboGears
 .. contents:: Table of Contents
    :depth: 2
 
-.. todo:: This tutorial was originally written for TG v2.0, and should be reviewed by a TG developer to make sure it is consistent with v2.1 updates
-
-The goal of this tutorial is to configure TurboGears to use multiple databases. In this tutorial we will simply set up two different databases engines that will use db session handlers of DBSession and DBSession2, db metadata names of metadata and metadata2, and DeclarativeBase objects of DeclarativeBase and DeclarativeBase2.
+The goal of this tutorial is to configure TurboGears to use multiple
+databases. In this tutorial we will simply set up two different
+databases engines that will use db session handlers of DBSession and
+DBSession2, db metadata names of metadata and metadata2, and
+DeclarativeBase objects of DeclarativeBase and DeclarativeBase2.
 
 Define your database urls in the [app:main] section of your .ini file(s)
 ------------------------------------------------------------------------
 
-The first thing you will need to do is edit your .ini file to specify multiple url options for the sqlalchemy configuration.
+The first thing you will need to do is edit your .ini file to specify
+multiple url options for the sqlalchemy configuration.
 
-In myapp/development.ini (or production.ini, or whatever.ini you are using), comment out the original sqlalchemy.url assignment and add the multiple config options::
+In myapp/development.ini (or production.ini, or whatever.ini you are
+using), comment out the original sqlalchemy.url assignment and add the
+multiple config options::
 
     #sqlalchemy.url = sqlite:///%(here)s/devdata.db
     sqlalchemy.first.url = sqlite:///%(here)s/database_1.db
     sqlalchemy.second.url = sqlite:///%(here)s/database_2.db
 
 
-Change the way your app loads the database engines
+Change The Way Your App Loads The Database Engines
 --------------------------------------------------
 
-Now we need to instruct the app to load the multiple databases correctly. This requires telling base_config (in app_cfg.py) to load our own custom AppConfig with the proper multi-db assignments and a call to the model's init_model method (more on that in the next step).
+Now we need to instruct the app to load the multiple databases
+correctly. This requires telling base_config (in app_cfg.py) to load
+our own custom AppConfig with the proper multi-db assignments and a
+call to the model's init_model method (more on that in the next step).
 
 In myapp/config/app_cfg.py::
 
@@ -51,10 +59,13 @@ In myapp/config/app_cfg.py::
     #base_config = AppConfig()
     base_config = MultiDBAppConfig()
 
-Update your model's __init__ to handle multiple sessions and metadata
+Update Your Model's __init__ To Handle Multiple Sessions And Metadata
 ---------------------------------------------------------------------
 
-Switching the model's init from a single-db config to a multi-db simply means we have to duplicate our DBSession and metata assignments, and then update the init_model method to assign/configure each engine correctly.
+Switching the model's init from a single-db config to a multi-db
+simply means we have to duplicate our DBSession and metata
+assignments, and then update the init_model method to assign/configure
+each engine correctly.
 
 In myapp/model/__init__.py::
 
@@ -82,10 +93,12 @@ In myapp/model/__init__.py::
         metadata2.bind = engine2
 
 
-Tell your models which engine to use
+Tell Your Models Which Engine To Use
 ------------------------------------
 
-Now that the configuration has all been taken care of, you can instruct your models to inherit from either the first or second DeclarativeBase depending on which DB engine you want it to use.
+Now that the configuration has all been taken care of, you can
+instruct your models to inherit from either the first or second
+DeclarativeBase depending on which DB engine you want it to use.
 
 For example, in myapp/model/spam.py (uses engine1)::
 
@@ -118,12 +131,16 @@ And then in myapp/model/eggs.py (uses engine2)::
         id = Column(Integer, autoincrement=True, primary_key=True)
         pkg_qty = Column(Integer, default=12)
 
-If you needed to use the DBSession here (or in your controllers), you would use DBSession for the 1st engine and DBSession2 for the 2nd (see the previous and next sections).
+If you needed to use the DBSession here (or in your controllers), you
+would use DBSession for the 1st engine and DBSession2 for the 2nd (see
+the previous and next sections).
 
-Optional: Create and populate each database in websetup.py
+Optional: Create And Populate Each Database In Websetup.py
 ----------------------------------------------------------
 
-If you want your setup_app method to populate each database with data, simply use the appropriate metadata/DBSession objects as you would in a single-db setup.
+If you want your setup_app method to populate each database with data,
+simply use the appropriate metadata/DBSession objects as you would in
+a single-db setup.
 
 In myapp/websetup.py::
 
@@ -152,3 +169,7 @@ In myapp/websetup.py::
         transaction.commit()
         print "Successfully setup"
 
+.. todo:: At some point, we should also find a way to document how to
+   handle `Horizontal and Vertical Partitioning
+   <http://www.sqlalchemy.org/docs/05/session.html#partitioning-strategies>`_
+   properly, and document that in here, too.

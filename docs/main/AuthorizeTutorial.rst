@@ -4,20 +4,28 @@ Using Authorize.net in a TurboGears Form
 .. contents:: Table of Contents
    :depth: 2
 
-The goal of this tutorial is to get a tw.forms form to go through two layers of validation before passing:
+The goal of this tutorial is to get a tw.forms form to go through two
+layers of validation before passing:
 
    1) Use the validation packages provided by tw.forms and formencode
-   2) If the first layer of validation passes, try to run the authorize.net charge using the authorize package. If this returns a response code of 1 (approved) then all validation has passed. Otherwise, invalidate the form and flash the authorize.net error.
+   2) If the first layer of validation passes, try to run the
+      authorize.net charge using the authorize package. If this returns a
+      response code of 1 (approved) then all validation has
+      passed. Otherwise, invalidate the form and flash the authorize.net
+      error.
 
-The authorize package
+The Authorize Package
 ---------------------
 
-The authorize package handles authorize.net requests, and can be found `here <http://www.adroll.com/labs>`_ or by typing: ``easy_install authorize``
+The authorize package handles authorize.net requests, and can be found
+`here <http://www.adroll.com/labs>`_ or by typing: ``easy_install
+authorize``
 
-Defining the validator
+Defining The Validator
 ----------------------
 
-First we will need to define our ProcessCard() class which will be the chained FancyValidator for processing the card::
+First we will need to define our ProcessCard() class which will be the
+chained FancyValidator for processing the card::
 
     import tw.forms as twf
     from authorize import aim as aim_api
@@ -43,10 +51,11 @@ First we will need to define our ProcessCard() class which will be the chained F
                 # failure
                 raise twf.validators.Invalid(result_dict['reason_text'], value, state)
 
-Defining the form
+Defining The Form
 -----------------
 
-Next we'll define our form class that will end up being passed to the view::
+Next we'll define our form class that will end up being passed to the
+view::
 
     from tw.api import WidgetsList
 
@@ -76,10 +85,11 @@ Next we'll define our form class that will end up being passed to the view::
             card_number = twf.TextField(label_text='Card #', validator=twf.validators.NotEmpty)
             card_cvv = twf.TextField(label_text='CVV Code', validator=twf.validators.NotEmpty)
 
-Using it in a controller
+Using It In A Controller
 ------------------------
 
-Now all you have to do is set up your controller class methods to use the form::
+Now all you have to do is set up your controller class methods to use
+the form::
 
     # Assign a name to the form
     authnet_form = AuthnetForm('authnet_form', action='/authnet/process/')
