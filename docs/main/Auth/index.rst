@@ -18,7 +18,7 @@ Overview
 to be, which is normally done using credentials (e.g., when you need to access
 your email, you provide the email address and your password, or if you want
 to check your bank account, you'll probably have to provide you Id number and
-your card's PIN number). In other words, finding `who` you are.
+your card's PIN). In other words, finding `who` you are.
 
 ``Authorization``, on the other hand, is the act of granting access to given
 resources depending on whether you have permission to use them. For example, 

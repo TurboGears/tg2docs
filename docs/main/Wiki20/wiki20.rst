@@ -40,8 +40,7 @@ To go through this tutorial, you'll need:
     comes with Python 2.5 pre-installed; for 10.4 and
     before, follow *Macintosh* in the above link.
 
-#.  `TurboGears 2.0
-    <../DownloadInstall>`_ or higher.
+#.  :ref:`downloadinstall`
 
 #.  docutils_ 0.4 or later,
     which is used for the wiki's formatting. ``docutils`` is not a required
