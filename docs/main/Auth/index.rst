@@ -18,12 +18,13 @@ Overview
 to be, which is normally done using credentials (e.g., when you need to access
 your email, you provide the email address and your password, or if you want
 to check your bank account, you'll probably have to provide you Id number and
-your card's ping). In other words, finding `who` you are.
+your card's PIN). In other words, finding `who` you are.
 
 ``Authorization``, on the other hand, is the act of granting access to given
-resources depending on who would use them. For example, allowing registered
-members to leave comments on a blog, or allowing your friends to see your
-pictures while others cannot. In other words, finding `what` you may do.
+resources depending on whether you have permission to use them. For example, 
+allowing registered members to leave comments on a blog, or allowing your 
+friends to see your pictures while others cannot. 
+In other words, finding `what` you may do.
 
 TurboGears 2 applications may take advantage of a robust, extendable, pluggable
 and easy-to-use system for authentication and authorization suitable for nearly
@@ -113,3 +114,7 @@ want to customize some things, you may want to read the following pages:
     Authorization
     Customization
 
+
+.. todo::  Fix up navigation in this section.   
+   I (laurin) wish I knew how to do it - perhaps someone else?.   
+   Next for "Authentication/who" is NOT "Authorization/what" - seems pyAMF snuck in there...

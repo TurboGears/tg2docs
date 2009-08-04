@@ -28,7 +28,7 @@ obligatory "Hello World" text.   In doing so, we'll introduce you to the
 V and C of MVC, the view and controller.
 
 
-Hello World using template
+Hello World Using Template
 --------------------------
 
 In this first approach, we'll use the existing template that was provided
@@ -54,7 +54,7 @@ You can now point your browser at http://localhost:8080 to see the change. You
 should see "Hello, world!" text in h1 size.
 
 
-Hello World using static file
+Hello World Using Static File
 --------------------------------
 
 Open a new file, edit the content as a simple html file:
@@ -72,7 +72,7 @@ and save it to helloworld/public/hello.html.
 Browse http://localhost:8080/hello.html and see the page.
 
 
-Hello World using controller
+Hello World Using Controller
 -------------------------------
 
 The controller defines how the server responds to user actions.   In the case
@@ -111,7 +111,7 @@ Edit helloworld/controllers/root.py:
 Browse http://localhost:8080/hello to see the change.
 
 
-Hello World combining template with controller
+Hello World Combining Template With Controller
 -----------------------------------------------
 
 So far, we've been returning plain text for every incoming request.  
@@ -221,7 +221,7 @@ since it is now based on the Pylons_ framework.   You can read more about the
 `interactive debugger here
 <http://pylonsbook.com/en/1.0/tracking-down-problems-and-handling-errors.html>`_.
 
-Hello World using flash
+Hello World Using Flash
 --------------------------------
 
 Here we are going to use a builtin function that TurboGears supplies 
