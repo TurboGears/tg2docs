@@ -1,0 +1,5 @@
+#!/bin/bash
+
+for i in `hg paths | grep -v default | cut -f 1 -d = -`; do
+    hg incoming $i
+done

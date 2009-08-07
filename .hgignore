@@ -7,3 +7,4 @@ sphinxlog.txt
 *.pyc
 docs/_static/ToscaWidgetsFormsExample.zip
 docs/_static/Wiki20_final.zip
+*~
