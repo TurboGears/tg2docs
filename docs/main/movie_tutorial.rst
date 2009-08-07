@@ -1,14 +1,16 @@
-Making a Movies database
-===========================================
+Making A Movies Databaes
+========================
 
-Let's get started by creating a simple project using quickstart::
+Let's get started by creating a simple project using quickstart:
+
+.. code-block: bash
   
   paster quickstart movies
 
 Getting Started
----------------------
+---------------
 
-Your first step to creating your model in TurboGears with SQLAlchemy is to 
+Your first step to creating your model in TurboGears with SQLAlchemy is to
 edit your model/__init__.py :
 
 .. code-block: python 
@@ -30,6 +32,7 @@ edit your model/__init__.py :
   def init_model(engine):
       """Call me before using any of the tables or classes in the model."""
       # Reflected tables must be defined and mapped here.
+      pass
 
   # Normal tables may be defined and mapped at module level, or here:
 
@@ -50,35 +53,37 @@ edit your model/__init__.py :
   # Map each class to its corresponding table.
   mapper(Movie, movie_table)
 
-Auto-reflection of tables has to happen after all the configuration is read, 
-and the app is setup, so we provide simple init_model method that is not 
-called until after everything is setup for you.  
+Auto-reflection of tables has to happen after all the configuration is read,
+and the app is setup, so we provide simple init_model method that is not
+called until after everything is setup for you.
 
-But, that's not what we're doing here.  We've just defined a new SQLAlchemy 
-table object `movie_table` which we can use to generate the database schema for 
-us.  
+But, that's not what we're doing here.  We've just defined a new SQLAlchemy
+table object `movie_table` which we can use to generate the database schema
+for us.
 
-There are times when you want to introspect your SQLAlchemy tables from the 
-database, rather than defining them in python, but when you're starting a new 
-project it's nice to define the tables in python, and take advantage of the fact 
-that SQLAlchemy can generate schemas for a wide variety of databases.   
-Effectively you can get database independence for your project for free.  
+There are times when you want to introspect your SQLAlchemy tables from the
+database, rather than defining them in python, but when you're starting a new
+project it's nice to define the tables in python, and take advantage of the
+fact that SQLAlchemy can generate schemas for a wide variety of databases.
+Effectively you can get database independence for your project for free.
 
-If you're defining your tables in Python, you'll want to get familiar with the 
-basics of the SQLAlchemy Types system, so you know what datatypes you can use 
-in your columns. 
+If you're defining your tables in Python, you'll want to get familiar with the
+basics of the SQLAlchemy Types system, so you know what datatypes you can use
+in your columns.
 
 Types
---------
+-----
 
-SQLAlchemy provides a number of built-in types which it automatically maps to underling database types.  If you want the latest and greatest listing just type:
+SQLAlchemy provides a number of built-in types which it automatically maps to
+underlying database types.  If you want the latest and greatest listing just
+type:
 
 .. code-block: python
 
   >>> from sqlalchemy import types
   >>> dir(types)
 
-main types are:
+The main types are:
 
 ================ ========
  type            value    
@@ -93,11 +98,11 @@ main types are:
  types.DateTime  datetime 
 ================ ========
 
-There are also two properties that apply to all column objects, which you 
-might want to set up front. 
+There are also two properties that apply to all column objects, which you
+might want to set up front.
 
 Properties
------------
+----------
 
 ============  ==========
  property     value      
@@ -106,15 +111,17 @@ Properties
  nullable     True/False 
 ============  ==========
 
-Pretty much these do exactly what you would expect them to do, set a field to 
-be a primary key or set it to accept null values.  Both are false by default. 
+Pretty much these do exactly what you would expect them to do, set a field to
+be a primary key or set it to accept null values.  Both are false by default.
 
 Object Relational Mapping
------------------------------
+-------------------------
 
-Once you've got a table, such as the movie_table we're using in this example 
-you can create a Movie class to support a more object oriented way of looking 
-at your data::
+Once you've got a table, such as the movie_table we're using in this example
+you can create a Movie class to support a more object oriented way of looking
+at your data:
+
+.. code-block: python
 
   class Movie(object):
       def __init__(self, title, year, description, **kw):
@@ -126,20 +133,20 @@ at your data::
           return "<Movie('%s','%s', '%s')>" % (self.title, self.year, self.description)
 
 
-If you're following along with the tutorial, you'll want to make sure you 
-custom __init__ method.  We'll use this to create new Movie instances, and set 
-their data all at once throughout the rest of the tutorial. 
+If you're following along with the tutorial, you'll want to make sure you
+customize your __init__ method.  We'll use this to create new Movie instances,
+and set their data all at once throughout the rest of the tutorial.
 
 
-If you don't define the __init__ method. You will need to update the properties 
-of a movie object after it's been created like this::
+If you don't define the __init__ method. You will need to update the
+properties of a movie object after it's been created like this::
 
   >>> entry = Movie()
   >>> entry.title = 'Dracula'
   >>> entry.year = '1931'
   >>> entry.description = 'vampire movie'
 
-But if the __init__ method we defined allows you to initialize the properties 
+But the __init__ method we defined allows you to initialize the properties
 at the same time you create the object::
 
   >>> entry = Movie(title='Dracula', year='1931', description='vampire movie')
@@ -148,18 +155,21 @@ or ::
 
   >>> entry = Movie('Dracula', '1931', 'vampire movie')
 
-Bootstrapping the application with CRUD
-========================================
+Bootstrapping The Application With Crud
+=======================================
 
 
-There are 2 options for building the controllers to use your model, build it 
-yourself using the ORM, or generate a basic interface automatically using CRUD.
+There are 2 options for building the controllers to use your model, build it
+yourself using the ORM, or generate a basic interface automatically using
+CRUD.
 
 
 Use ORM
----------
+-------
 
-Edit controllers/root.py::
+Edit controllers/root.py:
+
+.. code-block: python
 
     from movies.lib.base import BaseController
     from tg import expose, flash
@@ -185,23 +195,28 @@ Edit controllers/root.py::
             # save entry
             DBSession.add(entry)
 
-            # query record from Movie object record = DBSession.query(Movie).filter(Movie.title=='Transformer').one()
+            # query record from Movie object record = 	
+	    DBSession.query(Movie).filter(Movie.title=='Transformer').one()
 
             return dict(record=record.title)
 
 
-Edit template/index.html and add::
+Edit template/index.html and add:
+
+.. code-block: python
 
   <h1 py:replace="record">record</h1>
 
 
-Use CRUD tool
---------------
+Use Crud Tool
+-------------
 
-You could use paster command to create a customizable interface to Create, 
-Read, Update, Delete records 
+You could use paster command to create a customizable interface to Create,
+Read, Update, Delete records
 
-(CRUD) based on model ::
+(CRUD) based on model :
+
+.. code-block: bash
 
     $ paster crud
     
@@ -212,11 +227,13 @@ Note: Make sure you have created your models first
     Enter the package name [MovieController]:
     Enter the model form name [MovieForm]: 
 
-or use short command without prompt::
+or use the short command without prompt:
 
-$ paster crud -i id Movie MovieController
+.. code-block: bash
 
-The command Create several files
+    $ paster crud -i id Movie MovieController
+
+The command creates several files
 
 * controllers/MovieController.py
 * controllers/MovieForm.py
@@ -224,7 +241,9 @@ The command Create several files
 * templates/MovieController/show.html
 * templates/MovieController/form.html
 
-Edit controllers/root.py::
+Edit controllers/root.py:
+
+.. code-block: python
 
     ### Other code goes here
  
@@ -239,18 +258,15 @@ Edit controllers/root.py::
             flash("Your application is now running")
             return dict(now=datetime.now())
 
-Browse http://localhost:8080/movie/ and you got an Movie model admin interface. Note that the trailing '/' is important here.
+Browse http://localhost:8080/movie/ and you will find a Movie model admin
+interface. Note that the trailing '/' is important here.
 
-Edit MovieForm.py to customize the field corresponding to your model. 
+Edit MovieForm.py to customize the fields corresponding to your model. 
 
-And edit list.html/show.html to decide which column you want to show.
+And edit list.html/show.html to decide which columns you want to show.
 
 
 Reference
-----------
+---------
 
  * `SQLAlchemy Object Relational Tutorial <http://www.sqlalchemy.org/docs/04/ormtutorial.html>`_
-
-
-.. todo:: Review this file for todo items.
-
