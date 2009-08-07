@@ -49,4 +49,4 @@ Misc To Do Items From The Docs
 
 .. todo:: make sure to explain how to use "paster --daemon"
 
-.. tood:: add in notes regarding how to use repoze.who's user_checker
+.. todo:: add in notes regarding how to use repoze.who's user_checker
