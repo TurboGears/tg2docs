@@ -49,7 +49,7 @@ Database
 
 
 Memcached
----------
+----------
 .. currentmodule:: beaker.ext.memcached
 
 .. automodule:: beaker.ext.memcached
@@ -58,6 +58,7 @@ Memcached
 
 
 Middleware
+----------
 
 .. currentmodule:: beaker.middleware
 
@@ -101,12 +102,3 @@ Util
 .. autofunction:: verify_rules
 .. autofunction:: coerce_session_params
 .. autofunction:: coerce_cache_params
-
-
-
-
-
-
-
-.. todo:: Review this file for todo items.
-

@@ -13,7 +13,6 @@ Module Contents
 .. glossary::
 
     tmpl_context
-        .. todo:: define this term
-
-.. todo:: Review this file for todo items.
-
+        The template context object, a place to store all the data for
+        use in a template. This includes form data, user identity, and
+        the like.

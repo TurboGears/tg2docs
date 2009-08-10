@@ -4,7 +4,10 @@
 FormEncode
 ==========
 
-FormEncode is a validation and form generation package. The validation can be used separately from the form generation. The validation works on compound data structures, with all parts being nestable. It is separate from HTTP or any other input mechanism.
+FormEncode is a validation and form generation package. The validation
+can be used separately from the form generation. The validation works
+on compound data structures, with all parts being nestable. It is
+separate from HTTP or any other input mechanism.
 
 These module API docs are divided into section by category.
 
@@ -37,11 +40,11 @@ These functions are used mostly internally by FormEncode.
 :mod:`formencode.schema`
 ------------------------
 
-The FormEncode schema is one of the most important parts of using FormEncode,
-as it lets you organize validators into parts that can be re-used between
-schemas. Generally, a single schema will represent an entire form, but may
-inherit other schemas for re-usable validation parts (i.e., maybe multiple 
-forms all requires first and last name).
+The FormEncode schema is one of the most important parts of using
+FormEncode, as it lets you organize validators into parts that can be
+re-used between schemas. Generally, a single schema will represent an
+entire form, but may inherit other schemas for re-usable validation
+parts (i.e., maybe multiple forms all requires first and last name).
 
 .. module:: formencode.schema
 
@@ -136,7 +139,4 @@ HTML Parsing and Form Filling
 .. autofunction:: escape_formatter
 .. autofunction:: escapenl_formatter
 .. autoclass:: FillingParser
-
-
-.. todo:: Review this file for todo items.
 

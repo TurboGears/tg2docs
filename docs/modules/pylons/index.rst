@@ -28,6 +28,3 @@ Contents:
    util
    wsgiapp
 
-
-.. todo:: Review this file for todo items.
-

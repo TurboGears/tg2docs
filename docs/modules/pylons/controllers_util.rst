@@ -14,6 +14,3 @@ Module Contents
 .. autofunction:: etag_cache
 .. autofunction:: forward
 .. autofunction:: redirect_to
-
-.. todo:: Review this file for todo items.
-

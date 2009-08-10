@@ -1,3 +1,4 @@
+
 :mod:`webhelpers` -- helper functions for web applications
 ======================================================================
 
@@ -9,6 +10,3 @@ Package Contents
 .. autoclass:: Page
 
 .. automethod:: Page.pager
-
-.. todo:: Review this file for todo items.
-

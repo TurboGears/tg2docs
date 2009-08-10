@@ -181,20 +181,3 @@ mod:`webob.exc`
 .. automodule:: webob.updatedict
 .. autoclass:: UpdateDict
     :members:
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.. todo:: Review this file for todo items.
-

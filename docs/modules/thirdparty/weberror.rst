@@ -84,6 +84,3 @@
 
 .. autofunction:: collect_exception
 
-
-.. todo:: Review this file for todo items.
-

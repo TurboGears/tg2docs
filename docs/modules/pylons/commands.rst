@@ -10,5 +10,3 @@ Module Contents
 .. autoclass:: RestControllerCommand
 .. autoclass:: ShellCommand
 
-.. todo:: Review this file for todo items.
-

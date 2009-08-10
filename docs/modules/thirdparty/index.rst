@@ -12,7 +12,4 @@ Third-party components
    weberror
    webhelpers
    webob
-   
-
-.. todo:: Review this file for todo items.
 

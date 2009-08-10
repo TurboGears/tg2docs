@@ -4,8 +4,8 @@
 WebHelpers
 ==========
 
-WebHelpers is a package designed to ease common tasks developers need that
-are usually done for formatting or displaying data in templates.
+WebHelpers is a package designed to ease common tasks developers need
+that are usually done for formatting or displaying data in templates.
 
 Helpers available by module:
 
@@ -24,9 +24,9 @@ Date
 FeedGenerator
 =============
 
-The feed generator is intended for use in controllers, and generates an
-output stream. Currently the following feeds can be created by imported the
-appropriate class:
+The feed generator is intended for use in controllers, and generates
+an output stream. Currently the following feeds can be created by
+imported the appropriate class:
 
 * RssFeed
 * RssUserland091Feed
@@ -36,7 +36,9 @@ appropriate class:
 All of these format specific Feed generators inherit from the 
 :meth:`~webhelpers.feedgenerator.SyndicationFeed` class.
 
-Example controller method::
+Example controller method:
+
+.. code-block:: python
     
     import logging
 
@@ -157,22 +159,22 @@ Powerful HTML helpers that produce more than just simple tags.
 MIMEType Helper
 ===============
 
-The MIMEType helper assists in delivering appropriate content types for a
-single action in a controller, based on several requirements:
+The MIMEType helper assists in delivering appropriate content types
+for a single action in a controller, based on several requirements:
 
 1) Does the URL end in a specific extension? (.html, .xml, etc.)
 2) Can the client accept HTML?
 3) What Accept headers did the client send?
 
-If the URL ends in an extension, the mime-type associated with that is given
-the highest preference. Since some browsers fail to properly set their Accept
-headers to indicate they should be serving HTML, the next check looks to see
-if its at least in the list. This way those browsers will still get the HTML
-they are expecting.
+If the URL ends in an extension, the mime-type associated with that is
+given the highest preference. Since some browsers fail to properly set
+their Accept headers to indicate they should be served HTML, the next
+check looks to see if its at least in the list. This way those
+browsers will still get the HTML they are expecting.
 
-Finally, if the client didn't include an extension, and doesn't have HTML in
-the list of Accept headers, than the desired mime-type is returned if the
-server can send it.
+Finally, if the client didn't include an extension, and doesn't have
+HTML in the list of Accept headers, than the desired mime-type is
+returned if the server can send it.
 
 .. autoclass:: MIMETypes
     :members:
@@ -231,6 +233,3 @@ Text
 .. autofunction:: strip_leading_whitespace
 .. autofunction:: truncate
 .. autofunction:: wrap_paragraphs
-
-.. todo:: Review this file for todo items.
-
