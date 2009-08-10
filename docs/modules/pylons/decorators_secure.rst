@@ -8,6 +8,3 @@ Module Contents
 
 .. autofunction:: authenticate_form
 .. autofunction:: https
-
-.. todo:: Review this file for todo items.
-

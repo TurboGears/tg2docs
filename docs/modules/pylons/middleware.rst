@@ -24,9 +24,7 @@ The :data:`errorware` dictionary is constructed from the settings in the `DEFAUL
 Referenced classes
 ------------------
 Pylons middleware uses :class:`WebError` to effect the error-handling. The two
-classes implicated are ErrorMiddleware and EvalException
-
-.. todo:: link ErrorMiddleware and EvalException to the thirdpart/weberror.rst sections
+classes implicated are :ref:`weberror.errormiddleware` and :ref:`weberror.evalexception`
 
 Legacy
 ------
@@ -37,7 +35,3 @@ Legacy
 
 .. autofunction:: pylons.middleware.ErrorDocuments
 .. autofunction:: pylons.middleware.error_mapper
-
-
-.. todo:: Review this file for todo items.
-

@@ -8,6 +8,3 @@ Module Contents
 
 .. autoclass:: XMLRPCController
     :members: __call__, system_listMethods, system_methodSignature, system_methodHelp
-
-.. todo:: Review this file for todo items.
-

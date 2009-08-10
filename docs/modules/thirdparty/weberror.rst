@@ -3,6 +3,8 @@
 
 .. automodule:: weberror
 
+.. _weberror.errormiddleware:
+
 :mod:`weberror.errormiddleware`
 -------------------------------
 .. currentmodule:: weberror.errormiddleware
@@ -17,6 +19,8 @@
 
 .. autoclass:: weberror.evalcontext.EvalContext
     :members:
+
+.. _weberror.evalexception:
 
 :mod:`weberror.evalexception`
 -----------------------------

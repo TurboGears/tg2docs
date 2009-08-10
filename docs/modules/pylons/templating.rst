@@ -29,8 +29,10 @@ Legacy Buffet Functions
 
 .. glossary::
 
-    app_globals
-        .. todo:: define this term
+    app_globals   
+        One instance of Globals is created during application
+        initialization and is available during requests via the
+        'app_globals' variable.
 
     c
         .. todo:: define this term
@@ -42,7 +44,5 @@ Legacy Buffet Functions
         .. todo:: define this term
 
     tmpl_content
-        .. todo:: define this term
-
-.. todo:: Review this file for todo items.
+        .. todo:: define this term, is it supposed to be tmpl_context ?
 

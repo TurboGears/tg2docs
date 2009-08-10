@@ -17,6 +17,3 @@ Module Contents
 .. autofunction:: set_lang
 .. autofunction:: get_lang
 .. autofunction:: add_fallback
-
-.. todo:: Review this file for todo items.
-

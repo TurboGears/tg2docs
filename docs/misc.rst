@@ -50,3 +50,5 @@ Misc To Do Items From The Docs
 .. todo:: make sure to explain how to use "paster --daemon"
 
 .. todo:: add in notes regarding how to use repoze.who's user_checker
+
+.. todo:: add reference to EggBasket for packing/deployment with a private PyPI
