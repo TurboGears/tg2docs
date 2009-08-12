@@ -1,14 +1,16 @@
-Writing controller methods
+Writing Controller Methods
 ===========================
 
-The nerve center of your TurboGears application  is **the controller**. It
-ultimately handles all user actions, because every HTTP request arrives here
-first. The controller acts on the request and can call upon other TurboGears
-components (the template engines, database layers, etc.) as its logic directs.
+The nerve center of your TurboGears application is **the
+controller**. It ultimately handles all user actions, because every
+HTTP request arrives here first. The controller acts on the request
+and can call upon other TurboGears components (the template engines,
+database layers, etc.) as its logic directs.
 
-When the TurboGears server receives an HTTP request, the requested URL is mapped
-as a call to your controller code located in ``controllers.py``. Page names map
-to functions within the controller class.
+When the TurboGears server receives an HTTP request, the requested URL
+is mapped as a call to your controller code located in
+``controllers.py``. Page names map to functions within the controller
+class.
 
 For example:
 
@@ -23,9 +25,9 @@ URL                                Maps to
 Quick Example
 -------------
 
-Suppose using ``tg-admin quickstart`` you generate a TurboGears project named
-"HelloWorld". Your default controller code would be created in the file
-``HelloWorld/helloworld/controllers/root.py``.
+Suppose using ``paster quickstart`` you generate a TurboGears project
+named "HelloWorld". Your default controller code would be created in
+the file ``HelloWorld/helloworld/controllers/root.py``.
 
 Modify the default ``controllers.py`` to read as follows:
 
@@ -54,19 +56,21 @@ browser, you'll see a page with the message "Hello World" on it. In
 addition, any of `these URLs`_ will return the same result.
 
 
-Implementing a Catch-All URL via the ``default()`` Method
+Implementing A Catch-All Url Via The ``default()`` Method
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-URLs not explicitly mapped to other methods of the controller will generally be
-directed to the method named ``default()``. With the above example, requesting
-any URL besides ``/index``, for example ``http://localhost:8080/hello``, will
-return the message "This page is not ready".
+URLs not explicitly mapped to other methods of the controller will
+generally be directed to the method named ``default()``. With the
+above example, requesting any URL besides ``/index``, for example
+``http://localhost:8080/hello``, will return the message "This page is
+not ready".
 
 
 Adding More Pages
 ~~~~~~~~~~~~~~~~~
 
-When you are ready to add another page to your site, for example at the URL
+When you are ready to add another page to your site, for example at
+the URL
 
    ``http://localhost:8080/anotherpage``
 
@@ -81,7 +85,7 @@ Now, the URL ``/anotherpage`` will return:
 **There are more pages in my website**
 
 
-Line by Line Explanation
+Line By Line Explanation
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
@@ -98,15 +102,15 @@ First you need to import the required modules.
 There's a lot going on here, including some stuff for internationalization.
 But we're going to gloss over some of that for now.  The key thing to notice is
 that you are importing a BaseController, which your RootController must inherit
-from.   If you're particularly astute, you'll have notice that you import this
+from.   If you're particularly astute, you'll have noticed that you import this
 BaseController from the lib module of your own project, and not from TurboGears.
 
-TurboGears provides a base TGController which is imported in the lib folder of
-the current project (HelloWorld/helloworld/lib).
-So that you can modify it to suit the needs of your application. For example you
+TurboGears provides a base TGController which is imported in the lib
+folder of the current project (HelloWorld/helloworld/lib) so that you
+can modify it to suit the needs of your application. For example, you
 can define actions which will happen on every request, add parameters
-to every template call, and otherwise do what you need to the request on the way
-in, and on the way out.
+to every template call, and otherwise do what you need to the request
+on the way in, and on the way out.
 
 The next thing to notice is that we are importing ``expose`` from ``tg``.
 
@@ -118,20 +122,20 @@ of the controller should be rendered.
 The other imports are there in case you do internationalization,
 use the HTTP redirect function, validate inputs/outputs, or use the models.
 
-::
+.. code-block:: python
 
     class RootController(BaseController):
 
-``RootController`` is the required standard name for the RootController class of
-a TurboGears application and it should be inherited from the
-``BaseController`` class. It is thereby specified as the request handler class
-for the website's root.
+``RootController`` is the required standard name for the
+RootController class of a TurboGears application and it should inherit
+from the ``BaseController`` class. It is thereby specified as the
+request handler class for the website's root.
 
-In TurboGears 2 the web site is represented by a tree of controller objects
-and their methods, and a TurboGears website always grows out from the ``Root``
-class.
+In TurboGears 2 the web site is represented by a tree of controller
+objects and their methods, and a TurboGears website always grows out
+from the ``RootController`` class.
 
-::
+.. code-block:: python
 
     def index(self):
         return "<h1>Hello World</h1>"
@@ -139,10 +143,10 @@ class.
 .. _these urls:
 .. _three urls:
 
-We'll look at the methods of the ``Root`` class next.
+We'll look at the methods of the ``RootController`` class next.
 
-The ``index`` method is the start point of any TurboGears controller class. 
-Each of the URLs 
+The ``index`` method is the start point of any TurboGears controller
+class.  Each of the URLs
 
 * http://localhost:8080
 * http://localhost:8080/
@@ -157,25 +161,25 @@ If a URL is requested and does not map to a specific method, the
         return "This page is not ready"
 
 
-In this example, all pages except the `three URLs`_ listed above will map to the
-default method.
+In this example, all pages except the `three URLs`_ listed above will
+map to the default method.
 
-As you can see from the examples, the response to a given URL is determined by
-the method it maps to.
+As you can see from the examples, the response to a given URL is
+determined by the method it maps to.
 
-::
+.. code-block:: python
 
     @expose()
 
-The ``@expose()`` seen before each controller method directs TurboGears controllers to make
-the method accessible through the web server. Methods in the controller class
-that are *not* "exposed" can not be called directly by requesting a URL from the
-server.
+The ``@expose()`` seen before each controller method directs
+TurboGears controllers to make the method accessible through the web
+server. Methods in the controller class that are *not* "exposed" can
+not be called directly by requesting a URL from the server.
 
 There is much more to @expose(). It will be our access to TurboGears
 sophisticated rendering features that we will explore shortly.
 
-Are you sure you wanted to ``expose`` strings all the time?
+Are You Sure You Wanted To ``expose`` Strings All The Time?
 ------------------------------------------------------------
 
 As shown above, controller methods return the data of your website. So far, we
@@ -199,7 +203,9 @@ Template Example
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 A simple template file called ``sample`` could be made like
-this::
+this:
+
+.. code-block:: html
 
     <html>
       <head>
@@ -211,11 +217,12 @@ this::
       </body>
     </html>
 
-The ``${param}`` syntax in the template indicates some undetermined values to be filled.
+The ``${param}`` syntax in the template indicates some undetermined
+values to be filled.
 
 We provide them by adding a method to the controller like this ...
 
-::
+.. code-block:: python
 
     @expose(template="helloworld.templates.sample")
     def example(self):
@@ -232,24 +239,28 @@ We provide them by adding a method to the controller like this ...
 * The dict values are substituted into the final web response.
 * The web user sees a marked up page saying:
 
-The result is::
-
   **I just want to say that Tony Blair should be the next President of the United States.**
 
 Template files can thus house all markup information, maintaining clean
 separation from controller code.
 
-SubControllers and the URL Hierarchy
+SubControllers And The URL Hierarchy
 ------------------------------------
 
-Sometimes your web-app needs a URL structure that's more than one level deep.
+Sometimes your web-app needs a URL structure that's more than one
+level deep.
 
-TurboGears provides for this by traversing the object hierarchy, to find
-a method that can handle your request.
+TurboGears provides for this by traversing the object hierarchy, to
+find a method that can handle your request.
 
-To make a sub-controller, all you need to do is make your sub-controller
-inherit from the object class.  However there's a SubController class ``Controller`` in
-your project's lib.base (HelloWorld/helloworld/lib/base.py) for you to use if you want a central place to add helper methods or other functionality to your SubControllers::
+To make a sub-controller, all you need to do is make your
+sub-controller inherit from the object class.  However there's a
+SubController class ``Controller`` in your project's lib.base
+(HelloWorld/helloworld/lib/base.py) for you to use if you want a
+central place to add helper methods or other functionality to your
+SubControllers:
+
+.. code-block:: python
 
     from lib.base import BaseController
     from tg import redirect
@@ -275,40 +286,46 @@ and you will be redirected to:
 
 * http://localhost:8080/movie/list/
 
-Unlike turbogears 1, going to http://localhost:8080/movie **will not** redirect
-you to http://localhost:8080/movie/list.  This is due to some interesting bit
-about the way WSGI works.   But it's also the right thing to do from the
-perspective of URL joins.  Because you didn't have a trailing slash, there's no
-way to know you meant to be in the movie directory, so redirection to relative
-URLs will be based on the last / in the URL.  In this case the root of the site.
+Unlike turbogears 1, going to http://localhost:8080/movie **will not**
+redirect you to http://localhost:8080/movie/list.  This is due to some
+interesting bit about the way WSGI works.  But it's also the right
+thing to do from the perspective of URL joins.  Because you didn't
+have a trailing slash, there's no way to know you meant to be in the
+movie directory, so redirection to relative URLs will be based on the
+last / in the URL.  In this case the root of the site.
 
 
-It's easy enough to get around this, all you have to do is write your redirect
-like this::
+It's easy enough to get around this, all you have to do is write your
+redirect like this:
+
+.. code-block:: python
 
     redirect('/movie/list/')
 
-Which provides the redirect method with an absolute path, and takes you
-exactly where you wanted to go, no matter where you came from.
+Which provides the redirect method with an absolute path, and takes
+you exactly where you wanted to go, no matter where you came from.
 
-Passing Parameters to the Controller
+Passing Parameters To The Controller
 ---------------------------------------
 
-Now that you have the basic routing dispatch understood, you may be wondering how
-parameters are passed into the controller methods.  After all, a framework would
-not be of much use unless it could accept data streams from the user.
+Now that you have the basic routing dispatch understood, you may be
+wondering how parameters are passed into the controller methods.
+After all, a framework would not be of much use unless it could accept
+data streams from the user.
 
-TurboGears uses introspection to assign values to the arguments in your 
-controller methods.  This happens using the same duck-typing you may be familiar with
-if you are a frequent python programmer.  Here is the basic approach:
+TurboGears uses introspection to assign values to the arguments in
+your controller methods.  This happens using the same duck-typing you
+may be familiar with if you are a frequent python programmer.  Here is
+the basic approach:
 
- * The dispatcher gobbles up as much of the URL as it can to find the correct controller method associated with your request.
+ * The dispatcher gobbles up as much of the URL as it can to find the
+     correct controller method associated with your request.
  * The remaining url items are then mapped to the parameters in the method.
  * If there are still remaining parameters they are mapped to \*args in the method signature.
  * If there are named parameters, (as in a form request, or a GET request with parameters), they are mapped to the
-   args which match their names, and if there are leftovers, they are placed in \**kw.
+     args which match their names, and if there are leftovers, they are placed in \**kw.
 
-Here is and example controller and a chart outlining the way urls are mapped to it's methods:
+Here is an example controller and a chart outlining the way urls are mapped to it's methods:
 
 .. code-block:: python
 
@@ -353,37 +370,43 @@ Here is and example controller and a chart outlining the way urls are mapped to 
 | /delete/NewPage                                    | delete     | title :'NewPage'                                |
 +----------------------------------------------------+------------+-------------------------------------------------+
 
-The parameters that are turned into arguments arrive in string format.  It is a good idea to use Python's type casting
-capabilities to change the arguments into the types the rest of your program expects.  For instance, if you pass
-an integer 'id' into your function you might use id = int(id) to cast it into an int before usage.  Another way to 
-accomplish this feat is to use the @validate decorator, which is explained in `Validation <Validation.html>`_
+The parameters that are turned into arguments arrive in string format.
+It is a good idea to use Python's type casting capabilities to change
+the arguments into the types the rest of your program expects.  For
+instance, if you pass an integer 'id' into your function you might use
+id = int(id) to cast it into an int before usage.  Another way to
+accomplish this feat is to use the @validate decorator, which is
+explained in :ref:`Validation`
 
-Differences between dispatch in TG1 and TG2
+Differences Between Dispatch In Tg1 And TG2
 -----------------------------------------------
 
-Here are the major differences in dispatch between CherryPy/Turbogears1
-and TurboGears 2.
+Here are the major differences in dispatch between
+CherryPy/Turbogears1 and TurboGears 2.
 
-* We have not yet implemented cherrypy's mechanism that replaces dots in the
-  URL with underscores when looking up a method name.  If this feature is
-  important to you let us know on the mailing list.
+* We have not yet implemented cherrypy's mechanism that replaces dots
+  in the URL with underscores when looking up a method name.  If this
+  feature is important to you let us know on the mailing list.
 
-* TurboGears2 implements a Quixote inspired lookup method which allows you to do
-  customized dispatch at controller execution time.
+* TurboGears2 implements a Quixote inspired lookup method which allows
+  you to do customized dispatch at controller execution time.
 
-* TurboGears2 implements a new REST-based for resource-driven dispatch.
+* TurboGears2 implements a new REST-based for resource-driven
+  dispatch.
 
-* TurboGears2 provides an easy path for supporting mime-type extensions as part of dispatch.
+* TurboGears2 provides an easy path for supporting mime-type
+  extensions as part of dispatch.
 
-* Redirect does not know "where you are" in the object tree and move you on
-  from there, it just joins the URL the user requested, with the absolute
-  or relative URL you provide.   Using absolute URLs is recommended.
+* Redirect does not know "where you are" in the object tree and move
+  you on from there, it just joins the URL the user requested, with
+  the absolute or relative URL you provide.  Using absolute URLs is
+  recommended.
 
 
 Advanced Topics
 -------------------
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
    ResponseTypes
    TGControllers
@@ -391,12 +414,10 @@ Advanced Topics
    WSGIAppControllers
 
    
-Api References
+API References
 ------------------
 
 .. toctree::
+   :maxdepth: 1
 
    ../modules/tgcontroller
-
-.. todo:: Review this file for todo items.
-

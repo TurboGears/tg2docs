@@ -1,3 +1,5 @@
+.. _validation:
+
 FormEncode @validate, and TurboGears Validation
 ==================================================
 
