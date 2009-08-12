@@ -21,7 +21,7 @@ Using Apache as a Reverse Proxy
 TurboGears configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you're mounting your TG2 app at the root of the website, there's nothing you need to do.   But if you're mounting it somewhere else, you need to edit deployment.ini to include these changes::
+If you're mounting your TG2 app at the root of the website, there's nothing you need to do.   But if you're mounting it somewhere else, you need to edit production.ini to include these changes::
 
   [app:main]
   use = egg:your_project_name
@@ -36,7 +36,7 @@ basically this just tells paster where your app is going to be mounted so that i
 
 :Warning: You will also want to make sure that you disable the debugger middleware. 
 
-Make sure you have this line in deployment.ini ::
+Make sure you have this line in production.ini ::
 	
    full_stack = False
 

@@ -9,7 +9,7 @@ up the TG2 app and point people at it.
 
 This can be as simple as running::
 
-  paster serve deployment.ini
+  paster serve production.ini
 
 But it's also likely that you may want to automatically restart your
 TG2 app if the server reboots, or you may want to set it up as a
@@ -62,7 +62,7 @@ Reference
 You can also find recipes for mounting a Turbogears app behind lots of
 other servers in the 1.0 docs.  Generally these should "just work"
 with TG2 as well.  The only exception is that the config file
-deployment.ini is slightly different.
+production.ini is slightly different.
 
  * http://docs.turbogears.org/1.0/Deployment
 
