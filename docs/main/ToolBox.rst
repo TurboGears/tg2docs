@@ -1,7 +1,7 @@
 
 
 ToolBox
-==========
+=======
 
 :Status: Work in progress
 
@@ -9,58 +9,68 @@ ToolBox
     :depth: 2
 
 Goal
---------
+----
 
 A platform to share gadgets which helps the development.
 
-Developer could release their own gadgets on pypi.
-The gadgets will be auto-plugged into the TurboGears 2 toolbox through setuptools.
+Developer could release their own gadgets on pypi.  The gadgets will
+be auto-plugged into the TurboGears 2 toolbox through setuptools.
 
-ToolBox itself is a TurboGears 2 Application. Developers could use the same skills to develop a toolbox gadget as they do to createa a TurboGears 2 application.
+ToolBox itself is a TurboGears 2 Application. Developers could use the
+same skills to develop a toolbox gadget as they do to createa a
+TurboGears 2 application.
 
 
 Terminology
-------------
+-----------
 
- * Gadget: The application working within toolbox. Some of them may allow you to embed them into your application.
+ * Gadget: The application working within toolbox. Some of them may
+   allow you to embed them into your application.
 
 Features
--------------
+--------
 
  - Provide 'paster toolbox' command to start.
- - Provide a Gadget skeleton generator by paste script (not implement yet)
+ - Provide a Gadget skeleton generator by paste script (not implement
+   yet)
  - You could release your own gadgets on pypi.
  - Could detect if toolbox runs inside a project.
- - Able to select icons from Tango Icon http://tango.freedesktop.org/Tango_Icon_Library
+ - Able to select icons from Tango Icon
+   http://tango.freedesktop.org/Tango_Icon_Library
 
 Basic Gadgets
-----------------
+-------------
 
-ToolBox 2 Basic Gadgets are a minimum set of gadgets to provide some basic functions.
+ToolBox 2 Basic Gadgets are a minimum set of gadgets to provide some
+basic functions.
 
- - TGInfo gadget: browse tg2 related packages, similar to 'paster tginfo' command
+ - TGInfo gadget: browse tg2 related packages, similar to 'paster
+   tginfo' command
  - TurboGears 2 API gadget: browse tg2 API
  - ToolBox 2 API gadget: browse ToolBox2 API
  - Design gadget (Project Browser), update from ToolBox template browser gadget.
  - Admin gadget (the successor to catwalk) from dbsprockets module
 
 Spec
-----------------
+----
 
  - Setuptool-based plugin system
 
-You could define gadget hooker in setup.py::
+You could define gadget hooker in setup.py:
+
+.. code-block:: ini
 
   [turbogears2.toolboxcommand]
 
- - To specify the Gadget should be worked in a TurboGears 2 project, you could define attribute in Gadget::
+ - To specify the Gadget should be worked in a TurboGears 2 project,
+   you could define attribute in Gadget::
 
   need_project = True
 
-Write a simple Gadget
-----------------------
+Write A Simple Gadget
+---------------------
 
-Create a folder contains 2 files::
+Create a folder containing 2 files::
 
  setup.py
  gadget.py
@@ -110,7 +120,7 @@ in gadget.py::
           return 'Hello ToolBox'
 
 Debugging
-~~~~~~~~~~~~~~~
+~~~~~~~~~
 
 Run::
 
@@ -120,11 +130,12 @@ or::
 
   $ python setup.py install
 
-to register your project to setuptools. Then you could run 'paster toolbox' to view your gadget!
+to register your project to setuptools. Then you could run 'paster
+toolbox' to view your gadget!
 
 
-Upload to Pypi
-~~~~~~~~~~~~~~~
+Upload To Pypi
+~~~~~~~~~~~~~~
 
 Run::
 
@@ -132,7 +143,7 @@ Run::
 
 to upload both egg and source code to pypi.
 
-Remove development gadget
+Remove Development Gadget
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Run::
@@ -141,7 +152,7 @@ Run::
 
 Check 'paster toolbox' list and the hello gadget is gone.
 
-Future Plan
+Future Plans
 ------------
 
  - Widget Browser gadget by ToscaWidget (Browse widgets)
@@ -154,9 +165,4 @@ Future Plan
  - Able to Custom tab
  - able to Manage tab
  - Able to custom app/tab
-
-
-
-
-.. todo:: Review this file for todo items.
 
