@@ -1,3 +1,5 @@
+.. _database_migration:
+
 Database Schema Migration in TurboGears 2
 =========================================
 
