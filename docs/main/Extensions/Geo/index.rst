@@ -2,8 +2,9 @@
    :maxdepth: 2
 
    commands
-   TileCacheTutorial
+   FeatureServerTutorial
    MapFishTutorial
+   TileCacheTutorial
 
 .. todo:: Review this file for todo items.
 
