@@ -31,10 +31,17 @@ It is assumed that a fresh virtualenv has been created and TG2 installed followi
 
     (tg2env)$ easy_install -i http://www.turbogears.org/2.0/downloads/current/index/ tgext.geo
 
-We assume that a PostgreSQL server is installed and ready for use. Install PostGIS and create a new PostGIS enabled database called `gis`. Refer the docs `here <http://postgis.refractions.net/documentation>`_ to achieve this. We also need to install the python db-api for postgres::
+We assume that a PostgreSQL server is installed and ready for use. Install PostGIS and create a new PostGIS enabled database called `gis`. Refer the docs `here <http://postgis.refractions.net/documentation>`_ to achieve this. We also need to install GeoAlchemy and the python db-api for postgres::
 
-    (tg2env)$ easy_install -i http://www.turbogears.org/2.0/downloads/current/index egenix-mx-base
-    (tg2env)$ easy_install -i http://www.turbogears.org/2.0/downloads/current/index psycopg2 
+    (tg2env)$ easy_install GeoAlchemy
+    (tg2env)$ easy_install egenix-mx-base
+    (tg2env)$ easy_install psycopg2 
+
+Download and install featureserver from the svn repo::
+
+    (tg2env) $ svn co http://svn.featureserver.org/trunk/featureserver featureserver
+    (tg2env) $ cd featureserver
+    (tg2env) $ python setup.py install
 
 
 Creating a New TG2 App
@@ -44,6 +51,7 @@ Create a new TG2 app with gis capability::
 
     (tg2env)$ paster quickstart TGFeature --geo
     (tg2env)$ cd TGFeature
+    (tg2env)$ python setup.py develop
 
 
 Model Definition for Features
