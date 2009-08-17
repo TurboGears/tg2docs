@@ -13,10 +13,10 @@ and interact with them -- creating, updating, and deleting -- via a
 REST-based API. It is distributed under a BSD-like open source license.
 
 The text.geo.featureserver module enables easy integration of featureserver
-into TurboGears2 apps by providing the following::
+into TurboGears2 apps by providing the following:
 
-    *  GeoAlchemy Datasource - This allows geographic features to be stored in any of the spatial databases supported by `GeoAlchemy <http://geoalchemy.org>`_.
-    * FeatureServer Controller - This creates a new controller that reads the config and makes use of the FeatureServer API to dispatch requests to featureserver.
+*  GeoAlchemy Datasource - This allows geographic features to be stored in any of the spatial databases supported by `GeoAlchemy <http://geoalchemy.org>`_.
+* FeatureServer Controller - This creates a new controller that reads the config and makes use of the FeatureServer API to dispatch requests to featureserver.
 
 About this Tutorial
 -------------------
