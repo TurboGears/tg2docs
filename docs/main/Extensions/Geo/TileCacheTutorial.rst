@@ -1,5 +1,4 @@
 
-
 tgext.geo TileCache Tutorial
 ============================
 
@@ -61,8 +60,12 @@ Sections for all the required tilecache layers should be added to this file. For
     type=Mapnik
     mapfile=/home/user/osm-mapnik/osm.xml
     spherical_mercator=true
+    bbox=-20037508.34,-20037508.34,20037508.34,20037508.34
+    resolutions=156543.0,78271.5,39135.75,19567.875,9783.9375,4891.96875,2445.984375,1222.9921875,611.49609375,305.748046875,152.874023438,76.4370117188,38.2185058594,19.1092529297,9.55462646484,4.77731323242,2.38865661621,1.19432830811,0.597164154053,0.298582077026
+    metaTile="yes"
+    metaBuffer=40
 
-Mapnik is a C++ toolkit with python bindings for rendering maps. OpenStreetMap is a free geographic data set containing street maps. A document describing the rendering of OSM maps using Mapnik can be found `here <http://wiki.openstreetmap.org/index.php/Mapnik>_`.
+Mapnik is a C++ toolkit with python bindings for rendering maps. OpenStreetMap is a free geographic data set containing street maps. A document describing the rendering of OSM maps using Mapnik can be found `here <http://wiki.openstreetmap.org/index.php/Mapnik>_`. The metaTile param causes mapnik to make use of PIL for rendering the maps.
 
 
 Creating the Tiles Controller
@@ -72,7 +75,9 @@ Once the tilecache.cfg file is ready, the new controller containing TileCache WS
 
     (tg2env)$ paster geo-tilecache tiles
 
-where tiles is the new controller. Now edit the root controller (package/controllers/root.py) to import and mount the controller::
+where tiles is the new controller. Now edit the root controller (package/controllers/root.py) to import and mount the controller:
+
+.. code-block:: python
 
 
     from tilesapp.controllers.tiles import TilesController
@@ -92,7 +97,9 @@ Rendering the Tiles in an OpenLayers Map
 Adding the Javascript Code
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The tiles accessible through the TileCache definition above can be rendered in an OpenLayers Map as a WMS or TMS layer depending upon the layer type defined in tilecache config. For a WMS layer modify the index template to add the following javascript code in the head section::
+The tiles accessible through the TileCache definition above can be rendered in an OpenLayers Map as a WMS layer. Modify the index template to add the following javascript code in the head section:
+
+.. code-block:: javascript
 
     <script src="/javascript/OpenLayers.js"></script>
     <script type="text/javascript">
@@ -106,7 +113,9 @@ The tiles accessible through the TileCache definition above can be rendered in a
         }
     </script>
 
-For a TMS Layer (e.g. OSM tiles in Spherical Mercator Projection) add the following javascript code::
+When using the OSM Layer, use exactly the same projection, extents and resolution settings as defined in the tilecache config:
+
+.. code-block:: javascript
 
     <script src="/javascript/OpenLayers.js"></script>
     <script type="text/javascript">
@@ -116,18 +125,19 @@ For a TMS Layer (e.g. OSM tiles in Spherical Mercator Projection) add the follow
                 new OpenLayers.Control.LayerSwitcher(),
                 new OpenLayers.Control.PanZoomBar()
                 ]};
+
          options = OpenLayers.Util.extend({
             maxExtent: new OpenLayers.Bounds(-20037508.34,
                 -20037508.34,20037508.34,20037508.34),
             maxResolution: 156543.0339,
-            units: "m",
-            projection: "EPSG:900913",
+            projection: new OpenLayers.Projection("EPSG:900913"),
+            displayProjection: new OpenLayers.Projection("EPSG:4326"),
             transitionEffect: "resize"
         }, options);
 
         map = new OpenLayers.Map('map', options);
 
-        layer = new OpenLayers.Layer.TMS("osm", "http://localhost:8080/tiles/",
+        layer = new OpenLayers.Layer.WMS("osm", "http://localhost:8080/tiles/",
                 {layername: "osm", type: "png"});
         map.addLayer(layer);
         map.setCenter(new OpenLayers.LonLat(2.3, 48.86).transform(
@@ -142,7 +152,9 @@ Download OpenLayers javascript mapping toolkit from `www.openlayers.org <http://
 Adding the Style Code
 ~~~~~~~~~~~~~~~~~~~~~
 
-The following stylesheet code may be added to suite the map display::
+The following stylesheet code may be added to suite the map display:
+
+.. code-block:: css
 
     <style type="text/css">
         #map {
@@ -155,7 +167,9 @@ The following stylesheet code may be added to suite the map display::
 Add the HTML Code
 ~~~~~~~~~~~~~~~~~
 
-The following HTML code should be sufficient to show the map::
+The following HTML code should be sufficient to show the map:
+
+.. code-block:: html
 
     <body onload="init();">
       <div id="map"></div>
