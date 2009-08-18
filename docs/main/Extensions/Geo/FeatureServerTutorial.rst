@@ -113,7 +113,7 @@ command
 
 In case we need sample data to be inserted during application startup,
 we must add the sample data into the setup script,
-i.e. tgformat/websetup.py prior to running the setup command. Let us
+i.e. tgfeature/websetup.py prior to running the setup command. Let us
 add some sample data.
 
 .. code-block:: python
@@ -277,9 +277,9 @@ directory) to the public folder under a different name:
 
 .. code-block:: bash
 
-    $(tg2env) cp /path/to/featureserversource/index.html tgformat/public/demo.html
-    $(tg2env) cp /path/to/featureserversource/json.html tgformat/public/
-    $(tg2env) cp /path/to/featureserversource/kml.html tgformat/public/
+    $(tg2env) cp /path/to/featureserversource/index.html tgfeature/public/demo.html
+    $(tg2env) cp /path/to/featureserversource/json.html tgfeature/public/
+    $(tg2env) cp /path/to/featureserversource/kml.html tgfeature/public/
 
 Now modify these files to change the following::
 
@@ -290,7 +290,7 @@ Point your browser to http://localhost:8080/demo.html. You should now be able to
 
 .. todo:: Add authentication and authorization notes
 
-.. _GeoAlchemy: http://geoalchemy.org>
+.. _GeoAlchemy: http://geoalchemy.org
 .. _PostGIS: http://postgis.refractions.net/
 .. _`PostGIS docs`: http://postgis.refractions.net/documentation/
 .. _OpenLayers: http://openlayers.org
