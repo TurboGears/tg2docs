@@ -1,10 +1,14 @@
+=================================================
+ tgext.geo: Geographic Extensions for TurboGears
+=================================================
+
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
    commands
    FeatureServerTutorial
    MapFishTutorial
    TileCacheTutorial
 
-.. todo:: Review this file for todo items.
-
+.. todo:: Add more details on what these pieces are and how they fit
+          together.

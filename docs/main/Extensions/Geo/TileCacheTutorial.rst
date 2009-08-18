@@ -6,27 +6,39 @@ tgext.geo TileCache Tutorial
 Introduction
 ------------
 
-TileCache is a python WSGI (Web Services Gateway Interface) App that implements the WMS-C (Web Map Service - Cached) spec for generation and serving of WMS tiles. This improves the performance of a WMS service substantially by generating / querying tiles and locally caching them to serve subsequent tile requests. tgext.geo includes paster commands for creating controller code that mounts TileCache as a WSGI App.
+TileCache is a python WSGI (Web Services Gateway Interface) App that
+implements the WMS-C (Web Map Service - Cached) spec for generation
+and serving of WMS tiles. This improves the performance of a WMS
+service substantially by generating / querying tiles and locally
+caching them to serve subsequent tile requests. tgext.geo includes
+paster commands for creating controller code that mounts TileCache as
+a WSGI App.
 
 
-About this Tutorial
+About This Tutorial
 -------------------
 
-In this tutorial we will create a TG2 app and use tgext.geo extension to mount the TileCache WSGI App. We will also modify the template code for *index* method to create an OpenLayers Map that will render the tiles.
+In this tutorial we will create a TG2 app and use tgext.geo extension
+to mount the TileCache WSGI App. We will also modify the template code
+for *index* method to create an OpenLayers Map that will render the
+tiles.
 
 
 Installation
 ------------
 
-It is assumed that a fresh virtualenv has been created and TG2 installed following the `TG2 Installation Guide <http://turbogears.org/2.0/docs/main/DownloadInstall.html#install-turbogears-2>`_. Install tgext.geo using easy_install::
+It is assumed that a fresh virtualenv has been created and TG2
+installed following the :ref:`downloadinstall`. Install tgext.geo
+using easy_install::
 
     (tg2env)$ easy_install -i http://www.turbogears.org/2.0/downloads/current/index tgext.geo
 
 
-Creating a New TG2 App
+Creating A New TG2 App
 ----------------------
 
-Create a new TG2 app using the paster command and change into the newly created project folder::
+Create a new TG2 app using the paster command and change into the
+newly created project folder::
 
     (tg2env)$ paster quickstart TilesApp
     (tg2env)$ cd TilesApp
@@ -35,13 +47,20 @@ Create a new TG2 app using the paster command and change into the newly created 
 Add tgext.geo Paster Plugin
 ---------------------------
 
-Open the paster plugins file viz. TilesApp.egg-info/paster_plugins.txt and add a line containing ``tgext.geo`` . 
+Open the paster plugins file viz. TilesApp.egg-info/paster_plugins.txt
+and add a line containing ``tgext.geo`` .
 
 
-Create a TileCache Config
+Create A TileCache Config
 -------------------------
 
-Create a TileCache config in the file tilecache.cfg in the project folder and add the necessary configuration. Details of this configuration can be found in the `TileCache Documentation <http://tilecache.org/readme.html#configuration>`_. A sample tilecache.cfg file can be downloaded from http://svn.tilecache.org/trunk/tilecache/tilecache.cfg . For example, a standard WMS tile service would have the following config::
+Create a TileCache config in the file tilecache.cfg in the project
+folder and add the necessary configuration. Details of this
+configuration can be found in the `TileCache Documentation
+<http://tilecache.org/readme.html#configuration>`_. A sample
+tilecache.cfg file can be downloaded from
+http://svn.tilecache.org/trunk/tilecache/tilecache.cfg . For example,
+a standard WMS tile service would have the following config::
 
     [cache]
     type=Disk
@@ -53,7 +72,9 @@ Create a TileCache config in the file tilecache.cfg in the project folder and ad
     url=http://labs.metacarta.com/wms/vmap0
     extension=png
 
-Sections for all the required tilecache layers should be added to this file. For example, the following lines should be added in order to have a Mapnik Tiles layer using the OpenStreetMap (OSM) data::
+Sections for all the required tilecache layers should be added to this
+file. For example, the following lines should be added in order to
+have a :term:`Mapnik` Tiles layer using the OpenStreetMap_ (OSM) data::
 
     # Rendering OpenStreetMap data with Mapnik
     [osm]
@@ -65,17 +86,18 @@ Sections for all the required tilecache layers should be added to this file. For
     metaTile="yes"
     metaBuffer=40
 
-Mapnik is a C++ toolkit with python bindings for rendering maps. OpenStreetMap is a free geographic data set containing street maps. A document describing the rendering of OSM maps using Mapnik can be found `here <http://wiki.openstreetmap.org/index.php/Mapnik>_`. The metaTile param causes mapnik to make use of PIL for rendering the maps.
 
-
-Creating the Tiles Controller
+Creating The Tiles Controller
 -----------------------------
 
-Once the tilecache.cfg file is ready, the new controller containing TileCache WSGI App can be created using the following paster command::
+Once the tilecache.cfg file is ready, the new controller containing
+the TileCache WSGI App can be created using the following paster
+command::
 
     (tg2env)$ paster geo-tilecache tiles
 
-where tiles is the new controller. Now edit the root controller (package/controllers/root.py) to import and mount the controller:
+where tiles is the new controller. Now edit the root controller
+(package/controllers/root.py) to import and mount the controller:
 
 .. code-block:: python
 
@@ -85,19 +107,24 @@ where tiles is the new controller. Now edit the root controller (package/control
     class RootController(BaseController):
         tiles = TilesController()
 
-The tiles controller should now be accessible at the url location `http://<host>:<port>/tiles`.
+The tiles controller should now be accessible at the url location
+`http://<host>:<port>/tiles`.
 
-Start the server and point your browser to the above url. You should be able to see the TileCache Capabilities document, which an xml document describing the service.
+Start the server and point your browser to the above url. You should
+be able to see the TileCache Capabilities document, which an xml
+document describing the service.
 
 
-Rendering the Tiles in an OpenLayers Map
+Rendering The Tiles In An OpenLayers Map
 ----------------------------------------
 
 
-Adding the Javascript Code
+Adding The Javascript Code
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The tiles accessible through the TileCache definition above can be rendered in an OpenLayers Map as a WMS layer. Modify the index template to add the following javascript code in the head section:
+The tiles accessible through the TileCache definition above can be
+rendered in an OpenLayers Map as a WMS layer. Modify the index
+template to add the following javascript code in the head section:
 
 .. code-block:: javascript
 
@@ -113,7 +140,8 @@ The tiles accessible through the TileCache definition above can be rendered in a
         }
     </script>
 
-When using the OSM Layer, use exactly the same projection, extents and resolution settings as defined in the tilecache config:
+When using the OSM Layer, use exactly the same projection, extents and
+resolution settings as defined in the tilecache config:
 
 .. code-block:: javascript
 
@@ -146,10 +174,12 @@ When using the OSM Layer, use exactly the same projection, extents and resolutio
     }
     </script>
 
-Download OpenLayers javascript mapping toolkit from `www.openlayers.org <http://www.openlayers.org/>`_ and unzip / untar the archive. Copy the OpenLayers.js file and the img folder in the archive to project/public/javascript folder.
+Download OpenLayers javascript mapping toolkit from the OpenLayers_
+site and unzip / untar the archive. Copy the OpenLayers.js file and
+the img folder in the archive to project/public/javascript folder.
 
 
-Adding the Style Code
+Adding The Style Code
 ~~~~~~~~~~~~~~~~~~~~~
 
 The following stylesheet code may be added to suite the map display:
@@ -164,7 +194,7 @@ The following stylesheet code may be added to suite the map display:
     </style>
 
 
-Add the HTML Code
+Add The HTML Code
 ~~~~~~~~~~~~~~~~~
 
 The following HTML code should be sufficient to show the map:
@@ -172,21 +202,35 @@ The following HTML code should be sufficient to show the map:
 .. code-block:: html
 
     <body onload="init();">
-      <div id="map"></div>
+      <div id="map"/>
       <div class="clearingdiv" />
-      <div class="notice"> Thank you for choosing TurboGears.
-      </div>
+      <div class="notice"> Thank you for choosing TurboGears.</div>
     </body>
 
-See TileCache in Action
+See TileCache In Action
 -----------------------
 
-Its time to see TileCache in action now. Run the paster command to start the local HTTP server::
+Its time to see TileCache in action now. Run the paster command to
+start the local HTTP server::
 
     (tg2env)$ paster serve --reload development.ini
 
-Point your browser to http://localhost:8080 to view the map. The first time you see the map and zoom in the tile would be generated and rendered. In the subsequent requests the response is much faster as tiles cached earlier are served up.
+Point your browser to http://localhost:8080 to view the map. The first
+time you see the map and zoom in the tile would be generated and
+rendered. In the subsequent requests the response is much faster as
+tiles cached earlier are served up.
 
 
-.. todo:: Review this file for todo items.
+.. glossary::
 
+    Mapnik_
+        Mapnik is a C++ toolkit with python bindings for rendering
+	maps. OpenStreetMap is a free geographic data set containing street
+	maps. A document describing the rendering of OSM maps using Mapnik can
+	be found `here <http://wiki.openstreetmap.org/index.php/Mapnik>_`. The
+	metaTile param causes mapnik to make use of PIL for rendering the
+	maps.
+
+.. _OpenStreetMap: http://www.openstreetmap.org/
+.. _OpenLayers: http://www.openlayers.org/
+.. _Mapnik: http://www.mapnik.org/
