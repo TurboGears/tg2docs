@@ -1,3 +1,4 @@
+.. _tw_cookbook_jsunit:
 
 JSUnit Widget
 =============

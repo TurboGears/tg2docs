@@ -1,6 +1,7 @@
+.. _tw_cookbook_extitemselector:
 
-ExtJS ItemSelector Widget
-=========================
+ExtJS ItemSelector Widget Tutorial
+==================================
 
 
 Installation

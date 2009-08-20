@@ -1,4 +1,4 @@
-
+.. _tw_cookbook_openlayersmap:
 
 OpenLayers Map Widget
 =====================

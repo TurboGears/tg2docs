@@ -1,4 +1,4 @@
-
+.. _tw_cookbook_flexigrid:
 
 JQuery FlexiGrid Widget
 ==========================

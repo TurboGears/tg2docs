@@ -1,4 +1,4 @@
-
+.. _tw_cookbook_dynamicselect:
 
 How to create a database-driven select field
 ============================================

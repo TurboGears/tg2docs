@@ -1,4 +1,4 @@
-
+.. _tw_cookbook_ajaxform:
 
 Creating Ajax-enabled forms using Prototype
 ===========================================

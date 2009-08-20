@@ -1,4 +1,4 @@
-
+.. _tw_cookbook_passwordvalidation:
 
 Creating a password verification field
 ======================================

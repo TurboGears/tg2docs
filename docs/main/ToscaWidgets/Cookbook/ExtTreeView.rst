@@ -1,6 +1,7 @@
+.. _tw_cookbook_exttreeview:
 
-ExtJS Tree Widget
-==================
+ExtJS Tree Widget Tutorial
+==========================
 
 
 Installation

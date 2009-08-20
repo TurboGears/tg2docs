@@ -1,6 +1,7 @@
+.. _tw_cookbook_jquerytreeview:
 
-JQuery TreeView Widget
-==========================
+JQuery TreeView Widget Tutorial
+===============================
 
 
 Installation

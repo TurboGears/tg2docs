@@ -1,4 +1,4 @@
-
+.. _tw_cookbook_recaptcha:
 
 Adding Captcha to your Form
 ===========================

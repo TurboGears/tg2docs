@@ -1,7 +1,7 @@
+.. _tw_cookbook_autocomplete:
 
-
-JQuery AutoComplete Widget
-==========================
+JQuery AutoComplete Widget Tutorial
+===================================
 
 
 Installation
