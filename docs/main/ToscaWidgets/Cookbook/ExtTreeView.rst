@@ -13,18 +13,17 @@ Installation
 
 
 Usage
----------
+-----
 
-Widget definition
-
-::
+Widget definition::
   
  from tw.extjs import TreeView
  extTree = TreeView(divID='treeView1', fetch='fetchTree')
 
 
-Server side
+Server Side
 -----------
+
 ::
 
     @expose('myproject.templates.tableview')
@@ -32,15 +31,15 @@ Server side
         pylons.c.tree = extTree
         return dict()
 
-Template code
---------------
+Template Code
+-------------
 
 ::
 
  ${tmpl_context.tree()}
 
 
-Fetch code
+Fetch Code
 ----------
 
 ::
@@ -61,5 +60,6 @@ Fetch code
         return simplejson.dumps(r)
 
 
-.. todo:: Review this file for todo items.
+.. todo:: This entire tutorial is code snippets. Add some text to
+   explain what is going on
 

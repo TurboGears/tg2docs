@@ -19,7 +19,9 @@ The TreeView widget supports the following optional parameters:
 
 Parameters:
 ~~~~~~~~~~~
-* **treeDiv** The id of the div element which contains the unordered list to be rendered as a tree. (*Default:* treeDiv = tree)
+
+* **treeDiv** The id of the div element which contains the unordered
+    list to be rendered as a tree. (*Default:* treeDiv = tree)
 
 For example the widget is instantiated as::
 
@@ -38,7 +40,8 @@ And your template would display the tree like this::
 
    ${tmpl_context.w.tree()}
 
-The template should have a div with id navTree containing an unordered list as::
+The template should have a div with id navTree containing an unordered
+list as::
 
     <div id="navTree">
       <ul>
@@ -75,7 +78,4 @@ Here is the resulting field when viewed from a browser:
 
 .. image:: ../images/treeview.png
        :alt: example TreeView
-
-
-.. todo:: Review this file for todo items.
 

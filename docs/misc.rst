@@ -52,3 +52,5 @@ Misc To Do Items From The Docs
 .. todo:: add in notes regarding how to use repoze.who's user_checker
 
 .. todo:: add reference to EggBasket for packing/deployment with a private PyPI
+
+.. todo:: resolve ticket http://trac.turbogears.org/ticket/2326

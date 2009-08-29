@@ -1,9 +1,15 @@
 .. _tw_cookbook_dynamicselect:
 
-How to create a database-driven select field
+How To Create A Database-Driven Select Field
 ============================================
 
-Most developers create database tables which allow select fields in their forms to be dynamically updated when a change occurs in the database.  The challenge is that widgets are stateless, and therefore select fields expect to have the same options from the time they are instantiated.  However, ToscaWidgets does allow widget parameters to change "on the fly"  Here is a description of one way a developer might update these parameters and allow dynamic select options.
+Most developers create database tables which allow select fields in
+their forms to be dynamically updated when a change occurs in the
+database.  The challenge is that widgets are stateless, and therefore
+select fields expect to have the same options from the time they are
+instantiated.  However, ToscaWidgets does allow widget parameters to
+change "on the fly." Here is a description of one way a developer
+might update these parameters and allow dynamic select options.
 
 Consider the following model snippet::
 
@@ -21,9 +27,10 @@ Consider the following model snippet::
 
  mapper(Genera, genera_table)
 
-The trick here is to override the update_params method of SingleSelectField to query the database for the records, and then add them to the 'options' parameter before processing the rest of the TW.
-
-::
+The trick here is to override the update_params method of
+SingleSelectField to query the database for the records, and then add
+them to the 'options' parameter before processing the rest of the
+TW.::
  
  from mypackage.model import Genera
  from tw.forms import SingleSelectField
@@ -37,9 +44,8 @@ The trick here is to override the update_params method of SingleSelectField to q
         SingleSelectField.update_params(self, d)
         return d
 
-A more intelligent solution would be to cache the rows and then refresh them every so often.
-
-::
+A more intelligent solution would be to cache the rows and then
+refresh them every so often.::
  
  from mypackage.model import Genera
  from tw.forms import SingleSelectField
