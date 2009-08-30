@@ -5,13 +5,25 @@ TurboGears Licenses
 
 :Status: Official
 
-**Summary: There's no GPL incompatible provisos sneaked into any of these licenses, and all of TG2 and it's underlying components are not copy_left licensed, so you can include them in your projects -- even if they are proprietary**
+**Summary: There's no GPL incompatible provisos sneaked into any of
+  these licenses, and all of TG2 and it's underlying components are
+  not copy_left licensed, so you can include them in your projects --
+  even if they are proprietary**
 
-Note that the following paragraphs are **not legal advice**. They are one person's interpretations of the software licenses involved. If you have any questions or concerns about the licenses, you should consult a lawyer.
+Note that the following paragraphs are **not legal advice**. They are
+one person's interpretations of the software licenses involved. If you
+have any questions or concerns about the licenses, you should consult
+a lawyer.
 
-TurboGears is a *megaframework* that incorporates other open source projects. Each project that is included in TurboGears allows for closed source use, and the licenses are included here for convenience. The primary requirement made by the licenses is that you need to include the relevant copyright notices and licenses in your software. Including this file should be sufficient.
+TurboGears is a *megaframework* that incorporates other open source
+projects. Each project that is included in TurboGears allows for
+closed source use, and the licenses are included here for
+convenience. The primary requirement made by the licenses is that you
+need to include the relevant copyright notices and licenses in your
+software. Including this file should be sufficient.
 
-Generally speaking, the parts of TurboGears allow you to not only include them with your work, but to modify them at will.  
+Generally speaking, the parts of TurboGears allow you to not only
+include them with your work, but to modify them at will.
 
 TurboGears
 ----------
@@ -38,6 +50,3 @@ TurboGears is covered by the MIT license::
   DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR 
   OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE 
   OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-.. todo:: Review this file for todo items.
-
