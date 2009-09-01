@@ -71,20 +71,6 @@ Indices and tables
 * :ref:`search`
 
 
-Rough Draft Documentation
-=========================
-
-.. toctree::
-   :maxdepth: 3
-
-   main/RoughDocs/CreateDatabase
-   main/RoughDocs/DesignTemplate
-   main/RoughDocs/FormEncode
-   main/RoughDocs/I18N
-
-.. toctree::
-   :maxdepth: 0
-
 All To Do Items From The Docs
 =============================
 

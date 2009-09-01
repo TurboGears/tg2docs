@@ -5,10 +5,10 @@ TurboGears Licenses
 
 :Status: Official
 
-**Summary: There's no GPL incompatible provisos sneaked into any of
-  these licenses, and all of TG2 and it's underlying components are
-  not copy_left licensed, so you can include them in your projects --
-  even if they are proprietary**
+Summary: There's no GPL incompatible provisos sneaked into any of
+these licenses, and all of TG2 and it's underlying components are
+not copy_left licensed, so you can include them in your projects,
+even if they are proprietary
 
 Note that the following paragraphs are **not legal advice**. They are
 one person's interpretations of the software licenses involved. If you
