@@ -1,4 +1,4 @@
-Pagination quickstart for TurboGears2
+Pagination Quickstart For Turbogears2
 =====================================
 
 :Status: Work in progress
@@ -6,17 +6,18 @@ Pagination quickstart for TurboGears2
 Prequisites
 -----------
 
-We start where the MovieDemo left off. See the `ToscaSample`_ 
-tutorial or download the zipped ToscaWidgetsFormsExample_.
+We start where the MovieDemo left off. See the `ToscaSample`_ tutorial
+or download the zipped ToscaWidgetsFormsExample_.
 
 .. _ToscaWidgetsFormsExample: ../../_static/ToscaWidgetsFormsExample.zip
 .. _ToscaSample: http://www.turbogears.org/2.0/docs/main/ToscaWidgets/forms.html
 
-Populating the database
+Populating The Database
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-To have some sample data to work with, let's populate the database with some
-movies. Add these lines to ``websetup.py`` (above transaction.commit())::
+To have some sample data to work with, let's populate the database
+with some movies. Add these lines to ``websetup.py`` (above
+transaction.commit())::
 
 	    movieDatas = [["Into the Wild", 2007],
 	                  ["The Big Lebowsky", 1998],
@@ -34,8 +35,8 @@ movies. Add these lines to ``websetup.py`` (above transaction.commit())::
 	        model.DBSession.add(movie)
   
 
-After you set up your app and restart the server you should now have seven 
-movies listed.
+After you set up your app and restart the server you should now have
+seven movies listed.
 
 .. code-block:: bash
 
@@ -44,14 +45,15 @@ movies listed.
 	 
     
 
-Basic pagination
+Basic Pagination
 ----------------
 
-With a model and some data set up, add ``webhelpers.paginate`` to your controller, and 
-create an instance of ``paginate.Page`` that you pass to the template.  
+With a model and some data set up, add ``webhelpers.paginate`` to your
+controller, and create an instance of ``paginate.Page`` that you pass
+to the template.
 
-Import paginate in your ``controllers/root.py`` and modify the ``list()`` 
-method to look like this::
+Import paginate in your ``controllers/root.py`` and modify the
+``list()`` method to look like this::
 
 	    from webhelpers import paginate
 		
@@ -62,10 +64,12 @@ method to look like this::
 	        currentPage = paginate.Page(movies, page, items_per_page=5)
 	        return dict(movies=currentPage.items, page='ToscaSample Movie list', currentPage=currentPage)
 
-This creates and passes a ``paginate.Page`` object to our template, so we can use it there to access a ``pager()``.
+This creates and passes a ``paginate.Page`` object to our template, so
+we can use it there to access a ``pager()``.
 
-The subset of items that should be displayed for the current page we 
-get from ``currentPage.items`` and display them in the template like we normally would.
+The subset of items that should be displayed for the current page we
+get from ``currentPage.items`` and display them in the template like
+we normally would.
 
 
 Now the pagination can be displayed in the template like this:
@@ -80,10 +84,10 @@ Template code in ``templates/movie_list.html``::
 
 
 
-Now we add some padding to the pagelist and make it centered. 
+Now we add some padding to the pagelist and make it centered.
 
-Create a file pagination.css in your public/css/ directory with 
-the following contents and include it in style.css:
+Create a file pagination.css in your public/css/ directory with the
+following contents and include it in style.css:
  
 .. highlight:: css
 
@@ -107,10 +111,10 @@ Your movie listing should now look something like this:
 
 		
 
-Advanced pagination
+Advanced Pagination
 -------------------
 
-More formatting
+More Formatting
 ^^^^^^^^^^^^^^^
 
 Demonstrating some more formating arguments::
@@ -118,19 +122,22 @@ Demonstrating some more formating arguments::
 	${currentPage.pager(format='~3~', page_param='page', show_if_single_page=True)}
 
 	
-See http://www.pylonshq.com/docs/en/0.9.7/thirdparty/webhelpers/paginate/ for more details.
+See
+http://www.pylonshq.com/docs/en/0.9.7/thirdparty/webhelpers/paginate/
+for more details.
 
 
 
 
-Adding previous and next links
+Adding Previous And Next Links
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Let's add previous and next links:
 
 .. highlight:: html+genshi
 
-Modify the pagelist in ``templates/movie_list.html`` to look like this::
+Modify the pagelist in ``templates/movie_list.html`` to look like
+this::
 
 	<p class="pagelist">
 		<a class="prevPage" href="/books?page=${currentPage.previous_page}">&lt;&lt;&lt;</a>
@@ -144,8 +151,8 @@ Functional, but not very pretty:
 
 
 
-Adding some arrow images
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Adding Some Arrow Images
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 Let's add some images:
 
@@ -158,8 +165,9 @@ Let's add some images:
 
 .. note ::
 
-	These images are public domain - feel free to use them any way you like. 
-	Different sizes and the source \*.psd are included in the project file.)
+	These images are public domain - feel free to use them any way
+	you like.  Different sizes and the source \*.psd are included
+	in the project file.)
 
 
 .. highlight:: html+genshi
@@ -198,7 +206,7 @@ And this is what the end result looks like:
 
 .. image:: tg2pagination_fig3.png		
 
-An :download:`Example Project <ToscaWidgetsFormsPaginated.zip>` has been attached so that you can try this easily. 
+An :download:`Example Project <ToscaWidgetsFormsPaginated.zip>` has
+been attached so that you can try this easily.
 
-   
-.. todo:: Review this file for todo items.
+.. todo:: Does pagination still work this way for 2.1?

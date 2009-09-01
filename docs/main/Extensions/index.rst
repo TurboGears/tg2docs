@@ -1,16 +1,19 @@
 TG2 Extensions
 ==============
-TG2 has some extensions which offer built-in functionality you can add to your application.
-This is somewhat different from installing a WSGI application in your stack because the
-extensions are intended to be more tightly integrated with the components that make
-up a TurboGears application.
+
+TG2 has some extensions which offer built-in functionality you can add
+to your application.  This is somewhat different from installing a
+WSGI application in your stack because the extensions are intended to
+be more tightly integrated with the components that make up a
+TurboGears application.
 
 Admin
-----------
+-----
 
-The TurboGears Admin System is a great way to get started with your database.
-Once your model is defined, this extension provides a set of pages to help you
-create, view, delete, and edit your database objects.
+The TurboGears Admin System is a great way to get started with your
+database.  Once your model is defined, this extension provides a set
+of pages to help you create, view, delete, and edit your database
+objects.
 
 .. todo:: Make this extension more prominent, more likely to be found
 
@@ -22,11 +25,11 @@ create, view, delete, and edit your database objects.
    Admin/index
    
 Crud
----------
+----
 
-Turbogears2 Crud Extension gives you a framework to develop a RESTful controller
-method for your model class.  tgext.crud provides the building blocks for utilities
-like tgext.admin and Catwalk.
+Turbogears2 Crud Extension gives you a framework to develop a RESTful
+controller method for your model class.  tgext.crud provides the
+building blocks for utilities like tgext.admin and Catwalk.
 
 .. toctree::
    :maxdepth: 1
@@ -35,9 +38,10 @@ like tgext.admin and Catwalk.
 
 
 Geo
----------
+---
 
-TurboGears2 provides a set of extensions to help utilize your Geo Spatial Data.
+TurboGears2 provides a set of extensions to help utilize your Geo
+Spatial Data.
 
 .. image:: Geo/map_ss.png
 
@@ -45,7 +49,3 @@ TurboGears2 provides a set of extensions to help utilize your Geo Spatial Data.
    :maxdepth: 1
 
    Geo/index
-   
-
-.. todo:: Review this file for todo items.
-

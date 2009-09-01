@@ -1,5 +1,4 @@
-
-Profiling your app
+Profiling Your App
 ==================
 
 :Status: Work in progress
@@ -8,7 +7,8 @@ Profiling your app
     :depth: 2
 
 
-TurboGears does not come with a built-in profiler, but an easy to use WSGI application profiler is just an easy_install away! 
+TurboGears does not come with a built-in profiler, but an easy to use
+WSGI application profiler is just an easy_install away!
 
 
 Installing repoze.profile
@@ -37,25 +37,24 @@ Next add it to your WSGI stack in middleware.py in the config folder::
        
        return app
 
-
-
-Gathering profile data
+Gathering Profile Data
 ----------------------
 
-Just fire up a browser (or functional test-runner like twill, ab (apache bench), or whatever).   The repoze.profile middleware will profile everything above it in the WSGI stack. 
+Just fire up a browser (or functional test-runner like twill, ab
+(apache bench), or whatever).  The repoze.profile middleware will
+profile everything above it in the WSGI stack.
 
 
-Viewing profile data
----------------------------
+Viewing Profile Data
+--------------------
 
-    There's a built in web based view of your profile data. It should now be available at the location /__profile__ in your app. For explanation of the various columns shown on this page refer to python profiler docs  `http://docs.python.org/library/profile.html`.
+There's a built in web based view of your profile data. It should now
+be available at the location /__profile__ in your app. For explanation
+of the various columns shown on this page refer to python profiler
+docs `http://docs.python.org/library/profile.html`.
 
 Some distros package the profiler separately. Make sure to install  the python-profiler package as well.
 
 Reference:
 
 http://blog.repoze.org/repozeprofile-0_2-released.html
-
-
-.. todo:: Review this file for todo items.
-
