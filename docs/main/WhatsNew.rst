@@ -1,3 +1,5 @@
+.. _whatsnew:
+
 What's New In TurboGears 2
 ==========================
 

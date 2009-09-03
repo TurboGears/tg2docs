@@ -56,3 +56,13 @@ Misc To Do Items From The Docs
 .. todo:: resolve ticket http://trac.turbogears.org/ticket/2326
 
 .. todo:: port http://docs.turbogears.org/1.0/SQLAlchemy#id13
+
+.. todo:: http://code.google.com/p/tgtools/source/browse/projects/tgext.admin/trunk/tgext/admin/tgadminconfig.py#114 << how to override tgext.admin controllers properly
+
+.. todo:: incorporate custom routes docs from here http://simplestation.com/locomotion/routes-in-turbogears2/
+
+.. todo:: Note that RestController is REST + forms, not for webservices
+
+.. todo:: RestController requires that all data come in as a key/value pair, can't just get raw POST body
+
+.. todo:: Add in docs for sqlautocode -> percious said to put his name here
