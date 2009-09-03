@@ -66,3 +66,30 @@ Misc To Do Items From The Docs
 .. todo:: RestController requires that all data come in as a key/value pair, can't just get raw POST body
 
 .. todo:: Add in docs for sqlautocode -> percious said to put his name here
+
+.. todo:: make sure that override_template is more visible, and provide a tutorial on how to use it
+
+.. todo:: Include these docs: http://groups.google.com/group/turbogears/browse_frm/thread/9b07a8d34611f5d7?hl=en
+
+.. todo:: Include these docs: http://groups.google.com/group/turbogears/browse_frm/thread/c2aa4cb5ed07f52d?hl=en
+
+.. todo:: Include these docs: http://www.blog.pythonlibrary.org/?p=210
+
+.. todo:: Include these docs: http://groups.google.com/group/turbogears/browse_frm/thread/4023f34fd114121e?hl=en
+
+.. todo:: Include these docs: http://groups.google.com/group/turbogears/browse_frm/thread/f35ef3d347793682?hl=en
+
+.. todo:: Include these docs: http://groups.google.com/group/turbogears/browse_frm/thread/3afbc13d88af57d3?hl=en
+
+.. todo:: Include these docs: http://groups.google.com/group/turbogears/browse_frm/thread/46d8fa413a0c97d8?hl=en
+
+.. todo:: Include these docs: http://groups.google.com/group/turbogears/browse_thread/thread/6b44420129281259
+
+.. todo:: Include these docs: http://groups.google.com/group/turbogears/browse_frm/thread/31c4268417c5033c?hl=en
+
+.. todo:: Include these docs: http://groups.google.com/group/turbogears/browse_frm/thread/1c4158ad3035082c?hl=en
+
+.. todo:: Include these docs: http://groups.google.com/group/turbogears/browse_frm/thread/55d6bb9704b3127a?hl=en
+
+.. todo:: Include these docs: http://groups.google.com/group/turbogears/browse_frm/thread/a02d64756fb0aa24?hl=en
+
