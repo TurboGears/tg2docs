@@ -194,3 +194,7 @@ Misc To Do Items From The Docs
 .. todo:: Incorporate these docs: http://groups.google.com/group/turbogears/msg/fa55a0f30c514b89
 
 .. todo:: Resolve all tickets that match this query: http://trac.turbogears.org/query?status=new&status=assigned&status=reopened&component=Documentation&order=id
+
+.. todo:: Document @restrict decorator, restricts request types that a given method will respond to
+
+
