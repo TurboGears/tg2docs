@@ -93,3 +93,104 @@ Misc To Do Items From The Docs
 
 .. todo:: Include these docs: http://groups.google.com/group/turbogears/browse_frm/thread/a02d64756fb0aa24?hl=en
 
+.. todo:: Incorporate the info from this pic: http://imagebin.ca/view/P969Fr.html
+
+.. todo:: Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/ae89ea2b3a354bc2?hl=en
+
+.. todo:: Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/9fab648428c20761?hl=en
+
+.. todo:: Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/ade704ec2fb9f2bb?hl=en
+
+.. todo:: Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/c721e2d15bb2c134?hl=en
+
+.. todo:: Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/24683a03895e264a?hl=en
+
+.. todo:: Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/b718855725da557d?hl=en
+
+.. todo:: Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/0d804df13f2299b1?hl=en
+
+.. todo:: Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/bbf8c847e77ca740?hl=en
+
+.. todo:: Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/be2939380bfe0f2b?hl=en
+
+.. todo:: Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/da4789ff0e246f8b?hl=en
+
+.. todo:: Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/ed539bc52198115b?hl=en
+
+.. todo:: Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/4fc2abf3b91b9ce3?hl=en
+
+.. todo:: Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/8fc49a69e9971290?hl=en
+
+.. todo:: Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/d64d27b2cf54bb2e?hl=en
+
+.. todo:: Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/1b82fa2b4a95957e?hl=en
+
+.. todo:: Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/33a64a06ee4020ce?hl=en
+
+.. todo:: Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/1f9853eac52decd5?hl=en
+
+.. todo:: Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/7d5a07b4a21d7226?hl=en
+
+.. todo:: Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/2e9737544409c8e9?hl=en
+
+.. todo:: Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/42950271275c25ba?hl=en
+
+.. todo:: Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/b258fe5a1f788c0c?hl=en
+
+.. todo:: Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/094cf0138bd33e2c?hl=en
+
+.. todo:: Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/daf8db234df8105b?hl=en
+
+.. todo:: Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/4a87b275876647b6?hl=en
+
+.. todo:: Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/ba405adcabf4f78f?hl=en
+
+.. todo:: Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/f6c61b5f1668e6d3?hl=en
+
+.. todo:: Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/263233e9a8081c7a?hl=en
+
+.. todo:: Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/d4635f5eb2ad1dc4?hl=en
+
+.. todo:: Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/d3f40bf1bdf2cc98?hl=en
+
+.. todo:: Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/a60d30766006f58d?hl=en
+
+.. todo:: Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/5dd5b090eb0d4c49?hl=en
+
+.. todo:: Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/a691ae9d3b31138d?hl=en
+
+.. todo:: Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/626ff97e4b3a1dfd?hl=en
+
+.. todo:: Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/72e106fc6512b1cb?hl=en
+
+.. todo:: Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/b97ee4faeb6acd53?hl=en
+
+.. todo:: Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/92581851b407cdd6?hl=en
+
+.. todo:: Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/57229bc8677f0e6b/a9843e77e67af793?hl=en#a9843e77e67af793
+
+.. todo:: Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/7db400f92f652fd4/95c256ac817a5102?hl=en#95c256ac817a5102
+
+.. todo:: Incorporate these docs: http://groups.google.com/group/turbogears/browse_thread/thread/3ba7ca9d35fd9d75?fwc=1
+
+.. todo:: Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/54306a9fd9b76a7d?hl=en
+
+.. todo:: Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/ad87eeef701ed1b1?hl=en
+
+.. todo:: Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/ca5ddeabdc7cb517?hl=en
+
+.. todo:: Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/f3c2c616f5530426?hl=en
+
+.. todo:: Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/2d425ea3ab159cfd?hl=en
+
+.. todo:: Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/bb07ff87d38367f0?hl=en
+
+.. todo:: Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/9b451d82b410f844?hl=en
+
+.. todo:: Incorporate these docs: http://groups.google.com/group/turbogears/browse_thread/thread/1174aad1b3350b5c
+
+.. todo:: Incorporate these docs: http://groups.google.com/group/turbogears/browse_thread/thread/0048b8c99c472c36/496e987deff35419?lnk=raot
+
+.. todo:: Incorporate these docs: http://groups.google.com/group/turbogears/msg/fa55a0f30c514b89
+
+.. todo:: Resolve all tickets that match this query: http://trac.turbogears.org/query?status=new&status=assigned&status=reopened&component=Documentation&order=id
