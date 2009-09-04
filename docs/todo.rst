@@ -121,16 +121,18 @@ should we link more directly to toscawidget tutorials?
 Serving Specific File Types
 ---------------------------
 
-from tg.controllers import CUSTOM_CONTENT_TYPE
+.. code-block:: python
 
-class FilesController(RestController):
+    from tg.controllers import CUSTOM_CONTENT_TYPE
 
-    @@expose(content_type=CUSTOM_CONTENT_TYPE)
-        def get_one(self, file_type, *file_path):
-	        file_path = list(file_path)
-		if pylons.request.response_ext:
-		    file_path[-1]+=pylons.request.response_ext
-		pylons.response.headers['Content-Type'] = 'text/plain'
-		pylons.response.headers['Content-Disposition'] = 'attachment; filename="'+file_path[-1]+'"'
-		return file(file_path, "r").read()
+    class FilesController(RestController):
+
+        @@expose(content_type=CUSTOM_CONTENT_TYPE)
+            def get_one(self, file_type, *file_path):
+	            file_path = list(file_path)
+		    if pylons.request.response_ext:
+		        file_path[-1]+=pylons.request.response_ext
+    		    pylons.response.headers['Content-Type'] = 'text/plain'
+		    pylons.response.headers['Content-Disposition'] = 'attachment; filename="'+file_path[-1]+'"'
+		    return file(file_path, "r").read()
 							    
