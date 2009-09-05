@@ -2,5 +2,5 @@
 Template Performance
 ====================
 
-.. todo:: Review this file for todo items.
+.. todo:: This is an empty file. We need to discuss this topic in depth.
 

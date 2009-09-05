@@ -10,7 +10,3 @@ Module Contents
 .. autoclass:: TGGeoModelCommand
 .. autoclass:: TGGeoLayerCommand
 .. autoclass:: TGGeoTileCacheCommand
-
-
-.. todo:: Review this file for todo items.
-

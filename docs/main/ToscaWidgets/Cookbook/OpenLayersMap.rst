@@ -1,21 +1,36 @@
+.. _tw_cookbook_openlayersmap:
 
-
-OpenLayers Map Widget
-=====================
+OpenLayers_ Map Widget
+======================
 
 
 Introduction
 ------------
 
-OpenLayers is a Javascript Toolkit for creating web mapping applications. Its is licensed under the liberal BSD license and is being used extensively on various mapping applications.
+OpenLayers_ is a Javascript Toolkit for creating web mapping
+applications. It is licensed under the BSD license and is used
+extensively on various mapping applications.
 
-An Openlayers Map typically consists of a map object consisting of a viewport which is contained in a standard html DIV element. The map contains one or more Layer objects which are also html DIVs in their own right and render images based on data queried from one or more servers. The layer data is obtained using one of the several web mapping APIs that are commonly used on the Internet, like Google Maps API, Yahoo Maps API or the APIs based on the Open Geospatial Consortium (OGC) Specifications, e.g. Web Map Service (WMS), Web Feature Service (WFS), Geography Markup Language (GML), etc. Apart from the layers, a map would also have some map control objects like the LayerSwitcher (for arranging the oder of layers), PanZoomBar (for panning and zooming), etc.
+An Openlayers Map typically consists of a map object consisting of a
+viewport which is contained in a standard html DIV element. The map
+contains one or more Layer objects which are also html DIVs in their
+own right and render images based on data queried from one or more
+servers. The layer data is obtained using one of the several web
+mapping APIs that are commonly used on the Internet, like Google Maps
+API, Yahoo Maps API or the APIs based on the Open Geospatial
+Consortium (OGC) Specifications, e.g. Web Map Service (WMS), Web
+Feature Service (WFS), Geography Markup Language (GML), etc. Apart
+from the layers, a map would also have some map control objects like
+the LayerSwitcher (for arranging the order of layers), PanZoomBar (for
+panning and zooming), etc.
 
 
-About this Tutorial
+About This Tutorial
 -------------------
 
-In this tutorial we would create an OpenLayers Map with several layers and controls using the ToscaWidgets library for OpenLayers, viz. tw.openlayers. 
+In this tutorial we create an OpenLayers_ Map with several layers and
+controls using the ToscaWidgets library for OpenLayers_,
+viz. tw.openlayers.
 
 
 Installation
@@ -26,10 +41,17 @@ Installation
   easy_install tw.openlayers
 
 
-Creating the Layers:
+Creating The Layers:
 --------------------
 
-First of all we create the layers required to be rendered in the map. The layers should be created as a WidgetsList, which is described as "syntactic sugar for declaring a list of widgets" by Alberto, the creator of ToscaWidgets. The following code shows creation of layers with 6 different layer objects. Three layers using data accessible through OGC WMS and one each using Google, Yahoo and MS VirtualEarth APIs. Note that the API Keys used below for Google and Yahoo must be replaced with suitable keys generated for the site hosting the map::
+First of all we create the layers required to be rendered in the
+map. The layers should be created as a WidgetsList, which is described
+as "syntactic sugar for declaring a list of widgets" by Alberto, the
+creator of ToscaWidgets. The following code shows creation of layers
+with 6 different layer objects. Three layers using data accessible
+through OGC WMS and one each using Google, Yahoo and MS VirtualEarth
+APIs. Note that the API Keys used below for Google and Yahoo must be
+replaced with suitable keys generated for the site hosting the map::
 
     from tw.api import WidgetsList, js_symbol
     from tw.openlayers import WMS, Google, Yahoo, VirtualEarth
@@ -59,13 +81,18 @@ First of all we create the layers required to be rendered in the map. The layers
         ve = VirtualEarth(name="VE", apikey=VE_API_KEY, isBaseLayer = True)
 
 
-The WMS layers take a *url* parameter. This is a list of urls running the service. All the layers support an *options* and a *display* parameter. These parameters are required for passing additional layer options and display options. Checkout the OpenLayers API Docs for the various supported parameters.
+The WMS layers take a *url* parameter. This is a list of urls running
+the service. All the layers support an *options* and a *display*
+parameter. These parameters are required for passing additional layer
+options and display options. Checkout the OpenLayers_ API Docs for the
+various supported parameters.
 
 
-Creating the Map Controls
+Creating The Map Controls
 -------------------------
 
-Similar to the Layers, the map Controls are also created as a WidgetsList. They are initialized as follows::
+Similar to the Layers, the map Controls are also created as a
+WidgetsList. They are initialized as follows::
 
     from tw.openlayers import LayerSwitcher, OverviewMap, PanZoomBar
 
@@ -76,10 +103,12 @@ Similar to the Layers, the map Controls are also created as a WidgetsList. They 
         pzm = PanZoomBar()
 
 
-Creating the Map
+Creating The Map
 ----------------
 
-Finally the Map object is created using the layers and the controls created above and placed in the template context inside the controller method::
+Finally the Map object is created using the layers and the controls
+created above and placed in the template context inside the controller
+method::
 
     from tw.openlayers import Map
 
@@ -92,19 +121,19 @@ Finally the Map object is created using the layers and the controls created abov
             pylons.c.map = map
             return dict(page='index')
 
-Calling the Map in the Template
+Calling The Map In The Template
 -------------------------------
 
-The map is rendered in the template by calling it from the template context::
+The map is rendered in the template by calling it from the template
+context::
 
    ${tmpl_context.map()}
 
-The map can then be viewed in the browser. A screenshot is shown as example:
+The map can then be viewed in the browser. A screenshot is shown as
+example:
 
 .. image:: ../images/openlayersmap.png
     :alt: example OpenLayers Map
 
-
-
-.. todo:: Review this file for todo items.
+.. _OpenLayers: http://openlayers.org/
 

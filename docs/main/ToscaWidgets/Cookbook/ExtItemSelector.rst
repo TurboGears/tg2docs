@@ -1,6 +1,7 @@
+.. _tw_cookbook_extitemselector:
 
-ExtJS ItemSelector Widget
-=========================
+ExtJS ItemSelector Widget Tutorial
+==================================
 
 
 Installation
@@ -14,10 +15,15 @@ Installation
 Usage
 -----
 
-The ItemSelector widget aka SelectShuttle allows selection / deselection of multiple items from a select list. The ExtJS ItemSelector widget supports powerful features like drag and drop and ordering of selected items. The basic usage of this widget is demonstrated below. The widget uses the following parameters:
+The ItemSelector widget aka SelectShuttle allows selection and
+deselection of multiple items from a select list. The ExtJS
+ItemSelector widget supports powerful features like drag and drop and
+ordering of selected items. The basic usage of this widget is
+demonstrated below. The widget uses the following parameters:
 
 Parameters:
-~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~
+
 +-------------------------+---------------------------------------------+---------------------+
 | **Name**                | **Description**                             | **Default**         |
 +-------------------------+---------------------------------------------+---------------------+
@@ -97,13 +103,13 @@ The widget can then be displayed in the template like this::
 
    ${tmpl_context.field()}
 
-This brings up the ItemSelector on the browser. It allows shuttling of items between the source and destination Fields and ordering of items selected in the destination field using the arrow keys or by dragging and dropping the items at the correct place. This is how it looks in the browser:
+This brings up the ItemSelector on the browser. It allows shuttling of
+items between the source and destination Fields and ordering of items
+selected in the destination field using the arrow keys or by dragging
+and dropping the items at the correct place. This is how it looks in
+the browser:
 
 
  .. image:: ../images/itemselector1.png
    :alt: example ItemSelector
    :width: 500
-
-
-.. todo:: Review this file for todo items.
-

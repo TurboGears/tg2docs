@@ -1,3 +1,4 @@
+.. _tw_cookbook_jsunit:
 
 JSUnit Widget
 =============
@@ -14,14 +15,27 @@ Installation
 Usage
 -----
 
-The JSUnit Widget can be used to create testpages for testing javascript code using the `JSUnit javascript unit testing framework <http://www.jsunit.net/>`_. The package also includes a Runner Widget that sets up the environment for running the JSUnit testRunner off a TurboGears webapp as seen in the online testRunner example `here <http://www.jsunit.net/runner/testRunner.html?testpage=/runner/tests/jsUnitTestSuite.html>`_.
+The JSUnit Widget can be used to create testpages for testing
+javascript code using the JSUnit_ javascript unit testing
+framework. The package also includes a Runner Widget that sets up the
+environment for running the JSUnit testRunner off a TurboGears webapp
+as seen in the `online testRunner example`_.
 
-The tutorial is divided into two parts. The first part demonstrates the usage in testing custom javascript code used in a TurboGears Application and the second part demonstrates the usage in testing javascript code in a ToscaWidget.
+The tutorial is divided into two parts. The first part demonstrates
+the usage in testing custom javascript code used in a TurboGears
+Application and the second part demonstrates the usage in testing
+javascript code in a ToscaWidget.
 
-Testing Javascript Code in TurboGears App
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Testing Javascript Code in A TurboGears App
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When testing javascript code in a TG app, the JSUnit widget can be used by creating two additional controller methods. One for running the testRunner and the other for loading the testsuite. The method for running the testRunner must instantiate and place the Runner widget in the template context. Similarly the method for loading the testsuite must instantiate the JSUnit widget. The following code block shows the usage::
+When testing javascript code in a TG app, the JSUnit widget can be
+used by creating two additional controller methods. One for running
+the testRunner and the other for loading the testsuite. The method for
+running the testRunner must instantiate and place the Runner widget in
+the template context. Similarly the method for loading the testsuite
+must instantiate the JSUnit widget. The following code block shows the
+usage::
 
     from tw.jsunit import JSUnit, Runner
 
@@ -37,17 +51,27 @@ When testing javascript code in a TG app, the JSUnit widget can be used by creat
             pylons.c.jsunit = JSUnit()
             return dict()
 
-We also need to create two templates. One for the testRunner and one for the testsuite. The template for the testRunner should include the runner widget::
+We also need to create two templates. One for the testRunner and one
+for the testsuite. The template for the testRunner should include the
+runner widget::
 
     ${tmpl_context.runner(value=value)}
 
-The template for the testsuite should include the JSUnit widget and the javascript file containing the test functions. It should also include javascript files where the functions to be tested are defined::
+The template for the testsuite should include the JSUnit widget and
+the javascript file containing the test functions. It should also
+include javascript files where the functions to be tested are
+defined::
 
     <script type="text/javascript" src="/javascript/myfunctions.js" />
     <script type="text/javascript" src="/javascript/mytests.js" />
     ${tmpl_context.jsunit(value=value)}
 
-The javascript files are typically placed in the public/javascript folder inside the package for the TG app. The *mytests.js* file would contain all the test functions having the test signature as described in the jsunit documentation. These functions should be called testXXX() and should not take any parameters. The following example shows some sample test functions::
+The javascript files are typically placed in the public/javascript
+folder inside the package for the TG app. The *mytests.js* file would
+contain all the test functions having the test signature as described
+in the jsunit documentation. These functions should be called
+testXXX() and should not take any parameters. The following example
+shows some sample test functions::
 
     function testAlwaysPasses() {
       assertEquals("Always Passes!", 1, 1);
@@ -62,7 +86,9 @@ The javascript files are typically placed in the public/javascript folder inside
       assertEquals("Sometimes Fails!", true, rand_no>5);
     }
 
-Pointing the browser to http://localhost:8080/runner shows up the test runner page. The tests are performed on hitting the *Run* button. The results are displayed nicely as shown below:
+Pointing the browser to http://localhost:8080/runner shows up the test
+runner page. The tests are performed on hitting the *Run* button. The
+results are displayed nicely as shown below:
 
 .. image:: ../images/jsunit1.png
     :alt: example JSUnit Widget
@@ -72,10 +98,16 @@ The final files for this tutorial can be downloaded here;
 * ZIP file: `SampleJSUnit.zip <attachment:SampleJSUnit.zip>`_
 * Tar/Bz2 file: `SampleJSUnit.tar.bz2 <attachment:SampleJSUnit.tar.bz2>`_
 
-Testing Javascript Code in ToscaWidget
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Testing Javascript Code in ToscaWidgets
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-For testing javascript code in ToscaWidgets, the package for the widget to be tested should include a Test Widget created by extending the JSUnit widget. The following example shows a new widget ItemSelectorTest created inside the tw.extjs package for testing the javascript code used in the ExtJS ItemSelector widget. Apart from the javascript test code the Widget should include all the javascript code which are required to be tested::
+For testing javascript code in ToscaWidgets, the package for the
+widget to be tested should include a Test Widget created by extending
+the JSUnit widget. The following example shows a new widget
+ItemSelectorTest created inside the tw.extjs package for testing the
+javascript code used in the ExtJS ItemSelector widget. Apart from the
+javascript test code the Widget should include all the javascript code
+which are required to be tested::
 
     from tw.api import Widget, JSLink, CSSLink, JSSource
     from tw.core.resources import Resource
@@ -99,7 +131,11 @@ For testing javascript code in ToscaWidgets, the package for the widget to be te
         def update_params(self, d):
             super(ItemSelectorTest, self).update_params(d)
 
-The file multiselect_test.js inside the static folder contains the test functions having the test signatures described in the jsunit documentation. The following code block shows some example functions. The setUp() function is used to setup the test data. In this case only a part of the function definition code is displayed::
+The file multiselect_test.js inside the static folder contains the
+test functions having the test signatures described in the jsunit
+documentation. The following code block shows some example
+functions. The setUp() function is used to setup the test data. In
+this case only a part of the function definition code is displayed::
 
     function setUp() {
 
@@ -147,7 +183,14 @@ The file multiselect_test.js inside the static folder contains the test function
       assertEquals("valueField value mismatch!", 'code', panelItem.valueField);
     }
 
-This javascript code can be tested by using the Runner widget inside a sample TG app. As described above, the Controller should have two methods, one for the testRunner and the other for the testsuite. The method for the runner should be the same as above. In this case two apart from the Runner widget, two more widgets needs to be instantiated, viz. the widget to be tested and the test widget. Both these widgets should be placed in the template context by the testsuite method. The following code block demonstrates the usage::
+This javascript code can be tested by using the Runner widget inside a
+sample TG app. As described above, the Controller should have two
+methods, one for the testRunner and the other for the testsuite. The
+method for the runner should be the same as above. In this case, apart
+from the Runner widget, two more widgets needs to be instantiated,
+viz. the widget to be tested and the test widget. Both these widgets
+should be placed in the template context by the testsuite method. The
+following code block demonstrates the usage::
 
     from tw.extjs.tests import ItemSelectorTest
     from tw.jsunit import Runner, JSUnit
@@ -167,15 +210,19 @@ This javascript code can be tested by using the Runner widget inside a sample TG
             pylons.c.selectortest = selectortest
             return dict()
 
-The template file for the runner method should include the Runner widget as follows::
+The template file for the runner method should include the Runner
+widget as follows::
 
     ${tmpl_context.runner(value=value)}
 
-The template file for the testsuite method should include the test widget::
+The template file for the testsuite method should include the test
+widget::
 
     ${tmpl_context.selectortest(value=value)}
 
-Pointing the browser to http://localhost:8080/runner shows up the test runner page. The tests are performed on hitting the *Run* button. The results are displayed nicely as shown below:
+Pointing the browser to http://localhost:8080/runner shows up the test
+runner page. The tests are performed on hitting the *Run* button. The
+results are displayed nicely as shown below:
 
 .. image:: ../images/jsunit.png
     :alt: example JSUnit Widget
@@ -185,6 +232,6 @@ The final files for this tutorial can be downloaded here;
 * ZIP file: `SampleUnit.zip <attachment:SampleUnit.zip>`_
 * Tar/Bz2 file: `SampleUnit.tar.bz2 <attachment:SampleUnit.tar.bz2>`_
 
-
-.. todo:: Review this file for todo items.
+.. _JSUnit: http://www.jsunit.net/
+.. _`online testRunner example`: http://www.jsunit.net/runner/testRunner.html?testpage=/runner/tests/jsUnitTestSuite.html
 

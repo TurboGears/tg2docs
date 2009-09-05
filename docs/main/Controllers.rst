@@ -1,3 +1,5 @@
+.. _writing_controllers:
+
 Writing Controller Methods
 ===========================
 

@@ -22,9 +22,9 @@ a MooTools library for TW
 tw.jquery
 ---------
 includes:
- * ActiveForm (ajax form)
+ * AjaxForm (ajax form)
  * AutoCompleteField
  * flot
 
-.. todo:: Review this file for todo items.
+.. todo:: This file seems sparse. Review to make it have more depth.
 

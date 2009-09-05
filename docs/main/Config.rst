@@ -1,3 +1,5 @@
+.. _config:
+
 TurboGears 2 Configuration
 ==========================
 

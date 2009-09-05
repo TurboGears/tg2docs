@@ -1,5 +1,7 @@
+.. _command_line_reference:
+
 Command Line Reference
-###############################
+######################
 
 
 TurboGears2 delegates its command line tasks to Paste.  TG1.x uses the

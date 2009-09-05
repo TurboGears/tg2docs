@@ -1,7 +1,7 @@
+.. _tw_cookbook_autocomplete:
 
-
-JQuery AutoComplete Widget
-==========================
+JQuery AutoComplete Widget Tutorial
+===================================
 
 
 Installation
@@ -19,13 +19,24 @@ The AutoCompleteField widget supports the following parameters:
 
 Mandatory Parameters:
 ~~~~~~~~~~~~~~~~~~~~~
-* **id** The element id of the input field element. Multiple instances of AutoCompleteField can be used on the same form or page. These are referenced distinctly on the form or page by the id.  This is also the name of the field which is passed into the form on the server side.
-* **completionURL** This is the url to be used for fetching the autocomplete values using HTTP GET request.
+
+* **id** The element id of the input field element. Multiple instances
+    of AutoCompleteField can be used on the same form or page. These
+    are referenced distinctly on the form or page by the id.  This is
+    also the name of the field which is passed into the form on the
+    server side.
+* **completionURL** This is the url to be used for fetching the
+    autocomplete values using HTTP GET request.
 
 Optional Parameters:
 ~~~~~~~~~~~~~~~~~~~~
-* **fetchJSON** Specifies whether the values are to be fetched as a JSON request. If specified as true it tries to interpret the returned data as JSON. (*Default:* fetchJSON = False)
-*  **minChars** Specifies the minimum number of characters that the user must enter before the list is shown. (*Default:* minChars = 1)
+
+* **fetchJSON** Specifies whether the values are to be fetched as a
+    JSON request. If specified as true it tries to interpret the
+    returned data as JSON. (*Default:* fetchJSON = False)
+* **minChars** Specifies the minimum number of characters that the
+     user must enter before the list is shown. (*Default:* minChars =
+     1)
 
 For example the widget is instantiated as::
 
@@ -44,7 +55,8 @@ Once the Widget is instantiated it can be added to an existing form::
 
    myForm = TableForm(id='myForm', children=[autoField])
 
-This form is of course served up to the user via a controller method like this::
+This form is of course served up to the user via a controller method
+like this::
   
    @expose('mypackage.templates.myformtemplate')
    def entry(self, **kw):
@@ -61,20 +73,26 @@ And here is the resulting field when viewed from a browser:
     :alt: example AutoComplete Field
 
 
-The template generates the necessary javascript code to fetch values from the controller using the completionURL. The controller code for generating the json response would be something like::
+The template generates the necessary javascript code to fetch values
+from the controller using the completionURL. The controller code for
+generating the json response would be something like::
 
     @expose('json')
     def fetch_states(self):
         states = ['ALASKA', 'ALABAMA', 'ARIZONA', ..........., 'WYOMING']
         return dict(data=states)
 
-The method should return a dictionary with **data** as key and a list as value. In this example the list is populated manually. The list would, in most cases, be obtained from a database.
+The method should return a dictionary with **data** as key and a list
+as value. In this example the list is populated manually. The list
+would, in most cases, be obtained from a database.
 
 
 Data Retrieval
 --------------
 
-Here is how you retrieve data from the form once it has been submitted by the user.  Notice that this is not any different from how it is normally retrieved from forms.::
+Here is how you retrieve data from the form once it has been submitted
+by the user.  Notice that this is not any different from how it is
+normally retrieved from forms.::
 
   def retrieve(self, **kw):
      do.something()
@@ -83,7 +101,10 @@ Here is how you retrieve data from the form once it has been submitted by the us
 
 Validation
 ----------
-We add a @validate decorator to the data retrieval function which redirects us back to the original form if the user enters something that does not match that which is in our list. ::
+
+We add a @validate decorator to the data retrieval function which
+redirects us back to the original form if the user enters something
+that does not match that which is in our list. ::
 
   @validate(myForm, error_handler=entry)
   def retrieve(self, **kw):
@@ -97,7 +118,5 @@ and here is what the widget looks like when the validation fails:
 
 
 
---what about if someone is using this widget for a select field, and the value they want returned is the value of the id of an object of select values in a database? ---
-
-.. todo:: Review this file for todo items.
+.. todo:: document the answer to this question: What about if someone is using this widget for a select field, and the value they want returned is the value of the id of an object of select values in a database?
 

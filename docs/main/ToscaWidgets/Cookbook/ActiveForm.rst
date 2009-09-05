@@ -1,6 +1,6 @@
+.. _tw_cookbook_ajaxform:
 
-
-Creating Ajax-enabled forms using Prototype
+Creating Ajax-Enabled Forms Using Prototype
 ===========================================
 
 Installation
@@ -47,5 +47,6 @@ Usage
     activeFormHandler = ActiveFormResponseHandler(activeForm, submitSuccess)
     submit            = activeFormHandler.ajax_submit
 
-.. todo:: Review this file for todo items.
+.. todo:: This is nothing but code snippets. Add text describing what
+   the code does.
 

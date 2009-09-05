@@ -1,6 +1,7 @@
+.. _tw_cookbook_jqueryajaxform:
 
 JQuery AjaxForm Widget
-==========================
+======================
 
 
 Installation
@@ -18,9 +19,13 @@ The AjaxForm widget supports the following parameters:
 
 Mandatory Parameters:
 ~~~~~~~~~~~~~~~~~~~~~
-* **id** The id of the form. The submit action of this form triggers the Ajax Request. 
 
-* **fields** The form fields. The fields could be a WidgetList object created like this::
+* **id** The id of the form. The submit action of this form triggers
+    the Ajax Request.
+* **fields** The form fields. The fields could be a WidgetList object
+    created like this:
+
+.. code-block:: python
 
     from formencode import validators
     from tw.forms.fields import TextField, TextArea, CheckBox
@@ -34,27 +39,30 @@ Mandatory Parameters:
                         attrs={'size':30})
         comment = TextArea(validator=validators.NotEmpty())
         notify = CheckBox(label="Notify me")
-* **action** The url for the controller method that would handle the Ajax Request.
+
+* **action** The url for the controller method that would handle the
+    Ajax Request.
 
 Optional Parameters:
 ~~~~~~~~~~~~~~~~~~~~
-* **target** This is the id of the element where the output of the request would be rendered. (*Default:* "output")
 
-* **type** The method to use for the request, i.e. whether GET or POST. (*Default:* "POST")
-
-* **dataType** The dataType of the response, i.e. whether XML, JSON or SCRIPT. (*Default:* "JSON")
-
-* **beforeSubmit** The javascript function that should be called just before submitting the request. This could be helpful 
-
-for doing javascript based validations if needed. (*Default:* None)
-
-* **success** The javascript function that should be called if the request succeeds. (*Default:* None)
-
-* **clearForm** Clears the form after sending the request. (*Default:* True)
-
-* **resetForm** Resets the form after sending the request. (*Default:* True)
-
-* **timeout** Time in ms before the request is timed out. (*Default:* 3000)
+* **target** This is the id of the element where the output of the
+    request would be rendered. (*Default:* "output")
+* **type** The method to use for the request, i.e. whether GET or
+    POST. (*Default:* "POST")
+* **dataType** The dataType of the response, i.e. whether XML, JSON or
+    SCRIPT. (*Default:* "JSON")
+* **beforeSubmit** The javascript function that should be called just
+    before submitting the request. This could be helpful for doing
+    javascript based validations if needed. (*Default:* None)
+* **success** The javascript function that should be called if the
+    request succeeds. (*Default:* None)
+* **clearForm** Clears the form after sending the request. (*Default:*
+    True)
+* **resetForm** Resets the form after sending the request. (*Default:*
+    True)
+* **timeout** Time in ms before the request is timed out. (*Default:*
+    3000)
 
 A simple AjaxForm widget may be instantiated as::
 
@@ -66,14 +74,17 @@ A simple AjaxForm widget may be instantiated as::
                         action="do_search")
 
 
-The form can then be served up to the user via a controller method like this::
+The form can then be served up to the user via a controller method
+like this::
   
    @expose('mypackage.templates.myformtemplate')
    def entry(self, **kw):
        pylons.c.form = myAjaxForm
        return dict(value=kw)
 
-In your template you need to pickup your form from the template context for rendering. Also create a target div ("output" in this case) to display the output::
+In your template you need to pickup your form from the template
+context for rendering. Also create a target div ("output" in this
+case) to display the output::
 
    ${tmpl_context.form(show_labels=True, value=value)}
 
@@ -85,25 +96,21 @@ And here is the resulting field when viewed from a browser:
     :alt: example AjaxForm
 
 
-The template generates the necessary javascript code to send the Ajax Request when the form is submitted. The controller code 
-
-for generating the response would be something like::
+The template generates the necessary javascript code to send the Ajax
+Request when the form is submitted. The controller code for generating
+the response would be something like::
 
     @expose()
     @validate(ajax_form)
     def do_search(self, **kw):
         return "<p>Recieved Data:<br/>%(name)s<br/>%(email)s<br/>%(comment)s<br/>%(notify)s<br/></p>" % kw
 
-The output would be rendered inside a div element called *output*, which is the default target element. This is how the page 
-
-looks like after the form has been successfully submitted:
+The output would be rendered inside a div element called *output*,
+which is the default target element. This is how the page looks like
+after the form has been successfully submitted:
 
 .. image:: ../images/ajaxform2.png
     :alt: example AjaxForm
 
 
---To DO : Getting output as JSON and updating a data grid ---
-
-
-.. todo:: Review this file for todo items.
-
+.. todo:: Getting output as JSON and updating a data grid

@@ -1,12 +1,14 @@
+.. _alternative_templates:
+
 Alternative Template engines in TG2
-======================================
+===================================
 
 .. highlight:: python
 
 TurboGears has a very simple and flexible template system. 
 
-Built in renderers 
-----------------------
+Built in renderers
+------------------
 
 We support four template engines out of the box. 
 
@@ -37,7 +39,7 @@ We have docs on some of the specifics of each of these template engines:
 
 
 Writing your own render function
-------------------------------------
+--------------------------------
 
 .. todo:: Document writing your own render function for templates
 

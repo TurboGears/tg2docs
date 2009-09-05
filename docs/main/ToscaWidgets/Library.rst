@@ -7,7 +7,8 @@ Creating ToscaWidgets Libraries
 Paster
 ------
 
-Paster is a tool which creates a set of boiler-plate scripts akin to an egg package which you can then build your library inside of.
+Paster is a tool which creates a set of boiler-plate scripts akin to
+an egg package which you can then build your library inside of.
 
 Use paster to create your own toscapackage. ::
 
@@ -46,20 +47,23 @@ tw.mypackagename.  The directory structure looks like this ::
      `-- top_level.txt 
 
 
-Now you need to cd into your new package's directory and install it so you can import it in your application::
+Now you need to cd into your new package's directory and install it so
+you can import it in your application::
 
  cd tw.mypackagename
  python setup.py develop
 
-If you are interested in participating in tw.tools you should follow the standard package name which is tw. followed by your package name in all lower case letters.
+If you are interested in participating in tw.tools you should follow
+the standard package name which is tw. followed by your package name
+in all lower case letters.
 
-At this point it is a good idea to modify the setup.py file to add in dependencies on other
-public/private packages.
+At this point it is a good idea to modify the setup.py file to add in
+dependencies on other public/private packages.
 
 Finally, modify the toscawidgets/widgets/widgets.py to create your
 widget(s).
 
-your imports will look something like::
+Your imports will look something like::
 
   from tw.mypackagename import mywidgetname
 
@@ -70,13 +74,22 @@ Put a test for your widget in the test_widgets.py file.
 
 tw.tools
 --------
-tw.tools (and soon to be toscawidgets.org) gives you an easy place to share and publish your widget code.  Simply create a widget package, and notify the toscawidgets board that you are interested in sharing.  We will give you access to http://twtools.googlecode.com and give your package a trunk/tags/branches hierarchy.  You can decide to create your own releases, or have us generate releases for you and publish them to PyPI.
+
+tw.tools (and soon to be toscawidgets.org) gives you an easy place to
+share and publish your widget code.  Simply create a widget package,
+and notify the toscawidgets board that you are interested in sharing.
+We will give you access to http://twtools.googlecode.com and give your
+package a trunk/tags/branches hierarchy.  You can decide to create
+your own releases, or have us generate releases for you and publish
+them to PyPI.
 
 
 WidgetBrowser
 -------------
 
-At some point we will add the capability to let the widget browser know how to instantiate a test-version of your widget and display it so that it can be integrated with toscawidgets.org
+At some point we will add the capability to let the widget browser
+know how to instantiate a test-version of your widget and display it
+so that it can be integrated with toscawidgets.org
 
-.. todo:: Review this file for todo items.
+.. todo:: get the widget browser working for toscawidgets.org
 
