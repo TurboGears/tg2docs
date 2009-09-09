@@ -104,17 +104,11 @@ After this, you should be able to verify your tg2.1 installation with
    paster tginfo
 
 
-We also need Sphinx_ which enables us to generate html from the rst files.  
-However, the documentation uses newer features of sphinx only found in 
-the development branch, right now.   So, we get the source using Mercurial_. 
+We also need Sphinx_ which enables us to generate html from the rst files.  This can be installed by running easy_install:
 
 .. code-block:: bash
 
-    hg clone https://bitbucket.org/birkenfeld/sphinx-06/
-    cd sphinx-06
-    python setup.py develop
-    cd ..
-
+    easy_install sphinx
 
 Finally, we are ready to set up the documentation.   If you feel ready and
 willing to assist with the documentation efforts, I hope you have contacted
