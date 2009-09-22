@@ -136,7 +136,7 @@ yourname, of course.   Then you can get your repository with:
 
 .. code-block:: bash
 
-    hg clone http://bitbucket.org/laurin/tg_2_1_docs-yourname/
+    hg clone http://bitbucket.org/yourname/tg_2_1_docs-yourname/
     cd tg_2_1_docs-yourname/docs
     make html
 
@@ -157,7 +157,7 @@ yourname, of course.   Then you can get your repository with:
     
 If you want to grab mpedersen's latest changes, later within your work directory
 
-    hg pull -u http://bitbucket.org/pedersen/tg_2_1_docs/
+    hg pull -u `mpedersen repository`_
 
 
 To merge in your changes:

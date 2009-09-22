@@ -2,6 +2,10 @@
 Misc To Do Items From The Docs
 ==============================
 
+.. todo:: base_config.use_sqlalchemy=false <-- needs documentation
+
+.. todo:: http://turbogears.org/2.0/docs/main/DownloadInstall.html references http://www.turbogears.org/2.0/downloads/current/tg2-bootstrap.py and this needs to be updated
+
 .. todo:: critique the toc, and other organization. 
 
 .. todo:: add a "what is turbogears"/faq - very early on. first?   
