@@ -128,4 +128,4 @@ You can update the catalog with the following command::
 .. _`Internationalization and Localization`: http://wiki.pylonshq.com/display/pylonsdocs/Internationalization+and+Localization
 .. _UserGuide: http://babel.edgewall.org/wiki/Documentation/index.html
 
-.. todo:: The numbered list here gets an odd indent, and needs to be fixed.
+.. todo:: Difficulty: Easy. The numbered list here gets an odd indent, and needs to be fixed.

@@ -66,6 +66,6 @@ This is how it looks like in the browser:
 .. image:: ../images/singleselectcombo.png
     :alt: example SingleSelectCombo Field
 
-.. todo:: extend tutorial to include the SingleSelectCombo widget in a Form
-.. todo:: extend the tutorial to populate the options list by sending a JSON request
-.. todo:: extend the tutorial to have form field validation
+.. todo:: Difficulty: Medium. extend tutorial to include the SingleSelectCombo widget in a Form
+.. todo:: Difficulty: Medium. extend the tutorial to populate the options list by sending a JSON request
+.. todo:: Difficulty: Medium. extend the tutorial to have form field validation

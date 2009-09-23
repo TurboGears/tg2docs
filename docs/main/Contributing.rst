@@ -107,7 +107,7 @@ the editors don't enjoy writing documentation any more than you do
 (we'd rather be coding) and it's much easier to edit an existing doc
 than it is to figure out your code and write something from scratch.
 
-.. todo:: More doc types will be defined here when doc templates are
+.. todo:: Difficulty: Medium. More doc types will be defined here when doc templates are
     brought online.
 
 Contributing Documentation

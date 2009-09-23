@@ -126,4 +126,4 @@ libraries.
 
 .. image:: images/stars_avg.png
 
-.. todo:: Convert this page for tg2
+.. todo:: Difficulty: Hard. Convert this page for tg2

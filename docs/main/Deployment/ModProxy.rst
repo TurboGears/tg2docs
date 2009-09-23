@@ -112,7 +112,7 @@ the address configured as ``ServerName`` above.
 To be able to relocate your application without problems, make sure
 you create your URLs properly (see 1.0/GettingStarted/URLs).
 
-.. todo:: Fix ModProxy. Had reference to 1.0/GettingStarted/URLs and this needs to be updated for 2.1
+.. todo:: Difficulty: Easy. Fix ModProxy. Had reference to 1.0/GettingStarted/URLs and this needs to be updated for 2.1
 
 
 Setting The Correct Charset
@@ -135,5 +135,5 @@ somewhere before you return the data dictionary::
 
 Apache notices the pre-existing header and passes it through.
 
-.. todo:: The Charset section here refers to Kid templates. Verify
+.. todo:: Difficulty: Easy. The Charset section here refers to Kid templates. Verify
           these charsets, and convert to Genshi

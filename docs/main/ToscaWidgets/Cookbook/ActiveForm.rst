@@ -47,6 +47,5 @@ Usage
     activeFormHandler = ActiveFormResponseHandler(activeForm, submitSuccess)
     submit            = activeFormHandler.ajax_submit
 
-.. todo:: This is nothing but code snippets. Add text describing what
-   the code does.
+.. todo:: Difficulty: Medium. This is nothing but code snippets. Add text describing what the code does.
 

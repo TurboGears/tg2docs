@@ -188,11 +188,11 @@ efforts!
 .. _`mpedersen repository`: http://bitbucket.org/pedersen/tg_2_1_docs
 
 
-.. todo:: perhaps a better basic install link for python, virtualenv, easy_setup
-.. todo:: review whether my discussion of hg, bitbucket and repositories makes
+.. todo:: Difficulty: Medium. perhaps a better basic install link for python, virtualenv, easy_setup
+.. todo:: Difficulty: Medium. review whether my discussion of hg, bitbucket and repositories makes
     sense, and whether mpdedersen's bitbucket tutorial covers all it needs to.
     (note:   I think they make basic sense, but...   I'm not an expert)
-.. todo:: review and edit, in general...
+.. todo:: Difficulty: Easy. review and edit, in general...
     I still recommend highlighting some of the volunteer opportunities.  
     perhaps a "how to help/contribute" doc should link to here...
 

@@ -6,22 +6,22 @@ Developing Toscawidgets
 Widgets Are Stateless
 ---------------------
 
-.. todo:: Explain what this title means
+.. todo:: Difficulty: Easy. Explain what this title means
 
 Role of data in your widget
 ---------------------------
 
-.. todo:: fill in this section
+.. todo:: Difficulty: Easy. fill in this section
 
 Parameters
 ----------
 
-.. todo:: Fill in missing parameters section
+.. todo:: Difficulty: Medium. Fill in missing parameters section
 
 Generic Functions
 -----------------
 
-.. todo:: Fill in missing generic functions section
+.. todo:: Difficulty: Medium. Fill in missing generic functions section
 
 Typical Widget Components
 -------------------------
@@ -41,8 +41,7 @@ Template Code
    display_child, css_class) and any provided by the user-defined
    functions update_params and get_extra_vars.
 
-.. todo:: Is Buffet still part of the code base? I thought it was
-   being phased out for some reason.
+.. todo:: Difficulty: Easy. Is Buffet still part of the code base? I thought it was being phased out for some reason.
 
 Resources
 ~~~~~~~~~
@@ -93,11 +92,11 @@ A compound widget takes a dictionary as it's value, and passes
 individual values to child widgets. A similar system works for
 parameters, but you have to do .child_args.
 
-.. todo:: check this (.child_args), it's been a while
+.. todo:: Difficulty: Easy. check this (.child_args), it's been a while
 
 .. _Buffet: http://projects.dowski.com/projects/buffet
 
-.. todo:: add section on params
-.. todo:: add section on update_params
-.. todo:: add section about the javascript callbacks
+.. todo:: Difficulty: Medium. add section on params
+.. todo:: Difficulty: Medium. add section on update_params
+.. todo:: Difficulty: Medium. add section about the javascript callbacks
 

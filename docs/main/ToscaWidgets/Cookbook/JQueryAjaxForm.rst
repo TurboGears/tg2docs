@@ -113,4 +113,4 @@ after the form has been successfully submitted:
     :alt: example AjaxForm
 
 
-.. todo:: Getting output as JSON and updating a data grid
+.. todo:: Difficulty: Medium. Getting output as JSON and updating a data grid

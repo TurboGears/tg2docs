@@ -21,9 +21,9 @@ Tutorials
 
 
 
-.. todo:: Validate that toctree maxdepth values are appropriate
+.. todo:: Difficulty: Easy. Validate that toctree maxdepth values are appropriate
 
-.. todo:: Add link to cardlist manager whitepaper (from m.pedersen)
+.. todo:: Difficulty: Hard. Add link to cardlist manager whitepaper (from m.pedersen)
 
-.. todo:: Add links to "recipes and faqs"
+.. todo:: Difficulty: Medium (at most). Add links to "recipes and faqs"
 

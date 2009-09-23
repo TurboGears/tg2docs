@@ -4,7 +4,7 @@
 Testimonials, White Papers, and Case Studies
 ============================================
 
-.. todo:: Add testimonials
+.. todo:: Difficulty: Hard. Add testimonials
 
-.. todo:: Add cardlist manager whitepaper (from m.pedersen)
+.. todo:: Difficulty: Hard. Add cardlist manager whitepaper (from m.pedersen)
 

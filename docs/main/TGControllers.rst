@@ -9,7 +9,7 @@ method for dispatch.  They are described below.
 The Default Method
 ------------------
 
-.. todo:: Explanation of how the default method works here.
+.. todo:: Difficulty: Easy. Explanation of how the default method works here.
 
 The Lookup Method
 -----------------

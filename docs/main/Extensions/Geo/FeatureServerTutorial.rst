@@ -94,11 +94,11 @@ after and before table create and drop statements respectively. The
 GeometryColumn, LineString and GeometryDDL must be imported from the
 geoalchemy package.
 
-.. todo:: define SRID. What is this? What does the default value of
+.. todo:: Difficulty: Easy. define SRID. What is this? What does the default value of
           4326 mean? Why was it chosen? Links to this information would be
 	  fine.
 
-.. todo:: modify the above code block to have the imports mentioned in the
+.. todo:: Difficulty: Easy. modify the above code block to have the imports mentioned in the
           paragraph above.
 	  
 Creating Tables In The Database 
@@ -253,7 +253,7 @@ should include the feature id as shows below:
 
     $(tg2env)  curl -d @postdata.json http://localhost:8080/roads/3.json
 
-.. todo:: RESTful usually implies using edit in the url, but that's
+.. todo:: Difficulty: Easy. RESTful usually implies using edit in the url, but that's
           not here. Same for delete, below. Also, do we actually require
 	  using 3.json for the id? Or will just 3 work?
 
@@ -288,7 +288,7 @@ Now modify these files to change the following::
 
 Point your browser to http://localhost:8080/demo.html. You should now be able to view, create and modify features using featureserver running inside your TG2 app.
 
-.. todo:: Add authentication and authorization notes
+.. todo:: Difficulty: Medium. Add authentication and authorization notes
 
 .. _GeoAlchemy: http://geoalchemy.org>
 .. _PostGIS: http://postgis.refractions.net/
