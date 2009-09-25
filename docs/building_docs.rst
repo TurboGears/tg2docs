@@ -66,7 +66,7 @@ You could use different names if you must.
     easy_install mercurial
     mkdir src
     cd src
-    hg clone http://bitbucket.org/mramm/tg-21/
+    hg clone http://bitbucket.org/turbogears/tg-docs/
     cd tg-21
     python setup.py develop
     cd ..
