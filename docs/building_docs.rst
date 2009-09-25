@@ -14,7 +14,7 @@ language often used to document python projects.   We use Sphinx_ to generate
 html from the rst files.
 
 Since this documentation is for the 2.1 development branch of Turbogears,
-we also need to download the source in order to generate documentation from 
+we also need to download the source in order to generate documentation from
 the modules.
 
 If you are interested in helping with the new turbogears docs, we recommend you
@@ -29,7 +29,7 @@ Prerequisite
 
 We assume you have the following basic pieces in place: 
 
-* python >= 2.5
+* Python >= 2.5
 * virtualenv
 * easy_install
 
@@ -50,13 +50,13 @@ We recommend using a virtualenv for documentation development. While you
 can work without the virtualenv, we do not recommend it, do not support,
 and do not document the methods to do so.
 
-First, we setup the virtualenv and install the Turbogears 2.1 development 
+First, we setup the virtualenv and install the Turbogears 2.1 development
 branch, after first downloading it using Mercurial_.   I include a step
-for installing mercurial, which you can skip if you already have it.   
+for installing mercurial, which you can skip if you already have it.
 
-Below, we chose to use the name "tgdocs" for our virtualenv directory, and 
-used a subdirectory under that "src" for our work directory.   
-You could use different names if you must.    
+Below, we chose to use the name "tgdocs" for our virtualenv directory, and
+used a subdirectory under that "src" for our work directory.
+You could use different names if you must.
 
 .. code-block:: bash
 
@@ -71,19 +71,23 @@ You could use different names if you must.
     python setup.py develop
     cd ..
 
-.. note::   Under Windows, you use the "activate.bat" script to activate
+.. note::   Under Windows, you use "Scripts\\activate.bat" to activate
     your virtualenv.  See BasicInstall_ if you need help with that.
+    Also, in order to install Mercurial from source, you will need MinGW
+    and ``set LIBRARY_PATH=C:\Programme\Python25\libs`` in activate.bat.
+    Installing gettext and make from GnuWin32 will also be useful for
+    compiling Mercurial and building the TurboGears docs.
 
 We need several additional packages to support documentation development:
 
-sqlalchemy 
+sqlalchemy
    database support - not sure why tg-21 doesn't install this by default
 python_memcached
    this is requirement for the way we generate docs, provides memcache module
 tgext.geo
    we generate docs from some related packages, again tg-21 install did not install this by default
 
-Here is the command to download these packages.   Again, I'm assuming you are 
+Here is the command to download these packages.   Again, I'm assuming you are
 still in the virtualenv.
 
 .. code-block:: bash
@@ -91,8 +95,8 @@ still in the virtualenv.
 
    easy_install sqlalchemy python_memcached tgext.geo
 
-.. note::  tgext.geo may complain about not being able to install one of its 
-   dependencies: MapFish.   This is not critical for building the docs, but 
+.. note::  tgext.geo may complain about not being able to install one of its
+   dependencies: MapFish.   This is not critical for building the docs, but
    if this continues to be a problem you can install it with::
 
        easy_install -i http://dev.camptocamp.com/packages/mapfish/1.1/index --allow-hosts=dev.camptocamp.com mapfish==1.1
@@ -100,7 +104,7 @@ still in the virtualenv.
 After this, you should be able to verify your tg2.1 installation with
 
 .. code-block:: bash
- 
+
    paster tginfo
 
 
@@ -118,17 +122,17 @@ documentation repository.  This way, mpedersen can more easily merge your
 changes in with the new documenation.
 
 .. note::  you may set up the documentation without creating your
-    own fork of mpedersen's repository, but if you've made it this far, 
-    why not go all the way and contribute back to the effort?   
+    own fork of mpedersen's repository, but if you've made it this far,
+    why not go all the way and contribute back to the effort?
 
 mpedersen wrote a nice :ref:`bitbucket_tutorial`, which has screen shots and
 further explanation on how to fork and get and post updates with bitbucket.  We
 try to provide the basic information here, but you can work through that
 tutorial for additional details.
 
-You need an account on bitbucket_ in order to fork a repository.  
-It is a painless process, which can be done by following the link.  
-Once you are logged in at bitbucket, go to the `mpedersen repository`_, 
+You need an account on bitbucket_ in order to fork a repository.
+It is a painless process, which can be done by following the link.
+Once you are logged in at bitbucket, go to the `mpedersen repository`_,
 and click 'fork'.
 
 I recommend adding an extension to your fork like '-yourname', substituting
@@ -140,21 +144,21 @@ yourname, of course.   Then you can get your repository with:
     cd tg_2_1_docs-yourname/docs
     make html
 
-.. note::  don't forget to substitute '-yourname' for what you used.   
+.. note::  don't forget to substitute '-yourname' for what you used.
     The new html documentation should be in the _build/html directory.
 
 .. note::  On Windows, you typically don't have a "make" command available
-    to you.   Here are the commands you'd use instead.   
-    The first command only needs to be run once - to create the 
-    destination directories.   You may also want to read about one person's 
+    to you.   Here are the commands you'd use instead.
+    The first command only needs to be run once - to create the
+    destination directories.   You may also want to read about one person's
     WindowsInstall_.
-    
+
     	.. code-block:: bash
-	
+
 	    mkdir _build\html _build\doctrees
 	    sphinx-build -b html -d _build\doctrees. _build\html
 
-    
+
 If you want to grab mpedersen's latest changes, later within your work directory
 
     hg pull -u `mpedersen repository`_
@@ -167,8 +171,8 @@ To merge in your changes:
     hg commit
     hg push
 
-.. note::  push requires a login to bitbucket.   You may also find you need to 
-    commit any local changes you've made first (it gives a "not updating" 
+.. note::  push requires a login to bitbucket.   You may also find you need to
+    commit any local changes you've made first (it gives a "not updating"
     warning if this is the case).
 
 The above commands update *your* repository.   In order to get your changes
@@ -193,7 +197,7 @@ efforts!
     sense, and whether mpdedersen's bitbucket tutorial covers all it needs to.
     (note:   I think they make basic sense, but...   I'm not an expert)
 .. todo:: Difficulty: Easy. review and edit, in general...
-    I still recommend highlighting some of the volunteer opportunities.  
+    I still recommend highlighting some of the volunteer opportunities.
     perhaps a "how to help/contribute" doc should link to here...
 
 
