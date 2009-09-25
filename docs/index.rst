@@ -64,7 +64,7 @@ Indices and tables
 * :ref:`search`
 * :ref:`extendedtoc`
  
-.. todo:: make docs more linky.   provide link to pylons, and why tg2 is now based on it.   eventually, I'd really like to see links to pylonsbook for specific "more information", and how turbogears is different/expands upon it
+.. todo:: Difficulty: Medium. make docs more linky.   provide link to pylons, and why tg2 is now based on it.   eventually, I'd really like to see links to pylonsbook for specific "more information", and how turbogears is different/expands upon it
 
 .. glossary::
 

@@ -95,4 +95,4 @@ will treat as an attachment::
             response.headerlist.append(('Content-Disposition','attachment;filename=stats.csv'))
             return '1,2,3'
 
-.. todo:: Double-check: Are these methods still valid with 2.1?
+.. todo:: Difficulty: Medium. Double-check: Are these methods still valid with 2.1?

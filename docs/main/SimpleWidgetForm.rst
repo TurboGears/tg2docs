@@ -391,7 +391,7 @@ action that simplify error handling for forms substantially.
 This tutorial only covers basic widget usage. If you'd like to know
 more, explore the `widgets overview`_.
 
-.. todo:: previous paragraph referenced "widget browser" and "toolbox"
+.. todo:: Difficulty: Easy. previous paragraph referenced "widget browser" and "toolbox"
           as links. These do not exist for tg2. Need to add them back in
 	  here when they are eventually re-written.
 

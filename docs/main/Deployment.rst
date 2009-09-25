@@ -43,7 +43,7 @@ of TurboGears 2 in very high load environments.
 * load balancing proxy
 * NGINX mod_wsgi
 
-.. todo:: Determine what the list above should be trying to tell
+.. todo:: Difficulty: Medium. Determine what the list above should be trying to tell
           us. Is this a list of items to be documented?
 
 Packaging your app as an egg:
@@ -54,10 +54,10 @@ sets up everything that you need to do this.
 
  * http://docs.turbogears.org/1.0/DeployWithAnEgg
 
-.. todo:: Document making an egg from the TG2 app
+.. todo:: Difficulty: Medium. Document making an egg from the TG2 app. Also change the URL above to remove 1.0 references.
 
 Reference
------------
+---------
 
 You can also find recipes for mounting a Turbogears app behind lots of
 other servers in the 1.0 docs.  Generally these should "just work"
@@ -66,8 +66,8 @@ production.ini is slightly different.
 
  * http://docs.turbogears.org/1.0/Deployment
 
-.. todo:: Document the recipes for deployment, updating the 1.0 docs
+.. todo:: Difficulty: Medium. Document the recipes for deployment, updating the 1.0 docs
 
 
-.. todo:: Modify the Apache deployment options to use ref style links
+.. todo:: Difficulty: Medium. Modify the Apache deployment options to use ref style links
 

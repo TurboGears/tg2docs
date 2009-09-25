@@ -3,6 +3,11 @@
 =============================
 All To Do Items From The Docs
 =============================
+For the doc sprint, todo items have been given three categories:
+
+* Easy. Simple definitions, maybe couple of paragraphs. Expected work time: <15 minutes
+* Medium. Reorganization, reformatting, taking existing notes and making them coherent (for instance: Google groups threads). Expected work time: <1 hour
+* Hard. Everything else. Expected work time: Unknown (but likely a couple of hours)
 
 .. todolist::
 
@@ -69,7 +74,10 @@ Root Url of app is in environ, SCRIPT_PATH
 Sprox Disabling 'id' Field Editing When Using AddRecordForm
 -----------------------------------------------------------
 
-Don't use AddRecordForm, use FormBase instead.  AddRecordForm automatically disables the primary key fields.  The only other difference between AddRecordForm and FormBase is the assignment of the __check_if_unique__ property to True.
+Don't use AddRecordForm, use FormBase instead.  AddRecordForm
+automatically disables the primary key fields.  The only other
+difference between AddRecordForm and FormBase is the assignment of the
+__check_if_unique__ property to True.
 
 Q: How can I enable editing of the 'id' field on a Sprox AddRecordForm?
 A: Override _do_get_disabled_fields(self) in your subclass and return self.__disable_fields__[:].
@@ -80,10 +88,11 @@ From the docstrings: """Override this function to define how"""
 Using tg.config Variables
 -------------------------
 
-the tg.config variable is created when middlware.py does the load_environment call
-well, not created, but updated with the ini file values, etc
-you can't use it before that.   But all the ini values are passed in to the make_middlware call in middlware.py
-so you can use them there if you need to
+the tg.config variable is created when middlware.py does the
+load_environment call well, not created, but updated with the ini file
+values, etc you can't use it before that.  But all the ini values are
+passed in to the make_middlware call in middlware.py so you can use
+them there if you need to
 
 On Spawning New Processes and Threads
 -------------------------------------

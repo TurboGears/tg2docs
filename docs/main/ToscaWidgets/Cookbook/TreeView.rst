@@ -80,5 +80,5 @@ Here is the resulting field when viewed from a browser:
 .. image:: ../images/treeview.png
     :alt: example TreeView
 
-.. todo:: This file looks extremely similar to JQueryTreeView. Do we need both?
+.. todo:: Difficulty: Easy. This file looks extremely similar to JQueryTreeView. Do we need both?
 

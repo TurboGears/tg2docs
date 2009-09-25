@@ -169,7 +169,7 @@ In myapp/websetup.py::
         transaction.commit()
         print "Successfully setup"
 
-.. todo:: At some point, we should also find a way to document how to
+.. todo:: Difficulty: Hard. At some point, we should also find a way to document how to
    handle `Horizontal and Vertical Partitioning
    <http://www.sqlalchemy.org/docs/05/session.html#partitioning-strategies>`_
    properly, and document that in here, too.

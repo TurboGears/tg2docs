@@ -43,7 +43,7 @@ stuff, and then to call another function that's also a WSGI app
 application like this sits between the "real" webserver and another
 WSGI app, we call it middleware.
 
-.. todo:: middleware is defined here. Make it much more prominent in the docs.
+.. todo:: Difficulty: Easy. middleware is defined here. Make it much more prominent in the docs.
 
 The TurboGears request/response cycle is composed of various bits of
 middleware that help make writing web applicaitons easier for you.
@@ -194,7 +194,7 @@ configured out via special config values in app_cfg.py, and can be
 manipulated in any way you can imagine by subclassing AppConfig and
 replacing the methods that set it up.
 
-.. todo:: core middleware can be configured in app_cfg.py? how?
+.. todo:: Difficulty: Medium. core middleware can be configured in app_cfg.py? how?
 
 But TurboGears itself has code that requires that the core middleware
 be in place, so you won't want to mess with this stuff without a good
@@ -308,4 +308,4 @@ the stack to meet your needs.
 For details on exactly how the stack is configured take a look at the
 configuration docs at :ref:`config`.
 
-.. todo:: Make this file *much* more prominent. **EXTREMELY** useful information
+.. todo:: Difficulty: Easy. Make this file *much* more prominent. **EXTREMELY** useful information

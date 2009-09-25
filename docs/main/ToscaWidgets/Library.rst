@@ -91,5 +91,5 @@ At some point we will add the capability to let the widget browser
 know how to instantiate a test-version of your widget and display it
 so that it can be integrated with toscawidgets.org
 
-.. todo:: get the widget browser working for toscawidgets.org
+.. todo:: Difficulty: Hard. get the widget browser working for toscawidgets.org
 
