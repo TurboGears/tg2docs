@@ -27,7 +27,7 @@ latest documentation efforts.
 Prerequisite
 ------------
 
-We assume you have the following basic pieces in place: 
+We assume you have the following basic pieces in place:
 
 * Python >= 2.5
 * virtualenv
@@ -66,8 +66,12 @@ You could use different names if you must.
     easy_install mercurial
     mkdir src
     cd src
-    hg clone http://bitbucket.org/turbogears/tg-docs/
-    cd tg-21
+    hg clone http://bitbucket.org/turbogears/tg-dev/
+    cd tg-dev
+    python setup.py develop
+    cd ..
+    hg clone http://bitbucket.org/turbogears/tg-devtools-dev/
+    cd tg-devtools-dev
     python setup.py develop
     cd ..
 
@@ -80,14 +84,12 @@ You could use different names if you must.
 
 We need several additional packages to support documentation development:
 
-sqlalchemy
-   database support - not sure why tg-21 doesn't install this by default
 python_memcached
    this is requirement for the way we generate docs, provides memcache module
 tgext.geo
-   we generate docs from some related packages, again tg-21 install did not install this by default
+   we generate docs from some related packages, this is not installed by default
 
-Here is the command to download these packages.   Again, I'm assuming you are
+Here is the command to download these packages.  Again, I'm assuming you are
 still in the virtualenv.
 
 .. code-block:: bash
@@ -147,8 +149,8 @@ yourname, of course.   Then you can get your repository with:
 .. note::  don't forget to substitute '-yourname' for what you used.
     The new html documentation should be in the _build/html directory.
 
-.. note::  On Windows, you typically don't have a "make" command available
-    to you.   Here are the commands you'd use instead.
+.. note::  On Windows, if you haven't installed a "make" command
+    (e.g. from GnuWin32),  use the following commands to build manually.
     The first command only needs to be run once - to create the
     destination directories.   You may also want to read about one person's
     WindowsInstall_.
@@ -199,5 +201,3 @@ efforts!
 .. todo:: Difficulty: Easy. review and edit, in general...
     I still recommend highlighting some of the volunteer opportunities.
     perhaps a "how to help/contribute" doc should link to here...
-
-
