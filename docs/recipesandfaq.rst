@@ -34,6 +34,7 @@ Recipes for Installation and Deployment
    :maxdepth: 2
 
    main/Deployment
+   main/Deployment/DeployWithAnEgg
    main/Deployment/ModProxy
    main/Deployment/modwsgi+virtualenv
 

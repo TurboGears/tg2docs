@@ -1,5 +1,7 @@
-mod_proxy -- Running TG2 behind Apache
-=======================================
+.. _apache_mod_proxy:
+
+Running TG2 behind Apache with Mod Proxy
+========================================
 
 :status: Draft
 

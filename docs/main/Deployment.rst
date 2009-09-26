@@ -20,12 +20,12 @@ system specific, but fortunately they aren't TG2 specific.
 Apache Deployment options:
 ---------------------------
 
-* `mod_wsgi and virtualenv <Deployment/modwsgi%2Bvirtualenv>`_ -- the
+* :ref:`Apache and mod_wsgi <apache_mod_wsgi>` -- the
   mod_wsgi apache extension is a very efficient WSGI server, which
   provides automatic process monitoring, load balancing for
   multi-process deployments, as well as strong apache integration.
 
-* `Deploying with ModProxy <Deployment/ModProxy>`_ -- The mod_proxy
+* :ref:`Apache and mod_proxy <apache_mod_proxy>` -- The mod_proxy
   extension provides a simple to set-up apache environment that
   proxies HTTP requests to your TG2 app.  It can be used to load
   balance across multiple machines.
@@ -52,9 +52,7 @@ Packaging your app as an egg:
 You may also want to package your app up as a redistributable egg, TG2
 sets up everything that you need to do this.
 
- * http://docs.turbogears.org/1.0/DeployWithAnEgg
-
-.. todo:: Difficulty: Medium. Document making an egg from the TG2 app. Also change the URL above to remove 1.0 references.
+ :ref:`tgeggdeployment`
 
 Reference
 ---------
@@ -67,7 +65,4 @@ production.ini is slightly different.
  * http://docs.turbogears.org/1.0/Deployment
 
 .. todo:: Difficulty: Medium. Document the recipes for deployment, updating the 1.0 docs
-
-
-.. todo:: Difficulty: Medium. Modify the Apache deployment options to use ref style links
 

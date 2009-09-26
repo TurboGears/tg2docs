@@ -1,5 +1,7 @@
-mod_wsgi
-========
+.. _apache_mod_wsgi:
+
+Deploying TurboGears using Apache with mod_wsgi
+=================================================
 
 The mod_wsgi site documents how to use virtualenv:
 
