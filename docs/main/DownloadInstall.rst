@@ -178,8 +178,9 @@ the pypi_ packages have different names than you might expect.
 
 .. _pypi: http://pypi.python.org
 
-.. todo:: Difficulty: Easy. PostgreSQL drivers could also be psycopg2 or pg8000. When
-  SQLAlchemy 0.6 comes out, we will update these commands.
+SQLAlchemy also has support for PyGreSQL and the 0.6 version will support pg8000
+which is a fully python driver for postgres.  TG plans to support these when SA 0.6
+is released.
 
 Python 2.4 users will also need to install pysqlite_ themselves in
 order to use the sqlite database in the default configuration. In
@@ -293,7 +294,7 @@ Download and run the script with the following commands:
 
 .. code-block:: bash
 
-   wget http://www.turbogears.org/2.0/downloads/current/tg2-bootstrap.py
+   wget http://www.turbogears.org/2.1/downloads/current/tg2-bootstrap.py
    python tg2-bootstrap.py --no-site-packages tg2env
 
 
@@ -353,18 +354,20 @@ via:
 
 .. code-block:: bash
 
-    (tg2env)$ easy_install -i http://www.turbogears.org/2.0/downloads/current/index tg.devtools
+    (tg2env)$ easy_install -i http://www.turbogears.org/2.1/downloads/current/index tg.devtools
 
-.. todo:: Difficulty: Easy. Is this still correct? Or are we using PyPI exclusively now?
+What's up with the -i argument?  We all know that setup tools ability to pull dependent 
+packages  properly is less than optimal.  TG cannot ensure that every package on pypi will work 
+with TG at any given time. For this reason, we have set up a known set of packages that _wil_ work 
+So, while TG2 _is_ on pypi, and it will _probably_ work, the only way to install in a way where 
+functionality is certain is to utilize the index where we have hand plucked packages for your use.
 
 .. warning:: if you are upgrading from a previous TG2 version your
    command should be:
 
     .. code-block:: bash
 
-        (tg2env)$ easy_install -U -i http://www.turbogears.org/2.0/downloads/current/index tg.devtools
-
-.. todo:: Difficulty: Easy. Is this still correct? Or are we using PyPI exclusively now?
+        (tg2env)$ easy_install -U -i http://www.turbogears.org/2.1/downloads/current/index tg.devtools
 
 .. warning:: If your Python is version 2.4, you must make sure to
    install Beaker 1.4 or higher. Though it should be automatic, you
@@ -516,6 +519,6 @@ If you are new to turbogears you will want to continue with the
 :ref:`Quick Start Guide <quickstarting>`.
 
 If you are a TG1 user be sure to check out our :ref:`What's new in
-TurboGears 2.0 <whatsnew>` page to get a picture of what's changed in
+TurboGears 2 <whatsnew>` page to get a picture of what's changed in
 TurboGears2 so far.
 
