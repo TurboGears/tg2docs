@@ -24,7 +24,7 @@ On a Linux machine with virtualenv already installed, this is accomplished with:
     easy_install tg.devtools
 
 Complete instructions for setting up TurboGears, VirtualEnv and the like 
-are available on the `Download and Install <DownloadInstall.html>`_ page.
+are available on the :ref:`Download and Install <DownloadInstall>` page.
 
 Getting Started
 ---------------
@@ -41,7 +41,6 @@ If you browse into the new "movies" directory, you will find a sub-directory
 also named "movies".  This directory is your importable package, and within 
 it you will find a number of sub-packages, including one named "model".  We 
 are going to create our application's data-model here.
-
 
 We'll create a new file "movie.py" in our "model" directory with this content::
 
@@ -204,7 +203,7 @@ Reference
 ---------
 
  * `SQLAlchemy Object Relational Tutorial <http://www.sqlalchemy.org/docs/04/ormtutorial.html>`_
- * Catwalk/Admin GUI Tutorial (TODO: cross-reference)
+ * :ref:`tgext-admin`
  * The transaction module (TODO: documentation)
 
 Next Steps
