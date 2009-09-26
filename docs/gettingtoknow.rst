@@ -4,6 +4,20 @@
 Getting To Know TurboGears
 ==========================
 
+Read These Pages!
+=================
+
+These pages are the most useful pages for a new TurboGears developer
+to read after going through the tutorials. Understanding the material
+here will help you understand much about the TurboGears architecture,
+and will make you a much more productive developer with TurboGears. We
+cannot stress this enough: Read These Pages!
+
+.. toctree::
+   :maxdepth: 1
+   
+   main/RequestFlow
+
 What's New With The Latest Release
 ==================================
 

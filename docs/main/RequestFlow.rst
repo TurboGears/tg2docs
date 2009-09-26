@@ -1,3 +1,5 @@
+.. _requestflow:
+
 A Request's Flow Through The TurboGears Stack
 =============================================
 
@@ -42,8 +44,6 @@ stuff, and then to call another function that's also a WSGI app
 (meaning it takes an environ and a start response).  When an
 application like this sits between the "real" webserver and another
 WSGI app, we call it middleware.
-
-.. todo:: Difficulty: Easy. middleware is defined here. Make it much more prominent in the docs.
 
 The TurboGears request/response cycle is composed of various bits of
 middleware that help make writing web applicaitons easier for you.
@@ -307,5 +307,3 @@ the stack to meet your needs.
 
 For details on exactly how the stack is configured take a look at the
 configuration docs at :ref:`config`.
-
-.. todo:: Difficulty: Easy. Make this file *much* more prominent. **EXTREMELY** useful information

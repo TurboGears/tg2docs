@@ -23,36 +23,36 @@ Documentation is broken into several components. Feel free to jump directly
 to the place you need to be, or read the information below sequentially.
 
 
-:ref:`getting-started`
--------------------------------
+:ref:`Getting Started <getting-started>`
+----------------------------------------
     Get TurboGears installed and serving up the main page for your new
     project
 
-:ref:`tutorials`
--------------------------------
+:ref:`Tutorials <tutorials>`
+----------------------------
     The obligatory "Hello World" example, coupled with several other
     examples (and not all of them are purely TurboGears). These should help
     answer some of the basic "How do I ... ?" questions.
 
-:ref:`getting-to-know`
--------------------------------
+:ref:`Getting To Know TurboGears <getting-to-know>`
+---------------------------------------------------
     Learn what's new in the latest TurboGears. Explore the architecture. Learn
     what components come with the default install of TurboGears, what
     components are installed via the default quickstart, and how all of them
     tie together to serve your site.
 
-:ref:`recipes-and-faq`
--------------------------------
+:ref:`Recipes and FAQ <recipes-and-faq>`
+----------------------------------------
     Simple code samples to answer commonly asked questions about
     development and deployment of TurboGears
 
-:ref:`extensions-and-tools`
--------------------------------
+:ref:`Extensions and Tools <extensions-and-tools>`
+--------------------------------------------------
     Discover new extensions and tools to enhance your installation of
     TurboGears.
 
-:ref:`testimonials`
--------------------------------
+:ref:`Testimonials <testimonials>`
+----------------------------------
     A selection of papers and comments showing how TurboGears helped other
     developers solve the problems they had.
 
