@@ -59,8 +59,9 @@ This command will generate a "pot" file in the i18n folder of your
 application.  This pot file is the reference file that serves for all
 the different translations.
 
+
 2. Create a translation catalog for your language, let's take 'zh_tw'
-   for example::
+for example::
 
     python setup.py init_catalog -l zh_tw
 
@@ -127,5 +128,3 @@ You can update the catalog with the following command::
 
 .. _`Internationalization and Localization`: http://wiki.pylonshq.com/display/pylonsdocs/Internationalization+and+Localization
 .. _UserGuide: http://babel.edgewall.org/wiki/Documentation/index.html
-
-.. todo:: Difficulty: Easy. The numbered list here gets an odd indent, and needs to be fixed.
