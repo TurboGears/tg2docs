@@ -9,7 +9,6 @@ Tutorials
    
    main/BasicMoves
    main/Wiki20/wiki20
-   main/Wiki20/JSONMochiKit
    main/movie_tutorial.rst
    main/SimpleWidgetForm
    main/ToscaWidgets/forms
@@ -17,7 +16,6 @@ Tutorials
    main/AuthorizeTutorial
    main/Auth/index
    main/bitbucket_tutorial
-   main/MultipleDatabases
 
 ============================
 Moving From Other Frameworks
