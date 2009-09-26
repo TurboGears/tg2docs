@@ -8,7 +8,7 @@ Read These Pages!
 =================
 
 These pages are the most useful pages for a new TurboGears developer
-to read after going through the tutorials. Understanding the material
+to read after going through the tutorials. Reading the material
 here will help you understand much about the TurboGears architecture,
 and will make you a much more productive developer with TurboGears. We
 cannot stress this enough: Read These Pages!

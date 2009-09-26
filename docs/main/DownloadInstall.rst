@@ -409,14 +409,14 @@ Installing The Development Version Of Turbogears 2
 
 .. todo:: Difficulty: Medium. Convert this section to use Bitbucket/hg.tg.org and Mercurial
 
-Getting Subversion
+Getting Mercurial
 """"""""""""""""""
 
     * All major Linux distributions have this installed. The package
-      is normally named ``subversion``
-    * On windows you can download the `Subversion installer`_
+      is normally named ``mercurial``
+    * On windows you can download the `TortoiseHG installer`_
 
-.. _Subversion installer: http://subversion.tigris.org/getting.html
+.. _Tortoise installer: http://mercurial.selenic.com/wiki/TortoiseHg
 
 Getting The Source
 """"""""""""""""""
@@ -425,14 +425,14 @@ Check out the latest code from the subversion repositories:
 
 .. code-block:: bash
 
-  (tg2dev)$ svn co http://svn.turbogears.org/projects/tg.devtools/trunk tgdevtools
-  (tg2dev)$ svn co http://svn.turbogears.org/trunk tg2
+  (tg2dev)$ hg clone http://hg.turbogears.org/tgdevtools/ tgdevtools
+  (tg2dev)$ hg clone http://hg.turbogears.org/tg-21/ tg21
 
 Installing The Sources
 """"""""""""""""""""""
 
 Tell setuptools to use these versions that you have just checked out
-via SVN:
+via Mercurial:
 
 * TurboGears 2 :
 
@@ -450,6 +450,8 @@ via SVN:
 
 Source Install Via Pip
 """"""""""""""""""""""
+
+.. todo:: Update this section to use mercurial urls instead of svn urls
 
 use the ``--trunk`` flag to the bootstrap script::
 
