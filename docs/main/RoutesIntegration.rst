@@ -1,4 +1,4 @@
-
+.. _RoutesIntegration:
 
 Routes Integration in TG2
 =========================

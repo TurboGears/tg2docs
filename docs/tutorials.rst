@@ -19,7 +19,14 @@ Tutorials
    main/bitbucket_tutorial
    main/MultipleDatabases
 
+============================
+Moving From Other Frameworks
+============================
 
+.. toctree::
+   :maxdepth: 2
+
+   main/CakePHPIntro
 
 .. todo:: Difficulty: Easy. Validate that toctree maxdepth values are appropriate
 
