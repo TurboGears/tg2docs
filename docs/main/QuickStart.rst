@@ -86,26 +86,17 @@ rows is in helloword/web_setup.py.  The command "paster setup-app"
 ends up calling the function "setup_app" within this file.
 
 
-.. todo:: Difficulty: Medium. from laurin, decide whether the above section sufficiently
-   covers the database creation process (at this time).  I think there
-   is some really good information below, but I'm not sure it belongs
-   in a "helloworld" tutorial.  Especially the part using
-   {yourproject}.  Ideally, I'd think we'd want a brief page on each
-   default folder, and how an application starts...  I may be dreaming
-   though...
-
-Another key piece of TG2 application setup infrastructure is the ``paster
-setup-app`` command which takes a configuration file and runs your project's
-websetup code in that context.  This allows you to use setup-app to create
-database tables, pre-populate require data into your database, and otherwise
-make things nice for people first setting up your app.  If you take a look at
-your project's quickstart, you will see a websetup folder.  In here are two
-files, bootstrap.py and schema.py.  One is for creating database schema, the
-other for adding data to your database.
-
-.. todo:: Difficulty: Easy. websetup is a Python module, not a script. Need to update
-   the above paragraph.
-
+Another key piece of TG2 application setup infrastructure is the
+``paster setup-app`` command which takes a configuration file and runs
+your project's websetup code in that context.  This allows you to use
+setup-app to create database tables, pre-populate require data into
+your database, and otherwise make things nice for people first setting
+up your app.  If you take a look at your project's quickstart, you
+will see a websetup Python script. Inside of this script, you will see
+a single functon, setup_app, that is called when ``paster setup-app``
+is run. Inside of this, you may do any setup you need to for your
+application. The most common operations will be to add in basic data
+to the database that is required to bootstrap your application.
 
 .. note:: If it's the first time you're going to use the application,
   and you told quickstart to include authentication+authorizaiton, you
@@ -120,17 +111,13 @@ This will create the database using the information stored in the
 development.ini file which by default makes single file SQLite
 database in the local file system.  In addition to creating the
 database, it runs whatever extra database loaders or other setup are
-defined in {yourproject}.websetup.schema.
-
-.. todo:: Difficulty: Medium. fix websetup.schema again
+defined in {yourproject}.websetup:setup_app.
 
 In a quickstarted project with Authorization enabled setup-app creates
 a couple of basic users, groups, and permissions for you to use as an
-example.  This code is found in {yourproject}.websetup.bootstrap.
+example.  This code is found in {yourproject}.websetup:setup_app.
 This code also shows how you can add new data automatically to the
 database when the setup-app command is executed..
-
-.. todo:: Difficulty: Medium. fix websetup mention again
 
 Run The Server
 --------------
@@ -186,6 +173,15 @@ Just change 8080 to 80, and you'll be serving your app up on a
 standard port (assuming your OS allows you to do this using your
 normal account).
 
+You might also wish to have paster listening on all IP addresses on
+your machine. To do so, modify the line right above the port line (in
+development.ini) to have the value 0.0.0.0, like so::
+
+  [server:main]
+  ...
+  host = 0.0.0.0
+  
+
 
 Explore The Rest Of The Quickstarted Project Code
 -------------------------------------------------
@@ -227,14 +223,9 @@ text <basic_moves>`.
 
 .. _SQLite:  http://www.sqlite.org
 
-.. todo:: Difficulty: Easy. laurin added and modified a few things.   please review my changes  
-   most of it had to do with expected output from setup.py and setup-app
-.. todo:: Difficulty: Easy. is there a better way to format manager/managepass, perhaps putting
-   it on two separate lines?   Hmmm...  two separate lines now, but I had to remove the "note".
-.. todo:: Difficulty: Easy. since we mention port, should we also mention changing host to 
-   0.0.0.0 for serving to all network interfaces, not just localhost?   
-   probably overkill here.    but maybe add somewhere else...
-.. todo:: Difficulty: Hard. ideally, I'd like to see an expansion of the "explore a quickstarted 
-   application".    I think knowing how an application is laid out, 
-   gets initialized, starts up, and how some of the basic pieces fit together
-   is really valuable information.   Obviously it goes beyond intro material.
+.. todo:: Difficulty: Hard. ideally, I'd like to see an expansion of
+   the "explore a quickstarted application".  I think knowing how an
+   application is laid out, gets initialized, starts up, and how some
+   of the basic pieces fit together is really valuable information.
+   Obviously it goes beyond intro material. Obviouslly, this should
+   also include a detailed exploration of how setup-app works, etc.
