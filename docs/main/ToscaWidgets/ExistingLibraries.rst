@@ -26,5 +26,5 @@ includes:
  * AutoCompleteField
  * flot
 
-.. todo:: This file seems sparse. Review to make it have more depth.
+.. todo:: Difficulty: Medium. This file seems sparse. Review to make it have more depth.
 

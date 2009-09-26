@@ -41,5 +41,5 @@ We have docs on some of the specifics of each of these template engines:
 Writing your own render function
 --------------------------------
 
-.. todo:: Document writing your own render function for templates
+.. todo:: Difficulty: Medium. Document writing your own render function for templates
 

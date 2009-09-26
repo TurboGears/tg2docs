@@ -3,7 +3,7 @@
 Adding JSON with MochiKit to the :ref:`wiki20`
 ==============================================
 
-.. todo:: This info is just copied over from the TG1 wiki tutorial, and needs to be vetted, expanded, and edited. 
+.. todo:: Difficulty: Medium. This info is just copied over from the TG1 wiki tutorial, and needs to be vetted, expanded, and edited. 
 
 This part of the tutorial is not technically AJAX. The "X" in AJAX
 stands for XML. I'm going to use `JSON`_ instead. JSON is easy and
@@ -36,7 +36,7 @@ reference`_ article for details.
 
 .. _@expose reference: 1.0/ExposeDecorator
 
-.. todo:: update the expose reference article for tg2
+.. todo:: Difficulty: Medium. update the expose reference article for tg2
 
 from MochiKit import *
 ----------------------

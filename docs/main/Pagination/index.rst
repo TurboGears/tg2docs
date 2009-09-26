@@ -209,4 +209,4 @@ And this is what the end result looks like:
 An :download:`Example Project <ToscaWidgetsFormsPaginated.zip>` has
 been attached so that you can try this easily.
 
-.. todo:: Does pagination still work this way for 2.1?
+.. todo:: Difficulty: Easy to Medium. Does pagination still work this way for 2.1?

@@ -559,5 +559,5 @@ You can always check it out to play with it by::
   paster setup-app development.ini
   paster serve development.ini
 
-.. todo:: get the svn repository for the moviedemo code converted to hg
+.. todo:: Difficulty: Medium. get the svn repository for the moviedemo code converted to hg
 

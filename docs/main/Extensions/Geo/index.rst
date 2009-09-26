@@ -10,5 +10,5 @@
    MapFishTutorial
    TileCacheTutorial
 
-.. todo:: Add more details on what these pieces are and how they fit
+.. todo:: Difficulty: Medium. Add more details on what these pieces are and how they fit
           together.

@@ -89,7 +89,7 @@ the TG core developers.
 Why SQLAlchemy?
 ~~~~~~~~~~~~~~~
 
-.. todo:: missing write up on "why SQLAlchemy"?
+.. todo:: Difficulty: Easy. missing write up on "why SQLAlchemy"?
 
 New Features Of TurboGears 2:
 -----------------------------
@@ -127,8 +127,7 @@ Differences:
     The default template directory is on the search path so using dotted
     notation in @expose decorators has been deprecated.
 
-    .. todo:: has dotted notation for templates in @expose really been
-        deprecated?
+    .. todo:: Difficulty: Easy. has dotted notation for templates in @expose really been deprecated?
   * Object dispatch does not support dots in URLs the way TurboGears 1
     did.
   * CherryPy request and response objects are replaced with WebOb

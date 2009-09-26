@@ -60,6 +60,5 @@ Fetch Code
         return simplejson.dumps(r)
 
 
-.. todo:: This entire tutorial is code snippets. Add some text to
-   explain what is going on
+.. todo:: Difficulty: Medium. This entire tutorial is code snippets. Add some text to explain what is going on
 

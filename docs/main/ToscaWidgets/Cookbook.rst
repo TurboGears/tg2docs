@@ -99,7 +99,7 @@ Flot
 
  How to create dynamic graphs using the powerful Flot library.
 
- .. todo:: write the tutorial for making graphs using Flot
+ .. todo:: Difficulty: Medium to Hard. write the tutorial for making graphs using Flot
 
 
  .. image:: images/treeview.png
@@ -121,7 +121,7 @@ Tree View
 Ajax Graphs
 ```````````
 
-.. todo:: write tutorial to make an AJAX graph using tw.jquery and flot
+.. todo:: Difficulty: Medium to Hard. write tutorial to make an AJAX graph using tw.jquery and flot
 
 How to add an ajax graph to your system using tw.jquery and flot.
 
@@ -133,7 +133,7 @@ Ajax Star Rating
 
  How to add a simple star rating widget to your application.
 
-.. todo:: write a tutorial to add a star rating widget to an application
+.. todo:: Difficulty: Medium to Hard. write a tutorial to add a star rating widget to an application
 
 Prototype
 ~~~~~~~~~
@@ -148,7 +148,7 @@ Ajax Form
 Dojo
 ~~~~
 
-.. todo:: Need some basic dojo widgets here.
+.. todo:: Difficulty: Medium to Hard. Need some basic dojo widgets here.
 
 JSUnit
 ------
@@ -177,21 +177,21 @@ Ajax Related Select Fields
  How to create select fields which change based on the choices made on
  other select fields.
 
- .. todo:: write tutorial to show how to update select fields based on other choices
+ .. todo:: Difficulty: Medium to Hard. write tutorial to show how to update select fields based on other choices
 
 Ajax Progress Bar
 `````````````````
 
   How to create a progress bar with server-side progress indicator
 
-.. todo:: create a tutorial for an ajax enabled progress bar
+.. todo:: Difficulty: Medium to Hard. create a tutorial for an ajax enabled progress bar
 
 Ajax File Upload with Progress Bar
 ``````````````````````````````````
  
  How to create a file upload with a progress bar.
 
-.. todo:: create a tutorial for a file upload with progress bar
+.. todo:: Difficulty: Medium to Hard. create a tutorial for a file upload with progress bar
 
 tw.forms
 --------
@@ -243,7 +243,7 @@ Tabber
 
  How to easily add Tabbed Browsing to your website.
  
-.. todo:: create tutorial for adding tabbed browsing to your website
+.. todo:: Difficulty: Medium to Hard. create tutorial for adding tabbed browsing to your website
 
 
 OpenLayers
@@ -256,4 +256,4 @@ OpenLayers Map
 
  :ref:`tw_cookbook_openlayersmap`
 
-.. todo:: verify that all tw cookbook pages are linked from this page
+.. todo:: Difficulty: Easy to Medium. verify that all tw cookbook pages are linked from this page

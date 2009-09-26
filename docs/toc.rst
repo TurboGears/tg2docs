@@ -81,7 +81,7 @@ All To Do Items From The Docs
    misc
    index
 
-.. todo:: Validate that toctree maxdepth values are appropriate
+.. todo:: Difficulty: Medium. Validate that toctree maxdepth values are appropriate
 
-.. todo:: Validate that this toctree actually reflects what we want. Reduce it as necessary, reorg it, make it somewhat simpler.
+.. todo:: Difficulty: Medium. Validate that this toctree actually reflects what we want. Reduce it as necessary, reorg it, make it somewhat simpler.
 

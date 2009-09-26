@@ -86,7 +86,7 @@ rows is in helloword/web_setup.py.  The command "paster setup-app"
 ends up calling the function "setup_app" within this file.
 
 
-.. todo:: from laurin, decide whether the above section sufficiently
+.. todo:: Difficulty: Medium. from laurin, decide whether the above section sufficiently
    covers the database creation process (at this time).  I think there
    is some really good information below, but I'm not sure it belongs
    in a "helloworld" tutorial.  Especially the part using
@@ -103,7 +103,7 @@ your project's quickstart, you will see a websetup folder.  In here are two
 files, bootstrap.py and schema.py.  One is for creating database schema, the
 other for adding data to your database.
 
-.. todo:: websetup is a Python module, not a script. Need to update
+.. todo:: Difficulty: Easy. websetup is a Python module, not a script. Need to update
    the above paragraph.
 
 
@@ -122,7 +122,7 @@ database in the local file system.  In addition to creating the
 database, it runs whatever extra database loaders or other setup are
 defined in {yourproject}.websetup.schema.
 
-.. todo:: fix websetup.schema again
+.. todo:: Difficulty: Medium. fix websetup.schema again
 
 In a quickstarted project with Authorization enabled setup-app creates
 a couple of basic users, groups, and permissions for you to use as an
@@ -130,7 +130,7 @@ example.  This code is found in {yourproject}.websetup.bootstrap.
 This code also shows how you can add new data automatically to the
 database when the setup-app command is executed..
 
-.. todo:: fix websetup mention again
+.. todo:: Difficulty: Medium. fix websetup mention again
 
 Run The Server
 --------------
@@ -227,14 +227,14 @@ text <basic_moves>`.
 
 .. _SQLite:  http://www.sqlite.org
 
-.. todo:: laurin added and modified a few things.   please review my changes  
+.. todo:: Difficulty: Easy. laurin added and modified a few things.   please review my changes  
    most of it had to do with expected output from setup.py and setup-app
-.. todo:: is there a better way to format manager/managepass, perhaps putting
+.. todo:: Difficulty: Easy. is there a better way to format manager/managepass, perhaps putting
    it on two separate lines?   Hmmm...  two separate lines now, but I had to remove the "note".
-.. todo:: since we mention port, should we also mention changing host to 
+.. todo:: Difficulty: Easy. since we mention port, should we also mention changing host to 
    0.0.0.0 for serving to all network interfaces, not just localhost?   
    probably overkill here.    but maybe add somewhere else...
-.. todo:: ideally, I'd like to see an expansion of the "explore a quickstarted 
+.. todo:: Difficulty: Hard. ideally, I'd like to see an expansion of the "explore a quickstarted 
    application".    I think knowing how an application is laid out, 
    gets initialized, starts up, and how some of the basic pieces fit together
    is really valuable information.   Obviously it goes beyond intro material.

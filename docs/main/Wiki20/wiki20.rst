@@ -315,7 +315,7 @@ with nothing in it, and add all the interesting stuff using
 Note that it's also possible to start with an existing database, but
 that's a more advanced topic that we won't cover in this tutorial.
 
-.. todo:: Will we be adding sqlautocode in future?
+.. todo:: Difficulty: Medium. Will we be adding sqlautocode in future?
 
 Database Configuration
 ----------------------

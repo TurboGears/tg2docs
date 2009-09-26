@@ -15,7 +15,7 @@ database.  Once your model is defined, this extension provides a set
 of pages to help you create, view, delete, and edit your database
 objects.
 
-.. todo:: Make this extension more prominent, more likely to be found
+.. todo:: Difficulty: Easy. Make this extension more prominent, more likely to be found
 
 .. image:: Admin/images/index_ss.png
 

@@ -19,11 +19,18 @@ Tutorials
    main/bitbucket_tutorial
    main/MultipleDatabases
 
+============================
+Moving From Other Frameworks
+============================
 
+.. toctree::
+   :maxdepth: 2
 
-.. todo:: Validate that toctree maxdepth values are appropriate
+   main/CakePHPIntro
 
-.. todo:: Add link to cardlist manager whitepaper (from m.pedersen)
+.. todo:: Difficulty: Easy. Validate that toctree maxdepth values are appropriate
 
-.. todo:: Add links to "recipes and faqs"
+.. todo:: Difficulty: Hard. Add link to cardlist manager whitepaper (from m.pedersen)
+
+.. todo:: Difficulty: Medium (at most). Add links to "recipes and faqs"
 

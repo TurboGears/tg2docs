@@ -301,4 +301,4 @@ and global dictionaries, and creating an environment loader::
 Using Config outside of a quickstarted project:
 -----------------------------------------------
 
-.. todo:: Document how to use config outside of a quickstarted project
+.. todo:: Difficulty: Medium. Document how to use config outside of a quickstarted project

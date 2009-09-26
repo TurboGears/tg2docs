@@ -33,7 +33,7 @@ is version 2.5.  Python 2.4 requires additional steps which will be
 covered below where needed.  Python 3.0 is currently unsupported due
 to lack of support in many of our upstream packages.
 
-.. todo:: This is both docs and code. We should get Python 3.0 supported.
+.. todo:: Difficulty: Hard. This is both docs and code. We should get Python 3.0 supported.
 
 We recommend you use your system's default python install or follow
 the instructions provided here: http://python.org/download/
@@ -178,7 +178,7 @@ the pypi_ packages have different names than you might expect.
 
 .. _pypi: http://pypi.python.org
 
-.. todo:: PostgreSQL drivers could also be psycopg2 or pg8000. When
+.. todo:: Difficulty: Easy. PostgreSQL drivers could also be psycopg2 or pg8000. When
   SQLAlchemy 0.6 comes out, we will update these commands.
 
 Python 2.4 users will also need to install pysqlite_ themselves in
@@ -219,7 +219,7 @@ See also pylunch_ and  also `windows installer`
 
 .. _win32api: http://starship.python.net/crew/mhammond/win32/
 .. _pylunch: http://www.ohloh.net/p/pylunch
-.. todo:: missing link. What does `windows installer` refer to?
+.. todo:: Difficulty: Easy. missing link. What does `windows installer` refer to?
 
 Cygwin
 """"""
@@ -273,7 +273,7 @@ the level of control you want over it
     4. using pip (experimental)
     5. development version
 
-.. todo:: Complete tutorial for manually installing TG
+.. todo:: Difficulty: Medium. Complete tutorial for manually installing TG
 
 .. hint:: Please note we are using ``tg2env`` as the name of the
    virtual environment.  This is simply a convention in our
@@ -355,7 +355,7 @@ via:
 
     (tg2env)$ easy_install -i http://www.turbogears.org/2.0/downloads/current/index tg.devtools
 
-.. todo:: Is this still correct? Or are we using PyPI exclusively now?
+.. todo:: Difficulty: Easy. Is this still correct? Or are we using PyPI exclusively now?
 
 .. warning:: if you are upgrading from a previous TG2 version your
    command should be:
@@ -364,7 +364,7 @@ via:
 
         (tg2env)$ easy_install -U -i http://www.turbogears.org/2.0/downloads/current/index tg.devtools
 
-.. todo:: Is this still correct? Or are we using PyPI exclusively now?
+.. todo:: Difficulty: Easy. Is this still correct? Or are we using PyPI exclusively now?
 
 .. warning:: If your Python is version 2.4, you must make sure to
    install Beaker 1.4 or higher. Though it should be automatic, you
@@ -407,7 +407,7 @@ Just add the ``--pip`` flag to the bootstrap script::
 Installing The Development Version Of Turbogears 2
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. todo:: Convert this section to use Bitbucket/hg.tg.org and Mercurial
+.. todo:: Difficulty: Medium. Convert this section to use Bitbucket/hg.tg.org and Mercurial
 
 Getting Subversion
 """"""""""""""""""

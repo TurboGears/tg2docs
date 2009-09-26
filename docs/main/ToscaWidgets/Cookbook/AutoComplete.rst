@@ -118,5 +118,5 @@ and here is what the widget looks like when the validation fails:
 
 
 
-.. todo:: document the answer to this question: What about if someone is using this widget for a select field, and the value they want returned is the value of the id of an object of select values in a database?
+.. todo:: Difficulty: Medium. document the answer to this question: What about if someone is using this widget for a select field, and the value they want returned is the value of the id of an object of select values in a database?
 
