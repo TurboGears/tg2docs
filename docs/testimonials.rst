@@ -4,7 +4,11 @@
 Testimonials, White Papers, and Case Studies
 ============================================
 
+.. toctree::
+   :maxdepth: 1
+
+   whitepapers/cardlist
+
 .. todo:: Difficulty: Hard. Add testimonials
 
-.. todo:: Difficulty: Hard. Add cardlist manager whitepaper (from m.pedersen)
 

@@ -28,9 +28,16 @@ Moving From Other Frameworks
 
    main/CakePHPIntro
 
-.. todo:: Difficulty: Easy. Validate that toctree maxdepth values are appropriate
+=================================
+Extended Tutorials / White Papers
+=================================
 
-.. todo:: Difficulty: Hard. Add link to cardlist manager whitepaper (from m.pedersen)
+.. toctree::
+   :maxdepth: 1
+
+   whitepapers/cardlist
+   
+.. todo:: Difficulty: Easy. Validate that toctree maxdepth values are appropriate
 
 .. todo:: Difficulty: Medium (at most). Add links to "recipes and faqs"
 

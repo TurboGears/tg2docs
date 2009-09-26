@@ -416,7 +416,7 @@ Getting Mercurial
       is normally named ``mercurial``
     * On windows you can download the `TortoiseHG installer`_
 
-.. _Tortoise installer: http://mercurial.selenic.com/wiki/TortoiseHg
+.. _TortoiseHG installer: http://mercurial.selenic.com/wiki/TortoiseHg
 
 Getting The Source
 """"""""""""""""""
