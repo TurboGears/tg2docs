@@ -70,6 +70,10 @@ We assume that we have to model a layer of roads in our
 application. We open the tgfeature/model/__init__.py file in the
 package and add the following model definition::
 
+    from sqlalchemy import Column, Integer, Unicode, DateTime
+    from geoalchemy import GeometryColumn, LineString
+    from geoalchemy import GeometryDDL
+
     class Road(DeclarativeBase):
         __tablename__ = 'roads'
         id = Column(Integer, primary_key=True)
@@ -86,13 +90,18 @@ attribute to store geometry values of data type `LineString` in the
 database. GeoAlchemy supports other geometry types such as Point,
 Polygon and Mutiple Geometries. We also pass the dimension of the
 geometry as a parameter. The Geometry type takes another parameter for
-the `SRID`. In this case we leave it to its default value of `4326`
-which means that our geometry values will have geographic latitude and
-longitude coordinate system. We finally call the GeometryDDL DDL
-Extension that enables creation and deletion of geometry columns just
-after and before table create and drop statements respectively. The
-GeometryColumn, LineString and GeometryDDL must be imported from the
-geoalchemy package.
+the `SRID`, the Spatial Reference ID. In this case we leave it to its
+default value of `4326` which means that our geometry values will be
+expressed in geographic latitude and longitude coordinate system. There
+is a nice blogpost on `SharpGIS`_ that explains the concept of SRID.
+EPSG:4326 is chosen as the default SRID by PostGIS and other software
+primarily because it is based on the global ellipsoid (called WGS84)
+which is not specific to a particular region or continent.
+
+We finally call the GeometryDDL DDL Extension that enables creation and
+deletion of geometry columns just after and before table create and drop
+statements respectively. The GeometryColumn, LineString and GeometryDDL
+must be imported from the geoalchemy package.
 
 .. todo:: Difficulty: Easy. define SRID. What is this? What does the default value of
           4326 mean? Why was it chosen? Links to this information would be
@@ -247,7 +256,7 @@ This creates a new feature and returns back the features in json
 format. To modify the feature edit the postdata.json file and change
 the properties. Lets change the name property from `Broad Ave` to
 `Narrow St` and the width property from `10` to `4`. The modify url
-should include the feature id as shows below:
+should include the feature id as shown below:
 
 .. code-block:: bash
 
@@ -256,7 +265,13 @@ should include the feature id as shows below:
 .. todo:: Difficulty: Easy. RESTful usually implies using edit in the url, but that's
           not here. Same for delete, below. Also, do we actually require
 	  using 3.json for the id? Or will just 3 work?
+          comment: Well this is taken from  the featureserver website
+          http://featureserver.org/#REST
 
+The data can be requested in JSON, GML, KML and ATOM formats by using the
+apprpriate suffix, i.e. 3.json, 3.gml, 3.kml or 3.atom respectively.
+JSON is the default content type resturned by featureserver, so using it
+without any suffix (e.g. roads/3) returns data in GeoJSON format.
 For deleting the feature simply send a DELETE request with the feature id in the url:
 
 .. code-block:: bash
@@ -288,9 +303,44 @@ Now modify these files to change the following::
 
 Point your browser to http://localhost:8080/demo.html. You should now be able to view, create and modify features using featureserver running inside your TG2 app.
 
+Adding Authentication and Authorization
+---------------------------------------
+
+TG2 supports authentication and authorization using the repoze.who and
+repoze.what packages along with other packages in these namespaces.
+A TG2 app created using the authentication and authorization option (default)
+has these packages already included and configured as WSGI middleware.
+
+By default TG2 uses SQLAlchemy based authentication and authorization, where
+the user credentials and authorization roles / permissions are maintained
+in database tables. There are plugins available to support other
+authentication mechanisms such as LDAP based auth, OpenID based auth, etc.
+Refer the Authentication and Authorization docs for details.
+
+At the moment only controller wide authorization control is available in
+tgext.geo. In order to have authorization, pass a repoze.what authorization
+predicate as an additional parameter to FeatureServerController:
+
+.. code-block:: python
+
+    from pylons.i18n import ugettext as _, lazy_ugettext as l_
+    from repoze.what import predicates
+    from tgext.geo.featureserver import FeatureServerController
+
+    class RootController(BaseController):
+
+        allow_only = predicates.has_permission('feature',
+                    msg=l_('Only for people with "feature" permission'))
+        roads = FeatureServerController("roads", DBSession, allow_only)
+
+Now we must go to the admin interface and define a new permission called
+"feature". Once defined, this permission must be granted to groups and/or
+users to whom this new controller is now restricted.
+
 .. todo:: Difficulty: Medium. Add authentication and authorization notes
 
 .. _GeoAlchemy: http://geoalchemy.org
 .. _PostGIS: http://postgis.refractions.net/
 .. _`PostGIS docs`: http://postgis.refractions.net/documentation/
+.. _SharpGIS: http://www.sharpgis.net/post/2007/05/Spatial-references2c-coordinate-systems2c-projections2c-datums2c-ellipsoids-e28093-confusing.aspx
 .. _OpenLayers: http://openlayers.org
