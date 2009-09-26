@@ -24,7 +24,7 @@ On a Linux machine with virtualenv already installed, this is accomplished with:
     easy_install tg.devtools
 
 Complete instructions for setting up TurboGears, VirtualEnv and the like 
-are available on the `Download and Install <DownloadInstall.html>`_ page.
+are available on the :ref:`Download and Install <downloadinstall>` page.
 
 Getting Started
 ---------------
@@ -204,11 +204,17 @@ Reference
 ---------
 
  * `SQLAlchemy Object Relational Tutorial <http://www.sqlalchemy.org/docs/04/ormtutorial.html>`_
- * Catwalk/Admin GUI Tutorial (TODO: cross-reference)
- * The transaction module (TODO: documentation)
+ * Catwalk/Admin GUI Tutorial (.. todo:: cross-reference)
+ * The transaction module (.. todo:: documentation)
+
+.. todo:: cross-reference Catwalk/Admin GUI Tutorial
+
+.. todo:: documentation of transaction module
 
 Next Steps
 ----------
 
  * Controllers
- * Views (Forms) (ToscaWidgets TODO: cross-reference)
+ * Views (Forms) (ToscaWidgets .. todo:: cross-reference)
+
+.. todo:: cross-reference views with ToscaWidgets
