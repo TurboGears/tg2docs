@@ -1,7 +1,7 @@
 .. _building_docs:
 
 Documentation Generation Guide
-==================================
+==============================
 
 Setting up for Documentation Development
 ----------------------------------------
@@ -17,7 +17,7 @@ Since this documentation is for the 2.1 development branch of Turbogears,
 we also need to download the source in order to generate documentation from
 the modules.
 
-If you are interested in helping with the new turbogears docs, we recommend you
+If you are interested in helping with the turbogears docs, we recommend you
 touch base with mpedersen on the IRC channel #turbogears.  He appreciates any
 help you can give, and can help you get setup so he can more easily incorporate
 your modifications.   Below is the recommended setup to help work with the
@@ -52,7 +52,7 @@ and do not document the methods to do so.
 
 First, we setup the virtualenv and install the Turbogears 2.1 development
 branch, after first downloading it using Mercurial_.   I include a step
-for installing mercurial, which you can skip if you already have it.
+for installing Mercurial, which you can skip if you already have it.
 
 Below, we chose to use the name "tgdocs" for our virtualenv directory, and
 used a subdirectory under that "src" for our work directory.
@@ -85,9 +85,12 @@ You could use different names if you must.
 We need several additional packages to support documentation development:
 
 python_memcached
-   this is requirement for the way we generate docs, provides memcache module
+   This is requirement for the way we generate docs, provides memcache module
+sqlalchemy
+   This is required for the documentation to avoid generating warnings when
+   it is built.
 tgext.geo
-   we generate docs from some related packages, this is not installed by default
+   We generate docs from some related packages, this is not installed by default
 
 Here is the command to download these packages.  Again, I'm assuming you are
 still in the virtualenv.
@@ -132,10 +135,10 @@ further explanation on how to fork and get and post updates with bitbucket.  We
 try to provide the basic information here, but you can work through that
 tutorial for additional details.
 
-You need an account on bitbucket_ in order to fork a repository.
-It is a painless process, which can be done by following the link.
-Once you are logged in at bitbucket, go to the `mpedersen repository`_,
-and click 'fork'.
+You need an account on bitbucket_ in order to fork a repository.  It
+is a painless process, which can be done by following the link to the
+bitbucket_ home page.  Once you are logged in at bitbucket, go to the
+`mpedersen repository`_, and click 'fork'.
 
 I recommend adding an extension to your fork like '-yourname', substituting
 yourname, of course.   Then you can get your repository with:
@@ -193,11 +196,3 @@ efforts!
 .. _WindowsInstall: http://www.blog.pythonlibrary.org/?p=230
 .. _`mpedersen repository`: http://bitbucket.org/pedersen/tg_2_1_docs
 
-
-.. todo:: Difficulty: Medium. perhaps a better basic install link for python, virtualenv, easy_setup
-.. todo:: Difficulty: Medium. review whether my discussion of hg, bitbucket and repositories makes
-    sense, and whether mpdedersen's bitbucket tutorial covers all it needs to.
-    (note:   I think they make basic sense, but...   I'm not an expert)
-.. todo:: Difficulty: Easy. review and edit, in general...
-    I still recommend highlighting some of the volunteer opportunities.
-    perhaps a "how to help/contribute" doc should link to here...

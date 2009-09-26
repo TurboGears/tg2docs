@@ -106,6 +106,13 @@ Finally, we need to add a file. Make a new file in the directory named
    Just some random text to stuff in a file, so we can add a file into the
    Mercurial tree.
 
+Having made the file, we now need to tell Mercurial_ to track the
+file. This is done with the following command:
+
+.. code-block:: bash
+
+   hg add added_stuff.txt
+
 Now, with all of those file operations done, how do we store our work into
 the repository? See the next section.
 
