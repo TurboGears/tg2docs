@@ -113,8 +113,3 @@ want to customize some things, you may want to read the following pages:
     Authentication
     Authorization
     Customization
-
-
-.. todo:: Difficulty: Medium.  Fix up navigation in this section.   
-   I (laurin) wish I knew how to do it - perhaps someone else?.   
-   Next for "Authentication/who" is NOT "Authorization/what" - seems pyAMF snuck in there...
