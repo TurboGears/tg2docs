@@ -550,14 +550,12 @@ Running The Demo Code
 ---------------------
 
 The sample code for this documentation lives in a `repository
-<http://pythontutorials.googlecode.com/svn/tutorials/moviedemo/trunk/>`_.
+<http://bitbucket.org/percious/moviedemo/overview/>`_.
 You can always check it out to play with it by::
 
-  svn co http://pythontutorials.googlecode.com/svn/tutorials/moviedemo/trunk/ moviedemo
+  hg clone http://bitbucket.org/percious/moviedemo/
   cd moviedemo
   python setup.py
   paster setup-app development.ini
   paster serve development.ini
-
-.. todo:: Difficulty: Medium. get the svn repository for the moviedemo code converted to hg
 
