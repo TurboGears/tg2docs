@@ -8,14 +8,15 @@ Tutorials
    :maxdepth: 1
    
    main/BasicMoves
-   main/bitbucket_tutorial
    main/Wiki20/wiki20
-   main/movie_tutorial.rst
+   main/movie_tutorial
+   main/FormBasics
    main/SimpleWidgetForm
    main/ToscaWidgets/forms
-   main/Auth/index
    main/Pagination/index
+   main/Auth/index
    main/AuthorizeTutorial
+   main/bitbucket_tutorial
 
 ============================
 Moving From Other Frameworks
