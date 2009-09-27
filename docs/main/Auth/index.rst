@@ -1,3 +1,5 @@
+.. _auth_and_auth:
+
 Authentication and Authorization in TurboGears 2
 ================================================
 
