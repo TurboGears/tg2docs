@@ -1,3 +1,5 @@
+.. _form-basics:
+
 TurboGears Form Handling Overview
 =================================
 
