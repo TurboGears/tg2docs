@@ -4,8 +4,6 @@ Misc To Do Items From The Docs
 
 .. todo:: Difficulty: Hard. TW2 usage documentation
 
-.. todo:: Difficulty: Easy. base_config.use_sqlalchemy=false <-- needs documentation
-
 .. todo:: Difficulty: Medium. http://turbogears.org/2.0/docs/main/DownloadInstall.html references http://www.turbogears.org/2.0/downloads/current/tg2-bootstrap.py and this needs to be updated. Or does it? request from percious, contradiction from elpargo. Clarify with them before change.
 
 .. todo:: Difficulty: Medium. critique the toc, and other organization. 
