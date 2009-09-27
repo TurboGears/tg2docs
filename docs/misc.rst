@@ -66,8 +66,6 @@ Misc To Do Items From The Docs
 
 .. todo:: Difficulty: Easy. RestController requires that all data come in as a key/value pair, can't just get raw POST body
 
-.. todo:: Difficulty: Medium. Add in docs for sqlautocode -> percious said to put his name here
-
 .. todo:: Difficulty: Medium. Include these docs: http://groups.google.com/group/turbogears/browse_frm/thread/9b07a8d34611f5d7?hl=en
 
 .. todo:: Difficulty: Medium. Include these docs: http://groups.google.com/group/turbogears/browse_frm/thread/c2aa4cb5ed07f52d?hl=en

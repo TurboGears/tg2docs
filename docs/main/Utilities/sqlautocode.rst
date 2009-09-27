@@ -1,9 +1,9 @@
 .. _sqlautocode:
 
-AutoGenerating Model Code with SQLAlchemy
+AutoGenerating Model Code with SQLAutocode
 ==========================================
 
-:Status: RoughDoc
+:Status: Official
 
 .. contents:: Table of Contents
    :depth: 2
