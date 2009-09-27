@@ -106,21 +106,18 @@ If everything is ok, run::
 Finally, go to your TurboGears project directory and in a console
 run::
 
-        python start-myproject.py prod.cfg
+        paster serve production.ini
+        
+.. note:: The above command assumes you have created a config file named ``production.ini``.
 
 Now you should be able to see your webpage in full TurboGears glory at
 the address configured as ``ServerName`` above.
-
-To be able to relocate your application without problems, make sure
-you create your URLs properly (see 1.0/GettingStarted/URLs).
-
-.. todo:: Difficulty: Easy. Fix ModProxy. Had reference to 1.0/GettingStarted/URLs and this needs to be updated for 2.1
 
 
 Setting The Correct Charset
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The default Kid templates used by TurboGears specify ``utf-8`` as a
+The default templates used by TurboGears specify ``utf-8`` as a
 charset.  The Apache default charset, returned in the ``Content-Type``
 header, is ``ISO-8859-1``.  This inconsistency will cause errors
 during validation and incorrect rendering of some characters on the
@@ -128,14 +125,7 @@ client. Therefore we used the ``AddDefaultCharset utf-8`` directive
 above to override the Apache default in the TurboGears virtual host
 section.
 
-You can also explicitly set the charset property on a by-method basis by
-sending the ``Content-type`` HTTP header from CherryPy. To do this, you would
-add the following line to your controller methods in ``controllers.py``,
-somewhere before you return the data dictionary::
-
-    cherrypy.response.headerMap["Content-Type"] += ";charset=utf-8"
-
-Apache notices the pre-existing header and passes it through.
-
-.. todo:: Difficulty: Easy. The Charset section here refers to Kid templates. Verify
-          these charsets, and convert to Genshi
+TG2 also automatically sets the charset property by modifying the
+``Content-type`` HTTP header on each request that returns ``text/*``
+or ``application/json`` content types. Apache notices this pre-existing
+header and passes it through.
