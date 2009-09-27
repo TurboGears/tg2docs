@@ -1,3 +1,5 @@
+.. _jinja:
+
 Using Jinja in TG2
 ===================
 
