@@ -21,6 +21,7 @@ ToscaWidgets Cookbook
    Cookbook/ReCaptcha
    Cookbook/DynamicSelect
    Cookbook/OpenLayersMap
+   Cookbook/Flot
 
 Javascript Library Specific Widgets
 -----------------------------------
