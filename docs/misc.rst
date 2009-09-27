@@ -4,8 +4,6 @@ Misc To Do Items From The Docs
 
 .. todo:: Difficulty: Hard. TW2 usage documentation
 
-.. todo:: Difficulty: Easy. base_config.use_sqlalchemy=false <-- needs documentation
-
 .. todo:: Difficulty: Medium. http://turbogears.org/2.0/docs/main/DownloadInstall.html references http://www.turbogears.org/2.0/downloads/current/tg2-bootstrap.py and this needs to be updated. Or does it? request from percious, contradiction from elpargo. Clarify with them before change.
 
 .. todo:: Difficulty: Medium. critique the toc, and other organization. 
@@ -28,8 +26,6 @@ Misc To Do Items From The Docs
 
 .. todo:: Difficulty: Medium. highlight the test suite:  and the goodness of test driven development.
 
-.. todo:: Difficulty: Medium. Update install docs, since we now use pypi
-
 .. todo:: Difficulty: Hard. Compare Our Docs to `Django Docs <http://docs.djangoproject.com/en/dev/`, see where we can do better.   Also compare to pylons book!
 
 .. todo:: Difficulty: Medium. Understand "variable_provider": you define tg.config['variable_provider'] = callable and that returns a dict with all the variables you want in all templates.
@@ -50,11 +46,7 @@ Misc To Do Items From The Docs
 
 .. todo:: Difficulty: Medium. port http://docs.turbogears.org/1.0/FileUploadTutorial to TG2
 
-.. todo:: Difficulty: Medium. make sure to explain how to use "paster --daemon"
-
 .. todo:: Difficulty: Medium. add in notes regarding how to use repoze.who's user_checker
-
-.. todo:: Difficulty: Medium. add reference to EggBasket for packing/deployment with a private PyPI
 
 .. todo:: Difficulty: Medium. port http://docs.turbogears.org/1.0/SQLAlchemy#id13
 
@@ -70,8 +62,6 @@ Misc To Do Items From The Docs
 
 .. todo:: Difficulty: Medium. Include these docs: http://groups.google.com/group/turbogears/browse_frm/thread/c2aa4cb5ed07f52d?hl=en
 
-.. todo:: Difficulty: Medium. Include these docs: http://www.blog.pythonlibrary.org/?p=210
-
 .. todo:: Difficulty: Medium. Include these docs: http://groups.google.com/group/turbogears/browse_frm/thread/4023f34fd114121e?hl=en
 
 .. todo:: Difficulty: Medium. Include these docs: http://groups.google.com/group/turbogears/browse_frm/thread/f35ef3d347793682?hl=en
@@ -80,7 +70,7 @@ Misc To Do Items From The Docs
 
 .. todo:: Difficulty: Medium. Include these docs: http://groups.google.com/group/turbogears/browse_frm/thread/46d8fa413a0c97d8?hl=en
 
-.. todo:: Difficulty: Medium. Include these docs: http://groups.google.com/group/turbogears/browse_thread/thread/6b44420129281259
+.. todo:: Difficulty: Medium. Include these docs: http://groups.google.com/group/turbogears/browse_thread/thread/6b44420129281259 How to upload picture or video in Turbogears
 
 .. todo:: Difficulty: Medium. Include these docs: http://groups.google.com/group/turbogears/browse_frm/thread/31c4268417c5033c?hl=en
 
