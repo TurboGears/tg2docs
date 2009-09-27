@@ -98,8 +98,8 @@ To confirm this worked run:
     >>> setuptools.__version__
     '0.6c9'
 
-Installing Virtualenv
-~~~~~~~~~~~~~~~~~~~~~
+What is Virtualenv?
+~~~~~~~~~~~~~~~~~~~
 
 ``virtualenv`` is a tool that you can use to keep your Python path
 clean and tidy.  It allows you to install new packages and all of
