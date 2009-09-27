@@ -183,6 +183,20 @@ transaction.commit is normally handled by middleware which commits
 if a method returns "normally" (including redirects) and rolls 
 back if the method raises an uncaught exception.
 
+SQLAlchemy References
+---------------------
+
+ * `SQLAlchemy Documentation`_:
+ 
+   * `Object Relational Mapper`_
+   * `SQLAlchemy Expressions`_
+   
+ * The zope.sqlalchemy transaction module (TODO: documentation)
+
+.. _`SQLAlchemy Documentation`: http://www.sqlalchemy.org/docs/05/
+.. _`Object Relational Mapper`: http://www.sqlalchemy.org/docs/05/ormtutorial.html
+.. _`SQLAlchemy Expressions`: http://www.sqlalchemy.org/docs/05/sqlexpression.html
+
 Browse/Edit with Admin GUI
 --------------------------
 
@@ -329,18 +343,10 @@ CSS takes a significant amount of work to master, particularly with regard to
 the intricacies of legacy browser support.  We'll assume you will learn CSS 
 yourself and leave it as showing you where to put the results of your learning.
 
-Reference
----------
-
- * `SQLAlchemy Object Relational Tutorial <http://www.sqlalchemy.org/docs/04/ormtutorial.html>`_
- * The transaction module (TODO: documentation)
-
 Next Steps
 ----------
 
- * :ref:`form-basics` -- overview of how to handle forms 
- * :ref:`writing_controllers` -- explores the process of writing controller methods 
-    in depth, including discussions of how to handle not-found pages, how to set 
-    up URL hierarchies via object dispatch and the like.
+ * :ref:`form-basics` -- overview of how to create/handle forms 
+ * :ref:`writing_controllers` -- explores the process of writing controller methods in depth, including discussions of how to handle not-found pages, how to set up URL hierarchies via object dispatch and the like.
  * :ref:`getting-to-know` -- documents describing TurboGears' approach and mechanics,
     you should read these after you have completed a few tutorials.
