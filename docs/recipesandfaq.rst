@@ -17,7 +17,10 @@ Recipes and FAQ
    main/Templates/Mako
    main/Templates/Jinja
    main/Templates/Alternative
-   
+   main/MultipleDatabases
+   main/Wiki20/JSONMochiKit
+
+
 Widget Recipes
 ==============
 .. toctree::
@@ -38,21 +41,14 @@ Recipes for Installation and Deployment
    main/Deployment/modwsgi+virtualenv
 
 
-Performance And Optimization:
-=============================
+Performance and optimization:
+===============================
 
 .. toctree::
    :maxdepth: 2
    
    main/Performance/TemplatePerformance
 
-Code Examples and Snippets
-==========================
-
-.. toctree::
-   :maxdepth: 1
-   
-   recipes/authorize_net
 
 .. todo:: Difficulty: Easy. Validate that toctree maxdepth values are appropriate
 
