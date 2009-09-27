@@ -1,16 +1,16 @@
-SQLAlchemy Models (Creating a Movie Database)
+A Movie Database (Models, Views, Controllers)
 =============================================
 
-This tutorial introduces the use of the SQLAlchemy Object Relational Mapper (ORM).
-SQLAlchemy is a powerful database abstraction layer that lets you start off 
-with a simple "declarative" form that looks much like other ORMs, but allows 
-you to access a more general and powerful abstraction of "Mapper" should 
-you need that functionality in the future.
+This tutorial introduces:
 
+ * how to define data-models in TurboGears using SQLAlchemy
+ * how to interact with your data-models from Python code (controllers)
+ * how to modify HTML (Genshi) template views 
+ * how to use automatically generated forms to allow users to update your models
+ 
 We will assume you are familiar with the following:
 
  * The `Model-View-Controller`_ abstraction
-
  * Basic operations of Relational Databases
  
 .. _Model-View-Controller: http://en.wikipedia.org/wiki/Model-view-controller
@@ -32,10 +32,19 @@ Getting Started
 We will use the TurboGears "quickstart" command, which will create a generic 
 TurboGears project which we can proceed to edit::
   
-  paster quickstart movies
+    paster quickstart movies
 
 We will want to accept most of the defaults.  We will want to have authentication 
 in this project, so answer yes when asked about that.
+
+SQLAlchemy Models
+-----------------
+
+SQLAlchemy is the default storage layer used by TurboGears 2.0 and above.
+SQLAlchemy is a powerful database abstraction layer that lets you being your 
+project using a simple "declarative" form that looks much like other ORMs, 
+but allows you to access a more general and powerful abstraction of "Mapper" 
+should you need that functionality in the future.
   
 If you browse into the new "movies" directory, you will find a sub-directory 
 also named "movies".  This directory is your importable package, and within 
@@ -46,7 +55,7 @@ We'll create a new file "movie.py" in our "model" directory with this content::
 
     from sqlalchemy import *
     from sqlalchemy.orm import mapper, relation, backref
-    from sqlalchemy.types import Integer, Unicode
+    from sqlalchemy.types import Integer, Unicode, Boolean
 
     from movies.model import DeclarativeBase, metadata, DBSession
     
@@ -60,9 +69,9 @@ We'll create a new file "movie.py" in our "model" directory with this content::
         title = Column(Unicode, nullable=False)
         description = Column(Unicode, nullable=True)
         year = Column(Integer, nullable=True)
-        release_date = Column(Date, nullable=True)
         genre_id = Column(Integer,ForeignKey('genre.id'), nullable=True)
         genre = relation('Genre',foreign_keys=genre_id )
+        reviewed = Column(Boolean, nullable=False, default=False )
         def __repr__(self):
             return "<Movie('%s','%s', '%s')>" % (
                 self.title, self.year, self.description
@@ -283,7 +292,7 @@ rather than just the edits we would make to it:
                 <tr py:for="movie in movies">
                     <th class="movie-title">${movie.title}</th>
                     <td class="movie-year">${movie.year}</td>
-                    <td class="genre-title">${movie.genre.title}</td>
+                    <td class="genre-title"><span py:if="movie.genre" py:strip="">${movie.genre.title}</span></td>
                     <td class="movie-description">${movie.description}</td>
                 </tr>
             </tbody>
@@ -328,13 +337,135 @@ CSS takes a significant amount of work to master, particularly with regard to
 the intricacies of legacy browser support.  We'll assume you will learn CSS 
 yourself and leave it as showing you where to put the results of your learning.
 
-SQLAlchemy References
+Automatic Forms for User Interaction (Sprox)
+--------------------------------------------
+
+As you might have guessed by the Admin UI, TurboGears is able to ``introspect``
+your database model in order to provide common ``CRUD`` (Create, Update, Destroy)
+forms.  We'll use this capability, which is provided by the `Sprox`_ library
+to create a simple form our users can use to add new movies to our database::
+
+    from sprox.formbase import AddRecordForm
+    class AddMovie(AddRecordForm):
+        __model__ = Movie
+    add_movie_form = AddMovie(DBSession)
+    
+we can then use this pass this form to our template in our ``index`` method of 
+our root controller::
+
+    @expose('movies.templates.index')
+    def index(self, **named):
+        """Handle the front-page."""
+        movies = DBSession.query( Movie ).order_by( Movie.title )
+        return dict(
+            page='index',
+            movies = movies,
+            add_movie_form = add_movie_form,
+        )
+
+and call it within our ``index`` template:
+
+.. code-block:: html
+
+    <h2>New Movie</h2>
+    ${add_movie_form( action='add_movie') }
+
+we pass an ``action`` parameter to the form to tell it what controller method 
+(url) it should use to process the results of submitting the form.  We'll create 
+the controller on our root controller::
+
+    @expose( )
+    @validate( 
+        form=add_movie_form,
+        error_handler=index,
+    )
+    def add_movie( self, title, description, year, genre, **named ):
+        """Create a new movie record"""
+        new = Movie(
+            title = title,
+            description = description,
+            year = year,
+            reviewed = False,
+            genre_id = genre,
+        )
+        DBSession.add( new )
+        flash( '''Added movie: %s'''%( title, ))
+        redirect( './index' )
+
+We do not use a template in our ``expose`` call here, as we are not going 
+to return an HTML page from this method.  The ``validate`` decorator uses 
+the Sprox widget/form's automatically generated validator to convert the 
+incoming form values into Python objects and check for required fields.
+If there are errors, the error_handler controller method will be called.
+In this case, as is common, we use the same view which presented the 
+problematic form, as most widgets (including Sprox' widgets) are designed 
+to display error messages when errors occur.
+
+Note the use of DBSession.add() on the new instance.  Without this, the 
+record would not be registered with the transactional machinery, and would 
+simply disappear when the request completed.
+
+Customizing the Sprox Form
+--------------------------
+
+At this point we can view our site and see the movie-adding form just 
+below the list of Movies.  We can enter new values in the form and we will 
+create new Movie records.  However, the form is not particularly elegant 
+looking, as the use of "Unicode" values (without size limits) for the 
+title has convinced Sprox to use ungainly TextArea control instead of more 
+compact TextField controls.  We also have a number of extraneous controls 
+for ids, and the "reviewed" flag is visible to the user.
+
+To clean the form up somewhat, we will refine the set of fields in the form
+by omitting the unwanted fields and declaring the widget-type to use for the 
+title field.  The resulting add_movie_form looks like so::
+
+    from sprox.formbase import AddRecordForm
+    from tw.forms import TextField,CalendarDatePicker
+    class AddMovie(AddRecordForm):
+        __model__ = Movie
+        __omit_fields__ = [
+            'id', 'genre_id', 'reviewed'
+        ]
+        title = TextField
+    add_movie_form = AddMovie(DBSession)
+
+Last but not least, we alter our index page to no longer display any movies 
+which have not yet been reviewed by our admins (using the admin controller),
+which is done by adding a ``filter`` clause to the SQLAlchemy query::
+
+    movies = DBSession.query( Movie ).filter(
+        Movie.reviewed == True
+    ).order_by( Movie.title )
+
+`Sprox`_ allows you to rapidly prototype applications under TurboGears, and
+provides considerable customization (documented on their web-site).  
+As you refine your application you may replace many of the 
+Sprox-provided forms with custom forms created using the underlying 
+``ToscaWidgets`` framework, or potentially even forms directly coded 
+into your templates.  The automatically generated forms can save you 
+a significant amount of time until you get there.
+
+.. _`Sprox`: http://www.sprox.org
+
+Next Steps
+----------
+
+ * `SQLAlchemy Object Relational Tutorial`_ -- learn how to use SQLAlchemy effectively to model your applications
+ * :ref:`simple-widget-form` -- learn how to use ToscaWidgets to create custom forms
+ * :ref:`Genshi <genshi>` -- learn the default templating language for views
+ * :ref:`tgext.crud.controller` -- learn how to automate CRUD-style editing even more
+ * :ref:`tgext-admin` -- learn how to customize the admin UI
+
+References
 ---------------------
 
  * `SQLAlchemy Documentation`_:
  
    * `Object Relational Mapper`_
    * `SQLAlchemy Expressions`_
+
+ * `Sprox`_ Website -- includes customization tutorials
    
  * The zope.sqlalchemy transaction module
  
@@ -343,11 +474,3 @@ SQLAlchemy References
 .. _`Object Relational Mapper`: http://www.sqlalchemy.org/docs/05/ormtutorial.html
 .. _`SQLAlchemy Expressions`: http://www.sqlalchemy.org/docs/05/sqlexpression.html
 .. _`SQLAlchemy Object Relational Tutorial`: http://www.sqlalchemy.org/docs/05/ormtutorial.html
-
-Next Steps
-----------
-
- * :ref:`form-basics` -- overview of how to create/handle forms 
- * :ref:`writing_controllers` -- explores the process of writing controller methods in depth, including discussions of how to handle not-found pages, how to set up URL hierarchies via object dispatch and the like.
- * :ref:`getting-to-know` -- documents describing TurboGears' approach and mechanics,
-    you should read these after you have completed a few tutorials.

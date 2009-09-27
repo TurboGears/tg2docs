@@ -10,7 +10,6 @@ Tutorials
    main/BasicMoves
    main/Wiki20/wiki20
    main/movie_tutorial
-   main/FormBasics
    main/SimpleWidgetForm
    main/ToscaWidgets/forms
    main/Pagination/index
