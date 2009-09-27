@@ -48,8 +48,6 @@ Misc To Do Items From The Docs
 
 .. todo:: Difficulty: Medium. port http://docs.turbogears.org/1.0/FileUploadTutorial to TG2
 
-.. todo:: Difficulty: Medium. make sure to explain how to use "paster --daemon"
-
 .. todo:: Difficulty: Medium. add in notes regarding how to use repoze.who's user_checker
 
 .. todo:: Difficulty: Medium. port http://docs.turbogears.org/1.0/SQLAlchemy#id13
