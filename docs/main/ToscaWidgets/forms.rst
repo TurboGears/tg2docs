@@ -1,3 +1,5 @@
+.. _tosca-forms:
+
 Using ToscaWidgets to Create Forms
 ==================================
 

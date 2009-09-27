@@ -197,17 +197,16 @@ admin page here:
 
     http://localhost:8080/admin 
 
-You can customize the administrative GUI considerably.
+You can customize the administrative GUI considerably as discussed 
+in :ref:`tgext-admin`.
 
 Reference
 ---------
 
  * `SQLAlchemy Object Relational Tutorial <http://www.sqlalchemy.org/docs/04/ormtutorial.html>`_
- * :ref:`tgext-admin`
  * The transaction module (TODO: documentation)
 
 Next Steps
 ----------
 
- * Controllers
- * Views (Forms) (ToscaWidgets TODO: cross-reference)
+ * :ref:`tosca-forms` -- introduces the creation of Forms to edit your Model
