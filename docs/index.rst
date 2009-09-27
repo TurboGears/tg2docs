@@ -30,9 +30,10 @@ to the place you need to be, or read the information below sequentially.
 
 :ref:`Tutorials <tutorials>`
 ----------------------------
-    The obligatory "Hello World" example, coupled with several other
-    examples (and not all of them are purely TurboGears). These should help
-    answer some of the basic "How do I ... ?" questions.
+
+    For the new TurboGears user, this is the place to start.  These tutorials 
+    are intended to get you started working quickly and give you a feel for 
+    how TurboGears applications work.
 
 :ref:`Getting To Know TurboGears <getting-to-know>`
 ---------------------------------------------------
