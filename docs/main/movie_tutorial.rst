@@ -183,20 +183,6 @@ transaction.commit is normally handled by middleware which commits
 if a method returns "normally" (including redirects) and rolls 
 back if the method raises an uncaught exception.
 
-SQLAlchemy References
----------------------
-
- * `SQLAlchemy Documentation`_:
- 
-   * `Object Relational Mapper`_
-   * `SQLAlchemy Expressions`_
-   
- * The zope.sqlalchemy transaction module (TODO: documentation)
-
-.. _`SQLAlchemy Documentation`: http://www.sqlalchemy.org/docs/05/
-.. _`Object Relational Mapper`: http://www.sqlalchemy.org/docs/05/ormtutorial.html
-.. _`SQLAlchemy Expressions`: http://www.sqlalchemy.org/docs/05/sqlexpression.html
-
 Browse/Edit with Admin GUI
 --------------------------
 
@@ -249,10 +235,10 @@ index method to look like this::
             movies = movies,
         )
 
-SQLAlchemy query operations are an involved subject (see the References 
-for the SQLAlchemy ORM tutorial for an in-depth exploration of it.  Here 
-we are querying all Movie instances and sorting them by their 
-"title" field.
+SQLAlchemy query operations are an involved subject (see the 
+`SQLAlchemy Object Relational Tutorial`_ for an in-depth exploration of it.  
+Here we are querying all Movie instances and sorting them by their ``title``
+field.                                                         
 
 We could actually run our application now, and other than a tiny slowdown 
 of the front-page load, we would not be able to see any change in the 
@@ -263,13 +249,15 @@ Altering a View
 ---------------
 
 To make our collection of Movies visible, we are going to change the index 
-template for our application.  The "expose" decorator on the index method 
+template for our application.  The ``expose`` decorator on the index method 
 gives the dotted-format module name of the (Genshi) template which is going 
 to be used to render the page.  Here it is movies.templates.index, so we 
 will open the file movies/movies/templates/index.html to edit it.
 
 We are going to replace most of this file, so here we show the entire file,
-rather than just the edits we would make to it::
+rather than just the edits we would make to it:
+
+.. code-block:: html
 
     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
                           "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -305,18 +293,15 @@ rather than just the edits we would make to it::
     </body>
     </html>
 
-Genshi is an "attribute language" system which requires rigorous XML correctness.
+Genshi is an ``attribute language`` system which requires rigorous XML correctness.
 If you leave off a closing-tag or forget to put quotes around an attribute value 
 you will get Genshi templating errors.  Luckily Genshi tends to be relatively good 
 at pointing out where the error is, though occasionally you'll have to think a bit 
 to figure out which particular tag isn't closed, for instance.
 
-:ref:`genshi`
-
-TurboGears actually supports a number of other templating languages, including 
-:ref:`kid` and :ref:`mako`.  The differences between them tend to be subtle 
-enough that new users don't generally need to worry about choosing an alternate
-templating system.
+TurboGears actually supports a number of templating languages, including :ref:`Genshi <genshi>`, :ref:`Jinja <jinja>` and :ref:`Mako <mako>`. 
+The differences between them tend to be subtle enough that new users don't
+generally need to worry about choosing an alternate templating system.
 
 Aside: Adding some Style
 ------------------------
@@ -342,6 +327,22 @@ table of movies be a little easier to read::
 CSS takes a significant amount of work to master, particularly with regard to 
 the intricacies of legacy browser support.  We'll assume you will learn CSS 
 yourself and leave it as showing you where to put the results of your learning.
+
+SQLAlchemy References
+---------------------
+
+ * `SQLAlchemy Documentation`_:
+ 
+   * `Object Relational Mapper`_
+   * `SQLAlchemy Expressions`_
+   
+ * The zope.sqlalchemy transaction module
+ 
+.. todo:: document the transaction module
+.. _`SQLAlchemy Documentation`: http://www.sqlalchemy.org/docs/05/
+.. _`Object Relational Mapper`: http://www.sqlalchemy.org/docs/05/ormtutorial.html
+.. _`SQLAlchemy Expressions`: http://www.sqlalchemy.org/docs/05/sqlexpression.html
+.. _`SQLAlchemy Object Relational Tutorial`: http://www.sqlalchemy.org/docs/05/ormtutorial.html
 
 Next Steps
 ----------
