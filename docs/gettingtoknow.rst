@@ -18,6 +18,7 @@ cannot stress this enough: Read These Pages!
    
    main/RequestFlow
    main/master_html
+   main/AuthorizeTutorial
 
 What's New With The Latest Release
 ==================================

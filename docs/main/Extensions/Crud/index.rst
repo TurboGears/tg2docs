@@ -1,3 +1,6 @@
+.. _tgext.crud.controller:
+
+
 :obj:`tgext.crud.controller`
 ============================
 

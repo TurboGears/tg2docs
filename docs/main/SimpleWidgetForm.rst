@@ -1,3 +1,5 @@
+.. _simple-widget-form:
+
 Simple Widget Form Tutorial
 ===========================
 
