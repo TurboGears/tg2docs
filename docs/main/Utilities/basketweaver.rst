@@ -59,6 +59,14 @@ Serving with Apache
 Now, copy your top-level index folder to wherever you
 serve Apache files from.
 
+Other Personal PyPI alternatives
+---------------------------------
+
+`EggBasket`_ is a TurboGears 1.0 application that provides similar
+services, with a web frontend.
+
+.. _`EggBasket`: http://www.chrisarndt.de/projects/eggbasket/
+
 Installing from your index
 ---------------------------
 
@@ -68,3 +76,5 @@ And `Bob's Your Uncle`_.
 
 .. _`Bob's your Uncle`: http://en.wikipedia.org/wiki/Bob%27s_your_uncle
 .. _`pypi`: http://pypi.python.org
+
+

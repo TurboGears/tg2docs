@@ -62,8 +62,6 @@ Misc To Do Items From The Docs
 
 .. todo:: Difficulty: Medium. Include these docs: http://groups.google.com/group/turbogears/browse_frm/thread/c2aa4cb5ed07f52d?hl=en
 
-.. todo:: Difficulty: Medium. Include these docs: http://www.blog.pythonlibrary.org/?p=210
-
 .. todo:: Difficulty: Medium. Include these docs: http://groups.google.com/group/turbogears/browse_frm/thread/4023f34fd114121e?hl=en
 
 .. todo:: Difficulty: Medium. Include these docs: http://groups.google.com/group/turbogears/browse_frm/thread/f35ef3d347793682?hl=en
@@ -72,7 +70,7 @@ Misc To Do Items From The Docs
 
 .. todo:: Difficulty: Medium. Include these docs: http://groups.google.com/group/turbogears/browse_frm/thread/46d8fa413a0c97d8?hl=en
 
-.. todo:: Difficulty: Medium. Include these docs: http://groups.google.com/group/turbogears/browse_thread/thread/6b44420129281259
+.. todo:: Difficulty: Medium. Include these docs: http://groups.google.com/group/turbogears/browse_thread/thread/6b44420129281259 How to upload picture or video in Turbogears
 
 .. todo:: Difficulty: Medium. Include these docs: http://groups.google.com/group/turbogears/browse_frm/thread/31c4268417c5033c?hl=en
 
