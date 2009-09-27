@@ -62,7 +62,7 @@ A very Basic Form
 We now want to create a simple input form widget for the model object.
 In order to arrange our code more clearly, we create a new subpackage
 ``widgets`` in our project by adding a new subdirectory ``widgets``
-with an empty ``__init.py`` file in it.  The ``widgets`` subdirectory
+with an empty ``__init__.py`` file in it.  The ``widgets`` subdirectory
 should be on the same level as the ``controllers`` and ``model``
 subdirectories.  Inside the ``widgets`` subdirectory, we create a
 module ``movie_form.py`` containing the following very simple form
@@ -385,4 +385,3 @@ fieldsets or whole forms.
 .. _`available validators`: http://formencode.org/module-formencode.validators.html
 .. _`compound validators`: http://www.formencode.org/Validator.html#compound-validators
 .. _`additional validators`: http://toscawidgets.org/documentation/tw.forms/modules/validators.html
-
