@@ -56,8 +56,6 @@ Misc To Do Items From The Docs
 
 .. todo:: Difficulty: Medium. add reference to EggBasket for packing/deployment with a private PyPI
 
-.. todo:: Difficulty: Easy. resolve ticket http://trac.turbogears.org/ticket/2326
-
 .. todo:: Difficulty: Medium. port http://docs.turbogears.org/1.0/SQLAlchemy#id13
 
 .. todo:: Difficulty: Medium. http://code.google.com/p/tgtools/source/browse/projects/tgext.admin/trunk/tgext/admin/tgadminconfig.py#114 << how to override tgext.admin controllers properly
