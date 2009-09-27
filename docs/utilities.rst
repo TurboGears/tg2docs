@@ -8,3 +8,4 @@ Utilities
    :maxdepth: 1
    
    main/Utilities/sqlautocode
+   main/Utilities/basketweaver
