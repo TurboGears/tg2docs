@@ -50,6 +50,14 @@ Performance and optimization:
    main/Performance/TemplatePerformance
 
 
+Code Samples
+============
+
+.. toctree::
+   :maxdepth: 1
+
+   recipes/authorize_net
+  
 .. todo:: Difficulty: Easy. Validate that toctree maxdepth values are appropriate
 
 .. todo:: Difficulty: Medium. Rearrange headers, condensing as appropriate
