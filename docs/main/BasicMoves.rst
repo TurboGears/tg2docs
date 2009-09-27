@@ -281,10 +281,8 @@ this line, near the top of the file::
 
     <xi:include href="master.html" />
 
-.. todo:: Difficulty: Medium. Ideally, this would be a great spot to link to further information
-    about genshi and more about what is included in the "default" master
-    template...
-
+For a complete dissection of master.html, please check out :ref:`the
+page <master_html>` devoted to just that.
 
 What Was Covered
 ----------------
@@ -293,10 +291,9 @@ Here we showed various ways of displaying messages to the user with
 TurboGears, and gave a brief introduction to using templates.  We also
 learned a little about Controllers, and got introduced to the MVC
 concept (Model View Controller).  We just scratched the surface on the
-V and C parts here.
+:ref:`V (as in View) <alternative_templates>` and :ref:`C (as in
+Controller) <writing_controllers>` parts here...
 
-.. todo:: Difficulty: Medium. This would be a good spot to link to further information about templates
-    and controllers...
 
 and of course, the next step in the tutorial path!
 
@@ -306,7 +303,4 @@ and of course, the next step in the tutorial path!
 .. _`interactive debugger here`: http://pylonsbook.com/en/1.0/tracking-down-problems-and-handling-errors.html
 .. _Pylons: http://www.pylons.org
 .. _`Wikipedia page`: http://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller
-
-.. todo:: Difficulty: Medium. I'm not sure where we have additional information yet, but 
-   it should be linked here, when it is identified.
 

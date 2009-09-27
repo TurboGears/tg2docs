@@ -2,12 +2,12 @@
 
 ToscaWidgets Cookbook
 =====================
-  
+
   Here you will find information about how to do common tasks involving ToscaWidgets.
 
 .. toctree::
    :maxdepth: 1
-   
+
    Cookbook/ExtTreeView
    Cookbook/ExtItemSelector
    Cookbook/ExtSingleSelectCombo
@@ -21,7 +21,8 @@ ToscaWidgets Cookbook
    Cookbook/ReCaptcha
    Cookbook/DynamicSelect
    Cookbook/OpenLayersMap
-   
+   Cookbook/Flot
+
 Javascript Library Specific Widgets
 -----------------------------------
 
@@ -36,6 +37,7 @@ TreeView
 
 
  .. image:: images/itemselector1.png
+   :align: right
    :height: 140
 
 ItemSelector
@@ -49,6 +51,7 @@ ItemSelector
 
 
  .. image:: images/singleselectcombo-small.png
+   :align: right
    :height: 120
 
 SingleSelectCombo
@@ -60,6 +63,7 @@ SingleSelectCombo
 
 jQuery
 ~~~~~~~
+
 
  .. image:: images/autocomplete_small.png
     :align: right
@@ -94,18 +98,22 @@ Ajax Form
 
  :ref:`tw_cookbook_jqueryajaxform`
 
+
+ .. image:: images/flot1.png
+   :align: right
+   :height: 89
+
 Flot
 ````
 
  How to create dynamic graphs using the powerful Flot library.
 
- .. todo:: Difficulty: Medium to Hard. write the tutorial for making graphs using Flot
+ :ref:`tw_cookbook_flot`
 
 
  .. image:: images/treeview.png
    :align: right
    :height: 120
-
 
 Tree View
 `````````
@@ -125,8 +133,10 @@ Ajax Graphs
 
 How to add an ajax graph to your system using tw.jquery and flot.
 
- .. image:: images/stars.png
 
+ .. image:: images/stars.png
+   :align: right
+   :height: 57
 
 Ajax Star Rating
 ````````````````
@@ -188,7 +198,7 @@ Ajax Progress Bar
 
 Ajax File Upload with Progress Bar
 ``````````````````````````````````
- 
+
  How to create a file upload with a progress bar.
 
 .. todo:: Difficulty: Medium to Hard. create a tutorial for a file upload with progress bar
@@ -242,7 +252,7 @@ Tabber
 ``````
 
  How to easily add Tabbed Browsing to your website.
- 
+
 .. todo:: Difficulty: Medium to Hard. create tutorial for adding tabbed browsing to your website
 
 
