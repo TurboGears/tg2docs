@@ -45,9 +45,10 @@ The advantage of this new method is that the configuration can contain
 complex python objects without adding a dependency on ConfigObj (which
 was used in TG1).
 
-One disadvantage of the system is that it does not evaluates values in
+One disadvantage of the new configuration system is that it does 
+not evaluate values in
 the .ini files therefore all values are considered strings. This is
-especially important when using boolean atributes and numbers as you
+especially important when using boolean attributes and numbers as you
 need to convert them before use inside your project. This will be
 fixed in TG2.1 see `ticket #2240`_
 
@@ -246,21 +247,63 @@ set the renderer up, and set it in this dictionary directly.
 Turning on and off features
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Static Files
+++++++++++++++++
+
 ``base_config.serve_static`` -- automatically set to ``True`` for you.
 Set to False if you have set up apache, or nginx (or some other
 server) to handles static files.
+
+Stand Alone
++++++++++++++++
 
 ``base_config.stand_alone`` -- set this to ``False`` if you don't want
 error handling, HTTP status code error pages, etc.  This is intended
 for the case where you're embedding the TG app in some other WSGI app
 which handles these things for you.
 
-``base_config.use_toscawidgets`` -- Set to False to turn off
-Toscawidgets.
+SQLAlchemy
+++++++++++++++++
+
+Though the majority of folks will use TurboGears with SQLAlchemy, there
+are those who have interest in running the full stack of TG with a non-relational
+database like mongodb or couchdb.  There are a few settings that allow this,
+the most pertinent is: use_sqlalchemy:
+
+``base_config.use_sqlalchemy`` -- Set to False to turn off sqlalchemy support
+
+TurboGears takes advantage of repoze's transaction manager software.  Basically,
+the transaction manager wraps each of your controller methods, and should a method
+fail, the transaction will roll back.  if you utilize the transaction manager, then
+the result of a successful method call results in a commit to the database.  If
+the contoller method does not utilize the database, there is no database interaction
+performed.  What this means is that you never have to worry about committing, or
+rolling back when controller code fails, TG handles this for you automatically.
 
 ``base_config.use_transaction_manager`` -- Set to False to turn off the
 Transaction Manager and handle transactions yourself.
 
+ToscaWidgets
++++++++++++++++++++++++++++++
+
+TurboGears supports both the 0.9.x branches of ToscaWidgets and the 2.x code.
+ToscaWidgets is currently at a crossroads, with the 0.9.x branch being a very stable
+codebase, and TW2 providing speed benefits, easier use, and a simpler, easier to debug
+codebase.  TW2 is currently in alpha, so it's up to you to determine it's level
+of stability before usage.  TW and TW2 can be used simultaneously.  To use them,
+modify the following config options:
+
+``base_config.use_toscawidgets`` -- Set to False to turn off
+Toscawidgets. (default is True)
+
+``base_config.use_toscawidgets2`` -- Set to True to turn on
+Toscawidgets2. (default is False)
+
+What this does is to allow ToscaWidgets to provide hooks for both entry and exit.  On
+entry, ToscaWidgets handles server requests that are directed directly to the widget
+itself, bypassing the TG Controllers.  On exit, TW middleware provides resource injection,
+which can actually insert links to resources like javascript files into your HTML code
+automatically.  Both TW 0.9.x and TW 2.x support this usage.
 
 Advanced Configuration
 ======================
@@ -280,7 +323,6 @@ that particular pieces of the TG2 stack are configured.
    :members:
 
 
-
 Embedding a TG app inside another TG app
 ----------------------------------------
 
@@ -298,7 +340,3 @@ and global dictionaries, and creating an environment loader::
   make_wsgi_app = my_conf_object.setup_tg_wsgi_app(load_environment)
   final_app = make_wsgi_app(global_conf, app_conf)
 
-Using Config outside of a quickstarted project:
------------------------------------------------
-
-.. todo:: Difficulty: Medium. Document how to use config outside of a quickstarted project
