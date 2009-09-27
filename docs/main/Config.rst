@@ -37,7 +37,7 @@ Differences from TurboGears 1
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In turbogears 1.x branches, the application specific configuration
-variables was kept in a .ini file packaged inside the egg. For better
+variables waswere kept in a .ini file packaged inside the egg. For better
 control over those variables, TG2 is now using a python module that
 contains code.
 
@@ -74,7 +74,7 @@ Configuration in the INI files
 A TurboGears quickstarted project will contain a couple of .ini files
 which are used to define what WSGI app ought to be run, and to store
 end-user created configuration values, which is just another way of
-saying that the .ini files should contain \deployment specific\
+saying that the .ini files should contain *deployment specific* 
 options.
 
 By default TurboGears provides a ``development.ini``, ``test.ini``,
@@ -116,7 +116,7 @@ If the person who deployed your application forgot to add the variable
 to his config file he would get the default value provided as the
 second argument of the get() call.
 
-..warning ::
+.. warning::
     If you set a value like enable_subsystem = false, it will be
     loaded into python as the string 'false' which if used in a
     conditional will give you a very wrong result
@@ -198,11 +198,10 @@ is to add a second template engine or change the template engine used
 by your project.
 
 By default TurboGears sets up the Genshi engine, but we also provide
-out of the box support for Mako, Jinja and Chameleon-Genshi. To tell
-TG to prepare these templating engines for you all you need to do is
-install the package and append 'mako' or 'jinja' to the renderer's
-list here in app_config.  For Chameleon the installation is more
-complex but the steps are the same.
+out of the box support for Mako and Jinja. To tell TG to prepare these
+templating engines for you all you need to do is install the package
+and append 'mako' or 'jinja' to the renderer's list here in
+app_config.
 
 To change the default renderer to something other than Genshi, just
 set the default_renderer to the name of the rendering engine.  So, to
@@ -223,7 +222,7 @@ render function you want to use.
 ``base_config.renderers`` -- This is a list of render functions that
 ought to be prepared for use in the app.  This is a shortcut for the
 four renderers that TG2 provides out of the box. The four allowed
-values are `'genshi'`, `'chamelion_genshi'`, `'mako'`, and `'jinja'`.
+values are `'genshi'`, `'mako'`, and `'jinja'`.
 
 ``base_config.use_legacy_renderer`` -- If ``True`` old style buffet
 renderers will be used.  Don't set this unless you need buffet
