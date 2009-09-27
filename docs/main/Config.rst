@@ -3,6 +3,8 @@
 TurboGears 2 Configuration
 ==========================
 
+.. module:: tg.configuration
+
 TurboGears 2 provides a configuration system that attempts to be both
 extremely flexible for power users and very simple to use for standard
 projects.
@@ -190,61 +192,43 @@ some unanticipated (by us) application environment manipulation.
 And we'll look at the details of how that all works in the advanced
 configuration section of this document.
 
-Setting up the base configuration for your app
+Configuring your application
 ----------------------------------------------
 
-The most common configuration change you'll likely want to make here
-is to add a second template engine or change the template engine used
-by your project.
+Here's are some of the more general purpose configuration attributes:
 
-By default TurboGears sets up the Genshi engine, but we also provide
-out of the box support for Mako and Jinja. To tell TG to prepare these
-templating engines for you all you need to do is install the package
-and append 'mako' or 'jinja' to the renderer's list here in
-app_config.
-
-To change the default renderer to something other than Genshi, just
-set the default_renderer to the name of the rendering engine.  So, to
-add Mako to the list of renderers to prepare, and set it to be the
-default, this is all you'd have to do::
-
-  base_config.default_renderer = 'mako'
-  base_config.renderers.append('mako')
-
-Here's a full list of the configuration options:
-
-Template rendering config settings
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-``base_config.default_renderer`` -- set to the name of the default
-render function you want to use.
-
-``base_config.renderers`` -- This is a list of render functions that
-ought to be prepared for use in the app.  This is a shortcut for the
-four renderers that TG2 provides out of the box. The four allowed
-values are `'genshi'`, `'mako'`, and `'jinja'`.
-
-``base_config.use_legacy_renderer`` -- If ``True`` old style buffet
-renderers will be used.  Don't set this unless you need buffet
-renderers for some specific reason, buffet renderers are deprecated
-and will probably be removed in 2.1.
-
-``base_config.use_dotted_templatenames`` -- Generally you will not
-want to change this.  But if you want to use the standard
-genshi/mako/jinja file system based template search paths, set this to
-`False`.  The main advantage of dotted template names is that it's
-very easy to store template files in zipped eggs, but if you're not
-using packaged TG2 app components there are some advantages to the
-search path syntax.
-
-``base_config.renderers`` -- a dictionary with the render function
-name as the key, and the actual configured render function as the
-value.  For the four standard renderers it's enough to just add the
-name to ``base_config.renderers`` but for custom renderers you want to
-set the renderer up, and set it in this dictionary directly.
-
-Turning on and off features
+Configuration Attributes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The configuration object has a number of attributes that automate
+the majority of what you need to do with the config object.  These
+shortcuts eliminate the need to provide your own setup methods
+for configuring your TurboGears application.
+
+Mimetypes
++++++++++++++
+
+.. todo:: more info about setting mimetypes here.
+
+Startup and Shutdown
++++++++++++++++++++++
+
+TurboGears allows you to attach callables both to the startup of the
+server, and the shut down.  The startup is called before the environment
+is loaded, and the shutdown code runs when the python process shuts down.
+Heres an example of "hello, world" using startup and shutdown in your 
+app_cfg.py file::
+
+    def on_startup():
+        print 'hello, startup world'
+        
+    def on_shutdown():
+        print 'hello, shutdown world'
+    
+    # ... (base_config init code)
+    
+    base_config.call_on_startup = [on_startup]
+    base_config.call_on_shutdown = [on_shutdown]
 
 Static Files
 ++++++++++++++++
@@ -261,81 +245,59 @@ error handling, HTTP status code error pages, etc.  This is intended
 for the case where you're embedding the TG app in some other WSGI app
 which handles these things for you.
 
-SQLAlchemy
-++++++++++++++++
-
-Though the majority of folks will use TurboGears with SQLAlchemy, there
-are those who have interest in running the full stack of TG with a non-relational
-database like mongodb or couchdb.  There are a few settings that allow this,
-the most pertinent is: use_sqlalchemy:
-
-``base_config.use_sqlalchemy`` -- Set to False to turn off sqlalchemy support
-
-TurboGears takes advantage of repoze's transaction manager software.  Basically,
-the transaction manager wraps each of your controller methods, and should a method
-fail, the transaction will roll back.  if you utilize the transaction manager, then
-the result of a successful method call results in a commit to the database.  If
-the contoller method does not utilize the database, there is no database interaction
-performed.  What this means is that you never have to worry about committing, or
-rolling back when controller code fails, TG handles this for you automatically.
-
-``base_config.use_transaction_manager`` -- Set to False to turn off the
-Transaction Manager and handle transactions yourself.
-
-ToscaWidgets
-+++++++++++++++++++++++++++++
-
-TurboGears supports both the 0.9.x branches of ToscaWidgets and the 2.x code.
-ToscaWidgets is currently at a crossroads, with the 0.9.x branch being a very stable
-codebase, and TW2 providing speed benefits, easier use, and a simpler, easier to debug
-codebase.  TW2 is currently in alpha, so it's up to you to determine it's level
-of stability before usage.  TW and TW2 can be used simultaneously.  To use them,
-modify the following config options:
-
-``base_config.use_toscawidgets`` -- Set to False to turn off
-Toscawidgets. (default is True)
-
-``base_config.use_toscawidgets2`` -- Set to True to turn on
-Toscawidgets2. (default is False)
-
-What this does is to allow ToscaWidgets to provide hooks for both entry and exit.  On
-entry, ToscaWidgets handles server requests that are directed directly to the widget
-itself, bypassing the TG Controllers.  On exit, TW middleware provides resource injection,
-which can actually insert links to resources like javascript files into your HTML code
-automatically.  Both TW 0.9.x and TW 2.x support this usage.
 
 Advanced Configuration
-======================
+-------------------------
 
 Sometimes you need to go beyond the basics of setting configuration
-options.
+options.  We've created a number of methods that you can use to override the way
+that particular pieces of the TG2 stack are configured.  The basic way you
+override the configuration within app.cfg looks something like this::
 
-Modifying the environment loader and middleware stack
------------------------------------------------------
+    from tg.configuration import AppConfig
+    from tw2.core.middleware import TwMiddleware
 
-We've created a number of methods that you can use to override the way
-that particular pieces of the TG2 stack are configured.
+    class MyAppConfig(AppConfig):
 
+        def add_tosca2_middleware(self, app):
 
-.. automodule:: tg.configuration
-.. autoclass::  AppConfig
-   :members:
+            app = TwMiddleware(app, 
+                default_engine=self.default_renderer,
+                translator=ugettext,
+                auto_reload_templates = False
+                )
+            
+            return app
+    base_config = MyAppConfig()
+    
+    # modify base_config parameters below
+    
+The above example shows how one would go about overridding the toscawidgets2
+middleware.  See the class definition below for more ideas on how you 
+could modify your own custom config
 
+AppConfig General Options
+---------------------------
 
-Embedding a TG app inside another TG app
-----------------------------------------
+.. autoclass:: AppConfig
+   :members: init_config,
+             add_core_middleware, 
+             add_error_middleware,
+             setup_tg_wsgi_app,
+             setup_helpers_and_globals,
+             make_load_environment
+             
 
-One place where you'll have to be aware of how all of this works is
-when you programatically setup one TurboGears app inside another.
+More Configuration Options
+------------------------------
+These configuration options have been broken into sub pages for easier digestion.
 
-In that case, you'll need to create your own ``base_config`` like
-object to use when configuring the inside WSGI application instance.
- 
-Fortunately, this can be as simple as creating your own
-``base_config`` object from AppConfig(), creating your own app_conf
-and global dictionaries, and creating an environment loader::
+             
+.. toctree::
+   :maxdepth: 1
 
-  load_environment = my_conf_object.make_load_environment()
-  make_wsgi_app = my_conf_object.setup_tg_wsgi_app(load_environment)
-  final_app = make_wsgi_app(global_conf, app_conf)
-
+   Config/Rendering
+   Config/Authorization
+   Config/Routes
+   Config/ToscaWidgets
+   Config/SQLAlchemy
