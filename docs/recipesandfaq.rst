@@ -17,6 +17,8 @@ Recipes and FAQ
    main/Templates/Mako
    main/Templates/Jinja
    main/Templates/Alternative
+   main/MultipleDatabases
+   main/Wiki20/JSONMochiKit
 
 
 Widget Recipes

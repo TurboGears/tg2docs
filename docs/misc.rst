@@ -190,10 +190,6 @@ Misc To Do Items From The Docs
 
 .. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_thread/thread/1174aad1b3350b5c
 
-.. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_thread/thread/0048b8c99c472c36/496e987deff35419?lnk=raot
-
-.. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/msg/fa55a0f30c514b89
-
 .. todo:: Difficulty: Hard. Resolve all tickets that match this query: http://trac.turbogears.org/query?status=new&status=assigned&status=reopened&component=Documentation&order=id
 
 .. todo:: Difficulty: Medium. Document @restrict decorator, restricts request types that a given method will respond to

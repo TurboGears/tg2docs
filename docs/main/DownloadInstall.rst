@@ -33,8 +33,6 @@ is version 2.5.  Python 2.4 requires additional steps which will be
 covered below where needed.  Python 3.0 is currently unsupported due
 to lack of support in many of our upstream packages.
 
-.. todo:: Difficulty: Hard. This is both docs and code. We should get Python 3.0 supported.
-
 We recommend you use your system's default python install or follow
 the instructions provided here: http://python.org/download/
 
@@ -418,6 +416,9 @@ Getting Mercurial
     * All major Linux distributions have this installed. The package
       is normally named ``mercurial``
     * On windows you can download the `TortoiseHG installer`_
+    * On other platforms you may install the HG command line utility with an easy_install command::
+
+       easy_install mercurial
 
 .. _TortoiseHG installer: http://mercurial.selenic.com/wiki/TortoiseHg
 
@@ -441,20 +442,19 @@ via Mercurial:
 
 .. code-block:: bash
 
-  (tg2dev)$ cd tg2
-  (tg2dev)$ python setup.py develop
+  (tg2dev)$ cd tg21
+  (tg2dev)$ python setup.py develop -i http://www.turbogears.org/2.1/downloads/current/index
 
 * TurboGears 2 developer tools:
 
 .. code-block:: bash
 
   (tg2dev)$ cd ../tgdevtools
-  (tg2dev)$ python setup.py develop
+  (tg2dev)$ python setup.py develop -i http://www.turbogears.org/2.1/downloads/current/index
 
 Source Install Via Pip
 """"""""""""""""""""""
 
-.. todo:: Update this section to use mercurial urls instead of svn urls
 
 use the ``--trunk`` flag to the bootstrap script::
 
@@ -465,9 +465,12 @@ or install via pip manually
 .. code-block:: bash
 
    $ easy_install pip
-   $ pip install -e svn+http://svn.turbogears.org/trunk
-   $ pip install -e svn+http://svn.turbogears.org/projects/tg.devtools/trunk
+   $ pip install -e hg+pip install -e http://bitbucket.org/turbogears/tg-dev/
+   $ pip install -e hg+pip install -e http://bitbucket.org/turbogears/tgdevtools-dev/
 
+.. todo:: Update this section so pip works: elpargo
+
+   
 Validate The Installation
 -------------------------
 
