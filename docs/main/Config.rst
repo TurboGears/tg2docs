@@ -268,7 +268,7 @@ SQLAlchemy
 Though the majority of folks will use TurboGears with SQLAlchemy, there
 are those who have interest in running the full stack of TG with a non-relational
 database like mongodb or couchdb.  There are a few settings that allow this,
-the most pertainent is: use_sqlalchemy:
+the most pertinent is: use_sqlalchemy:
 
 ``base_config.use_sqlalchemy`` -- Set to False to turn off sqlalchemy support
 
@@ -290,7 +290,7 @@ TurboGears supports both the 0.9.x branches of ToscaWidgets and the 2.x code.
 ToscaWidgets is currently at a crossroads, with the 0.9.x branch being a very stable
 codebase, and TW2 providing speed benefits, easier use, and a simpler, easier to debug
 codebase.  TW2 is currently in alpha, so it's up to you to determine it's level
-of stability before usage.  TW and TW2 can be used similtaneously.  To use them,
+of stability before usage.  TW and TW2 can be used simultaneously.  To use them,
 modify the following config options:
 
 ``base_config.use_toscawidgets`` -- Set to False to turn off
