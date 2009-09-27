@@ -1,7 +1,7 @@
 .. _saconfig:
 
-Template rendering config settings
-==================================
+SQLAlchemy and Transaction Config Settings
+============================================
 
 .. currentmodule:: tg.configuration
 

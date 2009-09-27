@@ -208,7 +208,13 @@ for configuring your TurboGears application.
 Mimetypes
 +++++++++++++
 
-.. todo:: more info about setting mimetypes here.
+By default, only json/application and text/html are defined mimetypes. 
+If you would like to use additional mime-types you must register 
+them with your application's config. You can accomplish this by 
+adding the following code your your app_cfg.py file::
+
+    base_config.mimetype_lookup = {'.ext':'my-mimetype'}
+
 
 Startup and Shutdown
 +++++++++++++++++++++
