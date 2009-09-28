@@ -12,8 +12,6 @@ Misc To Do Items From The Docs
 
 .. todo:: Difficulty: Medium. add a "what is turbogears"/faq - very early on. first?   
 
-.. todo:: Difficulty: Hard. Include navigation links (previous, next, index) on all pages
-
 .. todo:: Difficulty: Hard. add prerequisites to all pages - well, especially tutorials
 
 .. todo:: Difficulty: Medium. include links to "read more" - especially true of tutorials that just scratch the surface  (this kind of replaces the "more linky" todo)
@@ -24,7 +22,7 @@ Misc To Do Items From The Docs
 
 .. todo:: Difficulty: Hard. only after showing the default components - show what components can be easily switched in TG2, and how
 
-.. todo:: Difficulty: Medium. Add lifecycle of TG project.
+.. todo:: Difficulty: Medium. Add lifecycle of TG project in the getting to know TG section.
 
 .. todo:: Difficulty: Medium. highlight the test suite:  and the goodness of test driven development.
 
@@ -41,8 +39,6 @@ Misc To Do Items From The Docs
 .. todo:: Difficulty: Medium. Add docs for adding jquery, mochikit, and other resources to pages.
 
 .. todo:: Difficulty: Medium. laurin is following the tutorial path.   right now, I created a tutorials directory under _static.   perhaps, all tutorial images, etc should go in there?   just a thought.   
-
-.. todo:: Difficulty: Medium. clean up old tutorial static stuff:   hello-oops.jpg, hello-evalexception.jpg both seem to be old and not be exactly what the text is talking about.   Wiki20_final.zip is empty, and is now replaced by _static/tutorials/Wiki-20.zip.     There are probably more "old" files...    
 
 .. todo:: Difficulty: Medium. make sure that override_template is more visible, and provide a tutorial on how to use it
 
@@ -82,10 +78,6 @@ so I would wait until I re-write RoutedController with _dispatch before document
 .. todo:: Difficulty: Medium. Include these docs: http://groups.google.com/group/turbogears/browse_frm/thread/1c4158ad3035082c?hl=en Secure Static Files TG2
 
 .. todo:: Difficulty: Medium. Include these docs: http://groups.google.com/group/turbogears/browse_frm/thread/55d6bb9704b3127a?hl=en Accessing configuration
-
-.. todo:: Difficulty: Medium. Include these docs: http://groups.google.com/group/turbogears/browse_frm/thread/a02d64756fb0aa24?hl=en override DBSession 
-
-I think the above link is an SQLAlchemy documentation item and should be removed.
 
 .. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/ae89ea2b3a354bc2?hl=en Lukasz Szybalski's docs: http://lucasmanual.com/mywiki/TurboGears2
 
@@ -149,7 +141,7 @@ percious: we need to add an offline install section to deployment.  This should 
 
 .. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/d3f40bf1bdf2cc98?hl=en 
 
-percious: I think this one shoudl be closed too.  It is well covered by toscawidgets/formencode.  people need to rtfm.
+percious: I think this one should be closed too.  It is well covered by toscawidgets/formencode.  people need to rtfm.
 
 .. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/5dd5b090eb0d4c49?hl=en List of Quickstarted files that are save to remove 
 
