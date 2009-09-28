@@ -35,6 +35,7 @@ within TurboGears before you dive into these documents.
     main/CommandLine
 
 .. todo:: Document initial DB setup in websetup.py
+.. todo:: Difficulty Easy: Cron/periodic/stand-alone tasks using the TurboGears machinery (basically can be copied from: http://blog.vrplumber.com/index.php?/archives/2384-TurboGears-offline-processes-crons,-command-line-commands,-etc.html )
    
 Extensions and Alternatives
 ===========================
