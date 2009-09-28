@@ -36,8 +36,6 @@ Misc To Do Items From The Docs
 
 .. todo:: Difficulty: Easy. Add better notes in README.txt for setting up the virtual environment for this
 
-.. todo:: Difficulty: Medium. Add docs for adding jquery, mochikit, and other resources to pages.
-
 .. todo:: Difficulty: Medium. laurin is following the tutorial path.   right now, I created a tutorials directory under _static.   perhaps, all tutorial images, etc should go in there?   just a thought.   
 
 .. todo:: Difficulty: Medium. make sure that override_template is more visible, and provide a tutorial on how to use it

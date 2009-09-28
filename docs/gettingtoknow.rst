@@ -65,6 +65,7 @@ Validation, Form handling and form widgets
    main/Validation
    main/ToscaWidgets/forms
    main/ToscaWidgets/ToscaWidgets
+   main/GlobalJSLib
 
 General Reference for MVC Components
 ====================================
