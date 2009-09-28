@@ -35,17 +35,18 @@ to the place you need to be, or read the information below sequentially.
     are intended to get you started working quickly and give you a feel for 
     how TurboGears applications work.
 
+:ref:`Working with TurboGears <recipes-and-faq>`
+------------------------------------------------
+    How to accomplish given tasks using TurboGears, from authentication, to 
+    caching, to user-session management.  This collection of documents should 
+    normally be explored after you've followed through a tutorial or two.
+
 :ref:`Getting To Know TurboGears <getting-to-know>`
 ---------------------------------------------------
     Learn what's new in the latest TurboGears. Explore the architecture. Learn
     what components come with the default install of TurboGears, what
     components are installed via the default quickstart, and how all of them
     tie together to serve your site.
-
-:ref:`Recipes and FAQ <recipes-and-faq>`
-----------------------------------------
-    Simple code samples to answer commonly asked questions about
-    development and deployment of TurboGears
 
 :ref:`Extensions and Tools <extensions-and-tools>`
 --------------------------------------------------
