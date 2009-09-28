@@ -8,7 +8,11 @@ Misc To Do Items From The Docs
 
 .. todo:: Difficulty: Medium. http://turbogears.org/2.0/docs/main/DownloadInstall.html references http://www.turbogears.org/2.0/downloads/current/tg2-bootstrap.py and this needs to be updated. Or does it? request from percious, contradiction from elpargo. Clarify with them before change.
 
-.. todo:: Difficulty: Medium. critique the toc, and other organization. 
+.. todo:: Difficulty: Medium. critique the toc, and other organization.
+
+I think the toc has an airy aroma, with a hint of cherry and oak.  It is not yet
+aged to perfection, but will remain to mature as it gets older.  This todo will be open 
+for some time.
 
 .. todo:: Difficulty: Medium. add a "what is turbogears"/faq - very early on. first?   
 
@@ -33,8 +37,6 @@ Misc To Do Items From The Docs
 .. todo:: Difficulty: Easy. Add note for "validator=Schema(allow_extra_fields=True)" for ToscaWidgets and RestController classes
 
 .. todo:: Difficulty: Medium. Add shell script which validates environment for building docs
-
-.. todo:: Difficulty: Easy. Add better notes in README.txt for setting up the virtual environment for this
 
 .. todo:: Difficulty: Medium. laurin is following the tutorial path.   right now, I created a tutorials directory under _static.   perhaps, all tutorial images, etc should go in there?   just a thought.   
 
