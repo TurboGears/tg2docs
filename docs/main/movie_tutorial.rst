@@ -42,7 +42,7 @@ SQLAlchemy Models
 -----------------
 
 SQLAlchemy is the default storage layer used by TurboGears 2.0 and above.
-SQLAlchemy is a powerful database abstraction layer that lets you being your 
+SQLAlchemy is a powerful database abstraction layer that lets you begin your 
 project using a simple "declarative" form that looks much like other ORMs, 
 but allows you to access a more general and powerful abstraction of "Mapper" 
 should you need that functionality in the future.
@@ -233,7 +233,7 @@ to the imports of the root.py module::
 
     from movies.model import *
 
-which gives us access to DBSession, Model and Genre.  We then alter our 
+which gives us access to DBSession, Movie and Genre.  We then alter our 
 index method to look like this::
 
     @expose('movies.templates.index')
@@ -351,7 +351,7 @@ to create a simple form our users can use to add new movies to our database::
         __model__ = Movie
     add_movie_form = AddMovie(DBSession)
     
-we can then use this pass this form to our template in our ``index`` method of 
+we can then pass this form to our template in the ``index`` method of 
 our root controller::
 
     @expose('movies.templates.index')
@@ -419,7 +419,7 @@ for ids, and the "reviewed" flag is visible to the user.
 
 To clean the form up somewhat, we will refine the set of fields in the form
 by omitting the unwanted fields and declaring the widget-type to use for the 
-title field.  The resulting add_movie_form looks like so::
+title field.  The resulting add_movie_form looks like this::
 
     from sprox.formbase import AddRecordForm
     from tw.forms import TextField,CalendarDatePicker
