@@ -18,7 +18,7 @@ cannot stress this enough: Read These Pages!
    
    main/RequestFlow
    main/master_html
-   main/AuthorizeTutorial
+   main/Auth/index
 
 What's New With The Latest Release
 ==================================
@@ -37,6 +37,7 @@ General Project Information
    main/TG2Philosophy
    main/RequestFlow
    main/Contributing
+   main/bitbucket_tutorial
    main/License
    main/TGandPylons
    building_docs
@@ -52,7 +53,7 @@ Development Tools
    main/Session
    main/Profile
    main/Internationalization
-   main/ToolBox
+   main/ToolBox 
 
 Validation, Form handling and form widgets
 ==========================================
