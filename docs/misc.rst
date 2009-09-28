@@ -48,8 +48,6 @@ for some time.
 
 .. todo:: Difficulty: Medium. add in notes regarding how to use repoze.who's user_checker
 
-.. todo:: Difficulty: Medium. port http://docs.turbogears.org/1.0/SQLAlchemy#id13
-
 .. todo:: Difficulty: Medium. Incorporate the info from this pic: http://imagebin.ca/view/P969Fr.html, this is way outdated I think -1
 
 .. todo:: Difficulty: Medium. http://code.google.com/p/tgtools/source/browse/projects/tgext.admin/trunk/tgext/admin/tgadminconfig.py#114 << how to override tgext.admin controllers properly
