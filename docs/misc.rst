@@ -6,7 +6,7 @@ Misc To Do Items From The Docs
 
 .. todo:: Difficulty: Medium. Document @restrict decorator, restricts request types that a given method will respond to
 
-.. todo:: Difficulty: Medium. http://turbogears.org/2.0/docs/main/DownloadInstall.html references http://www.turbogears.org/2.0/downloads/current/tg2-bootstrap.py and this needs to be updated. Or does it? request from percious, contradiction from elpargo. Clarify with them before change.
+.. todo:: Difficulty: Medium. http://turbogears.org/2.0/docs/main/DownloadInstall.html references http://www.turbogears.org/2.0/downloads/current/tg2-bootstrap.py and this needs to be updated. Or does it? request from percious, the code to generate the installer currently has tg.devtools/scripts/_installer.py and it's fixed at 2.0 only update needed is to hg
 
 .. todo:: Difficulty: Medium. critique the toc, and other organization.
 

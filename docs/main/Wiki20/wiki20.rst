@@ -252,7 +252,6 @@ directives in the sections on :ref:`Editing pages <editing_pages>` and
 .. _Model-View-Controller paradigm: http://en.wikipedia.org/wiki/Model-view-controller
 .. _plugins available: http://www.turbogears.org/cogbin/
 .. _Genshi: http://genshi.edgewall.org/wiki/Documentation/xml-templates.html
-.. _using alternate templating engines: http://docs.turbogears.org/1.0/AlternativeTemplating
 
 Next, we'll set up our data model, and create a database.
 
