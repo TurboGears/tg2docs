@@ -42,13 +42,15 @@ for some time.
 
 .. todo:: Difficulty: Medium. make sure that override_template is more visible, and provide a tutorial on how to use it
 
-.. todo:: Difficulty: Medium. port http://docs.turbogears.org/1.0/FileUploadTutorial to TG2
+.. todo:: Difficulty: Medium. port http://docs.turbogears.org/1.0/FileUploadTutorial to TG2, why not just release it as a project tgext.upload?
+.. todo:: Difficulty: Medium. Include these docs: http://groups.google.com/group/turbogears/browse_thread/thread/6b44420129281259 How to upload picture or video in Turbogears
+.. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/33a64a06ee4020ce?hl=en Upload images to a TG2 app with Dojo (Ajax style)
 
 .. todo:: Difficulty: Medium. add in notes regarding how to use repoze.who's user_checker
 
 .. todo:: Difficulty: Medium. port http://docs.turbogears.org/1.0/SQLAlchemy#id13
 
-.. todo:: Difficulty: Medium. Incorporate the info from this pic: http://imagebin.ca/view/P969Fr.html
+.. todo:: Difficulty: Medium. Incorporate the info from this pic: http://imagebin.ca/view/P969Fr.html, this is way outdated I think -1
 
 .. todo:: Difficulty: Medium. http://code.google.com/p/tgtools/source/browse/projects/tgext.admin/trunk/tgext/admin/tgadminconfig.py#114 << how to override tgext.admin controllers properly
 
@@ -57,9 +59,7 @@ for some time.
 percious: There is a better way of doing this by overriding _dispatch in 2.0
 so I would wait until I re-write RoutedController with _dispatch before documenting this
 
-.. todo:: Difficulty: Easy. Note that RestController is REST + forms, not for webservices.  percious: Um, this can totally be used for web services.  It just happens to be usable with forms as well.
-
-.. todo:: Difficulty: Easy. RestController requires that all data come in as a key/value pair, can't just get raw POST body. percious: not sure what you mean by this.  You want to provide RestController with just a blob of data?
+.. todo:: Difficulty: Easy. RestController requires that all data come in as a key/value pair, can't just get raw POST body. percious: not sure what you mean by this.  You want to provide RestController with just a blob of data? jorge: yes, this was the complain from europe74 this goes against the atom protocol http://tools.ietf.org/html/rfc5023#section-9.2
 
 .. todo:: Difficulty: Medium. Include these docs: http://groups.google.com/group/turbogears/browse_frm/thread/9b07a8d34611f5d7?hl=en  TG2 virtualenv MySQLdb ImportError.  Should we be providing documentation to debug MySQLdb problems?  Seems out of scope.
 
@@ -70,8 +70,6 @@ so I would wait until I re-write RoutedController with _dispatch before document
 .. todo:: Difficulty: Medium. Include these docs: http://groups.google.com/group/turbogears/browse_frm/thread/f35ef3d347793682?hl=en What's wrong with predicates being "booleanized"
 
 .. todo:: Difficulty: Medium. Include these docs: http://groups.google.com/group/turbogears/browse_frm/thread/3afbc13d88af57d3?hl=en TG2, repoze.who and multiple auth sources 
-
-.. todo:: Difficulty: Medium. Include these docs: http://groups.google.com/group/turbogears/browse_thread/thread/6b44420129281259 How to upload picture or video in Turbogears
 
 .. todo:: Difficulty: Medium. Include these docs: http://groups.google.com/group/turbogears/browse_frm/thread/31c4268417c5033c?hl=en Making a module available to all Genshi templates
 
@@ -93,15 +91,11 @@ so I would wait until I re-write RoutedController with _dispatch before document
 
 .. todo:: Difficulty: Easy. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/da4789ff0e246f8b?hl=en destroy tg2 session
 
-.. todo:: Difficulty: Easy. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/ed539bc52198115b?hl=en wrong links in mod_wsgi TG2 docs
-
 .. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/4fc2abf3b91b9ce3?hl=en tg_template is now override_template
 
-.. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/d64d27b2cf54bb2e?hl=en Suggestion about how turbojson handle SQLAlchemy object circuit
+.. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/d64d27b2cf54bb2e?hl=en Suggestion about how turbojson handle SQLAlchemy object circuit jorge: this seems like a feature request rather than a docs item
 
 .. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/1b82fa2b4a95957e?hl=en How do I save to DB using paster shell
-
-.. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/33a64a06ee4020ce?hl=en Upload images to a TG2 app with Dojo (Ajax style)
 
 .. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/1f9853eac52decd5?hl=en Rolling back transactions in TG2 (I think this is documented, need to double check)
 
@@ -167,3 +161,8 @@ priority: high
 
 .. todo:: Difficulty: Hard. Resolve all tickets that match this query: http://trac.turbogears.org/query?status=new&status=assigned&status=reopened&component=Documentation&order=id
 
+.. todo:: Difficulty: Medium. Review and possibly delete FormBasics.rst it talks about dbsprockets 
+
+.. todo:: Difficulty: Hard. Performance deployment enhancements pretty much explain all the YSlow issues
+            * serving static files from the frontent,  /config/app_cfg.py base_config.serve_static = False
+            * compressing JS/html/CSS,etc 
