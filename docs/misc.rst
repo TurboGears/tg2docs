@@ -194,3 +194,5 @@ priority: high
 .. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_thread/thread/1174aad1b3350b5c TurboGears2: Overriding meta element on child template. 
 
 .. todo:: Difficulty: Hard. Resolve all tickets that match this query: http://trac.turbogears.org/query?status=new&status=assigned&status=reopened&component=Documentation&order=id
+
+.. todo:: Difficulty: Medium. Document custom content types.
