@@ -3,17 +3,26 @@ Content Types and Request Extensions
 
 Content Types and Request Extensions are supported by both
 :class:`tg.controllers.TGController` and
-:class:`tg.controllers.RestController`.  Request extensions allow the
-user to provide a specifier at the end of their data stream which
-specifies how they would like their data retrieved, using a dot
-operator.
+:class:`tg.controllers.RestController`.  
+
+
+Request Extensions
+``````````````````
+
+Request extensions allow the user to provide a specifier at the 
+end of their data stream which specifies how they would like 
+their data retrieved, using a dot operator.
+
+For example: ``/users``, ``/users.html`` and ``/users.json`` will all resolve to 
+the `users` method from the `RootController`. 
 
 A Simple Json Example
 ---------------------
 
-TurboGears Controllers gives the developer the ability to attach a
-mime-type to their methods to express data in using different
-protocols.  The most common usage for this is with json, a standard
+TurboGears Controllers gives the developer the ability to attach 
+common types that will be translated into mime-type to their methods 
+to express data in using different protocols.  
+The most common usage for this is with json, a standard
 protocol used for Asynchronous JavaScript.  Consider the following
 code snippet::
 
@@ -26,7 +35,6 @@ code snippet::
             return {'users':users}
 
 This allows you to map a URL like /forum/users.json
-            
             
 Cascading Exposes To Provide Web Services
 -----------------------------------------
@@ -59,6 +67,7 @@ with RESTful URLs much simpler.  You could imagine using this
 capability to expose your application's resources for SOAP, or
 XML-RPC.
 
+This method is extensibly used by ``tgext.admin``. Which provides a very clean API out of the box.
 
 Application-Specific Mime-type Configuration
 --------------------------------------------
@@ -71,17 +80,20 @@ following code your your app_cfg.py file::
     base_config.mimetype_lookup = {'.ext':'my-mimetype'}
 
 
-Custom Content Types
---------------------
-
+Setting the Content Type
+````````````````````````
 Setting the Content-Type for your return data is often used to tell
 the web browser how to display that data to the user.  For instance,
 if you want the browser to open an Excel file as such, you need to
 tell the browser that the data coming back is in Excel format.
+
+Per Method
+----------
+
 Sometimes we want to set the content-type for our response within the
 controller method.  
 
-By providing the @expose decorator with a content_type parameter we are 
+By providing the `@expose` decorator with a ``content_type`` parameter we are 
 able to accomplish this.
 
 Here is an example of how to return a simple .csv file that the browser
@@ -100,8 +112,8 @@ It is also possible to set this up with a template::
                 ...
                 return dict(data = somedata)
 
-Custom Content Types At Runtime
---------------------------------
+Per Request
+-----------
 
 Sometimes you will want to set the content type at runtime, the best example of 
 this is when you want to restrict downloads behind auth and you will only know 
