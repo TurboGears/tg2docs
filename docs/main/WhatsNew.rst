@@ -142,11 +142,6 @@ Differences:
     middleware to do what filters did in CherryPy2
   * The @expose decorator has a slightly updated syntax for content
     type declaration
-  * All template engines now have search paths to find the templates.
-    The default template directory is on the search path so using dotted
-    notation in @expose decorators has been deprecated.
-
-    .. todo:: Difficulty: Easy. has dotted notation for templates in @expose really been deprecated?
   * Object dispatch does not support dots in URLs the way TurboGears 1
     did.
   * CherryPy request and response objects are replaced with WebOb
