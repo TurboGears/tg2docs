@@ -11,9 +11,12 @@ it much).
 .. _Project Philosophy: TG2Philosophy.html
 .. _TurboGears team: http://docs.turbogears.org/TurboGearsTeam
 
-Installing 
-------------
-This is covered in the main :ref:`downloadinstall`
+Installation and Tools
+----------------------
+
+This is covered in the main :ref:`downloadinstall`.  You may also want 
+to read :ref:`bitbucket_tutorial`.
+
 
 Source Layout
 -------------
