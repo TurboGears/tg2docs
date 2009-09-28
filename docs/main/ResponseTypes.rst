@@ -3,17 +3,26 @@ Content Types and Request Extensions
 
 Content Types and Request Extensions are supported by both
 :class:`tg.controllers.TGController` and
-:class:`tg.controllers.RestController`.  Request extensions allow the
-user to provide a specifier at the end of their data stream which
-specifies how they would like their data retrieved, using a dot
-operator.
+:class:`tg.controllers.RestController`.  
+
+
+Request Extensions
+``````````````````
+
+Request extensions allow the user to provide a specifier at the 
+end of their data stream which specifies how they would like 
+their data retrieved, using a dot operator.
+
+For example: ``/users``, ``/users.html`` and ``/users.json`` will all resolve to 
+the `users` method from the `RootController`. 
 
 A Simple Json Example
 ---------------------
 
-TurboGears Controllers gives the developer the ability to attach a
-mime-type to their methods to express data in using different
-protocols.  The most common usage for this is with json, a standard
+TurboGears Controllers gives the developer the ability to attach 
+common types that will be translated into mime-type to their methods 
+to express data in using different protocols.  
+The most common usage for this is with json, a standard
 protocol used for Asynchronous JavaScript.  Consider the following
 code snippet::
 
@@ -26,7 +35,6 @@ code snippet::
             return {'users':users}
 
 This allows you to map a URL like /forum/users.json
-            
             
 Cascading Exposes To Provide Web Services
 -----------------------------------------
@@ -59,6 +67,7 @@ with RESTful URLs much simpler.  You could imagine using this
 capability to expose your application's resources for SOAP, or
 XML-RPC.
 
+This method is extensibly used by ``tgext.admin``. Which provides a very clean API out of the box.
 
 Application-Specific Mime-type Configuration
 --------------------------------------------
@@ -71,28 +80,69 @@ following code your your app_cfg.py file::
     base_config.mimetype_lookup = {'.ext':'my-mimetype'}
 
 
-Custom Content Types
---------------------
-
+Setting the Content Type
+````````````````````````
 Setting the Content-Type for your return data is often used to tell
 the web browser how to display that data to the user.  For instance,
 if you want the browser to open an Excel file as such, you need to
 tell the browser that the data coming back is in Excel format.
+
+Per Method
+----------
+
 Sometimes we want to set the content-type for our response within the
-controller method.  By providing the @expose decorator with a
-"CUSTOM_CONTENT_TYPE" indicator we are able to accomplish this.  Here
-is an example of how to return a simple .csv file that the browser
+controller method.  
+
+By providing the `@expose` decorator with a ``content_type`` parameter we are 
+able to accomplish this.
+
+Here is an example of how to return a simple .csv file that the browser
 will treat as an attachment::
 
+    class MyController(BaseController):
+        @expose(content_type='text/csv')
+        def stats(self):
+            return '1,2,3'
+
+It is also possible to set this up with a template::
+
+    class MyController(BaseController):
+            @expose("mypackage.templates.sometemplate",content_type='text/csv')
+            def stats(self):
+                ...
+                return dict(data = somedata)
+
+Per Request
+-----------
+
+Sometimes you will want to set the content type at runtime, the best example of 
+this is when you want to restrict downloads behind auth and you will only know 
+which file you are serving based on the request parameters.
+
+This is done in the same way as plain old pylons.
+
+.. warning :: due to bug `#2378 <http://trac.turbogears.org/ticket/2378>`_ we currently need to flag the controller as "setting the content type at runtime"
+
+In this example we are flagging the content type::
 
     from tg import request, response
     from tg.controllers import CUSTOM_CONTENT_TYPE
  
-    class MyController:
+    class MyController(BaseController):
         @expose(content_type=CUSTOM_CONTENT_TYPE)
         def stats(self):
             response.content_type = 'text/csv'
             response.headerlist.append(('Content-Disposition','attachment;filename=stats.csv'))
             return '1,2,3'
 
-.. todo:: Difficulty: Medium. Double-check: Are these methods still valid with 2.1?
+Ones the above bug is fixed all you will need is to set the content type at runtime by modifiying the headers::
+
+    from tg import response
+
+    class MyController(BaseController):
+        @expose()
+        def stats(self):
+            response.headers['Content-type'] = 'text/csv'
+            return '1,2,3'
+
+

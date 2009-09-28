@@ -48,10 +48,10 @@ methods.
 .. toctree::
     :maxdepth: 1
     
-    main/Templates/Alternative
-    main/Templates/ChameleonGenshi
+    main/Templates/index
     main/Templates/Mako
     main/Templates/Jinja
+    main/Templates/ChameleonGenshi
     main/Wiki20/JSONMochiKit
     main/ToscaWidgets/Cookbook/FlexiGrid
     main/ToscaWidgets/Cookbook/TreeView

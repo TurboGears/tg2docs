@@ -1,21 +1,19 @@
 .. _genshi:
 
-Using Genshi in TG2
-============================================
+Why Genshi?
+===========
 
+Genshi was chosen as the default for two reason.
+ * It's the natural succesor of kid_ which was the default in TG1.x
+ * It's smart about markup complaining if your (x)html is not valid.
 
-TurboGears uses Genshi, a template language that is smart about markup, as the
-default template engine.
+Genshi is an XML template language based on kid_, which in turn was inspired by `Zope's TAL
+<http://wiki.zope.org/ZPT/TAL>`_.  
+
+Genshi Templates look like XHTML.  Here's a sample Genshi template:
 
 Simple Genshi example
 --------------------------
-
-Genshi is an XML template language based on `Kid
-<http://www.kid-templating.org/>`_, which in turn was inspired by `Zope's TAL
-<http://wiki.zope.org/ZPT/TAL>`_.  Genshi is the default template language of
-TurboGears2, and it provides a very similar API to its predecessor.
-
-Genshi Templates look like XHTML.  Here's a sample Genshi template:
 
 .. code-block:: html
 
@@ -119,3 +117,4 @@ Further Reading
 `Genshi web site`_
 
 .. _`Genshi web site`: http://genshi.edgewall.org/
+.. _kid : http://www.kid-templating.org/

@@ -27,7 +27,7 @@ to creating reusable components, and to achieving a long-term stable
 API based on the following Python components and libraries:
 
     * Models: SQLAlchemy
-    * Template engines: Genshi and Mako
+    * Template engines: Genshi, Mako and Jinja
     * URL Dispatching: Object dispatch
     * Form Handling: ToscaWidgets and Sprox
     * Authentication and Authorization: repoze.who & repoze.what

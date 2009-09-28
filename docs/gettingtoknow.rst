@@ -55,7 +55,7 @@ Development Tools
    main/Internationalization
    main/ToolBox 
 
-Validation, Form handling and form widgets
+Validation, Form handling and Widgets
 ==========================================
 
 .. toctree::
@@ -65,6 +65,7 @@ Validation, Form handling and form widgets
    main/Validation
    main/ToscaWidgets/forms
    main/ToscaWidgets/ToscaWidgets
+   main/GlobalJSLib
 
 General Reference for MVC Components
 ====================================

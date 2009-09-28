@@ -6,13 +6,15 @@ Misc To Do Items From The Docs
 
 .. todo:: Difficulty: Medium. Document @restrict decorator, restricts request types that a given method will respond to
 
-.. todo:: Difficulty: Medium. http://turbogears.org/2.0/docs/main/DownloadInstall.html references http://www.turbogears.org/2.0/downloads/current/tg2-bootstrap.py and this needs to be updated. Or does it? request from percious, contradiction from elpargo. Clarify with them before change.
+.. todo:: Difficulty: Medium. http://turbogears.org/2.0/docs/main/DownloadInstall.html references http://www.turbogears.org/2.0/downloads/current/tg2-bootstrap.py and this needs to be updated. Or does it? request from percious, the code to generate the installer currently has tg.devtools/scripts/_installer.py and it's fixed at 2.0 only update needed is to hg
 
-.. todo:: Difficulty: Medium. critique the toc, and other organization. 
+.. todo:: Difficulty: Medium. critique the toc, and other organization.
+
+I think the toc has an airy aroma, with a hint of cherry and oak.  It is not yet
+aged to perfection, but will mature as time goes on.  This todo will be open 
+for some time.
 
 .. todo:: Difficulty: Medium. add a "what is turbogears"/faq - very early on. first?   
-
-.. todo:: Difficulty: Hard. Include navigation links (previous, next, index) on all pages
 
 .. todo:: Difficulty: Hard. add prerequisites to all pages - well, especially tutorials
 
@@ -24,7 +26,7 @@ Misc To Do Items From The Docs
 
 .. todo:: Difficulty: Hard. only after showing the default components - show what components can be easily switched in TG2, and how
 
-.. todo:: Difficulty: Medium. Add lifecycle of TG project.
+.. todo:: Difficulty: Medium. Add lifecycle of TG project in the getting to know TG section.
 
 .. todo:: Difficulty: Medium. highlight the test suite:  and the goodness of test driven development.
 
@@ -36,23 +38,19 @@ Misc To Do Items From The Docs
 
 .. todo:: Difficulty: Medium. Add shell script which validates environment for building docs
 
-.. todo:: Difficulty: Easy. Add better notes in README.txt for setting up the virtual environment for this
-
-.. todo:: Difficulty: Medium. Add docs for adding jquery, mochikit, and other resources to pages.
-
 .. todo:: Difficulty: Medium. laurin is following the tutorial path.   right now, I created a tutorials directory under _static.   perhaps, all tutorial images, etc should go in there?   just a thought.   
-
-.. todo:: Difficulty: Medium. clean up old tutorial static stuff:   hello-oops.jpg, hello-evalexception.jpg both seem to be old and not be exactly what the text is talking about.   Wiki20_final.zip is empty, and is now replaced by _static/tutorials/Wiki-20.zip.     There are probably more "old" files...    
 
 .. todo:: Difficulty: Medium. make sure that override_template is more visible, and provide a tutorial on how to use it
 
-.. todo:: Difficulty: Medium. port http://docs.turbogears.org/1.0/FileUploadTutorial to TG2
+.. todo:: Difficulty: Medium. port http://docs.turbogears.org/1.0/FileUploadTutorial to TG2, why not just release it as a project tgext.upload?
+.. todo:: Difficulty: Medium. Include these docs: http://groups.google.com/group/turbogears/browse_thread/thread/6b44420129281259 How to upload picture or video in Turbogears
+.. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/33a64a06ee4020ce?hl=en Upload images to a TG2 app with Dojo (Ajax style)
 
 .. todo:: Difficulty: Medium. add in notes regarding how to use repoze.who's user_checker
 
 .. todo:: Difficulty: Medium. port http://docs.turbogears.org/1.0/SQLAlchemy#id13
 
-.. todo:: Difficulty: Medium. Incorporate the info from this pic: http://imagebin.ca/view/P969Fr.html
+.. todo:: Difficulty: Medium. Incorporate the info from this pic: http://imagebin.ca/view/P969Fr.html, this is way outdated I think -1
 
 .. todo:: Difficulty: Medium. http://code.google.com/p/tgtools/source/browse/projects/tgext.admin/trunk/tgext/admin/tgadminconfig.py#114 << how to override tgext.admin controllers properly
 
@@ -61,9 +59,7 @@ Misc To Do Items From The Docs
 percious: There is a better way of doing this by overriding _dispatch in 2.0
 so I would wait until I re-write RoutedController with _dispatch before documenting this
 
-.. todo:: Difficulty: Easy. Note that RestController is REST + forms, not for webservices.  percious: Um, this can totally be used for web services.  It just happens to be usable with forms as well.
-
-.. todo:: Difficulty: Easy. RestController requires that all data come in as a key/value pair, can't just get raw POST body. percious: not sure what you mean by this.  You want to provide RestController with just a blob of data?
+.. todo:: Difficulty: Easy. RestController requires that all data come in as a key/value pair, can't just get raw POST body. percious: not sure what you mean by this.  You want to provide RestController with just a blob of data? jorge: yes, this was the complain from europe74 this goes against the atom protocol http://tools.ietf.org/html/rfc5023#section-9.2
 
 .. todo:: Difficulty: Medium. Include these docs: http://groups.google.com/group/turbogears/browse_frm/thread/9b07a8d34611f5d7?hl=en  TG2 virtualenv MySQLdb ImportError.  Should we be providing documentation to debug MySQLdb problems?  Seems out of scope.
 
@@ -75,17 +71,11 @@ so I would wait until I re-write RoutedController with _dispatch before document
 
 .. todo:: Difficulty: Medium. Include these docs: http://groups.google.com/group/turbogears/browse_frm/thread/3afbc13d88af57d3?hl=en TG2, repoze.who and multiple auth sources 
 
-.. todo:: Difficulty: Medium. Include these docs: http://groups.google.com/group/turbogears/browse_thread/thread/6b44420129281259 How to upload picture or video in Turbogears
-
 .. todo:: Difficulty: Medium. Include these docs: http://groups.google.com/group/turbogears/browse_frm/thread/31c4268417c5033c?hl=en Making a module available to all Genshi templates
 
 .. todo:: Difficulty: Medium. Include these docs: http://groups.google.com/group/turbogears/browse_frm/thread/1c4158ad3035082c?hl=en Secure Static Files TG2
 
 .. todo:: Difficulty: Medium. Include these docs: http://groups.google.com/group/turbogears/browse_frm/thread/55d6bb9704b3127a?hl=en Accessing configuration
-
-.. todo:: Difficulty: Medium. Include these docs: http://groups.google.com/group/turbogears/browse_frm/thread/a02d64756fb0aa24?hl=en override DBSession 
-
-I think the above link is an SQLAlchemy documentation item and should be removed.
 
 .. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/ae89ea2b3a354bc2?hl=en Lukasz Szybalski's docs: http://lucasmanual.com/mywiki/TurboGears2
 
@@ -101,31 +91,15 @@ I think the above link is an SQLAlchemy documentation item and should be removed
 
 .. todo:: Difficulty: Easy. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/da4789ff0e246f8b?hl=en destroy tg2 session
 
-.. todo:: Difficulty: Easy. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/ed539bc52198115b?hl=en wrong links in mod_wsgi TG2 docs
-
 .. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/4fc2abf3b91b9ce3?hl=en tg_template is now override_template
 
-.. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/d64d27b2cf54bb2e?hl=en Suggestion about how turbojson handle SQLAlchemy object circuit
+.. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/d64d27b2cf54bb2e?hl=en Suggestion about how turbojson handle SQLAlchemy object circuit jorge: this seems like a feature request rather than a docs item
 
 .. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/1b82fa2b4a95957e?hl=en How do I save to DB using paster shell
-
-.. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/33a64a06ee4020ce?hl=en Upload images to a TG2 app with Dojo (Ajax style)
 
 .. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/1f9853eac52decd5?hl=en Rolling back transactions in TG2 (I think this is documented, need to double check)
 
 .. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/7d5a07b4a21d7226?hl=en Visitor IP & pre-populated toscawidget field from database
-
-.. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/2e9737544409c8e9?hl=en CrudRestControllerm, help needed.
-
-percious:  The above _should_ work and is well documented.  I think there is user error going on here.
-
-.. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/b258fe5a1f788c0c?hl=en 
-
-percious: again, i chock this one up to user error, but I'd have to look more deeply.
-
-.. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/094cf0138bd33e2c?hl=en Group of small widgets into big widget?
-
-percious: i think this one should go away.  The TW docs cover it.
 
 .. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/daf8db234df8105b?hl=en Critical security update for tg2 users! (session cookie secret)
 
@@ -147,19 +121,11 @@ percious: we need to add an offline install section to deployment.  This should 
 
 .. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/d4635f5eb2ad1dc4?hl=en how could a controller method know whether it's invoked as an error_handler or directly
 
-.. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/d3f40bf1bdf2cc98?hl=en 
-
-percious: I think this one shoudl be closed too.  It is well covered by toscawidgets/formencode.  people need to rtfm.
-
 .. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/5dd5b090eb0d4c49?hl=en List of Quickstarted files that are save to remove 
 
 percious: I think this is a terrible idea to document
 
 .. todo:: Difficulty: Hard. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/a691ae9d3b31138d?hl=en Flash Widget
-
-.. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/626ff97e4b3a1dfd?hl=en Looking for suggestions for a TG2 cms library 
-
-percious: not sure what to document here.  seems more like an outreach.
 
 .. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/72e106fc6512b1cb?hl=en Toscawidgets form with multiple buttons 
 
@@ -195,4 +161,8 @@ priority: high
 
 .. todo:: Difficulty: Hard. Resolve all tickets that match this query: http://trac.turbogears.org/query?status=new&status=assigned&status=reopened&component=Documentation&order=id
 
-.. todo:: Difficulty: Medium. Document custom content types.
+.. todo:: Difficulty: Medium. Review and possibly delete FormBasics.rst it talks about dbsprockets 
+
+.. todo:: Difficulty: Hard. Performance deployment enhancements pretty much explain all the YSlow issues
+            * serving static files from the frontent,  /config/app_cfg.py base_config.serve_static = False
+            * compressing JS/html/CSS,etc 
