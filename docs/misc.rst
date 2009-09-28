@@ -159,8 +159,6 @@ priority: high
 
 .. todo:: Difficulty: Hard. Resolve all tickets that match this query: http://trac.turbogears.org/query?status=new&status=assigned&status=reopened&component=Documentation&order=id
 
-.. todo:: Difficulty: Medium. Review and possibly delete FormBasics.rst it talks about dbsprockets 
-
 .. todo:: Difficulty: Hard. Performance deployment enhancements pretty much explain all the YSlow issues
             * serving static files from the frontent,  /config/app_cfg.py base_config.serve_static = False
             * compressing JS/html/CSS,etc 
