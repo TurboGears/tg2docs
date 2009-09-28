@@ -167,4 +167,3 @@ priority: high
 
 .. todo:: Difficulty: Hard. Resolve all tickets that match this query: http://trac.turbogears.org/query?status=new&status=assigned&status=reopened&component=Documentation&order=id
 
-.. todo:: Difficulty: Medium. Document custom content types.

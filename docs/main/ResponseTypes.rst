@@ -79,20 +79,58 @@ the web browser how to display that data to the user.  For instance,
 if you want the browser to open an Excel file as such, you need to
 tell the browser that the data coming back is in Excel format.
 Sometimes we want to set the content-type for our response within the
-controller method.  By providing the @expose decorator with a
-"CUSTOM_CONTENT_TYPE" indicator we are able to accomplish this.  Here
-is an example of how to return a simple .csv file that the browser
+controller method.  
+
+By providing the @expose decorator with a content_type parameter we are 
+able to accomplish this.
+
+Here is an example of how to return a simple .csv file that the browser
 will treat as an attachment::
 
+    class MyController(BaseController):
+        @expose(content_type='text/csv')
+        def stats(self):
+            return '1,2,3'
+
+It is also possible to set this up with a template::
+
+    class MyController(BaseController):
+            @expose("mypackage.templates.sometemplate",content_type='text/csv')
+            def stats(self):
+                ...
+                return dict(data = somedata)
+
+Custom Content Types At Runtime
+--------------------------------
+
+Sometimes you will want to set the content type at runtime, the best example of 
+this is when you want to restrict downloads behind auth and you will only know 
+which file you are serving based on the request parameters.
+
+This is done in the same way as plain old pylons.
+
+.. warning :: due to bug `#2378 <http://trac.turbogears.org/ticket/2378>`_ we currently need to flag the controller as "setting the content type at runtime"
+
+In this example we are flagging the content type::
 
     from tg import request, response
     from tg.controllers import CUSTOM_CONTENT_TYPE
  
-    class MyController:
+    class MyController(BaseController):
         @expose(content_type=CUSTOM_CONTENT_TYPE)
         def stats(self):
             response.content_type = 'text/csv'
             response.headerlist.append(('Content-Disposition','attachment;filename=stats.csv'))
             return '1,2,3'
 
-.. todo:: Difficulty: Medium. Double-check: Are these methods still valid with 2.1?
+Ones the above bug is fixed all you will need is to set the content type at runtime by modifiying the headers::
+
+    from tg import response
+
+    class MyController(BaseController):
+        @expose()
+        def stats(self):
+            response.headers['Content-type'] = 'text/csv'
+            return '1,2,3'
+
+
