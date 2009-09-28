@@ -12,6 +12,7 @@ We will assume you are familiar with the following:
 
  * The `Model-View-Controller`_ abstraction
  * Basic operations of Relational Databases
+ * Basic HTML, CSS and Python
  
 .. _Model-View-Controller: http://en.wikipedia.org/wiki/Model-view-controller
 
