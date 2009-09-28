@@ -55,7 +55,7 @@ Development Tools
    main/Internationalization
    main/ToolBox 
 
-Validation, Form handling and form widgets
+Validation, Form handling and Widgets
 ==========================================
 
 .. toctree::

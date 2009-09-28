@@ -11,7 +11,7 @@ Misc To Do Items From The Docs
 .. todo:: Difficulty: Medium. critique the toc, and other organization.
 
 I think the toc has an airy aroma, with a hint of cherry and oak.  It is not yet
-aged to perfection, but will remain to mature as it gets older.  This todo will be open 
+aged to perfection, but will mature as time goes on.  This todo will be open 
 for some time.
 
 .. todo:: Difficulty: Medium. add a "what is turbogears"/faq - very early on. first?   
