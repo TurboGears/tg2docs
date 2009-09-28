@@ -347,6 +347,7 @@ forms.  We'll use this capability, which is provided by the `Sprox`_ library
 to create a simple form our users can use to add new movies to our database::
 
     from sprox.formbase import AddRecordForm
+    from tg import tmpl_context
     class AddMovie(AddRecordForm):
         __model__ = Movie
     add_movie_form = AddMovie(DBSession)
@@ -358,18 +359,27 @@ our root controller::
     def index(self, **named):
         """Handle the front-page."""
         movies = DBSession.query( Movie ).order_by( Movie.title )
+        tmpl_context.add_movie_form = add_movie_form
         return dict(
             page='index',
             movies = movies,
-            add_movie_form = add_movie_form,
         )
 
-and call it within our ``index`` template:
+Why are we using ``tmpl_context``?  Why don't we just pass our 
+widget into the template as a parameter?  The reason is is that 
+TurboGears controllers often do double duty as both web-page 
+renderers and JSON handlers.  By putting "view-specific" code 
+into the tmpl_context and "model-data" into the result dictionary,
+we can more readily support the JSON queries.
+
+The tmpl_context
+        
+Now we call our widget from within our ``index`` template:
 
 .. code-block:: html
 
     <h2>New Movie</h2>
-    ${add_movie_form( action='add_movie') }
+    ${tmpl_context.add_movie_form( action='add_movie') }
 
 we pass an ``action`` parameter to the form to tell it what controller method 
 (url) it should use to process the results of submitting the form.  We'll create 
