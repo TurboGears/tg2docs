@@ -15,7 +15,6 @@ Tutorials
    main/Pagination/index
    main/Auth/index
    main/AuthorizeTutorial
-   main/bitbucket_tutorial
 
 ============================
 Moving From Other Frameworks
