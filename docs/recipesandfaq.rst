@@ -53,7 +53,8 @@ methods.
     main/Templates/Mako
     main/Templates/Jinja
     main/Wiki20/JSONMochiKit
-    main/ToscaWidgets/Cookbook/TreeView.rst
+    main/ToscaWidgets/Cookbook/FlexiGrid
+    main/ToscaWidgets/Cookbook/TreeView
     main/TGandPyAMF
     main/TGandFirePython
     main/AuthorizeTutorial
