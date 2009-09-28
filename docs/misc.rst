@@ -107,18 +107,6 @@ so I would wait until I re-write RoutedController with _dispatch before document
 
 .. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/7d5a07b4a21d7226?hl=en Visitor IP & pre-populated toscawidget field from database
 
-.. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/2e9737544409c8e9?hl=en CrudRestControllerm, help needed.
-
-percious:  The above _should_ work and is well documented.  I think there is user error going on here.
-
-.. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/b258fe5a1f788c0c?hl=en 
-
-percious: again, i chock this one up to user error, but I'd have to look more deeply.
-
-.. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/094cf0138bd33e2c?hl=en Group of small widgets into big widget?
-
-percious: i think this one should go away.  The TW docs cover it.
-
 .. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/daf8db234df8105b?hl=en Critical security update for tg2 users! (session cookie secret)
 
 .. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/4a87b275876647b6?hl=en list of connected users?
@@ -139,19 +127,11 @@ percious: we need to add an offline install section to deployment.  This should 
 
 .. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/d4635f5eb2ad1dc4?hl=en how could a controller method know whether it's invoked as an error_handler or directly
 
-.. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/d3f40bf1bdf2cc98?hl=en 
-
-percious: I think this one should be closed too.  It is well covered by toscawidgets/formencode.  people need to rtfm.
-
 .. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/5dd5b090eb0d4c49?hl=en List of Quickstarted files that are save to remove 
 
 percious: I think this is a terrible idea to document
 
 .. todo:: Difficulty: Hard. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/a691ae9d3b31138d?hl=en Flash Widget
-
-.. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/626ff97e4b3a1dfd?hl=en Looking for suggestions for a TG2 cms library 
-
-percious: not sure what to document here.  seems more like an outreach.
 
 .. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/72e106fc6512b1cb?hl=en Toscawidgets form with multiple buttons 
 
