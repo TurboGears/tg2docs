@@ -1,54 +1,87 @@
 .. _recipes-and-faq:
 
-===============
-Recipes and FAQ
-===============
+=======================
+Working with TurboGears
+=======================
+
+This page collects documentation which describes how to work with 
+TurboGears to accomplish an effect.  Normally you should have completed 
+a few :ref:`tutorials` so that you have a feel for the general workflow 
+within TurboGears before you dive into these documents.
 
 .. toctree::
-   :maxdepth: 2
+    :maxdepth: 1
+    
+    main/Auth/index
+    main/Validation
+    main/StaticFile
+    main/Controllers
+    main/ToscaWidgets/ToscaWidgets
+    main/Extensions/Crud/index
+    main/Extensions/Admin/index
+    main/Templates/Genshi
+    main/DatabaseMigration
+    main/MultipleDatabases
+    main/Session
+    main/Caching
+    main/Config
+    main/Internationalization
+    main/LogSetup
+    main/ResponseTypes
+    main/RestControllers
+    main/RoutesIntegration
+    main/CommandLine
 
-   main/Auth/index
-   main/TGandPyAMF
-   main/TGandFirePython
-   main/RoutesIntegration
-   main/StaticFile
-   main/Templates/ChameleonGenshi
-   main/Templates/Genshi
-   main/Templates/Mako
-   main/Templates/Jinja
-   main/Templates/Alternative
-   main/MultipleDatabases
-   main/Wiki20/JSONMochiKit
+.. todo:: Document initial DB setup in websetup.py
+.. todo:: Link SQLAlchemy Migrate docs
+   
+Extensions and Alternatives
+===========================
 
+TurboGears is a remarkably flexible framework that allows you to swap in 
+new implementations for many of the pieces used by default.  Templating 
+engines, Javascript libraries, authorization mechanisms, data-storage 
+abstractions and the like can all be plugged in to suit your development 
+methods.
 
-Widget Recipes
-==============
 .. toctree::
-   :maxdepth: 2
+    :maxdepth: 1
+    
+    main/Templates/ChameleonGenshi
+    main/Templates/Mako
+    main/Templates/Jinja
+    main/Templates/Alternative
+    main/Wiki20/JSONMochiKit
+    main/ToscaWidgets/Cookbook/TreeView.rst
+    main/TGandPyAMF
+    main/TGandFirePython
+    main/AuthorizeTutorial
+    main/Extensions/Geo/index
 
-   main/ToscaWidgets/Cookbook/TreeView.rst
+.. todo:: JQuery, Dojo, EXT usage doc-links
 
-
-Recipes for Installation and Deployment
-========================================
+Installation and Deployment
+===========================
 
 .. toctree::
-   :maxdepth: 2
+    :maxdepth: 2
 
-   main/Deployment
-   main/Deployment/DeployWithAnEgg
-   main/Deployment/ModProxy
-   main/Deployment/modwsgi+virtualenv
+    main/Deployment
+    main/Deployment/DeployWithAnEgg
+    main/Deployment/ModProxy
+    main/Deployment/modwsgi+virtualenv
 
 
 Performance and optimization:
 ===============================
 
 .. toctree::
-   :maxdepth: 2
+    :maxdepth: 2
    
-   main/Performance/TemplatePerformance
+    main/Profile
+    main/Performance/TemplatePerformance
 
+.. todo:: Difficulty: Medium. optimization tips for SQLAlchemy usage
 
 .. todo:: Difficulty: Easy. Validate that toctree maxdepth values are appropriate
 
