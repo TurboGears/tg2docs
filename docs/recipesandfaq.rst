@@ -16,24 +16,25 @@ within TurboGears before you dive into these documents.
     main/Validation
     main/StaticFile
     main/Controllers
+    main/Templates/Genshi
+    main/master_html
     main/ToscaWidgets/ToscaWidgets
+    main/RestControllers
     main/Extensions/Crud/index
     main/Extensions/Admin/index
-    main/Templates/Genshi
     main/DatabaseMigration
     main/MultipleDatabases
-    main/Session
     main/Caching
     main/Config
-    main/Internationalization
     main/LogSetup
+    main/Internationalization
+    main/Session
     main/ResponseTypes
-    main/RestControllers
     main/RoutesIntegration
+    main/RequestFlow
     main/CommandLine
 
 .. todo:: Document initial DB setup in websetup.py
-.. todo:: Link SQLAlchemy Migrate docs
    
 Extensions and Alternatives
 ===========================
@@ -47,10 +48,10 @@ methods.
 .. toctree::
     :maxdepth: 1
     
+    main/Templates/Alternative
     main/Templates/ChameleonGenshi
     main/Templates/Mako
     main/Templates/Jinja
-    main/Templates/Alternative
     main/Wiki20/JSONMochiKit
     main/ToscaWidgets/Cookbook/TreeView.rst
     main/TGandPyAMF
@@ -80,6 +81,7 @@ Performance and optimization:
    
     main/Profile
     main/Performance/TemplatePerformance
+    main/Caching
 
 .. todo:: Difficulty: Medium. optimization tips for SQLAlchemy usage
 
