@@ -52,7 +52,14 @@ Geo capabilities.
       :maxdepth: 4
 
       extensions
+      
+Useful Utilities and Tools
+===========================
 
+   .. toctree::
+       :maxdepth: 2
+
+       utilities
 
 Testimonials, White Papers, and Case Studies
 ============================================

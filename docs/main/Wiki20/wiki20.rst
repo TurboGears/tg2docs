@@ -313,9 +313,8 @@ with nothing in it, and add all the interesting stuff using
 ``mapper()``, which attaches the ``Table`` object to our class.
 
 Note that it's also possible to start with an existing database, but
-that's a more advanced topic that we won't cover in this tutorial.
-
-.. todo:: Difficulty: Medium. Will we be adding sqlautocode in future?
+that's a more advanced topic that we won't cover in this tutorial.  If you
+would like more information on how to do that, check out :ref:`sqlautocode`.
 
 Database Configuration
 ----------------------

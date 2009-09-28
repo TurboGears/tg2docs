@@ -70,8 +70,8 @@ You could use different names if you must.
     cd tg-dev
     python setup.py develop
     cd ..
-    hg clone http://bitbucket.org/turbogears/tg-devtools-dev/
-    cd tg-devtools-dev
+    hg clone http://bitbucket.org/turbogears/tgdevtools-dev/
+    cd tgdevtools-dev
     python setup.py develop
     cd ..
 

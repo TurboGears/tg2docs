@@ -186,6 +186,12 @@ You can also register projects and upload your eggs manually. This
 
 .. _setuptools tutorial: http://wiki.python.org/moin/CheeseShopTutorial
 
+References
+--------------
+Take a look at :ref:`basketweaver` to see how to make your own personal PYPI
+for distribution within a closed environment.
+
+
 
 .. _pypi: http://pypi.python.org
 .. _cogbin: http://www.turbogears.org/cogbin/

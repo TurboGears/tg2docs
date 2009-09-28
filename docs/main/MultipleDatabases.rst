@@ -1,3 +1,5 @@
+.. _multidatabase:
+
 Using Multiple Databases In TurboGears
 ======================================
 
