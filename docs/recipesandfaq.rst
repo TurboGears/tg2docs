@@ -134,6 +134,7 @@ Mochikit package which was the default in TurboGears 1.x.
     main/ToscaWidgets/Cookbook/JQueryTreeView
     main/ToscaWidgets/Cookbook/JQueryAjaxForm
     main/Wiki20/JSONMochiKit
+    main/StaticFile
 
 .. todo:: JQuery, Dojo, EXT usage doc-links
 .. todo:: Link documentation for doing JSON RPC/Ajax here
