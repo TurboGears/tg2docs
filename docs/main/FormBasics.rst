@@ -98,3 +98,5 @@ If there's a validation error, control will be passed to
 display_login, but this time there will be some data in tmpl_context
 so that when the form widget is rendered, it will get those validation
 error messages and display them for you.
+
+.. todo:: update to use sprox instead of dbsprockets
