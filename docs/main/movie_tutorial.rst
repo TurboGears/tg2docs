@@ -1,3 +1,5 @@
+.. _movie-tutorial:
+
 A Movie Database (Models, Views, Controllers)
 =============================================
 
