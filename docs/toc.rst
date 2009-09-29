@@ -24,7 +24,14 @@ Tutorials
    
    tutorials
 
+Working with TurboGears
+=======================
 
+.. toctree::
+   :maxdepth: 3
+
+   recipesandfaq
+   
 Getting To Know TurboGears
 ==========================
 
@@ -33,14 +40,6 @@ Getting To Know TurboGears
 
    gettingtoknow
 
-
-Recipes
-=======
-
-.. toctree::
-   :maxdepth: 3
-
-   recipesandfaq
 
 
 TurboGears 2 Extensions and Tools
