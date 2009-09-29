@@ -489,7 +489,6 @@ References
    
  * The zope.sqlalchemy transaction module
  
-.. todo:: document the transaction module, apparently this is part of the repoze.tm package, possibly repoze.tm2, introduction for implementers here... http://repoze.org/tmdemo.html
 .. _`SQLAlchemy Documentation`: http://www.sqlalchemy.org/docs/05/
 .. _`Object Relational Mapper`: http://www.sqlalchemy.org/docs/05/ormtutorial.html
 .. _`SQLAlchemy Expressions`: http://www.sqlalchemy.org/docs/05/sqlexpression.html

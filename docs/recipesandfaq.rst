@@ -49,6 +49,7 @@ for updating and migrating your database.
     
 .. todo:: Document initial DB setup in websetup.py
 .. todo:: Link DB setup (MySQL, PostgreSQL, etceteras) docs
+.. todo:: document the transaction module, part of the repoze.tm package, introduction for implementers here... http://repoze.org/tmdemo.html
 
 Handling HTTP Requests (Controllers)
 ------------------------------------
