@@ -45,6 +45,7 @@ for updating and migrating your database.
     :maxdepth: 1
    
     main/SQLAlchemy
+    main/Config/SQLAlchemy
     main/DatabaseMigration
     
 .. todo:: Document initial DB setup in websetup.py
@@ -63,8 +64,12 @@ Handling HTTP Requests (Controllers)
     main/FormBasics
     main/ToscaWidgets/ToscaWidgets
     main/ToscaWidgets/forms
+    main/Pagination/index
     
     main/Auth/index
+    modules/thirdparty/webob
+    modules/tgflash
+    modules/tgdecorators
     
     main/ResponseTypes
     main/RequestFlow    
