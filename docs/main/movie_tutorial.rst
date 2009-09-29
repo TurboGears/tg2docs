@@ -16,6 +16,10 @@ We will assume you are familiar with the following:
  * Basic operations of Relational Databases
  * Basic HTML, CSS and Python
  
+This tutorial goes somewhat faster than :ref:`wiki20` with the assumption that 
+you've done web-development before in some framework and just want to know 
+how TurboGears works in particular.
+ 
 .. _Model-View-Controller: http://en.wikipedia.org/wiki/Model-view-controller
 
 You will want to follow along with this tutorial within a TurboGears virtualenv.
