@@ -195,6 +195,13 @@ transaction.commit is normally handled by middleware which commits
 if a method returns "normally" (including redirects) and rolls 
 back if the method raises an uncaught exception.
 
+Aside: If you are an old SQLAlchemy hand, you may be wondering what 
+"transaction.commit()" is, as in SQLAlchemy you would normally use 
+DBSession.commit() to commit your current transaction.  TurboGears 2.x
+uses a middleware component ``repoze.tm`` which allows for multi-database 
+commits.  A side-effect of this usage is that use of DBSession.commit() 
+is no longer possible.
+
 Browse/Edit with Admin GUI
 --------------------------
 
