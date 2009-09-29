@@ -214,11 +214,10 @@ You may also want the `win32api`_ package as it provides some very
 useful tools for windows developers, the first you will encounter is
 the ability to make virtualenv work with paths that contain spaces.
 
-See also pylunch_ and  also `windows installer`
+See also pylunch_.
 
 .. _win32api: http://starship.python.net/crew/mhammond/win32/
 .. _pylunch: http://www.ohloh.net/p/pylunch
-.. todo:: Difficulty: Easy. missing link. What does `windows installer` refer to?
 
 Cygwin
 """"""
