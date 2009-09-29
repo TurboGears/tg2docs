@@ -407,8 +407,6 @@ Just add the ``--pip`` flag to the bootstrap script::
 Installing The Development Version Of Turbogears 2
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. todo:: Difficulty: Medium. Convert this section to use Bitbucket/hg.tg.org and Mercurial
-
 Getting Mercurial
 """"""""""""""""""
 
