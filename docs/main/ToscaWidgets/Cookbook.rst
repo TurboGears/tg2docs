@@ -15,13 +15,13 @@ ToscaWidgets Cookbook
    Cookbook/FlexiGrid
    Cookbook/JQueryAjaxForm
    Cookbook/JQueryTreeView
+   Cookbook/Flot
    Cookbook/JSUnit
    Cookbook/ActiveForm
    Cookbook/PasswordValidation
    Cookbook/ReCaptcha
    Cookbook/DynamicSelect
    Cookbook/OpenLayersMap
-   Cookbook/Flot
 
 Javascript Library Specific Widgets
 -----------------------------------
@@ -124,15 +124,6 @@ Tree View
  Plugin.
 
  :ref:`tw_cookbook_jquerytreeview`
-
-
-Ajax Graphs
-```````````
-
-.. todo:: Difficulty: Medium to Hard. write tutorial to make an AJAX graph using tw.jquery and flot
-
-How to add an ajax graph to your system using tw.jquery and flot.
-
 
  .. image:: images/stars.png
    :align: right
