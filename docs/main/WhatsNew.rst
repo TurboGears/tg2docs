@@ -89,7 +89,26 @@ the TG core developers.
 Why SQLAlchemy?
 ~~~~~~~~~~~~~~~
 
-.. todo:: Difficulty: Easy. missing write up on "why SQLAlchemy"?
+SQLAlchemy is arguably the best ORM available for Python.  Some have even proclaimed
+it the best ORM in any language.  The fact is, writing your own ORM is hard, and
+if we were to spend time doing that, we'd have no time to glue together everything
+that makes TG great.  Previously, TurboGears used SQLObject, which implements
+the `ActiveRecord`_ pattern, whereas SQLAlchemy utilizes the Data Mapper Pattern.
+We feel that the `Data Mapper`_ Pattern is more flexible for the longevity of a project,
+in that it gives you direct access to the Table Objects, allowing you to map
+the Related Objects around it.  For those who want everything summed up in a 
+single mapping class, SQLAlchemy provides a Declarative form of Object definition
+which implements ActiveRecord, while still giving you access to your tables.
+
+Design decisions aside, SA has an active `community`_, and has a well-maintained 
+codebase that is also well `documented`_.  This makes it a perfect choice for
+us because while we love giving you documentation, there is no way we
+could provide the detail required to do Object Relational Mapping justice.
+
+.. _`ActiveRecord`: http://en.wikipedia.org/wiki/Active_record_pattern
+.. _`Data Mapper`: http://www.martinfowler.com/eaaCatalog/dataMapper.html
+.. _`community`: http://groups.google.com/group/sqlalchemy
+.. _`documented`: http://www.sqlalchemy.org/docs/
 
 New Features Of TurboGears 2:
 -----------------------------
@@ -123,11 +142,6 @@ Differences:
     middleware to do what filters did in CherryPy2
   * The @expose decorator has a slightly updated syntax for content
     type declaration
-  * All template engines now have search paths to find the templates.
-    The default template directory is on the search path so using dotted
-    notation in @expose decorators has been deprecated.
-
-    .. todo:: Difficulty: Easy. has dotted notation for templates in @expose really been deprecated?
   * Object dispatch does not support dots in URLs the way TurboGears 1
     did.
   * CherryPy request and response objects are replaced with WebOb
