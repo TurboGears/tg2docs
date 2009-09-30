@@ -164,3 +164,5 @@ priority: high
             * compressing JS/html/CSS,etc
 
 .. todo:: Difficulty: uncertain. Document how SA+TG+Transaction manager work together.
+
+.. todo:: Difficulty: easy.  Document how to use "local:" in mako template includes  (see dottednamessupport.py)
