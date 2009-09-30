@@ -3,11 +3,12 @@
 TurboGears Form Handling Overview
 =================================
 
-This is a succinct explanation on how to use sprox's form rendering capabilities
-within TurboGears2. We will assume
-the reader is somewhat versed in TurboGears2's :class:`tg.controllers.RestController`.
-Note that this is the same technology the Turbogears2 admin is based on, so this
-knowledge is valuable to understand how to configure the admin for your purposes.
+This is a succinct explanation on how to use sprox's form rendering
+capabilities within TurboGears2. We will assume the reader is somewhat
+versed in TurboGears2's :class:`tg.controllers.RestController`.  Note
+that this is the same technology the Turbogears2 admin is based on, so
+this knowledge is valuable to understand how to configure the admin
+for your purposes.
 
 Establishing the Model Definition
 -----------------------------------
@@ -156,7 +157,7 @@ field just for fun.::
         
 .. image:: images/form/password.png
 
-You can see now that the title is "stared" out.  Note that you may also send an "instance" of
+You can see now that the title is "starred" out.  Note that you may also send an "instance" of
 a widget for a field, but you must pass in the fieldname to the widget.  This is a limitation
 of ToscaWidgets. (You may not change the "id" of a widget after it has been created.)::
 
@@ -170,6 +171,8 @@ to a widget, but you either want to provide an additional argument, or override 
 that sprox chooses.  For this, pass a dictionary into the __field_widget_args__ parameter with the
 key being the field you would like to pass the arg into, and the value a dictionary of args to set
 for that field.
+
+.. todo:: add code sample for this
 
 Custom Dropdown Field Names
 ------------------------------
