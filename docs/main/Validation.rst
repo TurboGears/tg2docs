@@ -200,14 +200,14 @@ just the thing for us -- Schema validators.
 If you want to do multiple-field validation, reuse validators or just
 clean up your code, validation ``Schema``s are the way to go. You
 create a validation schema by inheriting from
-``formencode.validators.Schema`` and pass the newly created ``Schema``
+``formencode.schema.Schema`` and pass the newly created ``Schema``
 as the ``validators`` argument instead of passing a dictionary.
 
 Create a schema:
 
 .. code-block:: python
 
-    class PwdSchema(validators.Schema):
+    class PwdSchema(schema.Schema):
         pwd1 = validators.String(not_empty=True)
         pwd2 = validators.String(not_empty=True)
         chained_validators = [validators.FieldsMatch('pwd1', 'pwd2')]
@@ -230,7 +230,17 @@ matching fields.
 Again, for information about ``Invalid`` exception objects, creating
 your own validators, schema and FormEncode in general, refer to the
 `FormEncode Validator`_ documentation and don't be afraid to check the
-``Formencode.validators`` source. It's often clearer than the docs.
+``Formencode.validators`` source. It's often clearer than the 
+documentation.
+
+Note that Schema validation is rigorous by default, in particular, you 
+must declare *every* field you are going to pass into your controller 
+or you will get validation errors.  To avoid this, add::
+
+    class MySchema( schema.Schema ):
+        allow_extra_fields=True
+
+to your schema declaration.
 
 .. _`FormEncode Validator`: http://formencode.org/docs/Validator.html
 
@@ -261,3 +271,4 @@ problem of propagating the errors back to your users. In the end, it's
 usually far simpler to use the validation framework.
 
 .. _FormEncode: http://formencode.org/
+

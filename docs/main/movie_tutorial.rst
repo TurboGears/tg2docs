@@ -1,3 +1,5 @@
+.. _movie-tutorial:
+
 A Movie Database (Models, Views, Controllers)
 =============================================
 
@@ -193,6 +195,13 @@ transaction.commit is normally handled by middleware which commits
 if a method returns "normally" (including redirects) and rolls 
 back if the method raises an uncaught exception.
 
+Aside: If you are an old SQLAlchemy hand, you may be wondering what 
+"transaction.commit()" is, as in SQLAlchemy you would normally use 
+DBSession.commit() to commit your current transaction.  TurboGears 2.x
+uses a middleware component ``repoze.tm`` which allows for multi-database 
+commits.  A side-effect of this usage is that use of DBSession.commit() 
+is no longer possible.
+
 Browse/Edit with Admin GUI
 --------------------------
 
@@ -347,6 +356,7 @@ forms.  We'll use this capability, which is provided by the `Sprox`_ library
 to create a simple form our users can use to add new movies to our database::
 
     from sprox.formbase import AddRecordForm
+    from tg import tmpl_context
     class AddMovie(AddRecordForm):
         __model__ = Movie
     add_movie_form = AddMovie(DBSession)
@@ -358,18 +368,27 @@ our root controller::
     def index(self, **named):
         """Handle the front-page."""
         movies = DBSession.query( Movie ).order_by( Movie.title )
+        tmpl_context.add_movie_form = add_movie_form
         return dict(
             page='index',
             movies = movies,
-            add_movie_form = add_movie_form,
         )
 
-and call it within our ``index`` template:
+Why are we using ``tmpl_context``?  Why don't we just pass our 
+widget into the template as a parameter?  The reason is is that 
+TurboGears controllers often do double duty as both web-page 
+renderers and JSON handlers.  By putting "view-specific" code 
+into the tmpl_context and "model-data" into the result dictionary,
+we can more readily support the JSON queries.
+
+The tmpl_context
+        
+Now we call our widget from within our ``index`` template:
 
 .. code-block:: html
 
     <h2>New Movie</h2>
-    ${add_movie_form( action='add_movie') }
+    ${tmpl_context.add_movie_form( action='add_movie') }
 
 we pass an ``action`` parameter to the form to tell it what controller method 
 (url) it should use to process the results of submitting the form.  We'll create 
@@ -470,7 +489,6 @@ References
    
  * The zope.sqlalchemy transaction module
  
-.. todo:: document the transaction module
 .. _`SQLAlchemy Documentation`: http://www.sqlalchemy.org/docs/05/
 .. _`Object Relational Mapper`: http://www.sqlalchemy.org/docs/05/ormtutorial.html
 .. _`SQLAlchemy Expressions`: http://www.sqlalchemy.org/docs/05/sqlexpression.html

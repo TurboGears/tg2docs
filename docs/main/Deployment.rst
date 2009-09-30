@@ -53,6 +53,7 @@ You may also want to package your app up as a redistributable egg, TG2
 sets up everything that you need to do this.
 
  :ref:`tgeggdeployment`
+ 
 
 Reference
 ---------
@@ -66,3 +67,5 @@ production.ini is slightly different.
 
 .. todo:: Difficulty: Medium. Document the recipes for deployment, updating the 1.0 docs
 
+
+.. todo:: Document usage of http://pypi.python.org/pypi/wsgisvc to deploy as a Win32 service 
