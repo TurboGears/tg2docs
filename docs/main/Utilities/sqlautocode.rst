@@ -15,7 +15,7 @@ started can be a bit daunting.  Luckily, sqlautocode was created
 to help you get started.  First things first, we need to get
 this puppy installed.::
 
-   easy_install sqlutocode
+   easy_install sqlautocode
    
 We can take a look at the help options in an overview manner:
 
@@ -108,7 +108,7 @@ Most people getting started with TurboGears or SQLAlchemy for that matter, will 
 to use the `declarative`_ style of SQLAlchemy model definition.  sqlautocode supports this with the
 -d option::
 
-  sqlautocode -d -o model.py sqlite:///devdata.db
+  sqlautocode -d -o model.py sqlite:///moviedemo.db
 
 
 .. _declarative: http://www.sqlalchemy.org/docs/05/reference/ext/declarative.html

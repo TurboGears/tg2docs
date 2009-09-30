@@ -6,7 +6,7 @@ Jinja provides yet another template rendering solution for TurboGears, but it
 has a couple of advantages for specific situations: 
 
  * It is super fast, 
- * It's syntax was inspired by django-templates_ and `dojo's DTL`_ so if you are migrating from Django it's the natural choise. 
+ * It's syntax was inspired by django-templates_ and `dojo's DTL`_ so if you are migrating from Django it's the natural choice. 
  * It lacks some of the most hated (anti)features of django templates. 
     * you can do template logic
     * Autoescaping is off by default.

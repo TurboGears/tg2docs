@@ -48,8 +48,6 @@ for some time.
 
 .. todo:: Difficulty: Medium. add in notes regarding how to use repoze.who's user_checker
 
-.. todo:: Difficulty: Medium. port http://docs.turbogears.org/1.0/SQLAlchemy#id13
-
 .. todo:: Difficulty: Medium. Incorporate the info from this pic: http://imagebin.ca/view/P969Fr.html, this is way outdated I think -1
 
 .. todo:: Difficulty: Medium. http://code.google.com/p/tgtools/source/browse/projects/tgext.admin/trunk/tgext/admin/tgadminconfig.py#114 << how to override tgext.admin controllers properly
@@ -161,8 +159,8 @@ priority: high
 
 .. todo:: Difficulty: Hard. Resolve all tickets that match this query: http://trac.turbogears.org/query?status=new&status=assigned&status=reopened&component=Documentation&order=id
 
-.. todo:: Difficulty: Medium. Review and possibly delete FormBasics.rst it talks about dbsprockets 
-
 .. todo:: Difficulty: Hard. Performance deployment enhancements pretty much explain all the YSlow issues
             * serving static files from the frontent,  /config/app_cfg.py base_config.serve_static = False
-            * compressing JS/html/CSS,etc 
+            * compressing JS/html/CSS,etc
+
+.. todo:: Difficulty: uncertain. Document how SA+TG+Transaction manager work together.
