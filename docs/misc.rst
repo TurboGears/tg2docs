@@ -165,4 +165,6 @@ priority: high
 
 .. todo:: Difficulty: Hard. Performance deployment enhancements pretty much explain all the YSlow issues
             * serving static files from the frontent,  /config/app_cfg.py base_config.serve_static = False
-            * compressing JS/html/CSS,etc 
+            * compressing JS/html/CSS,etc
+
+.. todo:: Difficulty: uncertain. Document how SA+TG+Transaction manager work together.

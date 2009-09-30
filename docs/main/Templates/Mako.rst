@@ -7,7 +7,7 @@ Mako provides another template rendering solution for TurboGears, it has a
 couple of advantages:
 
  * Is very fast! (as fast as some C engines)
- * Provides namespaces that behave just like regular python code
+ * Provides namespaces that behaves just like regular python code
  * Contains callable blocks
  * It can be be used to generate non-html markup as neither the template or the output needs to be valid html.
  * It the default in Pylons so people migrating will probably want to keep it

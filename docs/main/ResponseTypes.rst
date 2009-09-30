@@ -19,12 +19,11 @@ the `users` method from the `RootController`.
 A Simple Json Example
 ---------------------
 
-TurboGears Controllers gives the developer the ability to attach 
-common types that will be translated into mime-type to their methods 
-to express data in using different protocols.  
-The most common usage for this is with json, a standard
-protocol used for Asynchronous JavaScript.  Consider the following
-code snippet::
+TurboGears Controllers gives the developer the ability to attach
+common types that will be translated into mime-type to their methods
+to express data using different protocols.  The most common usage for
+this is with json, a standard protocol used for Asynchronous
+JavaScript.  Consider the following code snippet::
 
     users = "sally", "dave", "john"
 
@@ -135,7 +134,7 @@ In this example we are flagging the content type::
             response.headerlist.append(('Content-Disposition','attachment;filename=stats.csv'))
             return '1,2,3'
 
-Ones the above bug is fixed all you will need is to set the content type at runtime by modifiying the headers::
+Once the above bug is fixed all you will need is to set the content type at runtime by modifiying the headers::
 
     from tg import response
 
