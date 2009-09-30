@@ -131,6 +131,18 @@ See the FormEncode documentation for how this is done.
 
 .. _`FormEncode validators`: http://formencode.org/module-formencode.validators.html#classes
 
+You can also compose ``compound`` validators with logical operations,
+the FormEncode compound module provides `All` (all must pass), 
+`Any` (any one must pass) and `Pipe` (all must pass with the results of 
+each validator passed to the next item in the Pipe).  You can use these 
+like so::
+
+    from formencode.compound import All
+    ...
+    the_validator=All(
+        validators.NotEmpty(),
+        validators.UnicodeString(),
+    )
 
 Validating widget-based forms
 -----------------------------
