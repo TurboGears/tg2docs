@@ -100,6 +100,13 @@ the Related Objects around it.  For those who want everything summed up in a
 single mapping class, SQLAlchemy provides a Declarative form of Object definition
 which implements ActiveRecord, while still giving you access to your tables.
 
+A concrete example of the flexibility of SQLAlchemy vs. SQLObject is
+that it is very hard to have a user data type in SQLObject that has a
+key based in part on foreign key fields of another object.  So while
+(for example) account transaction objects never exist independently of
+account objects, it was very hard to build a data model embodying this
+fact in SQLObject.  This is not true of SQLAlchemy.
+
 Design decisions aside, SA has an active `community`_, and has a well-maintained 
 codebase that is also well `documented`_.  This makes it a perfect choice for
 us because while we love giving you documentation, there is no way we
