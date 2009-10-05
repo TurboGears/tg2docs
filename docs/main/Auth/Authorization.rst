@@ -40,7 +40,8 @@ but you need more flexibility, you will get it by adjusting your
 the three tables above for authentication or authorization (e.g., you want to
 use OpenId authentication and store your groups and permissions in XML files),
 then you should check the :mod:`repoze.what` manual to learn how to configure
-your TG application.
+your TG application. (See also :ref:`openid` which describes the process of 
+setting up OpenID authentication in detail).
 
 You can even get rid of authorization based on groups and permissions and use
 other authorization patterns (e.g., roles, based on network components) or 

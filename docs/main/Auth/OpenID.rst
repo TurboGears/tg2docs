@@ -56,16 +56,41 @@ to enter their OpenID and log in:
 
 .. code-block:: html
 
-    <form action="${tg.url('/openid_login_handler', came_from = came_from.encode('utf-8'), __logins = login_counter.encode('utf-8'))}" method="POST" class="loginfields">
-        <h2><span>Login with OpenID</span></h2>
-        <label for="openid">OpenID:</label><input type="text" id="openid" name="openid" class="text" value="http://"></input><br/>
+    <form action="${tg.url('/openid_login_handler', came_from = came_from.encode('utf-8'), __logins = login_counter.encode('utf-8'))}" method="POST" class="openid-login">
+        <input type="text" id="openid" name="openid" class="text" value="http://"></input><input type="submit" id="submit" value="Login with OpenID" />
             <input type="hidden" value="/" name="returnto"/>
             <input type="hidden" value="claim_openid" name="op"/>
             <input type="hidden" value="1" name="openid_login"/>    
-        <input type="submit" id="submit" value="Login w/OpenID" />
     </form>
 
 which you should style appropriately with CSS to match the OpenID standards.
+
+Adding Some Style
+-----------------
+
+OpenID provides a logo suitable for use as a background for text-boxes.
+We can download this logo to our project's `public/images` directory::
+
+    wget http://wiki.openid.net/f/openid-16x16.gif
+
+And then reference it from our css stylesheet `public/css/style.css` 
+to get a reasonable looking and somewhat compact login form::
+
+    form.openid-login {
+        border: thin solid #ffc000;
+        padding: .25em;
+    }
+
+    form.openid-login input[type="text"] {
+        padding-left: 16px;
+        background: url('/images/openid-16x16.gif') top left no-repeat;
+        width: 10em;
+    }
+
+.. todo:: Difficulty Medium/Hard: document how to provide group/permission
+          support when using an OpenID Authentication provider.
+.. todo:: Difficulty Hard: document how to store OpenID identifiers in 
+          SQLAlchemy (i.e. add records for each new OpenID identity)
 
 References
 ----------
