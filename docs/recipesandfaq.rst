@@ -67,6 +67,7 @@ Handling HTTP Requests (Controllers)
     main/Pagination/index
     
     main/Auth/index
+    main/Auth/OpenID
     modules/thirdparty/webob
     modules/tgflash
     modules/tgdecorators

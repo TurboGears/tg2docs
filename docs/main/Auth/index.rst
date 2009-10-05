@@ -115,3 +115,5 @@ want to customize some things, you may want to read the following pages:
     Authentication
     Authorization
     Customization
+    whoini
+    OpenID
