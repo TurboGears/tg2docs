@@ -35,6 +35,7 @@ available directives are all optional:
       app_cfg.sa_auth.authenticators = [('htpasswd_auth', htpasswd_auth)]
       # ...
 
+
 Customizing the model structure assumed by the quickstart
 ---------------------------------------------------------
 
