@@ -62,6 +62,30 @@ value.  For the four standard renderers it's enough to just add the
 name to ``base_config.renderers`` but for custom renderers you want to
 set the renderer up, and set it in this dictionary directly.
 
+
+Making a module available to all Genshi templates 
+---------------------------------------------------
+Sometimes you want to expose an entire module to all of the templates
+in your templates directory.  Perhaps you have a form library you
+like to use, or a png-txt renderer that you want to wrap with <pre>.
+This is possible in TG.
+
+First, we must modify our app_cfg.py so that you can share your
+link across all templates::
+
+  base_config.variable_provider = helpers.add_global_tmpl_vars 
+
+Next, you want to modify the lib/helpers.py module of your application
+to include the newly added ``add_global_tmpl_vars`` method::
+
+  import mymodule
+  
+  def add_global_tmpl_vars():
+       return dict(mymodule=mymodule) 
+
+That's pretty much it, you should have access to mymodule in every
+template now.
+
 Overriding AppConfig Rendering Methods
 ---------------------------------------
 

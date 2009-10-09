@@ -69,8 +69,6 @@ so I would wait until I re-write RoutedController with _dispatch before document
 
 .. todo:: Difficulty: Medium. Include these docs: http://groups.google.com/group/turbogears/browse_frm/thread/3afbc13d88af57d3?hl=en TG2, repoze.who and multiple auth sources 
 
-.. todo:: Difficulty: Medium. Include these docs: http://groups.google.com/group/turbogears/browse_frm/thread/31c4268417c5033c?hl=en Making a module available to all Genshi templates
-
 .. todo:: Difficulty: Medium. Include these docs: http://groups.google.com/group/turbogears/browse_frm/thread/1c4158ad3035082c?hl=en Secure Static Files TG2
 
 .. todo:: Difficulty: Medium. Include these docs: http://groups.google.com/group/turbogears/browse_frm/thread/55d6bb9704b3127a?hl=en Accessing configuration
