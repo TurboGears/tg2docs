@@ -35,6 +35,7 @@ available directives are all optional:
       app_cfg.sa_auth.authenticators = [('htpasswd_auth', htpasswd_auth)]
       # ...
 
+
 Customizing the model structure assumed by the quickstart
 ---------------------------------------------------------
 
@@ -362,7 +363,8 @@ quickstart, you should follow the instructions described in this section:
         tmpl_context.identity = request.identity
         # ...
 
-
+.. _disabling-auth:
+        
 Disabling authentication and authorization
 ------------------------------------------
 
@@ -376,3 +378,12 @@ commenting) the following line from
 
 Then you may also want to delete those settings like ``base_config.sa_auth.*``
 -- they'll be ignored.
+
+Next Steps
+----------
+
+ * :ref:`using-who.ini` -- describes how to integrate the `repoze.who`
+   `who.ini` configuration scheme into your application 
+ * :ref:`openid` -- describes how to use a `repoze.who` plugin to 
+   authenticate users via the OpenID mechanism
+

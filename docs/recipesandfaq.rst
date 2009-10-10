@@ -67,6 +67,7 @@ Handling HTTP Requests (Controllers)
     main/Pagination/index
     
     main/Auth/index
+    main/Auth/OpenID
     modules/thirdparty/webob
     modules/tgflash
     modules/tgdecorators
@@ -113,6 +114,7 @@ Note: most new users do not need to choose an alternate templating language.
     main/Templates/ChameleonGenshi
     main/Templates/Mako
     main/Templates/Jinja
+    main/ToscaWidgets/Cookbook/ReCaptcha.html
 
 Javascript Libraries
 --------------------
@@ -128,6 +130,7 @@ Mochikit package which was the default in TurboGears 1.x.
     :maxdepth: 1
 
     main/GlobalJSLib
+    main/ToscaWidgets/Cookbook
     main/ToscaWidgets/Cookbook/FlexiGrid
     main/ToscaWidgets/Cookbook/TreeView
     main/ToscaWidgets/Cookbook/Flot

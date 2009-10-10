@@ -1,3 +1,5 @@
+.. _pagination-quickstart:
+
 Pagination Quickstart For Turbogears2
 =====================================
 

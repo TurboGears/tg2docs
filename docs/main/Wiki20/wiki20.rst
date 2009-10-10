@@ -166,7 +166,7 @@ everything necessary to get up and running. Here, we'll look at the
 two files directly involved in displaying this welcome page.
 
 TurboGears follows the `Model-View-Controller paradigm`_
-(a.k.a. "MVC"), as do most modern web frameworks like Rails, Cake,
+(a.k.a. "MVC"), as do most modern web frameworks like Rails, Django,
 Struts, etc.
 
 * **Model**: For a web application, the "model" refers to the way the

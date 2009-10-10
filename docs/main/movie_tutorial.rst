@@ -16,6 +16,10 @@ We will assume you are familiar with the following:
  * Basic operations of Relational Databases
  * Basic HTML, CSS and Python
  
+This tutorial goes somewhat faster than :ref:`wiki20` with the assumption that 
+you've done web-development before in some framework and just want to know 
+how TurboGears works in particular.
+ 
 .. _Model-View-Controller: http://en.wikipedia.org/wiki/Model-view-controller
 
 You will want to follow along with this tutorial within a TurboGears virtualenv.
@@ -467,6 +471,65 @@ into your templates.  The automatically generated forms can save you
 a significant amount of time until you get there.
 
 .. _`Sprox`: http://www.sprox.org
+
+Adding Basic Pagination
+-----------------------
+
+As our users add movies and we approve them, our list of movies on the 
+front page will get longer and longer.  We're going to make our list use 
+``pagination`` to present standard navigation mechanisms to the user.
+
+In our controllers/root.py module, we'll alter the index method::
+
+    @expose('movies.templates.index')
+    def index(self, **named):
+        """Handle the front-page."""
+        movies = DBSession.query( Movie ).filter(
+            Movie.reviewed == True
+        ).order_by( Movie.title )
+        tmpl_context.add_movie_form = add_movie_form
+        from webhelpers import paginate
+        count = movies.count()
+        page =int( named.get( 'page', '1' ))
+        currentPage = paginate.Page( 
+            movies, page, item_count=count, 
+            items_per_page=5,
+        )
+        movies = currentPage.items
+        return dict(
+            page='index',
+            movies = movies,
+            currentPage = currentPage,
+            search = search,
+        )
+
+This sets up a simple URL scheme where the parameter "page" will determine 
+which page we will view, and we'll view at most 5 movies per page.  We take 
+just the set of movies in the current page as our "movies" collection, and 
+we pass in the Page object to our template to allow it to render the 
+navigation mechanisms.
+
+Our template is altered to display the page navigation at the bottom of 
+the movie table in our index.html template:
+
+.. code-block:: html
+
+    <tr class="navigation" py:if="currentPage.page_count > 1">
+        <td colspan="4" class="pager">${currentPage.pager()}</td>
+    </tr>
+    <tr class="navigation" py:if="currentPage.item_count == 0">
+        <td colspan="4" class="pager">No movies found</td>
+    </tr>
+
+And finally, we add some CSS rules to make the navigation stand out from 
+the content::
+
+    .navigation .pager {
+        text-align: center;
+        color: darkgrey;
+    }
+
+If you want to do more customization with your pager, see the :ref:`The Pagination Quickstart <pagination-quickstart>`.
 
 Next Steps
 ----------
