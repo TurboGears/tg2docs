@@ -24,7 +24,9 @@ slowdown is occurring:
   .. note:: ETag only helps if the entire page can be cached.
 
 * Controllers - The `cache` object is available in controllers and templates
-  for use in caching anything in Python that can be pickled. 
+  for use in caching anything in Python that can be pickled.  It is imported 
+  from the `pylons` namespace, and is configured in your application's 
+  config-file (`development.ini`, `production.ini`)
 
 The two primary concepts to bear in mind when caching are i) caches have a
 *namespace* and ii) caches can have *keys* under that namespace. The reason for
@@ -57,6 +59,7 @@ pickled (list, dict, tuple, etc.):
 
 .. code-block:: python
 
+    from pylons import cache
     @expose()
     def some_action(self, day): 
         # hypothetical action that uses a 'day' variable as its key 
@@ -83,8 +86,8 @@ or has expired in the cache.
 Because the `createfunc` is called with no arguments, the resource- or
 time-expensive function must correspondingly also not require any arguments.
 
-Other Cache Options 
-^^^^^^^^^^^^^^^^^^^
+Other Cache Operations 
+^^^^^^^^^^^^^^^^^^^^^^
 
 The cache also supports the removal values from the cache, using the key(s) to
 identify the value(s) to be removed and it also supports clearing the cache
@@ -158,9 +161,6 @@ prompted to fetch a fresh copy of the page.
 Inside the Beaker Cache
 -----------------------
 
-Caching
-^^^^^^^
-
 First lets start out with some **slow** function that we would like to cache.
 This function is not slow but it will show us when it was cached so we can see
 things are working as we expect:
@@ -174,8 +174,8 @@ things are working as we expect:
 
 When we have the cached function, multiple calls will tell us whether are seeing a cached or a new version.
 
-DBMCache
-^^^^^^^^
+DBM
+---
 
 The DBMCache stores (actually pickles) the response in a dbm style database.
 
@@ -243,8 +243,8 @@ a good thing since different processes may have different policies in effect.
 If there are difficulties with these values, remember that one call to
 :func:`cache.clear` resets everything.
 
-Database Cache
-^^^^^^^^^^^^^^
+Database
+--------
 
 Using the `ext:database` cache type.
 
@@ -304,25 +304,85 @@ It includes the access time but stores rows on a one-row-per-namespace basis,
 This is a more efficient approach when the problem is handling a large number
 of namespaces with limited keys --- like sessions.
 
-Memcached Cache
-^^^^^^^^^^^^^^^
+.. _memcache:
 
-For large numbers of keys with expensive pre-key lookups memcached it the way
-to go.
+Memcached
+---------
 
-If memcached is running on the the default port of 11211:
+Memcached allows for creating a pool of colaborating servers which 
+manage a single distributed cache which can be shared by large numbers of 
+front-end servers (i.e. TurboGears instances).  Memcached can be extremely
+fast and scales up very well, but it involves an external daemon process 
+which (normally) must be maintained (and secured) by your sysadmin.
+
+Memcached is a system-level daemon which is intended 
+for use solely on "trusted" networks, there is little or no security provided 
+by the daemon (it trusts anyone who can connect to it), so you should never 
+run the daemon on a network which can be accessed by the public!  To repeat,
+do `not` run memcached without a firewall or other network partitioning 
+mechanism!  Further, be careful about storing any sensitive or 
+authentication/authorization data in memcache, as any attacker who can 
+gain access to the network can access this information.
+
+Ubuntu/Debian servers will generally have memcached configured by default 
+to only run on the localhost interface, and will have a small amount of 
+memory (say 64MB) configured.  The `/etc/memcached.conf` file can be 
+edited to change those parameters.  The memcached daemon will also normally
+be deactivated by default on installation.  A basic memcached installation
+might look like this on an Ubuntu host:
+
+.. code-block:: bash
+
+    sudo aptitude install memcached
+    sudo vim /etc/default/memcached
+    # ENABLE_MEMCACHED=yes
+    sudo vim /etc/memcached.conf 
+    # Set your desired parameters...
+    sudo /etc/init.d/memcached restart
+    # now install the Python-side client library...
+    # note that there are other implementations as well...
+    easy_install python-memcached
+
+You then need to configure TurboGears/Pylon's beaker support to use the 
+memcached daemon in your .ini files:
+
+.. code-block:: ini
+
+    [app:main]
+    beaker.cache.type = ext:memcached
+    beaker.cache.url = 127.0.0.1:11211
+    # you can also store sessions in memcached, should you wish
+    # beaker.session.type = ext:memcached
+    # beaker.session.url = 127.0.0.1:11211
+
+You can have multiple memcached servers specified using `;` separators.  
+Usage, as you might imagine is the same as with any other `Beaker` cache 
+configuration (that is, to some extent, the point of the 
+Beaker Cache abstraction, after all):
 
 .. code-block:: python
 
-    from beaker.cache import CacheManager
-    cm = CacheManager(type='ext:memcached', url='127.0.0.1:11211',
-                      lock_dir='beaker.cache')
-    cache = cm.get_cache('Some_Function_name')
-    # the cache is setup but the dbm file is not created until needed 
-    # so let's populate it with three values:
-    cache.get_value('x', createfunc=lambda: slooow('x'), expiretime=15)
-    cache.get_value('yy', createfunc=lambda: slooow('yy'), expiretime=15)
-    cache.get_value('zzz', createfunc=lambda: slooow('zzz'), expiretime=15)
+    from pylons import cache
+    class Cached( controllers.BaseController ):
+        @expose(...)
+        def my_controller( self, blah, ... ):
+            def calculate_complex_results( ):
+                """Callable which can do the operation"""
+                return do_long_calculation_and_return_result(blah)
+            local_cache = cache.get_cache('my-namespace')
+            return local_cache.get_value(
+                str(blah), # key to the value that uniquely specs results
+                createfunc = calculate_complex_results,
+                expiretime = 300,
+            )
+
+References    
+^^^^^^^^^^
+    
+    * `Beaker Caching <http://beaker.groovie.org/caching.html>`_ -- discussion of use of Beaker's caching services
+    * `Beaker Configuration <http://beaker.groovie.org/configuration.html>`_ -- the various parameters which can be used to configure Beaker in your config files
+    * `Memcached <http://www.danga.com/memcached/>`_ -- the memcached project
+    * `Python Memcached <http://www.tummy.com/Community/software/python-memcached/>`_ -- Python client-side binding for memcached
 
 .. glossary::
 
@@ -331,3 +391,7 @@ If memcached is running on the the default port of 11211:
         (entity tag) is an HTTP response header returned by an HTTP/1.1
         compliant web server used to determine change in content at a given
         URL.
+
+.. todo:: Other than the memcached section, this document is ignoring the pylons/TurboGears setup, so is describing entry points not normally used (i.e. normally you would leave all configuration/setup to the ini file).
+.. todo:: Add links to Beaker region (task-specific caching mechanisms) support.
+.. todo:: Document what the default Beaker cache setup is for TG 2.x quickstarted projects.

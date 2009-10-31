@@ -14,7 +14,7 @@ Sessions in TurboGears can be backed by the filesystem, memcache, the
 database, or by hashed cookie values.  By default the filesystem is
 used, but in high traffic websites hashed cookies provide a great
 system for small bits of session data.  If you are storing lots of
-data in the session, memcache is recommended.
+data in the session, :ref:`Memcache <memcache>` is recommended.
 
 How To Use Sessions?
 --------------------
