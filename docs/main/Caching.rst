@@ -3,59 +3,72 @@
 Caching
 =======
 
-Caching is an extrordinarily common techneque to achieve performance goals,
-when a web application has to perform some operation that could take a long
-time.   So TurboGears comes with caching middleware enabled that is part of the
-same package that provides the session handling, `Beaker
-<http://beaker.groovie.org>`_. Beaker supports a variety of caching backends:
-memory-based, filesystem-based and the specialised `memcached` library. 
+Caching is a common techneque to achieve performance goals,
+when a web application has to perform some operation that 
+could take a long time.  There are two major types of caching 
+used in Web Applications:
 
-There are several ways to cache data under TurboGears, depending on where the
-slowdown is occurring:
+ * :ref:`Whole-page caching<http_caching>` --
+   works at the HTTP protocol level to avoid entire requests to the 
+   server by having either the user's browser, or an intermediate 
+   proxy server (such as Squid) intercept the request and return 
+   a cached copy of the file.
+ 
+ * Application-level caching -- works within the application server 
+   to cache computed values, often the results of complex database 
+   queries, so that future requests can avoid needing to re-caculate 
+   the values.
 
-* Browser-side Caching - HTTP/1.1 supports the :term:`ETag` caching system that
-  allows the browser to use its own cache instead of requiring regeneration of
-  the entire page. ETag-based caching avoids repeated generation of content but
-  if the browser has never seen the page before, the page will still be
-  generated. Therefore using ETag caching in conjunction with one of the other
-  types of caching listed here will achieve optimal throughput and avoid
-  unnecessary calls on resource-intensive operations.
+Most web applications can only make very selective use of HTTP-level caching,
+such as for caching generated RSS feeds, but that use of HTTP-level 
+caching can dramatically reduce load on your server, particularly 
+when using an external proxy such as Squid and encountering a 
+high-traffic event (such as the `Slashdot Effect`).
 
-  .. note:: ETag only helps if the entire page can be cached.
+For web applications, application-level caching provides a flexible way to 
+cache the results of complex queries so that the total load of a given 
+controller method can be reduced to a few user-specific or case-specific 
+queries and the rendering overhead of a template.  Even within templates,
+application-level caching can be used to cache rendered HTML for those 
+fragments of the interface which are comparatively static, such as 
+database-configured menus, reducing potentially recursive database queries 
+to simple memory-based cache lookups.
 
-* Controllers - The `cache` object is available in controllers and templates
-  for use in caching anything in Python that can be pickled.  It is imported 
-  from the `pylons` namespace, and is configured in your application's 
-  config-file (`development.ini`, `production.ini`)
+.. _beaker_cache:
 
-The two primary concepts to bear in mind when caching are i) caches have a
-*namespace* and ii) caches can have *keys* under that namespace. The reason for
-this is that, for a single template, there might be multiple versions of the
-template each requiring its own cached version. The keys in the namespace are
-the ``version`` and the name of the template is the ``namespace``. **Both of
-these values must be Python strings.** 
+Application-level Caching (Beaker)
+----------------------------------
 
-In templates, the cache ``namespace`` will automatically be set to the name of
-the template being rendered. Nothing else is required for basic caching, unless
-the developer wishes to control for how long the template is cached and/or
-maintain caches of multiple versions of the template. 
+TurboGears comes with application-level caching 
+middleware enabled by default in QuickStarted projects.  The 
+middleware, `Beaker <http://beaker.groovie.org>`_ is the same 
+package which provides Session storage for QuickStarted 
+projects.  Beaker is the standard cache framework of the 
+Pylons web framework, on which TurboGears 2.x is based.
 
-see also Stephen Pierzchala's `Caching for Performance
-<http://web.archive.org/web/20060424171425/http://www.webperformance.org/caching/caching_for_performance.pdf>`_
-(stephen@pierzchala.com)
+Beaker supports a variety of backends which can be used for 
+cache or session storage:
 
-Using the Cache object 
----------------------- 
+* memory -- per-process storage, extremely fast
+* filesystem -- per-server storage, very fast, multi-process
+* "DBM" database -- per-server storage, fairly fast, multi-process
+* SQLAlchemy database -- per-database-server storage, integrated into
+  your main DB infrastructure, so potentially shared, replicated, etc.,
+  but generally slower than memory, filesystem or DBM approaches
+* :ref:`memcache` -- (potentially) multi-server memory-based cache, 
+  extremely fast, but with some system setup requirements
 
-Inside a controller, the `cache` object will be available for use. If an action
-or block of code makes heavy use of resources or take a long time to complete,
-it can be convenient to cache the result. The `cache` object can cache any
-Python structure that can be `pickled
-<http://docs.python.org/lib/module-pickle.html>`_. 
+Each of these backends can be configured from your 
+application's configuration file, and the resulting caches can be 
+used with the same API within your application.
 
-Consider an action where it is desirable to cache some code that does a
-time-consuming or resource-intensive lookup and returns an object that can be
-pickled (list, dict, tuple, etc.):
+Using the Cache
+^^^^^^^^^^^^^^^
+
+The configured `Beaker` cache is provided by the `pylons` module.
+This is more properly thought of as a `CacheManager`, as it provides 
+access to multiple independent cache namespaces.  To access the 
+cache from within a controller module:
 
 .. code-block:: python
 
@@ -74,17 +87,42 @@ pickled (list, dict, tuple, etc.):
 
         # Get the value, this will create the cache copy the first time 
         # and any time it expires (in seconds, so 3600 = one hour) 
-        cachedvalue = mycache.get_value(key=day, createfunc=expensive_function, 
-                                      type="memory", expiretime=3600)
-
+        cachedvalue = mycache.get_value(
+            key=day, 
+            createfunc=expensive_function, 
+            expiretime=3600
+        )
         return dict(myvalue=cachedvalue)
+        
+The `Beaker` cache is a two-level namespace, with the keys at each level 
+being string values.  The call to cache.get_cache() retrieves a cache 
+namespace which will map a set of string keys to stored values.  Each value 
+that is stored in the cache must be `pickle-able
+<http://docs.python.org/lib/module-pickle.html>`_.
 
-The `createfunc` option requires a callable object or a function which is then
-called by the cache whenever a value for the provided key is not in the cache,
-or has expired in the cache. 
+Pay attention to the keys you are using to store your cached values.  You 
+need to be sure that your keys encode all of the information that the 
+results being cached depend upon in a unique manner.  In the example above, 
+we use `day` as the key for our cached value, on the assumption that this 
+is the only value which affects the calculation of `expensive_function`,
+if there were multiple parameters involved, we would need to encode each of 
+them into the key.
 
-Because the `createfunc` is called with no arguments, the resource- or
-time-expensive function must correspondingly also not require any arguments.
+.. note:: 
+    The `Beaker` API exposed here requires that your functions for 
+    calculating complex values be callables taking 0 arguments.  
+    Often you will use a nested function to provide this interface 
+    as simply as possible.  This function will only be called if there 
+    is a `cache miss`, that is, if the cache does not currently have 
+    the given key recorded (or the recorded key has expired).
+
+Template Caches
+^^^^^^^^^^^^^^^
+
+In templates, the cache ``namespace`` will automatically be set to the name of
+the template being rendered. Nothing else is required for basic caching, unless
+the developer wishes to control for how long the template is cached and/or
+maintain caches of multiple versions of the template. 
 
 Other Cache Operations 
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -97,212 +135,51 @@ completely, should it need to be reset.
 
     # Clear the cache 
     mycache.clear() 
-
+    
     # Remove a specific key 
     mycache.remove_value('some_key') 
 
+Configuring Beaker
+------------------
 
-ETag Caching 
-------------
+`Beaker` is configured in your QuickStarted application's main configuration 
+file in the app:main section.
 
-Caching via ETag involves sending the browser an ETag header so that it knows
-to save and possibly use a cached copy of the page from its own cache, instead
-of requesting the application to send a fresh copy. 
+To use memory-based caching:
 
-Because the ETag cache relies on sending headers to the browser, it works in a
-slightly different manner to the other caching mechanisms described above. 
+.. code-block:: ini
 
-The :func:`etag_cache` function will set the proper HTTP headers if the browser
-doesn't yet have a copy of the page. Otherwise, a 304 HTTP Exception will be
-thrown that is then caught by Paste middleware and turned into a proper 304
-response to the browser. This will cause the browser to use its own
-locally-cached copy.
+    [app:main]
+    beaker.cache.type = memory
 
-:func:`etag_cache` returns `pylons.response` for legacy purposes
-(`pylons.response` should be used directly instead).
+To use file-based caching:
 
-ETag-based caching requires a single key which is sent in the ETag HTTP header
-back to the browser. The `RFC specification for HTTP headers
-<http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html>`_ indicates that an
-ETag header merely needs to be a string. This value of this string does not
-need to be unique for every URL as the browser itself determines whether to use
-its own copy, this decision is based on the URL and the ETag key. 
+.. code-block:: ini
 
-.. code-block:: python 
+    [app:main]
+    beaker.cache.type = file
+    beaker.cache.data_dir = /tmp/cache/beaker
+    beaker.cache.lock_dir = /tmp/lock/beaker
+    
+To use DBM-file-based caching:
 
-    def my_action(self): 
-        etag_cache('somekey') 
-        return render('/show.myt', cache_expire=3600) 
+.. code-block:: ini
 
-Or to change other aspects of the response: 
+    [app:main]
+    beaker.cache.type = dbm
+    beaker.cache.data_dir = /tmp/cache/beaker
+    beaker.cache.lock_dir = /tmp/lock/beaker
 
-.. code-block:: python 
+To use SQLAlchemy-based caching you must provide the `url` parameter 
+for the `Beaker` configuration.  This can be any valid SQLAlchemy
+URL, the `Beaker` storage table will be created by `Beaker` if 
+necessary:
 
-    def my_action(self): 
-        etag_cache('somekey') 
-        response.headers['content-type'] = 'text/plain' 
-        return render('/show.myt', cache_expire=3600) 
+.. code-block:: ini
 
-.. note:: 
-    In this example that we are using template caching in addition to ETag
-    caching. If a new visitor comes to the site, we avoid re-rendering the
-    template if a cached copy exists and repeat hits to the page by that user
-    will then trigger the ETag cache. This example also will never change the
-    ETag key, so the browsers cache will always be used if it has one.
-
-The frequency with which an ETag cache key is changed will depend on the web
-application and the developer's assessment of how often the browser should be
-prompted to fetch a fresh copy of the page. 
-
-.. warning:: The following was copied from Philip Cooper's `OpenVest wiki
-   <http://www.openvest.com/trac/wiki/BeakerCache>`_  after which it was updated
-   and edited ...
-
-Inside the Beaker Cache
------------------------
-
-First lets start out with some **slow** function that we would like to cache.
-This function is not slow but it will show us when it was cached so we can see
-things are working as we expect:
-
-.. code-block:: python
-
-    import time
-    def slooow(myarg):
-      # some slow database or template stuff here
-      return "%s at %s" % (myarg,time.asctime())
-
-When we have the cached function, multiple calls will tell us whether are seeing a cached or a new version.
-
-DBM
----
-
-The DBMCache stores (actually pickles) the response in a dbm style database.
-
-What may not be obvious is that the are two levels of keys.  They are
-essentially created as one for the function or template name (called the
-namespace) and one for the ''keys'' within that (called the key).  So for
-`Some_Function_name`, there is a cache created as one dbm file/database.  As
-that function is called with different arguments, those arguments are keys
-within the dbm file. First lets create and populate a cache.  This cache might
-be a cache for the function `Some_Function_name` called three times with three
-different arguments: `x, yy, and zzz`:
-
-.. code-block:: python
-
-    from beaker.cache import CacheManager
-    cm = CacheManager(type='dbm', data_dir='beaker.cache')
-    cache = cm.get_cache('Some_Function_name')
-    # the cache is setup but the dbm file is not created until needed 
-    # so let's populate it with three values:
-    cache.get_value('x', createfunc=lambda: slooow('x'), expiretime=15)
-    cache.get_value('yy', createfunc=lambda: slooow('yy'), expiretime=15)
-    cache.get_value('zzz', createfunc=lambda: slooow('zzz'), expiretime=15)
-
-Nothing much new yet.  After getting the cache we can use the cache as per the
-Beaker Documentation.
-
-.. code-block:: python
-
-    import beaker.container as container
-    cc = container.ContainerContext()
-    nsm = cc.get_namespace_manager('Some_Function_name',
-                                   container.DBMContainer,data_dir='beaker.cache')
-    filename = nsm.file
-
-Now we have the file name.  The file name is a `sha` hash of a string which is
-a join of the container class name and the function name (used in the
-`get_cache` function call).  It would return something like:
-
-
-.. code-block:: python
-
-    'beaker.cache/container_dbm/a/a7/a768f120e39d0248d3d2f23d15ee0a20be5226de.dbm'
-
-With that file name you could look directly inside the cache database (but only
-for your education and debugging experience, **not** your cache interactions!)
-
-.. code-block:: python
-
-    ## this file name can be used directly (for debug ONLY)
-    import anydbm
-    import pickle
-    db = anydbm.open(filename)
-    old_t, old_v = pickle.loads(db['zzz'])
-
-The database only contains the old time and old value.  Where did the expire
-time and the function to create/update the value go?.  They never make it to
-the database.  They reside in the `cache` object returned from `get_cache` call
-above.  
-
-Note that the createfunc, and expiretime values are stored during the first
-call to `get_value`. Subsequent calls with (say) a different expiry time will
-**not** update that value.  This is a tricky part of the caching but perhaps is
-a good thing since different processes may have different policies in effect.
-
-If there are difficulties with these values, remember that one call to
-:func:`cache.clear` resets everything.
-
-Database
---------
-
-Using the `ext:database` cache type.
-
-.. code-block:: python
-
-    from beaker.cache import CacheManager
-    #cm = CacheManager(type='dbm', data_dir='beaker.cache')
-    cm = CacheManager(type='ext:database', 
-                      url="sqlite:///beaker.cache/beaker.sqlite",
-                      data_dir='beaker.cache')
-    cache = cm.get_cache('Some_Function_name')
-    # the cache is setup but the dbm file is not created until needed 
-    # so let's populate it with three values:
-    cache.get_value('x', createfunc=lambda: slooow('x'), expiretime=15)
-    cache.get_value('yy', createfunc=lambda: slooow('yy'), expiretime=15)
-    cache.get_value('zzz', createfunc=lambda: slooow('zzz'), expiretime=15)
-
-
-This is identical to the cache usage above with the only difference being the
-creation of the `CacheManager`.  It is much easier to view the caches outside
-the beaker code (again for edification and debugging, not for api usage).
-
-SQLite was used in this instance and the SQLite data file can be directly
-accessed uaing the SQLite command-line utility or the Firefox plug-in:
-
-.. code-block:: text
-
-    sqlite3 beaker.cache/beaker.sqlite
-    # from inside sqlite:
-    sqlite> .schema
-    CREATE TABLE beaker_cache (
-            id INTEGER NOT NULL, 
-            namespace VARCHAR(255) NOT NULL, 
-            key VARCHAR(255) NOT NULL, 
-            value BLOB NOT NULL, 
-            PRIMARY KEY (id), 
-             UNIQUE (namespace, key)
-    );
-    select * from beaker_cache;
-
-.. warning:: The data structure is different in Beaker 0.8 ...
-
-.. code-block:: python
-
-    cache = sa.Table(table_name, meta,
-                     sa.Column('id', types.Integer, primary_key=True),
-                     sa.Column('namespace', types.String(255), nullable=False),
-                     sa.Column('accessed', types.DateTime, nullable=False),
-                     sa.Column('created', types.DateTime, nullable=False),
-                     sa.Column('data', types.BLOB(), nullable=False),
-                     sa.UniqueConstraint('namespace')
-    )
-
-
-It includes the access time but stores rows on a one-row-per-namespace basis,
-(storing a pickled dict) rather than one-row-per-namespace/key-combination.
-This is a more efficient approach when the problem is handling a large number
-of namespaces with limited keys --- like sessions.
+    [app:main]
+    beaker.cache.type = ext:database
+    beaker.cache.url = sqlite:///tmp/cache/beaker.sqlite
 
 .. _memcache:
 
@@ -360,22 +237,6 @@ Usage, as you might imagine is the same as with any other `Beaker` cache
 configuration (that is, to some extent, the point of the 
 Beaker Cache abstraction, after all):
 
-.. code-block:: python
-
-    from pylons import cache
-    class Cached( controllers.BaseController ):
-        @expose(...)
-        def my_controller( self, blah, ... ):
-            def calculate_complex_results( ):
-                """Callable which can do the operation"""
-                return do_long_calculation_and_return_result(blah)
-            local_cache = cache.get_cache('my-namespace')
-            return local_cache.get_value(
-                str(blah), # key to the value that uniquely specs results
-                createfunc = calculate_complex_results,
-                expiretime = 300,
-            )
-
 References    
 ^^^^^^^^^^
     
@@ -383,7 +244,99 @@ References
     * `Beaker Configuration <http://beaker.groovie.org/configuration.html>`_ -- the various parameters which can be used to configure Beaker in your config files
     * `Memcached <http://www.danga.com/memcached/>`_ -- the memcached project
     * `Python Memcached <http://www.tummy.com/Community/software/python-memcached/>`_ -- Python client-side binding for memcached
+    * `Caching for Performance <http://web.archive.org/web/20060424171425/http://www.webperformance.org/caching/caching_for_performance.pdf>`_ 
+      -- Stephen Pierzchala's general introduction to the concept of 
+      caching in order to improve web-site performance
 
+.. _http_caching:
+
+HTTP-Level Caching
+------------------
+
+HTTP supports caching of whole responses (web-pages,
+images, script-files and the like).  This kind of caching 
+can dramatically speed up web-sites where the bulk of the 
+content being served is largely static, or changes predictably,
+or where some commonly viewed page (such as a home-page) requires 
+complex operations to generate.
+
+HTTP-level caching is handled by external services, such as 
+a `Squid <http://www.squid-cache.org/>`_ proxy or the user's 
+browser cache.  The web application's role in HTTP-level caching 
+is simply to signal to the external service what level of caching
+is appropriate for a given piece of content.
+
+.. note:: 
+
+    If *any* part of you page has to be dynamically generated,
+    even the simplest fragment, such as a user-name, for each 
+    request HTTP caching likely will not work for you.  Once the 
+    page is HTTP-cached, the application server will not recieve any 
+    further requests until the cache expires, so it will not 
+    generally be able to do even minor customizations.
+
+.. _etag:
+
+Browser-side Caching with ETag
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+HTTP/1.1 supports the :term:`ETag` caching system that
+allows the browser to use its own cache instead of requiring regeneration of
+the entire page. ETag-based caching avoids repeated generation of content but
+if the browser has never seen the page before, the page will still be
+generated. Therefore using ETag caching in conjunction with one of the other
+types of caching listed here will achieve optimal throughput and avoid
+unnecessary calls on resource-intensive operations.
+
+Caching via ETag involves sending the browser an ETag header so that it knows
+to save and possibly use a cached copy of the page from its own cache, instead
+of requesting the application to send a fresh copy. 
+
+The :func:`etag_cache` function will set the proper HTTP headers if the browser
+doesn't yet have a copy of the page. Otherwise, a 304 HTTP Exception will be
+thrown that is then caught by Paste middleware and turned into a proper 304
+response to the browser. This will cause the browser to use its own
+locally-cached copy.
+
+:func:`etag_cache` returns `pylons.response` for legacy purposes
+(`pylons.response` should be used directly instead).
+
+ETag-based caching requires a single key which is sent in the ETag HTTP header
+back to the browser. The `RFC specification for HTTP headers
+<http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html>`_ indicates that an
+ETag header merely needs to be a string. This value of this string does not
+need to be unique for every URL as the browser itself determines whether to use
+its own copy, this decision is based on the URL and the ETag key. 
+
+.. code-block:: python 
+    
+    from pylons.controllers.util import etag_cache
+    def my_action(self): 
+        etag_cache('somekey') 
+        return render('/show.myt', cache_expire=3600) 
+
+Or to change other aspects of the response: 
+
+.. code-block:: python 
+
+    from pylons.controllers.util import etag_cache
+    from tg import response
+    def my_action(self): 
+        etag_cache('somekey') 
+        response.headers['content-type'] = 'text/plain' 
+        return render('/show.myt', cache_expire=3600) 
+
+.. note:: 
+    In this example that we are using template caching in addition to ETag
+    caching. If a new visitor comes to the site, we avoid re-rendering the
+    template if a cached copy exists and repeat hits to the page by that user
+    will then trigger the ETag cache. This example also will never change the
+    ETag key, so the browsers cache will always be used if it has one.
+
+The frequency with which an ETag cache key is changed will depend on the web
+application and the developer's assessment of how often the browser should be
+prompted to fetch a fresh copy of the page. 
+    
 .. glossary::
 
     ETag
@@ -392,6 +345,6 @@ References
         compliant web server used to determine change in content at a given
         URL.
 
-.. todo:: Other than the memcached section, this document is ignoring the pylons/TurboGears setup, so is describing entry points not normally used (i.e. normally you would leave all configuration/setup to the ini file).
 .. todo:: Add links to Beaker region (task-specific caching mechanisms) support.
-.. todo:: Document what the default Beaker cache setup is for TG 2.x quickstarted projects.
+.. todo:: Document what the default Beaker cache setup is for TG 2.x quickstarted projects (file-based, likely).
+.. todo:: Provide code-sample for use of cache within templates

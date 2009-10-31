@@ -120,7 +120,7 @@ could provide the detail required to do Object Relational Mapping justice.
 New Features Of TurboGears 2:
 -----------------------------
 
-  * Cache system
+  * :ref:`Cache system<caching>`
   * Error report: interactive tracebacks through the web, custom error pages, and email alerts
   * API Document generator through Sphinx
   * could pass status code to flash message
