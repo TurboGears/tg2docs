@@ -65,7 +65,9 @@ Indices and tables
 * :ref:`modindex`
 * :ref:`search`
 * :ref:`extendedtoc`
- 
+
+.. note:: These documents are a :ref:`work in progress <todolist>`, so please feel free to tackle some of the items and send in patches!
+
 .. todo:: Difficulty: Medium. make docs more linky.   provide link to pylons, and why tg2 is now based on it.   eventually, I'd really like to see links to pylonsbook for specific "more information", and how turbogears is different/expands upon it
 
 .. glossary::
