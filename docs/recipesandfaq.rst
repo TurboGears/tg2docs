@@ -78,6 +78,8 @@ Handling HTTP Requests (Controllers)
     main/Caching
     main/RoutesIntegration
     
+    modules/thirdparty/webhelpers_feedgenerator
+    
 Automatic Forms/Controllers
 ---------------------------
 
@@ -114,7 +116,7 @@ Note: most new users do not need to choose an alternate templating language.
     main/Templates/ChameleonGenshi
     main/Templates/Mako
     main/Templates/Jinja
-    main/ToscaWidgets/Cookbook/ReCaptcha.html
+    main/ToscaWidgets/Cookbook/ReCaptcha
 
 Javascript Libraries
 --------------------
