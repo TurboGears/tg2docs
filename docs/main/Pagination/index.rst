@@ -5,8 +5,8 @@ Pagination Quickstart For Turbogears2
 
 :Status: Work in progress
 
-Prequisites
------------
+Prerequisites
+-------------
 
 We start where the MovieDemo left off. See the `ToscaSample`_ tutorial
 or download the zipped ToscaWidgetsFormsExample_.
@@ -37,7 +37,7 @@ transaction.commit())::
 	        model.DBSession.add(movie)
   
 
-After you set up your app and restart the server you should now have
+After you set up your application and restart the server you should now have
 seven movies listed.
 
 .. code-block:: bash
@@ -142,9 +142,9 @@ Modify the pagelist in ``templates/movie_list.html`` to look like
 this::
 
 	<p class="pagelist">
-		<a class="prevPage" href="/books?page=${currentPage.previous_page}">&lt;&lt;&lt;</a>
+		<a class="prevPage" href="/list?page=${currentPage.previous_page}">&lt;&lt;&lt;</a>
 		${currentPage.pager(format='~3~', page_param='page', show_if_single_page=True)}
-		<a class="nextPage" href="/books?page=${currentPage.next_page}">&gt;&gt;&gt;</a>
+		<a class="nextPage" href="/list?page=${currentPage.next_page}">&gt;&gt;&gt;</a>
 	</p>
 	
 Functional, but not very pretty:
@@ -177,9 +177,9 @@ Let's add some images:
 Change the pagelist code in ``templates/movie_list.html``::
 
 	<p class="pagelist">
-		<a class="prevPage" href="/books?page=${currentPage.previous_page}">&nbsp;</a>
+		<a class="prevPage" href="/list?page=${currentPage.previous_page}">&nbsp;</a>
 		${currentPage.pager(format='~3~', page_param='page', show_if_single_page=True)}
-		<a class="nextPage" href="/books?page=${currentPage.next_page}">&nbsp;</a>
+		<a class="nextPage" href="/list?page=${currentPage.next_page}">&nbsp;</a>
 	</p>
 	
 .. highlight:: css
