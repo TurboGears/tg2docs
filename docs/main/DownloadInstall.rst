@@ -271,8 +271,6 @@ the level of control you want over it
     4. using pip (experimental)
     5. development version
 
-.. todo:: Difficulty: Medium. Complete tutorial for manually installing TG
-
 .. hint:: Please note we are using ``tg2env`` as the name of the
    virtual environment.  This is simply a convention in our
    documentation, the name of the virtualenv depends totally on the
@@ -461,13 +459,10 @@ or install via pip manually
 
 .. code-block:: bash
 
-   $ easy_install pip
-   $ pip install -e hg+pip install -e http://bitbucket.org/turbogears/tg-dev/
-   $ pip install -e hg+pip install -e http://bitbucket.org/turbogears/tgdevtools-dev/
+   $ easy_install pip sqlalchemy
+   $ pip install -e 'hg+http://bitbucket.org/turbogears/tg-dev/#egg=TurboGears2'
+   $ pip install -e 'hg+http://bitbucket.org/turbogears/tgdevtools-dev/#egg=tg.devtools'
 
-.. todo:: Update this section so pip works: elpargo
-
-   
 Validate The Installation
 -------------------------
 
