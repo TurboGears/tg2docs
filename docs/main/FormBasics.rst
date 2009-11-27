@@ -170,9 +170,11 @@ Sometimes you want to provide sprox with a class for a field, and have sprox set
 to a widget, but you either want to provide an additional argument, or override one of the arguments
 that sprox chooses.  For this, pass a dictionary into the __field_widget_args__ parameter with the
 key being the field you would like to pass the arg into, and the value a dictionary of args to set
-for that field.
+for that field.  Here is an example of how to set the  rows and columns for the description field of a form.::
 
-.. todo:: add code sample for this
+    class NewMovieForm(AddRecordForm):
+        __model__ = Movie
+        __field_widget_args__ = {'description':{'rows':30, 'cols':30}}
 
 Custom Dropdown Field Names
 ------------------------------
