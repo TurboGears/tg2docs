@@ -192,14 +192,14 @@ Core Middleware:
 The middleware outside of Core Middleware is optional and can often be
 configured out via special config values in app_cfg.py, and can be
 manipulated in any way you can imagine by subclassing AppConfig and
-replacing the methods that set it up.
-
-.. todo:: Difficulty: Medium. core middleware can be configured in app_cfg.py? how?
-
-But TurboGears itself has code that requires that the core middleware
+replacing the methods that set it up.  
+TurboGears itself has code that requires that the core middleware
 be in place, so you won't want to mess with this stuff without a good
 reason.  This is particularly true of Routes which can only be
 configured out of your app if you reimplement TGApp.
+Please see 
+`App Config General Options <Config.html#appconfig-general-options>`_
+for more information on how to modify the core middleware.
 
 The **Cache** middleware sets up a reference to the threadlocal cache
 manager that turbogears uses to interface to whatever backend you're

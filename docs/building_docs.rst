@@ -185,6 +185,14 @@ into the "main" repository that mpedersen maintains, you need to initiate
 a "pull request".   You can read more about using bitbucket in this tutorial:
 :ref:`bitbucket_tutorial`.
 
+Status
+---------
+You can check on the current status of todo items by typing ::
+
+	hg locate -0 | xargs -0 grep 'todo::'|wc -l
+
+at the command prompt in the highest level directory of the doc repository.
+
 Thank you very much for helping out with the turbogears documentation
 efforts!
 

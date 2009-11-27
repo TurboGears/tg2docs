@@ -87,7 +87,7 @@ The TurboGears Admin system is built on top of the Sprox and tg.ext.crud
 system.  You can use the same automatically generated forms and
 controllers to help you quickly prototype your applications.  The 
 :ref:`Movie Tutorial <movie-tutorial>` introduces this usage of 
-Sprox.
+`Sprox`_.
 
 ..  toctree::
     :maxdepth: 1
@@ -96,7 +96,7 @@ Sprox.
     main/Extensions/Crud/index
     main/Extensions/Admin/index
 
-.. todo:: Difficulty easy: link sprox here
+.. _`Sprox`: http://www.sprox.org
 
 Templates/Views
 ---------------
