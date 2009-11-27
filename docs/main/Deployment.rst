@@ -33,6 +33,11 @@ Apache Deployment options:
 * modRewrite -- mod_rewrite deployment is very similar to mod_proxy
   (in fact from the TG2 side they are identical), but mod_rewrite can
   be somewhat more complex to setup itself.
+  
+* :ref:`FastCGI <FastCGI>`_ -- when apache extensions are not an option 
+  due to webhost restrictions (for example, the want to run suexec on all 
+  userspace scripts), you can create a FastCGI dispatcher that invokes the 
+  WSGI interface. 
 
 NGINX deployment
 -----------------
