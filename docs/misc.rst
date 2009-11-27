@@ -11,10 +11,10 @@ Misc To Do Items From The Docs
 .. todo:: Difficulty: Medium. critique the toc, and other organization.
 
 I think the toc has an airy aroma, with a hint of cherry and oak.  It is not yet
-aged to perfection, but will mature as time goes on.  This todo will be open 
+aged to perfection, but will mature as time goes on.  This todo will be open
 for some time.
 
-.. todo:: Difficulty: Medium. add a "what is turbogears"/faq - very early on. first?   
+.. todo:: Difficulty: Medium. add a "what is turbogears"/faq - very early on. first?
 
 .. todo:: Difficulty: Hard. add prerequisites to all pages - well, especially tutorials
 
@@ -28,7 +28,11 @@ for some time.
 
 .. todo:: Difficulty: Medium. Add lifecycle of TG project in the getting to know TG section.
 
-.. todo:: Difficulty: Medium. highlight the test suite:  and the goodness of test driven development.
+.. todo:: Difficulty: Easy. Explain how TG2 itself can be tested.
+
+.. todo:: Difficulty: Medium. Explain how TG2 apps can be tested and the goodness of test driven development.
+
+.. todo:: Difficulty: Medium. make docs more linky.   provide link to pylons, and why tg2 is now based on it.   eventually, I'd really like to see links to pylonsbook for specific "more information", and how turbogears is different/expands upon it
 
 .. todo:: Difficulty: Hard. Compare Our Docs to `Django Docs <http://docs.djangoproject.com/en/dev/`, see where we can do better.   Also compare to pylons book!
 
@@ -38,7 +42,7 @@ for some time.
 
 .. todo:: Difficulty: Medium. Add shell script which validates environment for building docs
 
-.. todo:: Difficulty: Medium. laurin is following the tutorial path.   right now, I created a tutorials directory under _static.   perhaps, all tutorial images, etc should go in there?   just a thought.   
+.. todo:: Difficulty: Medium. laurin is following the tutorial path.   right now, I created a tutorials directory under _static.   perhaps, all tutorial images, etc should go in there?   just a thought.
 
 .. todo:: Difficulty: Medium. make sure that override_template is more visible, and provide a tutorial on how to use it
 
@@ -52,7 +56,7 @@ for some time.
 
 .. todo:: Difficulty: Medium. http://code.google.com/p/tgtools/source/browse/projects/tgext.admin/trunk/tgext/admin/tgadminconfig.py#114 << how to override tgext.admin controllers properly
 
-.. todo:: Difficulty: Medium. incorporate custom routes docs from here http://simplestation.com/locomotion/routes-in-turbogears2/  
+.. todo:: Difficulty: Medium. incorporate custom routes docs from here http://simplestation.com/locomotion/routes-in-turbogears2/
 
 percious: There is a better way of doing this by overriding _dispatch in 2.0
 so I would wait until I re-write RoutedController with _dispatch before documenting this
@@ -67,7 +71,7 @@ so I would wait until I re-write RoutedController with _dispatch before document
 
 .. todo:: Difficulty: Medium. Include these docs: http://groups.google.com/group/turbogears/browse_frm/thread/f35ef3d347793682?hl=en What's wrong with predicates being "booleanized"
 
-.. todo:: Difficulty: Medium. Include these docs: http://groups.google.com/group/turbogears/browse_frm/thread/3afbc13d88af57d3?hl=en TG2, repoze.who and multiple auth sources 
+.. todo:: Difficulty: Medium. Include these docs: http://groups.google.com/group/turbogears/browse_frm/thread/3afbc13d88af57d3?hl=en TG2, repoze.who and multiple auth sources
 
 .. todo:: Difficulty: Medium. Include these docs: http://groups.google.com/group/turbogears/browse_frm/thread/1c4158ad3035082c?hl=en Secure Static Files TG2
 
@@ -77,11 +81,11 @@ so I would wait until I re-write RoutedController with _dispatch before document
 
 .. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/9fab648428c20761?hl=en login_handler
 
-.. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/c721e2d15bb2c134?hl=en Return to form after custom validation and keep form data? 
+.. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/c721e2d15bb2c134?hl=en Return to form after custom validation and keep form data?
 
 .. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/b718855725da557d?hl=en tgext and i18n
 
-.. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/bbf8c847e77ca740?hl=en TG2 on Webfaction - Make TG not see the extra part of the URL 
+.. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/bbf8c847e77ca740?hl=en TG2 on Webfaction - Make TG not see the extra part of the URL
 
 .. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/be2939380bfe0f2b?hl=en Using ImageButton() as submit throws an error
 
@@ -117,13 +121,13 @@ percious: we need to add an offline install section to deployment.  This should 
 
 .. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/d4635f5eb2ad1dc4?hl=en how could a controller method know whether it's invoked as an error_handler or directly
 
-.. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/5dd5b090eb0d4c49?hl=en List of Quickstarted files that are save to remove 
+.. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/5dd5b090eb0d4c49?hl=en List of Quickstarted files that are save to remove
 
 percious: I think this is a terrible idea to document
 
 .. todo:: Difficulty: Hard. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/a691ae9d3b31138d?hl=en Flash Widget
 
-.. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/72e106fc6512b1cb?hl=en Toscawidgets form with multiple buttons 
+.. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/72e106fc6512b1cb?hl=en Toscawidgets form with multiple buttons
 
 priority: low
 
@@ -153,7 +157,7 @@ priority: high
 
 .. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/9b451d82b410f844?hl=en TG2 serveFile equivalent?
 
-.. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_thread/thread/1174aad1b3350b5c TurboGears2: Overriding meta element on child template. 
+.. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_thread/thread/1174aad1b3350b5c TurboGears2: Overriding meta element on child template.
 
 .. todo:: Difficulty: Hard. Resolve all tickets that match this query: http://trac.turbogears.org/query?status=new&status=assigned&status=reopened&component=Documentation&order=id
 
