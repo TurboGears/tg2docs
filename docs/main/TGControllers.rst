@@ -9,7 +9,20 @@ method for dispatch.  They are described below.
 The Default Method
 ------------------
 
-.. todo:: Difficulty: Easy. Explanation of how the default method works here.
+The developer may decide to provied a ``default`` method within their
+controller which is called when the dispatch mechanism cannot find
+an appropriate method in your controllers to call.  This 
+default method might look something like this::
+
+    class WikiController(BaseController):
+    
+      @expose('mytgapp.wiki.new)
+      def default(self, *args):
+        """
+          Return a page to prompt the user to create a new wiki page."""
+        """
+        return dict(new_page_slug=args)s
+
 
 The Lookup Method
 -----------------
