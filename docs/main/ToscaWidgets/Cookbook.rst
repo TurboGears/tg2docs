@@ -8,20 +8,22 @@ ToscaWidgets Cookbook
 .. toctree::
    :maxdepth: 1
 
-   Cookbook/ExtTreeView
-   Cookbook/ExtItemSelector
-   Cookbook/ExtSingleSelectCombo
    Cookbook/AutoComplete
    Cookbook/FlexiGrid
    Cookbook/JQueryAjaxForm
    Cookbook/JQueryTreeView
+   Cookbook/TreeView
    Cookbook/Flot
-   Cookbook/JSUnit
-   Cookbook/ActiveForm
+   Cookbook/FlexiGrid
+   Cookbook/OpenLayersMap
    Cookbook/PasswordValidation
    Cookbook/ReCaptcha
    Cookbook/DynamicSelect
-   Cookbook/OpenLayersMap
+   Cookbook/JSUnit
+   Cookbook/ExtTreeView
+   Cookbook/ExtItemSelector
+   Cookbook/ExtSingleSelectCombo
+   Cookbook/ActiveForm
 
 Javascript Library Specific Widgets
 -----------------------------------
@@ -257,4 +259,3 @@ OpenLayers Map
 
  :ref:`tw_cookbook_openlayersmap`
 
-.. todo:: Difficulty: Easy to Medium. verify that all tw cookbook pages are linked from this page
