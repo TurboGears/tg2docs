@@ -31,7 +31,6 @@ We cannot stress this enough: Read These Pages!
     main/StaticFile
     main/Internationalization
 
-.. todo:: document for Genshi should be how-to, not "why"
 .. todo:: link repoze.who, repoze.what, and the other key middleware
 
 Modelling Your Application
