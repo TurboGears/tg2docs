@@ -81,8 +81,6 @@ Of course, we are going to need a validator, and since there are extra
 fields appended with the recaptcha widget, we are going to need a
 filtering schema to address the extra fields.
 
-.. todo:: Difficulty: Medium. The paragraph above talks about adding a validator. But there are no docs. Need to add the docs for the validator.
-
 Alright, now with that done you need to setup your filtering schema
 class::
 

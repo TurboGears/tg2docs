@@ -1,4 +1,4 @@
-#format rst
+.. _toscawidgets_cookbook:
 
 ToscaWidgets Cookbook
 =====================
