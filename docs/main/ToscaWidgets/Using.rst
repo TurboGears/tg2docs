@@ -1,4 +1,4 @@
-
+.. _using_toscawidgets:
 
 
 Using Existing Widgets
@@ -8,12 +8,17 @@ Using Existing Widgets
 Finding Existing Widgets
 ------------------------
 
- * To find ToscaWidget libraries which currently exist on pypi check
-   out the `CogBin <http://www.turbogears.org/cogbin/>`_
- * A widget browser is available for your TurboGears application.
-   Type tg-admin toolbox to start up a page which points you to a
-   widget browser.
- * http://svn.turbogears.org/projects/
+ * Check pypi_
+ * Toscawidgets provides documentation_ for some of it's
+   released packages.  Some of the docs contain `Widget Browsers`_
+   that allow you to play with the widget live.
+ * The Toscawidgets repository_ holds some widget libraries that have not been released.
+   Use them at your own risk.
+   
+.. _pypi: http://pypi.python.org/pypi?%3Aaction=search&term=toscawidgets&submit=search
+.. _documentation: http://toscawidgets.org/documentation
+.. _`Widget Browsers`: http://toscawidgets.org/documentation/tw.forms/modules/fields/forms.html
+.. _repository: http://toscawidgets.org/hg
 
 Tutorial
 --------
@@ -37,13 +42,13 @@ from the trunk.
 
 ::
  
- easy_install http://svn.turbogears.org/projects/twRating/trunk/
+ easy_install tw.rating
 
 import the widget into your project
 
 ::
 
-  from tw.twRating import Ratings
+  from tw.rating import Ratings
 
 Create the widget inside your controllers definitions.
 
@@ -57,7 +62,7 @@ Create a new controller method to share our widget
   
   @expose('genshi:myproject.templates.widget')
   def testing(self, **kw):
-      pylons.c.widget = rating
+      tmpl_context.widget = rating
       return dict()
 
 In the template, call the widget to display it.
@@ -125,5 +130,3 @@ library, and the '$' operator may not work the same in other
 libraries.
 
 .. image:: images/stars_avg.png
-
-.. todo:: Difficulty: Hard. Convert this page for tg2
