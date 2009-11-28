@@ -184,8 +184,7 @@ Special Effects and Extensions
     main/TGandFirePython
     main/AuthorizeTutorial
     main/Extensions/Geo/index
-
-.. todo:: Difficulty Easy: Cron/periodic/stand-alone tasks using the TurboGears machinery (basically can be copied from: http://blog.vrplumber.com/index.php?/archives/2384-TurboGears-offline-processes-crons,-command-line-commands,-etc.html )
+    main/CLIScript
     
 Performance and optimization:
 ===============================
