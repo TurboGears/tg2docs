@@ -4,7 +4,7 @@ Command Line Scripts
 ####################
 
 It is often useful to have command line scripts that can access the
-model of a TurboGears2 application, as an example, to manipulat model
+model of a TurboGears2 application, as an example, to manipulate model
 object from within a cron job.  The main difficulty in implementing
 such a script is often to have the model configured according to a
 given configuration file.  Paste takes care of that but the
