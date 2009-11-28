@@ -1,7 +1,7 @@
 .. _genshi:
 
-Why Genshi?
-===========
+Genshi How-To
+=============
 
 Genshi was chosen as the default for two reason.
  * It's the natural succesor of kid_ which was the default in TG1.x
