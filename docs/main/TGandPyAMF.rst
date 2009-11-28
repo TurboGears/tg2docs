@@ -91,15 +91,13 @@ Setup A Controller That Uses The GatewayController WSGI App:
 
 Then you can import your GatewayController into root.py::
 
-    from tg import use_wsgi_app 
+    from tg.controllers import WSGIAppController
     from mygateway import GatewayController
 
 Now all you have to do is add a method that delegates to the wsgi
 app::
 
-  @expose()
-  def gateway(self, *args, **kwargs):
-      return use_wsgi_app(GatewayController)
+  amf = WSGIAppController(GatewayController)
 
 Of course, you'll need to import use_wsgi_app from tg, and your
 GatewayController from wherever you put it. But once you've done those
@@ -121,7 +119,7 @@ Here's the MXML::
 
     <?xml version="1.0" encoding="utf-8"?>
     <mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" horizontalAlign="left">
-    <mx:RemoteObject id="remoteObj" endpoint="http://127.0.0.1:8080/gateway" destination="Services"
+    <mx:RemoteObject id="remoteObj" endpoint="http://127.0.0.1:8080/gateway/" destination="Services"
         result="displayResult(event)" fault="remoteFault(event)">
         <mx:method name="scramble" result="scrambleResult(event)"/>
     </mx:RemoteObject>
