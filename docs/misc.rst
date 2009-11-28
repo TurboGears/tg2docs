@@ -42,8 +42,6 @@ for some time.
 
 .. todo:: Difficulty: Medium. make sure that override_template is more visible, and provide a tutorial on how to use it
 
-.. todo:: Difficulty: Medium. port http://docs.turbogears.org/1.0/FileUploadTutorial to TG2, why not just release it as a project tgext.upload?
-.. todo:: Difficulty: Medium. Include these docs: http://groups.google.com/group/turbogears/browse_thread/thread/6b44420129281259 How to upload picture or video in Turbogears
 .. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/33a64a06ee4020ce?hl=en Upload images to a TG2 app with Dojo (Ajax style)
 
 .. todo:: Difficulty: Medium. add in notes regarding how to use repoze.who's user_checker

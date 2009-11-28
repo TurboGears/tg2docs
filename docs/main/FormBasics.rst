@@ -38,6 +38,7 @@ Let us first assume the following model for this demonstration.::
         genre_id = Column(Integer, ForeignKey('genres.genre_id'))
         genre = relation('Genre', backref='movies')
         release_date = Column(Date, nullable=True)
+
     
     class Director(DeclarativeBase):
         __tablename__ = "directors"

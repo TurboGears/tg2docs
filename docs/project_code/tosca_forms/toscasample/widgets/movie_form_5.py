@@ -11,9 +11,9 @@ class MovieForm(TableForm):
     template = "toscasample.widgets.templates.table_form"
     css = [CSSLink(link=url('/css/tooltips.css'))]
 
-    genre_options = enumerate((
+    genre_options = [x for x in enumerate((
         'Action & Adventure', 'Animation', 'Comedy',
-        'Documentary', 'Drama', 'Sci-Fi & Fantasy'))
+        'Documentary', 'Drama', 'Sci-Fi & Fantasy'))]
 
     fields = [
         TextField('title', label_text='Movie Title',

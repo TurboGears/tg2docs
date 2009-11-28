@@ -7,4 +7,7 @@ sphinxlog.txt
 *.pyc
 docs/_static/ToscaWidgetsFormsExample.zip
 docs/_static/Wiki20_final.zip
+docs/project_code/tosca_forms/ToscaSample.egg-info
+docs/project_code/tosca_forms/toscasample/public/movies/
+docs/project_code/tosca_forms/devdata.db
 *~

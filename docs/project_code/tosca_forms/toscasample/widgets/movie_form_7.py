@@ -2,17 +2,15 @@
 
 from tw.api import CSSLink
 from tw.forms import (TableForm, CalendarDatePicker,
-    SingleSelectField, Spacer, TextField, TextArea)
+    SingleSelectField, Spacer, TextField, TextArea, FileField)
 from tw.forms.validators import Int, NotEmpty, DateConverter
 from tg import url
-
 
 class MovieForm(TableForm):
 
     template = "toscasample.widgets.templates.table_form"
     css = [CSSLink(link=url('/css/tooltips.css'))]
     show_errors = True
-
     genre_options = [x for x in enumerate((
         'Action & Adventure', 'Animation', 'Comedy',
         'Documentary', 'Drama', 'Sci-Fi & Fantasy'))]
@@ -31,7 +29,12 @@ class MovieForm(TableForm):
         Spacer(),
         TextArea('description', attrs=dict(rows=3, cols=25),
             help_text = 'Please provide a short description of the plot.'),
-        Spacer()]
+        Spacer(),
+        FileField('picture_filename',
+            help_text = 'Please provide a picture for this movie.'),
+        Spacer()
+
+    ]
 
     submit_text = 'Save Movie'
 

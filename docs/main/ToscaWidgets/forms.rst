@@ -268,6 +268,62 @@ when you hover with the mouse over one of the input fields:
 
 .. image:: images/movie_form_5.png
 
+
+Adding a File Upload
+----------------------
+
+Now let's add a file upload to see how that works.  We will add a new
+file field to our form, and then on the serverside we will gather
+the data from the file form and save it to a file in the public directory
+on the server.  This file could later be served up and displayed on our
+movie page.
+
+The first thing we need to do is add the file field to our form.  
+First, add ``FileField`` to our import::
+
+    from tw.forms import (TableForm, CalendarDatePicker,
+        SingleSelectField, Spacer, TextField, TextArea, FileField)
+
+Then, add the field to the ``fields`` parameter of our widget::
+
+        FileField('picture_filename',
+            help_text = 'Please provide a picture for this movie.'),
+        Spacer()
+
+Our form now looks like this:
+
+.. image:: images/movie_form_7.png
+
+
+Now, if you look at the source for your page you will see that the enctype
+has changed in our form.::
+
+   <form id="create_movie_form" action="create" method="post" class="required movieform" enctype="multipart/form-data">
+
+If you happen to be looking at this reference for pointers on how to 
+upload files, then this is important to note if you are not using
+ToscaWidgets.  ``enctype="multipart/form-data"`` is needed in order
+to tell the web server that the form contains a multipart message,
+including a file to upload.
+
+Now we can modify our create method to save our new file to the public directory,
+noting the filename in the database.  First, we need to locate our public directory:
+
+.. code:: tosca_forms/toscasample/controllers/root.py
+  :section: picture_import
+
+Then we change the create code to save our filename to the database and our file to
+the public directory.
+
+.. code:: tosca_forms/toscasample/controllers/root.py
+  :section: create_with_picture
+
+Now if you check the public directory after an insert you will see
+the file has been written.  This file could be used in the listing
+or display of the movie information, since it has been placed
+in the public directory.
+
+
 More Form Fields
 ----------------
 
@@ -281,6 +337,7 @@ fields`_.
 
 .. _ToscaWidgets: http://toscawidgets.org
 .. _`available form fields`: http://toscawidgets.org/documentation/tw.forms/modules/fields/
+
 
 Form Validation
 ---------------
@@ -382,6 +439,8 @@ forms.  The ``tw.forms.validators`` module also provides some
 
 You can also build `compound validators`_ (schemas) corresponding to
 fieldsets or whole forms.
+
+
 
 .. _FormEncode: http://www.formencode.org
 .. _`available validators`: http://formencode.org/module-formencode.validators.html

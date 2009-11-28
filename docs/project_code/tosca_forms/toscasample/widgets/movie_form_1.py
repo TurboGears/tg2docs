@@ -10,9 +10,9 @@ class MovieForm(TableForm):
         title = TextField()
         year = TextField()
         release_date = CalendarDatePicker()
-        genre_options = enumerate((
+        genre_options = [x for x in enumerate((
             'Action & Adventure', 'Animation', 'Comedy',
-            'Documentary', 'Drama', 'Sci-Fi & Fantasy'))
+            'Documentary', 'Drama', 'Sci-Fi & Fantasy'))]
         genre = SingleSelectField(options=genre_options)
         description = TextArea()
 
