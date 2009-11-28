@@ -38,6 +38,7 @@ General Project Information
     main/License
     main/TGandPylons
     building_docs
+    main/testing_core
      
 Libraries and Modules Shipped With TurboGears
 =============================================

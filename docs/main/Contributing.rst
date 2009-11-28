@@ -46,25 +46,9 @@ Testing
 -------
 
 Automated unit tests are essential to make the future growth of the
-project as error free as possible.
-
-TurboGears 2 uses Nose_, which makes testing easy. You can run the
-tests in each of the source directories just by running `nosetests`.
-For example, to run the test on the TG2 server:
-
-.. code-block:: bash
-
-  (tg2dev)$ cd tg2
-  (tg2dev)$ nosetests
-
-.. _Nose: http://somethingaboutorange.com/mrl/projects/nose/
-
-Default options for `nosetests` can often be found in the
-`[nosetests]` section of `setup.cfg` and additional options can be
-passed on the command line.  See the Nose_ documentation for details.
-
-For TG2 projects all testing default are configured in it's tests
-package for maximun user configurability.
+project as error free as possible.  Please see :ref:`testing_core`
+for more information about how to set up your environment with
+TurboGears for testing.
 
 Documenting Changes
 -------------------

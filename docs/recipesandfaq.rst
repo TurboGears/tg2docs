@@ -133,7 +133,6 @@ Mochikit package which was the default in TurboGears 1.x.
     main/GlobalJSLib
     main/ToscaWidgets/Cookbook
     main/ToscaWidgets/Cookbook/FlexiGrid
-    main/ToscaWidgets/Cookbook/TreeView
     main/ToscaWidgets/Cookbook/Flot
     main/ToscaWidgets/Cookbook/JQueryTreeView
     main/ToscaWidgets/Cookbook/JQueryAjaxForm

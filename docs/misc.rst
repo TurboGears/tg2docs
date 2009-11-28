@@ -26,8 +26,6 @@ for some time.
 
 .. todo:: Difficulty: Medium. Add lifecycle of TG project in the getting to know TG section.
 
-.. todo:: Difficulty: Easy. Explain how TG2 itself can be tested.
-
 .. todo:: Difficulty: Medium. Explain how TG2 apps can be tested and the goodness of test driven development.
 
 .. todo:: Difficulty: Medium. make docs more linky.   provide link to pylons, and why tg2 is now based on it.   eventually, I'd really like to see links to pylonsbook for specific "more information", and how turbogears is different/expands upon it
