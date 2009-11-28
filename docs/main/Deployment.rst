@@ -81,7 +81,6 @@ Reference
       Deployment/ModProxy
       Deployment/lighttpd+fcgi
       Deployment/FastCGI
-      main/CLIScript
 
 .. todo:: Difficulty: Hard. Document use of IIS with TurboGears thru a proxy.
 .. todo:: Difficulty: Hard. Document usage of http://pypi.python.org/pypi/wsgisvc to deploy as a Win32 service 
