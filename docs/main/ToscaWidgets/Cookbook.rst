@@ -12,7 +12,6 @@ ToscaWidgets Cookbook
    Cookbook/FlexiGrid
    Cookbook/JQueryAjaxForm
    Cookbook/JQueryTreeView
-   Cookbook/TreeView
    Cookbook/Flot
    Cookbook/FlexiGrid
    Cookbook/OpenLayersMap
