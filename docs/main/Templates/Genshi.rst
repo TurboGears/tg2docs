@@ -3,16 +3,19 @@
 Genshi How-To
 =============
 
-Genshi was chosen as the default for two reason.
- * It's the natural succesor of kid_ which was the default in TG1.x
- * It's smart about markup complaining if your (x)html is not valid.
+Genshi was chosen as the default for two reasons.
+ * Genshi's syntax is a mere augmentation of the kid_ templating language which was the default for
+   TurboGears from 0.8-1.0.  Genshi is the new default in TurboGears 1.1
+   Genshi improves on Kid's error reporting by providing better debug messages.
+ * By default, Genshi is forces (x)html compliance, and error if your template
+   does not provide valid (x)html.
 
 Genshi is an XML template language based on kid_, which in turn was inspired by `Zope's TAL
 <http://wiki.zope.org/ZPT/TAL>`_.  
 
 Genshi Templates look like XHTML.  Here's a sample Genshi template:
 
-Simple Genshi example
+A Simple Genshi Template
 --------------------------
 
 .. code-block:: html
@@ -110,6 +113,37 @@ Genshi gotchas
     can provide a somewhat confusing AttributeError on the Context object.
     Currently the error message provides no mention of 'data' being a reserved
     word.
+
+Dotted Lookup Support
+-----------------------
+Since TurboGears relies on dotted template support for it's standard, this
+standard also applies to Genshi.  Therefore, all templates are referenced using
+a dotted name, instead of slashes, and this applies to xincluded templates
+within your template as well.
+
+Local Support
+--------------
+Genshi support also includes support for ``local:`` in your template name.  What this
+allows you to do is to tell TurboGears to look for the referenced template in the 
+locally executing namespace, as apposed to a fully-dotted name.  This allows you to
+write extensions that can "plug in" to an existing TurboGears project by providing
+direct access to a project's master template.  tgext.admin takes advantage of this; most
+templates have the following code at the beginning of their files::
+
+    <%inherit file="local:templates.master"/>
+
+
+Exposing a mako template
+-------------------------
+
+If you have your project's default set to mako, don't fret, you may still use 
+genshi within your app.  Simply preface your template name with mako, producing
+an expose decorator that might look like this::
+    
+    @expose('genshi:mytgapp.templates.my_awesome_genshi_template')
+    def my_awesome_controller_method(self, **kw):
+        ...
+
 
 Further Reading
 -------------------
