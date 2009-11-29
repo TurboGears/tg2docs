@@ -3,6 +3,9 @@
 TurboGears Documentation
 ========================
 
+.. image:: main/images/python_logo.png
+   :align: right
+
 TurboGears is a web framework written in Python that combines best-of-breed
 technologies to offer a developer rapid initial ramp-up, an even learning curve,
 and scalability as your project grows.  TurboGears is built on a 
@@ -10,6 +13,7 @@ stack of technologies that allows us to focus on the parts that are important
 only to TurboGears.  Although TurboGears provides fully featured ORM 
 (Object Relational Mapper), Templating Languages, and URL dispatch mechanisms,
 the codebase remains less than 2000 lines of executable code.
+
 
 It is important to note that this version of TurboGears is a reinvention 
 of the original TurboGears project developed by Kevin Dangoor.  TurboGears2
