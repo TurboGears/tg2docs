@@ -27,7 +27,7 @@ default method might look something like this::
 The Lookup Method
 -----------------
 
-``Lookup`` and ``default`` are called in identical situations: when
+``_lookup`` and ``_default`` are called in identical situations: when
 "normal" object traversal is not able to find an exposed method, it
 begins popping the stack of "not found" handlers.  If the handler is a
 "default" method, it is called with the rest of the path as positional
@@ -44,7 +44,7 @@ have controllers that look something like this::
   class BlogController(BaseController):
 
      @expose()
-     def lookup(self, year, month, day, id, *remainder):
+     def _lookup(self, year, month, day, id, *remainder):
         dt = date(int(year), int(month), int(day))
         blog_entry = BlogEntryController(dt, int(id))
         return blog_entry, remainder
@@ -66,14 +66,14 @@ have controllers that look something like this::
         ....
 
 So a URL request to .../2007/6/28/0/edit would map first to the
-BlogController's lookup method, which would lookup the date,
+BlogController's _lookup method, which would lookup the date,
 instantiate a new BlogEntryController object (blog_entry), and pass
 that blog_entry object back to the object dispatcher, which uses the
 remainder do continue dispatch, finding the edit method. And of course
 the edit method would have access to self.entry, which was looked up
 and saved in the object along the way.
 
-In other situations, you might have a several-layers-deep "lookup"
+In other situations, you might have a several-layers-deep "_lookup"
 chain, e.g. for editing hierarchical data
 (/client/1/project/2/task/3/edit).
 
