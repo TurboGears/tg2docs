@@ -4,9 +4,9 @@
 Working with TurboGears
 =======================
 
-This page collects documentation which describes how to work with 
-TurboGears to accomplish an effect.  Normally you should have completed 
-a few :ref:`tutorials` so that you have a feel for the general workflow 
+This page collects documentation which describes how to work with
+TurboGears to accomplish an effect.  Normally you should have completed
+a few :ref:`tutorials` so that you have a feel for the general workflow
 within TurboGears before you dive into these documents.
 
 Core: Read These Pages!
@@ -42,11 +42,11 @@ for updating and migrating your database.
 
 ..  toctree::
     :maxdepth: 1
-   
+
     main/SQLAlchemy
     main/Config/SQLAlchemy
     main/DatabaseMigration
-    
+
 .. todo:: Document initial DB setup in websetup.py
 .. todo:: Link DB setup (MySQL, PostgreSQL, etceteras) docs
 .. todo:: document the transaction module, part of the repoze.tm package, introduction for implementers here... http://repoze.org/tmdemo.html
@@ -56,7 +56,7 @@ Handling HTTP Requests (Controllers)
 
 ..  toctree::
     :maxdepth: 1
-    
+
     main/Controllers
     main/Session
     main/Validation
@@ -64,33 +64,33 @@ Handling HTTP Requests (Controllers)
     main/ToscaWidgets/ToscaWidgets
     main/ToscaWidgets/forms
     main/Pagination/index
-    
+
     main/Auth/index
     main/Auth/OpenID
     modules/thirdparty/webob
     modules/tgflash
     modules/tgdecorators
-    
+
     main/ResponseTypes
-    main/RequestFlow    
+    main/RequestFlow
 
     main/Caching
     main/RoutesIntegration
-    
+
     modules/thirdparty/webhelpers_feedgenerator
-    
+
 Automatic Forms/Controllers
 ---------------------------
 
 The TurboGears Admin system is built on top of the Sprox and tg.ext.crud
 system.  You can use the same automatically generated forms and
-controllers to help you quickly prototype your applications.  The 
-:ref:`Movie Tutorial <movie-tutorial>` introduces this usage of 
+controllers to help you quickly prototype your applications.  The
+:ref:`Movie Tutorial <movie-tutorial>` introduces this usage of
 `Sprox`_.
 
 ..  toctree::
     :maxdepth: 1
-    
+
     main/RestControllers
     main/Extensions/Crud/index
     main/Extensions/Admin/index
@@ -100,9 +100,9 @@ controllers to help you quickly prototype your applications.  The
 Templates/Views
 ---------------
 
-By default your TurboGears 2.x project will be configured to use the 
+By default your TurboGears 2.x project will be configured to use the
 :ref:`Genshi <genshi>` templating language.  TurboGears allows for the
-use of alternate templating languages.  
+use of alternate templating languages.
 
 Note: most new users do not need to choose an alternate templating language.
 
@@ -120,11 +120,11 @@ Note: most new users do not need to choose an alternate templating language.
 Javascript Libraries
 --------------------
 
-Modern web-sites are dynamic, flexible, Javascript-code-heavy pieces 
-of software.  You will almost certainly want to use one of the major 
-Javascript libraries to make the process of creating your sites less 
-painful.  The ToscaWidgets package provides plug-ins for each of the 
-three major libraries, JQuery, Dojo and Ext, as well as the older 
+Modern web-sites are dynamic, flexible, Javascript-code-heavy pieces
+of software.  You will almost certainly want to use one of the major
+Javascript libraries to make the process of creating your sites less
+painful.  The ToscaWidgets package provides plug-ins for each of the
+three major libraries, JQuery, Dojo and Ext, as well as the older
 Mochikit package which was the default in TurboGears 1.x.
 
 ..  toctree::
@@ -141,6 +141,16 @@ Mochikit package which was the default in TurboGears 1.x.
 
 .. todo:: JQuery, Dojo, EXT usage doc-links
 .. todo:: Link documentation for doing JSON RPC/Ajax here
+
+Testing
+=======
+
+..  toctree::
+    :maxdepth: 1
+
+    main/Testing
+    main/Testing/index
+
 
 Installation and Deployment
 ===========================
@@ -164,13 +174,13 @@ Tools
     :maxdepth: 1
 
     main/Profile
-    main/ToolBox 
+    main/ToolBox
     main/CommandLine
     main/Config
     main/LogSetup
 
 .. todo: Difficulty Easy: document Debugging
-    
+
 Special Effects and Extensions
 ==============================
 
@@ -183,13 +193,13 @@ Special Effects and Extensions
     main/AuthorizeTutorial
     main/Extensions/Geo/index
     main/CLIScript
-    
-Performance and optimization:
-===============================
+
+Performance and optimization
+============================
 
 .. toctree::
     :maxdepth: 1
-   
+
     main/Profile
     main/Performance/TemplatePerformance
     main/Caching
