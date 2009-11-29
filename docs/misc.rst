@@ -194,12 +194,8 @@ for some time.
 General
 ---------------
 
-.. todo:: Difficulty: Medium. add a "what is turbogears"/faq - very early on. first?
-
 .. todo:: Difficulty: Medium. include links to "read more" - especially true of 
           tutorials that just scratch the surface  (this kind of replaces the "more linky" todo)
-
-.. todo:: Difficulty: Medium. Update and incorporate the info from this pic: http://imagebin.ca/view/P969Fr.html 
 
 .. todo:: Difficulty: Medium. parts is parts:   the text on the frontgage of a quickstart says:
           "standing on the shoulders of giants, since 2007" - provide a main place to
@@ -210,13 +206,12 @@ General
 
 .. todo:: Difficulty: Medium. Add lifecycle of TG project in the getting to know TG section.
 
-.. todo:: Difficulty: Medium. Add shell script which validates environment for building docs
-
 .. todo:: Difficulty: Medium. make sure that override_template is more visible, and provide a tutorial on how to use it
 
 .. todo:: Difficulty: Medium. http://code.google.com/p/tgtools/source/browse/projects/tgext.admin/trunk/tgext/admin/tgadminconfig.py#114 << how to override tgext.admin controllers properly
 
-.. todo:: Difficulty: Medium. Include these docs: http://groups.google.com/group/turbogears/browse_frm/thread/9b07a8d34611f5d7?hl=en  TG2 virtualenv MySQLdb ImportError.  
+.. todo:: Difficulty: Medium. Include these docs: http://groups.google.com/group/turbogears/browse_frm/thread/9b07a8d34611f5d7?hl=en
+          TG2 virtualenv MySQLdb ImportError.  
           Should we be providing documentation to debug MySQLdb problems?  Seems out of scope.
 
 .. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/5dd5b090eb0d4c49?hl=en
@@ -241,5 +236,7 @@ Other
 .. todo:: Difficulty: Hard. Performance deployment enhancements pretty much explain all the YSlow issues
             * serving static files from the frontent,  /config/app_cfg.py base_config.serve_static = False
             * compressing JS/html/CSS,etc
+
+.. todo:: Difficulty: Medium. Add shell script which validates environment for building docs
 
 

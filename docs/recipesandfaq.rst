@@ -33,7 +33,7 @@ We cannot stress this enough: Read These Pages!
 
 .. todo:: link repoze.who, repoze.what, and the other key middleware
 
-Modelling Your Application
+Modeling Your Application
 --------------------------
 
 SQLAlchemy is the default data-storage layer for TurboGears 2.x.
