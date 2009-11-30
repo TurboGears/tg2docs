@@ -86,14 +86,14 @@ Post Install
 .. hint:: You most likely want setuptools 0.6c9 or greater as this one
    provides fixes to work with svn1.5.  If you ever get an error
    regarding 'log' please run:
-   
+
    easy_install -U setuptools
 
 To confirm this worked run:
-   
+
 .. code-block:: bash
 
-    $ python 
+    $ python
     >>> import setuptools
     >>> setuptools.__version__
     '0.6c9'
@@ -231,7 +231,7 @@ MacOS
 Xcode is required to build some binary dependancies and is available
 on the OS X CD or at http://developer.apple.com/tools/xcode/.
 
-Debian, Ubuntu 
+Debian, Ubuntu
 """""""""""""""
 
 Debian derived Linux versions require ``python-dev`` and
@@ -282,7 +282,7 @@ Automatic Installation
 If this is your first time using TurboGears you can use the bootstrap
 script.  `tg2-bootstrap.py` is a custom virtualenv script.  It will:
 
- * create a virtualenv for you 
+ * create a virtualenv for you
  * install the latest TurboGears in it
 
 Download and run the script with the following commands:
@@ -351,10 +351,10 @@ via:
 
     (tg2env)$ easy_install -i http://www.turbogears.org/2.1/downloads/current/index tg.devtools
 
-What's up with the -i argument?  We all know that setup tools ability to pull dependent 
-packages  properly is less than optimal.  TG cannot ensure that every package on pypi will work 
-with TG at any given time. For this reason, we have set up a known set of packages that _wil_ work 
-So, while TG2 _is_ on pypi, and it will _probably_ work, the only way to install in a way where 
+What's up with the -i argument?  We all know that setup tools ability to pull dependent
+packages  properly is less than optimal.  TG cannot ensure that every package on pypi will work
+with TG at any given time. For this reason, we have set up a known set of packages that _wil_ work
+So, while TG2 _is_ on pypi, and it will _probably_ work, the only way to install in a way where
 functionality is certain is to utilize the index where we have hand plucked packages for your use.
 
 .. warning:: if you are upgrading from a previous TG2 version your
@@ -381,7 +381,7 @@ Deactivating The Environment
 When you are done working simply run the ``deactivate`` virtualenv
 shell command::
 
-    (tg2env)user@host:~/tg2env$ deactivate 
+    (tg2env)user@host:~/tg2env$ deactivate
     user@host:~/tg2env$
 
 This isn't really needed but it's good practice if you want to switch
@@ -395,11 +395,11 @@ replacement. It provides many improvements over it's predecessor and
 aims to be a full replacement.
 
 .. warning:: pip is not supported under windows!
-   
+
 Just add the ``--pip`` flag to the bootstrap script::
 
   $ python tg2-bootstrap.py --no-site-packages --pip tg2env
-   
+
 .. _pip: http://pypi.python.org/pypi/pip
 
 Installing The Development Version Of Turbogears 2
@@ -424,8 +424,8 @@ Check out the latest code from the subversion repositories:
 
 .. code-block:: bash
 
-  (tg2dev)$ hg clone http://hg.turbogears.org/tgdevtools/ tgdevtools
-  (tg2dev)$ hg clone http://hg.turbogears.org/tg-21/ tg21
+  (tg2dev)$ hg clone http://hg.turbogears.org/tgdevtools-dev/ tgdevtools
+  (tg2dev)$ hg clone http://hg.turbogears.org/tg-dev/ tg
 
 Installing The Sources
 """"""""""""""""""""""
@@ -437,7 +437,7 @@ via Mercurial:
 
 .. code-block:: bash
 
-  (tg2dev)$ cd tg21
+  (tg2dev)$ cd tg
   (tg2dev)$ python setup.py develop -i http://www.turbogears.org/2.1/downloads/current/index
 
 * TurboGears 2 developer tools:
