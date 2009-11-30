@@ -285,7 +285,7 @@ Testing your controllers
 ------------------------
 
 As already mentioned, you will find the tests for the example controller
-methods of your quickstarted application in the ``tests.functinonal``
+methods of your quickstarted application in the ``tests.functional``
 package. There are actually two test modules, ``test_authentication``
 for testing the user login provided by the authentication sub-system,
 and ``test_root`` for testing the actual functionality of the root controller.
@@ -428,7 +428,7 @@ of the root controller. The report shows that line 47 of the
 ``controllers.root`` module is missing, and if you open the file with an
 editor, you will find that this is the controller method for the "about" page.
 You can add the following test method to the ``TestRootController`` class
-in the ``tests.functinoaltest_root`` module to fix this::
+in the ``tests.functional.test_root`` module to fix this::
 
         def test_about(self):
             """The about page can be displayed"""
