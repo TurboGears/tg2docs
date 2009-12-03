@@ -385,8 +385,6 @@ renderers and JSON handlers.  By putting "view-specific" code
 into the tmpl_context and "model-data" into the result dictionary,
 we can more readily support the JSON queries.
 
-The tmpl_context
-        
 Now we call our widget from within our ``index`` template:
 
 .. code-block:: html
@@ -398,23 +396,26 @@ we pass an ``action`` parameter to the form to tell it what controller method
 (url) it should use to process the results of submitting the form.  We'll create 
 the controller on our root controller::
 
-    @expose( )
-    @validate( 
-        form=add_movie_form,
-        error_handler=index,
-    )
-    def add_movie( self, title, description, year, genre, **named ):
-        """Create a new movie record"""
-        new = Movie(
-            title = title,
-            description = description,
-            year = year,
-            reviewed = False,
-            genre_id = genre,
+    from tg import validate
+    ...
+    
+        @expose( )
+        @validate( 
+            form=add_movie_form,
+            error_handler=index,
         )
-        DBSession.add( new )
-        flash( '''Added movie: %s'''%( title, ))
-        redirect( './index' )
+        def add_movie( self, title, description, year, genre, **named ):
+            """Create a new movie record"""
+            new = Movie(
+                title = title,
+                description = description,
+                year = year,
+                reviewed = False,
+                genre_id = genre,
+            )
+            DBSession.add( new )
+            flash( '''Added movie: %s'''%( title, ))
+            redirect( './index' )
 
 We do not use a template in our ``expose`` call here, as we are not going 
 to return an HTML page from this method.  The ``validate`` decorator uses 
@@ -481,27 +482,29 @@ front page will get longer and longer.  We're going to make our list use
 
 In our controllers/root.py module, we'll alter the index method::
 
-    @expose('movies.templates.index')
-    def index(self, **named):
-        """Handle the front-page."""
-        movies = DBSession.query( Movie ).filter(
-            Movie.reviewed == True
-        ).order_by( Movie.title )
-        tmpl_context.add_movie_form = add_movie_form
-        from webhelpers import paginate
-        count = movies.count()
-        page =int( named.get( 'page', '1' ))
-        currentPage = paginate.Page( 
-            movies, page, item_count=count, 
-            items_per_page=5,
-        )
-        movies = currentPage.items
-        return dict(
-            page='index',
-            movies = movies,
-            currentPage = currentPage,
-            search = search,
-        )
+    from tg import tmpl_context
+    ...
+    
+        @expose('movies.templates.index')
+        def index(self, **named):
+            """Handle the front-page."""
+            movies = DBSession.query( Movie ).filter(
+                Movie.reviewed == True
+            ).order_by( Movie.title )
+            tmpl_context.add_movie_form = add_movie_form
+            from webhelpers import paginate
+            count = movies.count()
+            page =int( named.get( 'page', '1' ))
+            currentPage = paginate.Page( 
+                movies, page, item_count=count, 
+                items_per_page=5,
+            )
+            movies = currentPage.items
+            return dict(
+                page='index',
+                movies = movies,
+                currentPage = currentPage,
+            )
 
 This sets up a simple URL scheme where the parameter "page" will determine 
 which page we will view, and we'll view at most 5 movies per page.  We take 
