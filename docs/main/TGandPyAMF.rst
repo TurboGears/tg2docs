@@ -80,7 +80,7 @@ you want it::
  # Expose our services:
  services = {"Services" : Services()}
 
- GatewayController = WSGIGateway(services)
+ Gateway = WSGIGateway(services)
 
 This sets up a GatewayController WSGI app that has three services that
 can be called from flex: echo, sum, and scramble, which each do
@@ -92,15 +92,15 @@ Setup A Controller That Uses The GatewayController WSGI App:
 Then you can import your GatewayController into root.py::
 
     from tg.controllers import WSGIAppController
-    from mygateway import GatewayController
+    from mygateway import Gateway
 
 Now all you have to do is add a method that delegates to the wsgi
 app::
 
-  amf = WSGIAppController(GatewayController)
+  gateway = WSGIAppController(Gateway)
 
-Of course, you'll need to import use_wsgi_app from tg, and your
-GatewayController from wherever you put it. But once you've done those
+Of course, you'll need to the WSGIAppController from tg, and your
+Gateway from wherever you put it. But once you've done those
 things you'll have a AMF Gateway mounted at /gateway which you can use
 from flex.
 
