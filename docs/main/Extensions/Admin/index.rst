@@ -84,7 +84,7 @@ the permissions to allow anyone with the 'manage' permission access with the fol
     class MyAdminController(AdminController):
         allow_only = has_permission('manage')
 
-Please note that if you use a diferent config you will have to secure it.
+Please note that if you use a different config you will have to secure it.
 
 For more information, please see :mod:`repoze.what`
 
