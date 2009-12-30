@@ -195,8 +195,8 @@ These changes result in the following new look of our form:
 You will notice the different appearance and that that our date field
 now has dashes in it instead of slashes.
 
-Customizig With CSS And Form Templates
---------------------------------------
+Customizing With CSS And Form Templates
+---------------------------------------
 
 We will now add some CSS and a modified template to our form in order
 to provide "tooltip-like" help texts for the individual form fields.
