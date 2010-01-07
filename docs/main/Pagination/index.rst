@@ -5,6 +5,8 @@ Pagination Quickstart For Turbogears2
 
 :Status: Work in progress
 
+.. todo:: Needs to mention the paginate decorator.
+
 Prerequisites
 -------------
 
@@ -28,14 +30,14 @@ transaction.commit())::
 	                  ["Night on Earth", 1991],
 	                  ["Genova", 2008],
 	                  ["Snatch", 2000]]
-	    
+
 	    movies = []
 	    for data in movieDatas:
 	        movie = Movie()
 	        movie.title = data[0]
 	        movie.year = data[1]
 	        model.DBSession.add(movie)
-  
+
 
 After you set up your application and restart the server you should now have
 seven movies listed.
@@ -44,8 +46,8 @@ seven movies listed.
 
 	paster setup-app development.ini
 	paster serve --reload development.ini
-	 
-    
+
+
 
 Basic Pagination
 ----------------
@@ -58,7 +60,7 @@ Import paginate in your ``controllers/root.py`` and modify the
 ``list()`` method to look like this::
 
 	    from webhelpers import paginate
-		
+
 	    @expose("toscasample.templates.movie_list")
 	    def list(self, page=1):
 	        """List and paginate all movies in the database"""
@@ -81,7 +83,7 @@ Now the pagination can be displayed in the template like this:
 Template code in ``templates/movie_list.html``::
 
 	<p class="pagelist">${currentPage.pager()}</p>
-	
+
 .. highlight:: python
 
 
@@ -90,28 +92,28 @@ Now we add some padding to the pagelist and make it centered.
 
 Create a file pagination.css in your public/css/ directory with the
 following contents and include it in style.css:
- 
+
 .. highlight:: css
 
 CSS in ``public/css/style.css``::
 
-	@import url("pagination.css"); 
+	@import url("pagination.css");
 
 CSS in ``public/css/pagination.css``::
 
 	.pagelist strong {
 		padding: 5px;
 	}
-	
+
 	p.pagelist {
 		text-align: center;
 	}
-	
+
 Your movie listing should now look something like this:
 
-.. image:: tg2pagination_fig1.png		
+.. image:: tg2pagination_fig1.png
 
-		
+
 
 Advanced Pagination
 -------------------
@@ -123,7 +125,7 @@ Demonstrating some more formating arguments::
 
 	${currentPage.pager(format='~3~', page_param='page', show_if_single_page=True)}
 
-	
+
 See
 http://www.pylonshq.com/docs/en/0.9.7/thirdparty/webhelpers/paginate/
 for more details.
@@ -146,10 +148,10 @@ this::
 		${currentPage.pager(format='~3~', page_param='page', show_if_single_page=True)}
 		<a class="nextPage" href="/list?page=${currentPage.next_page}">&gt;&gt;&gt;</a>
 	</p>
-	
+
 Functional, but not very pretty:
 
-.. image:: tg2pagination_fig2.png		
+.. image:: tg2pagination_fig2.png
 
 
 
@@ -163,7 +165,7 @@ Let's add some images:
 
  .. image:: icons/arrow-right.png
    :height: 32
-   
+
 
 .. note ::
 
@@ -181,7 +183,7 @@ Change the pagelist code in ``templates/movie_list.html``::
 		${currentPage.pager(format='~3~', page_param='page', show_if_single_page=True)}
 		<a class="nextPage" href="/list?page=${currentPage.next_page}">&nbsp;</a>
 	</p>
-	
+
 .. highlight:: css
 
 Add this to the CSS in ``public/css/pagination.css``::
@@ -194,7 +196,7 @@ Add this to the CSS in ``public/css/pagination.css``::
 		padding-bottom: 15px;
 		text-decoration: none;
 		}
-	
+
 	.nextPage {
 		background: url("/images/icons/png/32x32/arrow-right.png") no-repeat;
 		padding-left: 18px;
@@ -202,11 +204,11 @@ Add this to the CSS in ``public/css/pagination.css``::
 		padding-top: 12px;
 		padding-bottom: 15px;
 		text-decoration: none;
-		}		
+		}
 
 And this is what the end result looks like:
 
-.. image:: tg2pagination_fig3.png		
+.. image:: tg2pagination_fig3.png
 
 An :download:`Example Project <ToscaWidgetsFormsPaginated.zip>` has
 been attached so that you can try this easily.
