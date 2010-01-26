@@ -47,7 +47,7 @@ The advantage of this new method is that the configuration can contain
 complex python objects without adding a dependency on ConfigObj (which
 was used in TG1).
 
-One disadvantage of the new configuration system is that it does 
+One disadvantage of the new configuration system is that it does
 not evaluate values in
 the .ini files therefore all values are considered strings. This is
 especially important when using boolean attributes and numbers as you
@@ -76,7 +76,7 @@ Configuration in the INI files
 A TurboGears quickstarted project will contain a couple of .ini files
 which are used to define what WSGI app ought to be run, and to store
 end-user created configuration values, which is just another way of
-saying that the .ini files should contain *deployment specific* 
+saying that the .ini files should contain *deployment specific*
 options.
 
 By default TurboGears provides a ``development.ini``, ``test.ini``,
@@ -129,7 +129,7 @@ The correct way of loading boolean values for your use is
 
    from paste.deploy.converters import asbool
    if asbool(config['enable_subsystem']):
-      ... sub systems is enabled... 
+      ... sub systems is enabled...
 
 The config module
 -----------------
@@ -208,9 +208,9 @@ for configuring your TurboGears application.
 Mimetypes
 +++++++++++++
 
-By default, only json/application and text/html are defined mimetypes. 
-If you would like to use additional mime-types you must register 
-them with your application's config. You can accomplish this by 
+By default, only json/application and text/html are defined mimetypes.
+If you would like to use additional mime-types you must register
+them with your application's config. You can accomplish this by
 adding the following code your your app_cfg.py file::
 
     base_config.mimetype_lookup = {'.ext':'my-mimetype'}
@@ -222,17 +222,17 @@ Startup and Shutdown
 TurboGears allows you to attach callables both to the startup of the
 server, and the shut down.  The startup is called before the environment
 is loaded, and the shutdown code runs when the python process shuts down.
-Heres an example of "hello, world" using startup and shutdown in your 
+Heres an example of "hello, world" using startup and shutdown in your
 app_cfg.py file::
 
     def on_startup():
         print 'hello, startup world'
-        
+
     def on_shutdown():
         print 'hello, shutdown world'
-    
+
     # ... (base_config init code)
-    
+
     base_config.call_on_startup = [on_startup]
     base_config.call_on_shutdown = [on_shutdown]
 
@@ -242,6 +242,18 @@ Static Files
 ``base_config.serve_static`` -- automatically set to ``True`` for you.
 Set to False if you have set up apache, or nginx (or some other
 server) to handles static files.
+
+Request Extensions
++++++++++++++++++++++++
+
+``base_config.disable_request_extensions`` -- by default this is false.
+This means that TG will take the request, and strip anything off the end
+of the last element in the URL that follows ".".  It will then take this
+information, and assign an appropriate mime-type and store the data in the
+tg.request.response_type and tg.request.response_ext variables.  By enabling
+this flag, you disable this behavior, rendering TG unable to determine the
+mime-type that the user is requesting automatically.
+
 
 Stand Alone
 +++++++++++++++
@@ -267,19 +279,19 @@ override the configuration within app.cfg looks something like this::
 
         def add_tosca2_middleware(self, app):
 
-            app = TwMiddleware(app, 
+            app = TwMiddleware(app,
                 default_engine=self.default_renderer,
                 translator=ugettext,
                 auto_reload_templates = False
                 )
-            
+
             return app
     base_config = MyAppConfig()
-    
+
     # modify base_config parameters below
-    
+
 The above example shows how one would go about overridding the toscawidgets2
-middleware.  See the class definition below for more ideas on how you 
+middleware.  See the class definition below for more ideas on how you
 could modify your own custom config
 
 AppConfig General Options
@@ -287,18 +299,18 @@ AppConfig General Options
 
 .. autoclass:: AppConfig
    :members: init_config,
-             add_core_middleware, 
+             add_core_middleware,
              add_error_middleware,
              setup_tg_wsgi_app,
              setup_helpers_and_globals,
              make_load_environment
-             
+
 
 More Configuration Options
 ------------------------------
 These configuration options have been broken into sub pages for easier digestion.
 
-             
+
 .. toctree::
    :maxdepth: 1
 

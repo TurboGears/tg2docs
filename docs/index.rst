@@ -39,7 +39,7 @@ meets the needs of your project.
 The TurboGears stack is made up of a four main components that aim at increasing
 web development productivity.  Each of these components can in fact be used
 independently, or within other applications, so the knowledge you gain
-by learning about this components is highly applicable to other projects
+by learning about these components is highly applicable to other projects
 you might do, including those outside the scope of web design.  Here is a breakdown
 of what you can expect to see in the stack.
 
@@ -54,9 +54,11 @@ for your entire site, or for individual pages.
 
 Genshi_ was popularized by the project tracking software called Trac.  Genshi
 provides an easy way to create templated content by providing developers
-with pythonic tools, (x)html validation, and useful debugging messages.  Kid
-Developers coming over from TurboGears 1.1 will feel at home with the familiar
+with pythonic tools, (x)html validation, and useful debugging messages.  Kid_
+developers coming over from TurboGears 1.1 will feel at home with the familiar
 syntax.
+
+.. _Kid: http://www.kid-templating.org/
 
 Pylons_ is our web server of choice.  Pylons is a good choice for our web server,
 because it embraces WSGI, and is also broken into smaller swappable components.  Pylons

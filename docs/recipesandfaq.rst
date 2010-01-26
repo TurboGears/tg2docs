@@ -207,6 +207,8 @@ Performance and optimization
 
 .. todo:: Difficulty: Easy. Validate that toctree maxdepth values are appropriate
 
+.. todo:: Difficulty: Easy. Explain usage of tgscheduler and how to use SQLAlchemy in a task
+
 Next Steps
 ----------
 
