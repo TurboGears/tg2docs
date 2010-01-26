@@ -91,7 +91,7 @@ For more information, please see :mod:`repoze.what`
 Utilizing Translations from repoze.what
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you have an existing database format that you are retrofitting to the TurboGears,
+If you have an existing database format that you are retrofitting to TurboGears,
 you can utilize your existing translation for identity with some additions for use in
 the default AdminController.
 
