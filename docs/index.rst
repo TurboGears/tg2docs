@@ -8,16 +8,16 @@ TurboGears Documentation
 
 TurboGears is a web framework written in Python that combines best-of-breed
 technologies to offer a developer rapid initial ramp-up, an even learning curve,
-and scalability as your project grows.  TurboGears is built on a 
+and scalability as your project grows.  TurboGears is built on a
 stack of technologies that allows us to focus on the parts that are important
-only to TurboGears.  Although TurboGears provides fully featured ORM 
+only to TurboGears.  Although TurboGears provides fully featured ORM
 (Object Relational Mapper), Templating Languages, and URL dispatch mechanisms,
 the codebase remains less than 2000 lines of executable code.
 
 
-It is important to note that this version of TurboGears is a reinvention 
+It is important to note that this version of TurboGears is a reinvention
 of the original TurboGears project developed by Kevin Dangoor.  TurboGears2
-was developed to increase cooperation between the Python Web Framework 
+was developed to increase cooperation between the Python Web Framework
 community, especially with the Pylons project.  TurboGears also leverages
 WSGI (Web Server Gateway Interface) components available today.  :term:`WSGI`
 allows web applications to share a common api to provide a layered approach
@@ -28,7 +28,7 @@ The TurboGears Stack: An Overview
 
 TG2 represents a change from some of the components in TurboGears 1.x, but
 we've now invested in a set of components that we think will continue to be at
-the center of python web development for years to come.  From the beginning 
+the center of python web development for years to come.  From the beginning
 TurboGears was designed to be a Full Stack framework built from best-of-breed
 components.  TurboGears takes some of the guesswork out of choosing from the
 various components available by providing you with a set of productive defaults,
@@ -65,7 +65,7 @@ because it embraces WSGI, and is also broken into smaller swappable components. 
 gives us routing, caching, sessions, and a set of thread-safe globals to make
 development easier.
 
-SQLAlchemy_ has been called the best Object Relational Mapper in _any_ language.
+SQLAlchemy_ has been called the best Object Relational Mapper in *any* language.
 SQLAlchemy provides a solid foundation to build your data-driven application from.
 SA allows you to abstract your database to Python objects, while still giving
 you access to your database in tabular, and even SQL form.  Using SQLAlchemy also gives
@@ -87,14 +87,14 @@ you the ability to use a number of add-on tools like migrate_ and bootalchemy_.
 :ref:`Tutorials <tutorials>`
 ----------------------------
 
-    For the new TurboGears user, this is the place to start.  These tutorials 
-    are intended to get you started working quickly and give you a feel for 
+    For the new TurboGears user, this is the place to start.  These tutorials
+    are intended to get you started working quickly and give you a feel for
     how TurboGears applications work.
 
 :ref:`Working with TurboGears <recipes-and-faq>`
 ------------------------------------------------
-    How to accomplish given tasks using TurboGears, from authentication, to 
-    caching, to user-session management.  This collection of documents should 
+    How to accomplish given tasks using TurboGears, from authentication, to
+    caching, to user-session management.  This collection of documents should
     normally be explored after you've followed through a tutorial or two.
 
 :ref:`Getting To Know TurboGears <getting-to-know>`
@@ -128,7 +128,7 @@ Indices and tables
 
 .. glossary::
 
-   WSGI_ 
+   WSGI_
       Web Server Gateway Interface
 
 .. _WSGI: http://www.wsgi.org/wsgi/
