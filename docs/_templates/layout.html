@@ -1,5 +1,32 @@
 {# Filename: .templates/layout.html #}
 {% extends '!layout.html' %}
+{% block relbar1 %}{% endblock %}
+
+{% block sidebar1 %}
+<!--[if gte IE 5.5]>
+<![if lt IE 7]>
+<style type="text/css">
+  #ggear img { filter:progid:DXImageTransform.Microsoft.Alpha(opacity=0); }
+  #ggear { display: inline-block; width: 100px; height: 100px;
+filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='{{ pathto('_static/g_gear.png.png', 1) }}'); }
+</style>
+<![endif]>
+<![endif]-->
+
+<div id="header">
+  <img title="TurboGears header" alt="TurboGears header" src="{{ pathto('_static/header.png', 1) }}"/>
+  <div id="ggear"><a href="{{ pathto('index') }}"><img class="logo" title="TurboGears G gear logo" alt="TurboGears G gear logo" src="{{ pathto('_static/g_gear.png', 1) }}"/></a></div>
+  <ul id="menu">
+    <li><a href="http://turbogears.org/2.0/" title="Learn more about TurboGears 2.">About 2.0</a></li>
+    <li><a href="http://turbogears.org/about/" title="Learn more about TurboGears 1.">About 1.1</a></li>
+    <li><a href="http://turbogears.org/2.0/docs/" title="Go to the TurboGears documentation site.">Documentation</a></li>
+    <li><a href="http://turbogears.org/2.0/docs/main/DownloadInstall.html" title="Read the download &amp; installation instructions for TurboGears.">Install</a></li>
+    <li><a href="http://turbogears.org/2.0/docs/main/Contributing.html" title="Want to contribute or try a development snapshot?">Development</a></li>
+    <li><a href="http://turbogears.org/news.html" title="Read what's happing in the TurboGears world.">News</a></li>
+  </ul>
+  
+</div>
+{% endblock %}
 
 {% block rootrellink %}
   <li>
