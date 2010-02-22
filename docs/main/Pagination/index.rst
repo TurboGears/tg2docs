@@ -13,7 +13,7 @@ Prerequisites
 We start where the MovieDemo left off. See the `ToscaSample`_ tutorial
 or download the zipped ToscaWidgetsFormsExample_.
 
-.. _ToscaWidgetsFormsExample: ../../_static/ToscaWidgetsFormsExample.zip
+.. _ToscaWidgetsFormsExample: ../../_downloads/ToscaSample-0.2dev.zip
 .. _ToscaSample: http://www.turbogears.org/2.0/docs/main/ToscaWidgets/forms.html
 
 Populating The Database
@@ -210,7 +210,7 @@ And this is what the end result looks like:
 
 .. image:: tg2pagination_fig3.png
 
-An :download:`Example Project <ToscaWidgetsFormsPaginated.zip>` has
+An :download:`Example Project <ToscaSample-0.2dev.zip>` has
 been attached so that you can try this easily.
 
 .. todo:: Difficulty: Easy to Medium. Does pagination still work this way for 2.1?
