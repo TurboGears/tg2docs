@@ -13,3 +13,4 @@ docs/project_code/tosca_forms/devdata.db
 *~
 toscasample/dist/
 main/Pagination/*.zip
+devdata.db
