@@ -5,8 +5,6 @@ Pagination Quickstart For Turbogears2
 
 :Status: Work in progress
 
-.. todo:: Needs to mention the paginate decorator.
-
 Prerequisites
 -------------
 
@@ -113,6 +111,39 @@ Your movie listing should now look something like this:
 
 .. image:: tg2pagination_fig1.png
 
+
+Paginate Decorator
+------------------
+
+TurboGears provides a convenient `paginate()` decorator that you can
+combine with `expose()`.  To use it, you simply have to pass it the
+name of a collection to paginate.  In ``controller/root.py``::
+
+    from tg.decorators import paginate as paginatedeco
+    @expose("toscasample.templates.movie_list_deco")
+    @paginatedeco("movies", items_per_page=5)
+    def decolist(self):
+        """List and paginate all movies in the database using the
+        paginate() decorator."""
+        movies = DBSession.query(Movie)
+        return dict(movies=movies, page='ToscaSample Movie list')
+
+.. highlight:: python
+
+In your template, you can now use the collection direction since it
+will be trimed to only contain the current page.  You will also have
+have a basic page navigation with
+`${tmpl_context.paginators.movies.pager()}`::
+
+    <ol>
+       <li py:for="movie in movies" py:content="movie">Movie title and year</li>
+    </ol>
+
+    <p class="pagelist">
+      ${tmpl_context.paginators.movies.pager()}
+    </p>
+
+.. highlight:: html+genshi
 
 
 Advanced Pagination

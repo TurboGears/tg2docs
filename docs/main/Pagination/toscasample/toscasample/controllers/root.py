@@ -29,8 +29,8 @@ class RootController(BaseController):
         return dict(movies=currentPage.items, page='ToscaSample Movie list', 
                     currentPage=currentPage)
     
-    @paginatedeco("movies", items_per_page=5)
     @expose("toscasample.templates.movie_list_deco")
+    @paginatedeco("movies", items_per_page=5)
     def decolist(self):
         """List and paginate all movies in the database using the
         paginate() decorator."""
