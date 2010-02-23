@@ -10,8 +10,10 @@ Quickstarting A TurboGears 2 Project
 .. contents:: Table of Contents
     :depth: 2
 
-Now we assume you've got TurboGears installed and, if you installed it
-in a virtual environment, that your virtualenv is activated.
+We assume that you have TurboGears installed and, if you installed it
+in a virtual environment as recommended, that your virtualenv is activated.
+See :ref:`downloadinstall` to get to this point.
+
 TurboGears 2 extends the ``paster`` command-line tool to provide a
 suite of tools for working with TurboGears 2 projects. A few will be
 touched upon in this tutorial, check the ``paster --help`` command for
@@ -102,7 +104,7 @@ to the database that is required to bootstrap your application.
   and you told quickstart to include authentication+authorizaiton, you
   will *have* to run ``setup-app`` to set it up (e.g., create a test
   database)::
-  
+
       $ paster setup-app development.ini
 
 
@@ -168,7 +170,7 @@ used by the built-in web server::
   [server:main]
   ...
   port = 8080
-  
+
 Just change 8080 to 80, and you'll be serving your app up on a
 standard port (assuming your OS allows you to do this using your
 normal account).
@@ -180,7 +182,7 @@ development.ini) to have the value 0.0.0.0, like so::
   [server:main]
   ...
   host = 0.0.0.0
-  
+
 
 
 Explore The Rest Of The Quickstarted Project Code
@@ -201,14 +203,14 @@ Controllers
 ==============================================
 
 Controllers are what gets called when a browser (or other http client) makes
-a request to your application.  
+a request to your application.
 
-In the my_intranet/controllers folder you will find several controller files. 
+In the my_intranet/controllers folder you will find several controller files.
 
-root.py is the first one you should look at, as it is "special" because the 
-RootController in root.py is setup by default to get all requests, lookup 
-what method should be called, and calls it.   You can change this default by 
-setting up custom Routes, but in most cases that's not required. 
+root.py is the first one you should look at, as it is "special" because the
+RootController in root.py is setup by default to get all requests, lookup
+what method should be called, and calls it.   You can change this default by
+setting up custom Routes, but in most cases that's not required.
 
 Writing controller methods
 ------------------------------------------------
@@ -235,10 +237,10 @@ URL                                Maps to
 Quick Example
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Here's a simple example of the TG2. 
+Here's a simple example of the TG2.
 
-Suppose using ``tg-admin quickstart`` you generate a TurboGears project 
-named "HelloWorld". Your default controller code would be created in the 
+Suppose using ``tg-admin quickstart`` you generate a TurboGears project
+named "HelloWorld". Your default controller code would be created in the
 file ``HelloWorld/helloworld/controllers/root.py``.
 
 Modify the default ``controllers.py`` to read as follows:
@@ -264,7 +266,7 @@ Modify the default ``controllers.py`` to read as follows:
 
 
 When you load the root URL ``http://localhost:8080/index`` in your web
-browser, you'll see a page with the message "Hello World" on it. 
+browser, you'll see a page with the message "Hello World" on it.
 
 
 root.py
@@ -277,16 +279,16 @@ Let's take a look at the RootController:
     class RootController(BaseController):
         """
         The root controller for the my-intranet application.
-    
+
         All the other controllers and WSGI applications should be mounted on this
         controller. For example::
-    
+
             panel = ControlPanelController()
             another_app = AnotherWSGIApplication()
-    
+
         Keep in mind that WSGI applications shouldn't be mounted directly: They
         must be wrapped around with :class:`tg.controllers.WSGIAppController`.
-    
+
         """
         secc = SecureController()
         admin = Catwalk(model, DBSession)
@@ -327,13 +329,13 @@ Let's take a look at the RootController:
                 flash(_('Wrong credentials'), 'warning')
             return dict(page='login', login_counter=str(login_counter),
                         came_from=came_from)
-    
+
         @expose()
         def post_login(self, came_from=url('/')):
             """
             Redirect the user to the initially requested page on successful
             authentication or redirect her back to the login page if login failed.
-        
+
             """
             if not request.identity:
                 login_counter = request.environ['repoze.who.logins'] + 1
@@ -347,33 +349,33 @@ Let's take a look at the RootController:
             """
             Redirect the user to the initially requested page on logout and say
             goodbye as well.
-        
+
             """
             flash(_('We hope to see you soon!'))
             redirect(came_from)
-            
+
 There are a couple obvious differences from the  simplistic example above:
 
-#. Most of the ``expose()`` calls point to a specific template file. 
-  
-#. We mount the SecureController, AdminController, etc in secc, admin, by 
+#. Most of the ``expose()`` calls point to a specific template file.
+
+#. We mount the SecureController, AdminController, etc in secc, admin, by
    instantiating them in RootController
 
 
- 
+
 Templates
 ==============================================
 
-As we just noticed in root.py TG like almost all web frameworks helps you 
-create templates for HTML and other kinds of responses.   We also support 
-returning multiple kinds of response from the same controller method so you 
-can have a JSON, or XML API from the same controller methods as your main 
-html app. 
+As we just noticed in root.py TG like almost all web frameworks helps you
+create templates for HTML and other kinds of responses.   We also support
+returning multiple kinds of response from the same controller method so you
+can have a JSON, or XML API from the same controller methods as your main
+html app.
 
-TG2 uses the Genshi templating system by default, and we'll cover the 
-details of genshi in a bit.   But let's dive right in with another quick 
-example, followed by a deeper look at what's already there in the 
-quickstarted project. 
+TG2 uses the Genshi templating system by default, and we'll cover the
+details of genshi in a bit.   But let's dive right in with another quick
+example, followed by a deeper look at what's already there in the
+quickstarted project.
 
 Expose + Template == Good
 -----------------------------------------------
@@ -381,8 +383,8 @@ Expose + Template == Good
 To enable a cleaner solution, data from your TurboGears controller can be
 returned as strings, **or** as a dictionary.
 
-With ``@expose()``, a dictionary can be passed from the controller 
-to a template which fills in its placeholder keys with the dictionary 
+With ``@expose()``, a dictionary can be passed from the controller
+to a template which fills in its placeholder keys with the dictionary
 values and then returns the filled template output to the browser.
 
 Template Example
@@ -401,7 +403,7 @@ this::
       </body>
     </html>
 
-The ``${param}`` syntax in the template indicates some undetermined values 
+The ``${param}`` syntax in the template indicates some undetermined values
 to be filled.
 
 We provide them by adding a method to the controller like this ...
@@ -427,7 +429,7 @@ Quickstarted Project Templates
 
 .. code-block:: html+genshi
 
-    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
                           "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     <html xmlns="http://www.w3.org/1999/xhtml"
           xmlns:py="http://genshi.edgewall.org/"
@@ -437,7 +439,7 @@ Quickstarted Project Templates
 
     <head>
       <meta content="text/html; charset=UTF-8" http-equiv="content-type" py:replace="''"/>
-      <title>Welcome to TurboGears 2.0, standing on the 
+      <title>Welcome to TurboGears 2.0, standing on the
       shoulders of giants, since 2007</title>
     </head>
 
@@ -445,17 +447,17 @@ Quickstarted Project Templates
         ${sidebar_top()}
       <div id="getting_started">
         <h2>Presentation</h2>
-        <p>TurboGears 2 is rapid web application development toolkit designed 
+        <p>TurboGears 2 is rapid web application development toolkit designed
         to make your life easier.</p>
         <ol id="getting_started_steps">
           <li class="getting_started">
             <h3>Code your data model</h3>
-            <p> Design your data model, Create the database, and Add some 
+            <p> Design your data model, Create the database, and Add some
             bootstrap data.</p>
           </li>
           <li class="getting_started">
             <h3>Design your URL architecture</h3>
-            <p> Decide your URLs, Program your controller methods, Design your 
+            <p> Decide your URLs, Program your controller methods, Design your
                 templates, and place some static files (CSS and/or JavaScript). </p>
           </li>
           <li class="getting_started">
@@ -465,25 +467,25 @@ Quickstarted Project Templates
         </ol>
       </div>
       <div class="clearingdiv" />
-      <div class="notice"> Thank you for choosing TurboGears. 
+      <div class="notice"> Thank you for choosing TurboGears.
       </div>
     </body>
     </html>
 
-Let's pay attention to a couple of important lines: 
+Let's pay attention to a couple of important lines:
 
 .. code-block:: html+genshi
 
-  <xi:include href="master.html" /> 
+  <xi:include href="master.html" />
   ${sidebar_top()}
 
-the xi:include statement pulls in master.html, and includes it in this template's namespace.   Which is how the next thing gets pulled in since sidebar.html is included in master.html. 
+the xi:include statement pulls in master.html, and includes it in this template's namespace.   Which is how the next thing gets pulled in since sidebar.html is included in master.html.
 
-This allows you to break your template files into reusable components. 
+This allows you to break your template files into reusable components.
 
-Perhaps the most used feature of genshi is the ``${}`` syntax, which means that genshi should insert the value of the python expression inside into the template at that point in the page.   In this case it's calling a genshi template function that renders the sidebar. 
+Perhaps the most used feature of genshi is the ``${}`` syntax, which means that genshi should insert the value of the python expression inside into the template at that point in the page.   In this case it's calling a genshi template function that renders the sidebar.
 
-This template function is defined in sidebars.html: 
+This template function is defined in sidebars.html:
 
 .. code-block:: html+genshi
 
@@ -494,44 +496,44 @@ This template function is defined in sidebars.html:
             <li py:choose="">
               <span py:when="page=='index'"><a href="${tg.url('/about')}">
                 About this page</a> A quick guide to this TG2 site </span>
-              <span py:otherwise=""><a href="${tg.url('/')}">Home</a> Back to 
+              <span py:otherwise=""><a href="${tg.url('/')}">Home</a> Back to
                 your Quickstart Home page </span>
             </li>
-            <li><a href="http://www.turbogears.org/2.0/docs/">TG2 Documents</a> - 
+            <li><a href="http://www.turbogears.org/2.0/docs/">TG2 Documents</a> -
               Read everything in the Getting Started section</li>
-            <li><a href="http://docs.turbogears.org/1.0">TG1 docs</a> 
+            <li><a href="http://docs.turbogears.org/1.0">TG1 docs</a>
               (still useful, although a lot has changed for TG2) </li>
-            <li><a href="http://groups.google.com/group/turbogears"> 
+            <li><a href="http://groups.google.com/group/turbogears">
               Join the TG Mail List</a> for general TG use/topics  </li>
           </ul>
       </div>
-    </py:def>    
-    
-``py:def`` is a special genshi tag that allows you to create a reusable 
-template function.  You'll notice that we use ``${tg.url('/about')}`` in 
-this template function, to generate the link to about.   The tg.url function 
-creates a URL for you, but it takes into acount where the tg2 app has been 
-mounted in our URL tree.   So if you're app is mounted via apache and mod-wsgi 
-at /mywebsite/dynamic/tg2/my-intranet ``/about`` will be turned into the proper
-``mywebsite/dynamic/tg2/my-intranet``.   tg.url actually does quite a bit 
-more than that, but we'll get into that later. 
+    </py:def>
 
-You'll also notice a couple of other interesting attributes here:  
+``py:def`` is a special genshi tag that allows you to create a reusable
+template function.  You'll notice that we use ``${tg.url('/about')}`` in
+this template function, to generate the link to about.   The tg.url function
+creates a URL for you, but it takes into acount where the tg2 app has been
+mounted in our URL tree.   So if you're app is mounted via apache and mod-wsgi
+at /mywebsite/dynamic/tg2/my-intranet ``/about`` will be turned into the proper
+``mywebsite/dynamic/tg2/my-intranet``.   tg.url actually does quite a bit
+more than that, but we'll get into that later.
+
+You'll also notice a couple of other interesting attributes here:
 
 .. code-block:: html+genshi
-      
+
       <li py:choose="">
         <span py:when="page=='index'">...</span
         <span py:otherwise="">...</span>
       </li>
 
 Genshi provides a number of special processing attributes that allow you to
- conditionally display something the most standard of which is py:if that 
- just displays the tag if the reqult is true.   Here we have py:choose which, 
- with py:when and py:otherwise allows you to choose between one of many 
- possible things to render in the <li>. 
+ conditionally display something the most standard of which is py:if that
+ just displays the tag if the reqult is true.   Here we have py:choose which,
+ with py:when and py:otherwise allows you to choose between one of many
+ possible things to render in the <li>.
 
-You can find a full list and explanation of the genshi tags here: 
+You can find a full list and explanation of the genshi tags here:
 
 http://genshi.edgewall.org/wiki/Documentation/xml-templates.html
 
@@ -539,32 +541,32 @@ http://genshi.edgewall.org/wiki/Documentation/xml-templates.html
 Public
 ------------
 
-The public folder just contains simple files that will be served up by tg2 
-as part of your app.  These aren't stored in a /public url, but are just 
-served up by your app if they exist at the url requested. 
+The public folder just contains simple files that will be served up by tg2
+as part of your app.  These aren't stored in a /public url, but are just
+served up by your app if they exist at the url requested.
 
-So an index.html file in the root of public would respond to index requests 
-BEFORE they get to your app.  So, be carefull what you put in here ;) 
+So an index.html file in the root of public would respond to index requests
+BEFORE they get to your app.  So, be carefull what you put in here ;)
 
-The up side of this is that favicon.ico and and other static files can 
-easily be placed anywhere in your url hirearcy that you want. 
+The up side of this is that favicon.ico and and other static files can
+easily be placed anywhere in your url hirearcy that you want.
 
 
-.. warning:: 
-  Before you go too crazy with this if you' need to maximize the 
-  requests your app can serve on some hardware, you will want to setup 
-  apache, iis, or even something as high performance as nginx to serve these 
-  files up for you.   
-  
-  If your static files are spread out too much, configuring this will be 
-  more work than you want.  
+.. warning::
+  Before you go too crazy with this if you' need to maximize the
+  requests your app can serve on some hardware, you will want to setup
+  apache, iis, or even something as high performance as nginx to serve these
+  files up for you.
+
+  If your static files are spread out too much, configuring this will be
+  more work than you want.
 
 Models
 ---------
 
-The whole point of a TG2 is to make dynamic applications possible, not 
-to serve up static sites, so the models sit at the heart of your app, and 
-everything flows out from there. 
+The whole point of a TG2 is to make dynamic applications possible, not
+to serve up static sites, so the models sit at the heart of your app, and
+everything flows out from there.
 
 SQLAlchemy in quickstart
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -606,14 +608,14 @@ Without the comments, here's the package initializaiton for the models:
 User, Group, and Permissions Models
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This is by far the most complex piece of code in the quickstart template.  
-It defines several SQLAlchemy tables, and associated model object with all 
-the methods and functions you might need. 
+This is by far the most complex piece of code in the quickstart template.
+It defines several SQLAlchemy tables, and associated model object with all
+the methods and functions you might need.
 
-The reason this is in quickstart is that it is very common to need to add 
-fields to the user table, or otherwise customize it a bit.  Let's walk 
-quickly through it at this point, knowing that we'll have to come back to 
-some of these things as we have more SQLAlchemy background. 
+The reason this is in quickstart is that it is very common to need to add
+fields to the user table, or otherwise customize it a bit.  Let's walk
+quickly through it at this point, knowing that we'll have to come back to
+some of these things as we have more SQLAlchemy background.
 
 .. code-block:: python
 
@@ -640,8 +642,8 @@ some of these things as we have more SQLAlchemy background.
 
     __all__ = ['User', 'Group', 'Permission']
 
-Lots of imports, but the __all__ assures objects.py file only exports the 
-final mapped SQLAlchemy User, Group, and Permission objects. 
+Lots of imports, but the __all__ assures objects.py file only exports the
+final mapped SQLAlchemy User, Group, and Permission objects.
 
 Here are the explicit table definitions for the asssociation tables:
 
@@ -661,7 +663,7 @@ Here are the explicit table definitions for the asssociation tables:
             onupdate="CASCADE", ondelete="CASCADE"))
     )
 
-These are not exported, but are used by the mapped Group, User and Permission objects. 
+These are not exported, but are used by the mapped Group, User and Permission objects.
 
 And then the Group definition::
 
@@ -670,37 +672,37 @@ And then the Group definition::
         Group definition for :mod:`repoze.what`.
         Only the ``group_name`` column is required by :mod:`repoze.what`.
         """
-        __tablename__ = 'tg_group'    
-    
+        __tablename__ = 'tg_group'
+
         group_id = Column(Integer, autoincrement=True, primary_key=True)
         group_name = Column(Unicode(16), unique=True, nullable=False)
         display_name = Column(Unicode(255))
         created = Column(DateTime, default=datetime.now)
         users = relation('User', secondary=user_group_table, backref='groups')
-    
+
         def __repr__(self):
             return '<Group: name=%s>' % self.group_name
-    
+
         def __unicode__(self):
             return self.group_name
 
 
-There is a relation, which is new to us at this point, and we'll skip the 
-details for now, except to say that it creates a users attribute on every 
-``Group`` object that's is a list of ``Users`` in that group.   The 
-``backref`` parameter says to put a matching ``groups`` attribute on every 
-``User`` instance. 
+There is a relation, which is new to us at this point, and we'll skip the
+details for now, except to say that it creates a users attribute on every
+``Group`` object that's is a list of ``Users`` in that group.   The
+``backref`` parameter says to put a matching ``groups`` attribute on every
+``User`` instance.
 
 
-Next, let's take a look at the user object definition, but we'll split this 
-one into a couple of pieces. 
+Next, let's take a look at the user object definition, but we'll split this
+one into a couple of pieces.
 
-One thing to notice in the initial definition of the object, is the special 
-info, attribute we're passing to some of the column definitions. The 
-'info' argument is just a way to register some information about what's 
-in that column, what kind of validators to use for it, etc.   
+One thing to notice in the initial definition of the object, is the special
+info, attribute we're passing to some of the column definitions. The
+'info' argument is just a way to register some information about what's
+in that column, what kind of validators to use for it, etc.
 
-In this case, we're telling Rum(http://python-rum.org/) some extra 
+In this case, we're telling Rum(http://python-rum.org/) some extra
 information it can can use generate an admin interface for your models.
 
 .. code-block:: python
@@ -709,9 +711,9 @@ information it can can use generate an admin interface for your models.
         """User definition.
         This is the user definition used by :mod:`repoze.who`, which requires at
         least the ``user_name`` column."""
-        
+
         __tablename__ = 'tg_user'
-    
+
         user_id = Column(Integer, autoincrement=True, primary_key=True)
         user_name = Column(Unicode(16), unique=True, nullable=False)
         email_address = Column(Unicode(255), unique=True, nullable=False,
@@ -721,10 +723,10 @@ information it can can use generate an admin interface for your models.
                            info={'rum': {'field':'Password'}})
         created = Column(DateTime, default=datetime.now)
 
-The ``_password`` column is used to store the password, but it's going to 
-be encrypted, so in a second we'll make a property for ``password`` so that 
-it can be set with encryption, and checked against the encrypted version 
-more easily. 
+The ``_password`` column is used to store the password, but it's going to
+be encrypted, so in a second we'll make a property for ``password`` so that
+it can be set with encryption, and checked against the encrypted version
+more easily.
 
 .. code-block:: python
 
@@ -734,8 +736,8 @@ more easily.
 
         def __unicode__(self):
             return self.display_name or self.user_name
-            
-Just some standard python stuff to make working with the object easier. 
+
+Just some standard python stuff to make working with the object easier.
 
 .. code-block:: python
 
@@ -756,46 +758,46 @@ Here's a couple of helper methods.  Notice this line::
 
   DBSession.query(cls).filter(cls.email_address==email).first()
 
-It is inside a class method, where the class is ``cls``, and it's the 
+It is inside a class method, where the class is ``cls``, and it's the
 first SQLAlchemy query we've seen.   Let's deconstruct if for a second.
 
-#. ``DBSession`` is both a store for in memory database objects, and a 
-     connection to the database.   
-#. The ``query`` method is being called with a User class (letting 
-   SA know we want a User object back) and it's being further refined with a 
-   ``filter`` that returns only those User objects with 
-   ``cls.email_address==email``.  
-#. The ``filter`` call returns a new query, which is then further refined 
+#. ``DBSession`` is both a store for in memory database objects, and a
+     connection to the database.
+#. The ``query`` method is being called with a User class (letting
+   SA know we want a User object back) and it's being further refined with a
+   ``filter`` that returns only those User objects with
+   ``cls.email_address==email``.
+#. The ``filter`` call returns a new query, which is then further refined
    by a call to ``first()`` which limits the results to just the first user
-   object retrieved.  
+   object retrieved.
 
-   .. note:: 
+   .. note::
 
-     **Extra credit** for whoever can tell me why it's not a problem that we're not sorting, or otherwise assuring that we always get the same User object back for an e-mail address. 
-   
-     **Extra, extra credit** for whoever can guess why the ``.first()`` call is used. 
-   
-     **Extra, extra, extra** credit for knowing what might be a better query filtering method to use in this case. 
+     **Extra credit** for whoever can tell me why it's not a problem that we're not sorting, or otherwise assuring that we always get the same User object back for an e-mail address.
 
-#. This class method means you can can do 
-    User.by_email_address("foo@foogoo.com") and get a nice result. 
+     **Extra, extra credit** for whoever can guess why the ``.first()`` call is used.
+
+     **Extra, extra, extra** credit for knowing what might be a better query filtering method to use in this case.
+
+#. This class method means you can can do
+    User.by_email_address("foo@foogoo.com") and get a nice result.
 
 
-Next we have another simple class method:: 
+Next we have another simple class method::
 
         @classmethod
         def by_user_name(cls, username):
             """Return the user object whose user name is ``username``."""
             return DBSession.query(cls).filter(cls.user_name==username).first()
 
-And then we have the setter and getter for password methods that do the encryption. 
+And then we have the setter and getter for password methods that do the encryption.
 
 .. code-block:: python
 
         def _set_password(self, password):
             """Hash ``password`` on the fly and store its hashed version."""
             hashed_password = password
-        
+
             if isinstance(password, unicode):
                 password_8bit = password.encode('UTF-8')
             else:
@@ -819,19 +821,19 @@ And then we have the setter and getter for password methods that do the encrypti
         password = synonym('_password', descriptor=property(_get_password,
                                                             _set_password))
 
-These are standard python methodsm, except for the call to 
-SQLAlchemy's ``synonym`` function.  We're probably getting ahead of 
-ourselves, with explaining synonym at this point, but you can guess what 
-it does from this.   It sets up ``_password`` as a property with getters 
-and setters, backed by the ``password`` column in the database, and 
-using the ``_get_password`` and ``_set_password`` methods as getters and 
-setters. 
+These are standard python methodsm, except for the call to
+SQLAlchemy's ``synonym`` function.  We're probably getting ahead of
+ourselves, with explaining synonym at this point, but you can guess what
+it does from this.   It sets up ``_password`` as a property with getters
+and setters, backed by the ``password`` column in the database, and
+using the ``_get_password`` and ``_set_password`` methods as getters and
+setters.
 
-This kind of trickery is only needed when you don't want to store the 
-user-visible values in the database or otherwise need some python 
-indirection in the middle.   Some ORM's make this harder than it needs to be, 
-but SQLAlchemy is designed to make easy things easy, and hard things not 
-just possible, but also *easier*.  
+This kind of trickery is only needed when you don't want to store the
+user-visible values in the database or otherwise need some python
+indirection in the middle.   Some ORM's make this harder than it needs to be,
+but SQLAlchemy is designed to make easy things easy, and hard things not
+just possible, but also *easier*.
 
 .. code-block:: python
 
@@ -840,8 +842,8 @@ just possible, but also *easier*.
             hashed_pass.update(password + self.password[:40])
             return self.password[40:] == hashed_pass.hexdigest()
 
-Validate password pretty much rounds out the User object, and is pretty 
-simple to understand. And that brings us to the end of our file::   
+Validate password pretty much rounds out the User object, and is pretty
+simple to understand. And that brings us to the end of our file::
 
     class Permission(DeclarativeBase):
         __tablename__ = 'tg_permission'
@@ -849,33 +851,33 @@ simple to understand. And that brings us to the end of our file::
         permission_id = Column(Integer, autoincrement=True, primary_key=True)
         permission_name = Column(Unicode(16), unique=True, nullable=False)
         description = Column(Unicode(255))
-    
+
         groups = relation(Group, secondary=group_permission_table,
                           backref='permissions')
-    
+
         def __repr__(self):
             return '<Permission: name=%s>' % self.permission_name
         def __unicode__(self):
             return self.permission_name
 
 
-All of this should be pretty standard stuff at this point.   One thing to 
-note is the relation function, and the reaperance of ``backref`` which sets 
-up a relationship between Permissions and Groups. 
+All of this should be pretty standard stuff at this point.   One thing to
+note is the relation function, and the reaperance of ``backref`` which sets
+up a relationship between Permissions and Groups.
 
 Lib
 ----
 
-TG2 provides a lib module for you to use to store the various libraries 
-that you might need in your application.   And we pre-populate it with a 
-couple of very usefull hooks and helpers. 
+TG2 provides a lib module for you to use to store the various libraries
+that you might need in your application.   And we pre-populate it with a
+couple of very usefull hooks and helpers.
 
 base.py
 ~~~~~~~~~~~~
 
-base.py exists to setup a BaseController for your app, but allows for 
-you to create multiple BaseControllers, or to create custom subcontrollers 
-that you re-use throughout your app. 
+base.py exists to setup a BaseController for your app, but allows for
+you to create multiple BaseControllers, or to create custom subcontrollers
+that you re-use throughout your app.
 
 .. code-block:: python
 
@@ -899,20 +901,20 @@ that you re-use throughout your app.
             return TGController.__call__(self, environ, start_response)
 
 
-The key thing to know is that the __call__ method should be called on 
-every single request that reaches your app.   So you can easily use it to 
-do app wide things (it arleady sets up the identity attribute on the 
+The key thing to know is that the __call__ method should be called on
+every single request that reaches your app.   So you can easily use it to
+do app wide things (it arleady sets up the identity attribute on the
 request with information about the user pulled from the WSGI environ.)
 
 helpers.py
 ~~~~~~~~~~~~
 
-The ``helpers.py`` file has a slightly different purpose than ``base.py`` 
-in that it is the location from which you should import html and other 
-helpers.  TG does you a favor and makes everything in this module 
-automatically available in your genshi templates under the name ``helpers``.   
+The ``helpers.py`` file has a slightly different purpose than ``base.py``
+in that it is the location from which you should import html and other
+helpers.  TG does you a favor and makes everything in this module
+automatically available in your genshi templates under the name ``helpers``.
 
-And we pre-populate helpers with just a few of the useful helpers in the 
+And we pre-populate helpers with just a few of the useful helpers in the
 ``webhelpers`` package::
 
     # -*- coding: utf-8 -*-
@@ -920,15 +922,15 @@ And we pre-populate helpers with just a few of the useful helpers in the
     """WebHelpers used in my-intranet."""
 
     from webhelpers import date, feedgenerator, html, number, misc, text
- 
 
-But you should feel free to create some of your own application specific 
-template helpers and stick them here. 
+
+But you should feel free to create some of your own application specific
+template helpers and stick them here.
 
 globals.py
 ~~~~~~~~~~~~
 
-Every app may have some global settings or information that's shared across all requests, but it's very possible that you may want to run two TG2 apps in the same process, or even two instances of the same app in a single process.  If so, ``app_globals.py`` provides a simple mechanism for storing application specific globals which don't clober on other instances of the same app. 
+Every app may have some global settings or information that's shared across all requests, but it's very possible that you may want to run two TG2 apps in the same process, or even two instances of the same app in a single process.  If so, ``app_globals.py`` provides a simple mechanism for storing application specific globals which don't clober on other instances of the same app.
 
 .. code-block:: python
 
@@ -944,47 +946,47 @@ Every app may have some global settings or information that's shared across all 
             """Do nothing, by default."""
             pass
 
-The ``app_globals`` and ``helpers`` stuff is pre-loaded up into the tg 
-environment for you by the config system.   Which is what we will 
-look into next. 
+The ``app_globals`` and ``helpers`` stuff is pre-loaded up into the tg
+environment for you by the config system.   Which is what we will
+look into next.
 
 Config
 ------------
 
-TG2 like Pylons inverts your normal relationship with a web framework.   
-Normal web frameworks tell you where to put your code and how the 
-framework will set up the context in which that code is called by the 
-framework.   TG2 does it the other way round, where the web framework 
-is setup and configured by your application in conjunction with paste deploy. 
+TG2 like Pylons inverts your normal relationship with a web framework.
+Normal web frameworks tell you where to put your code and how the
+framework will set up the context in which that code is called by the
+framework.   TG2 does it the other way round, where the web framework
+is setup and configured by your application in conjunction with paste deploy.
 
-Paste deploy is what gets called to interperet the ``paster serve 
+Paste deploy is what gets called to interperet the ``paster serve
 development.ini`` command
 
 development.ini
 ~~~~~~~~~~~~~~~~~~
 
-The development.ini file is a simple ini file that is used by paste deploy to 
-load up a wsgi app.  There's nothing that's TG specific about it, except 
-that tg2 expects a few values to be there by default.   
+The development.ini file is a simple ini file that is used by paste deploy to
+load up a wsgi app.  There's nothing that's TG specific about it, except
+that tg2 expects a few values to be there by default.
 
 A TurboGears quickstarted project will contain a couple of  .ini files which
 are used to define what WSGI app ought to be run, and to store end-user
 created configuration values, which is just another way of saying that the
 .ini files should contain \deployment specific\  options.
 
-By default TurboGears provides a ``development.ini``, ``test.ini``, files.  
+By default TurboGears provides a ``development.ini``, ``test.ini``, files.
 These are standard ini file formats.   There's aslo a paster command to create
-a production ini file when you need. it. 
+a production ini file when you need. it.
 
-These files are standard INI files, as used by PasteDeploy.  The individual 
+These files are standard INI files, as used by PasteDeploy.  The individual
 sections are marked off with ``[]``'s.
 
 .. seealso::
-        Configuration file format **and options** are described in great 
-        detail in the `Paste Deploy documentation 
+        Configuration file format **and options** are described in great
+        detail in the `Paste Deploy documentation
         <http://pythonpaste.org/deploy/>`_.
 
-Here's a copy of the standard development.ini file with all the 
+Here's a copy of the standard development.ini file with all the
 comments removed:
 
 
@@ -998,23 +1000,23 @@ comments removed:
     error_email_from = paste@localhost
 
 The default section sets a couple important things.   debug = true is critical
-to turn off in production since it allows the interactive debugger.   Don't 
+to turn off in production since it allows the interactive debugger.   Don't
 worry though, if you setup the smtp_server and error e-mail stuff you'll get
-tracebacks mailed to you whenever they happen on your production server. 
+tracebacks mailed to you whenever they happen on your production server.
 
-Information about the server and what IP address and port to use.   Any 
-paste deploy enabled server will work here.  The default is the 
+Information about the server and what IP address and port to use.   Any
+paste deploy enabled server will work here.  The default is the
 paste.httpserver which is very solid, but perhaps not as high-performance
-as some o of the alternatives. 
+as some o of the alternatives.
 
 .. code-block:: ini
 
     [server:main]
     use = egg:Paste#http
-    host = 127.0.0.1 
+    host = 127.0.0.1
     port = 8080
 
-Information about this particular app and app specific settings: 
+Information about this particular app and app specific settings:
 
 .. code-block:: ini
 
@@ -1038,7 +1040,7 @@ Information about this particular app and app specific settings:
     # execute malicious code after an exception is raised.
     #set debug = false
 
-Setup the loggers: 
+Setup the loggers:
 
 .. code-block:: ini
 
@@ -1074,7 +1076,7 @@ Setup the loggers:
     # repoze.who and repoze.what:
     [logger_auth]
     level = WARN
-    handlers = 
+    handlers =
     qualname = auth
 
     # If you create additional handlers, add them as a key to [handlers]
@@ -1120,27 +1122,27 @@ in your tests.   Out of the box the text.ini file looks like this:
     # Add additional test specific configuration options as necessary.
 
 
-There are a couple important changes, no real server is started up and all 
-the tests that talk to your app do so in-process.   And by default an 
-sqlite in memory database is used to back your tests. 
+There are a couple important changes, no real server is started up and all
+the tests that talk to your app do so in-process.   And by default an
+sqlite in memory database is used to back your tests.
 
 Also by default websetup.py's bootstrap data is pre-loaded for tests, so you
-can easily get a base of data from which to run both development instances 
-and tests by adding it to websetup.py. 
+can easily get a base of data from which to run both development instances
+and tests by adding it to websetup.py.
 
 
 config module
 ~~~~~~~~~~~~~~~~~
 
-In addition to the config files, there's a config module inside my_intranet 
-which is designed to configure and run the tg framework.   This puts 
-application developers in the drivers seat, and the framework firmly 
+In addition to the config files, there's a config module inside my_intranet
+which is designed to configure and run the tg framework.   This puts
+application developers in the drivers seat, and the framework firmly
 in it's place as something that's there to help you when you need it
-and get out of your way when you don't. 
+and get out of your way when you don't.
 
 Our hope is that 90% of applications don't need to edit any of the config module
-files, but for those who do, the most common file to change is 
-``app_config.py`` 
+files, but for those who do, the most common file to change is
+``app_config.py``
 
 .. code-block:: python
 
@@ -1153,17 +1155,17 @@ files, but for those who do, the most common file to change is
     Please note that **all the argument values are strings**. If you want to
     convert them into boolean, for example, you should use the
     :func:`paste.deploy.converters.asbool` function, as in::
-    
+
         from paste.deploy.converters import asbool
         setting = asbool(global_conf.get('the_setting'))
- 
+
     """
 
     from tg.configuration import AppConfig
 
     import my_intranet
     from my_intranet import model
-    from my_intranet.lib import app_globals, helpers 
+    from my_intranet.lib import app_globals, helpers
 
     base_config = AppConfig()
     base_config.renderers = []
@@ -1217,7 +1219,7 @@ in its ``__init__``.  But equally important it provides us with several methods
 that work on the config values to produce the two functions that set up
 your TurboGears app.
 
-If the standard config options we provide don't 
+If the standard config options we provide don't
 do what you need, you can subclass and overide specific methods on
 ``AppConfig`` to get exactly the configuration you want.
 
@@ -1230,15 +1232,15 @@ deploy the app.
 
 As part of the app loading process the ``base_config`` object will
 be merged in with the config values from the .ini file you're using
-to launch your app, and placed in ``tg.config`` 
+to launch your app, and placed in ``tg.config``
 (also known as ``pylons.config``).
 
 
 Tests
 -------
 
-The next section for us to look through is the tests.   TG2 quickstarts your 
-app with two different kind of tests.   And all the setup for the tests: 
+The next section for us to look through is the tests.   TG2 quickstarts your
+app with two different kind of tests.   And all the setup for the tests:
 
 #. Functional tests
 #. Model Unit tests
@@ -1246,7 +1248,7 @@ app with two different kind of tests.   And all the setup for the tests:
 Functional tests
 ~~~~~~~~~~~~~~~~~~`
 
-Let's dive right in and look at the functional tests:: 
+Let's dive right in and look at the functional tests::
 
     # -*- coding: utf-8 -*-
     """
@@ -1277,10 +1279,10 @@ Let's dive right in and look at the functional tests::
             #links = response.html.findAll('a')
             #assert_true(links, "Mummy, there are no links here!")
 
-WebTest provides a simple to use way to grab the response from calling a 
+WebTest provides a simple to use way to grab the response from calling a
 wsgi app with a specific url.   You can then test that specific strings
 are in the response.   Or you can install beautiful soup, parse the response
-and make more specific assertions (like the above which assterts that there 
+and make more specific assertions (like the above which assterts that there
 will be links on the front page.)
 
 .. code-block:: python
@@ -1292,11 +1294,11 @@ will be links on the front page.)
             resp = self.app.get('/secc', extra_environ=environ, status=200)
             assert 'Secure Controller here' in resp.body, resp.body
 
-You can also tell WebTest what kind of response you expect (``status=200``) 
-and you can pass extra information into the controller through the 
-``extra_environ`` param.   This is most useful for setting up a user 
-in ``REMOTE_USER`` so that you can test access to parts of your app that 
-require login. 
+You can also tell WebTest what kind of response you expect (``status=200``)
+and you can pass extra information into the controller through the
+``extra_environ`` param.   This is most useful for setting up a user
+in ``REMOTE_USER`` so that you can test access to parts of your app that
+require login.
 
 .. code-block:: python
 
@@ -1317,7 +1319,7 @@ that it's what we expect.
             self.app.get('/secc', status=401)
             # It's enough to know that authorization was denied with a 401 status
 
-401 indicates access denied because the user is not yet logged in. 
+401 indicates access denied because the user is not yet logged in.
 
 Websetup
 ==============================================
@@ -1331,13 +1333,13 @@ schema.py
 
 This file demonstrates how to create all of code
 needed to generate your tables.  This would be a good
-place to modify the code if you needed to add some 
+place to modify the code if you needed to add some
 unusual database setup commands.
 
 bootstrap.py
 -------------
 
-This is where the default data is defined and loaded 
+This is where the default data is defined and loaded
 into your application's database.  Also, this data is
 used when setting up your database for testing.  Here is
 an excerpt from that file::
@@ -1347,18 +1349,18 @@ an excerpt from that file::
         u.display_name = u'Example manager'
         u.email_address = u'manager@somedomain.com'
         u.password = u'managepass'
-    
+
         model.DBSession.add(u)
-    
+
         g = model.Group()
         g.group_name = u'managers'
         g.display_name = u'Managers Group'
-    
+
         g.users.append(u)
-    
+
         model.DBSession.add(g)
 
-Here, a default manager user is being added to the system, 
+Here, a default manager user is being added to the system,
 along with a manager group.  The user is then assigned to
 the manager group, and the group is added to the session.
 

@@ -1,161 +1,196 @@
 .. _downloadinstall:
 
-How To Install TurboGears 2
-===========================
+TurboGears 2.x Standard Installation
+====================================
 
-This document provides several methods of installing TurboGears; the
-method you choose will depend on your level of experience and
-platform.
+This document is intended to get the new developer up-and-running
+quickly with TurboGears 2.x.  It assumes that you will follow the
+recommended installation procedures and preferred setup.
+:ref:`altinstall` covers non-standard installation procedures
+such as for :ref:`wininstall`.
 
-We recommend installing TurboGears 2 into a virtual environment which
-will prevent any interference with your system's installed packages
-and won't unknowingly upgrade any python libraries that your system
-needs.
+The setup here is a development environment which uses the Paste
+web-server which is easy to set up, but isn't normally used in
+production save for very low-traffic sites.  For instructions on
+setting up a production environment, see :ref:`tgdeployment`.
 
-If you want to build packages of TurboGears for your system please
-send an email to turbogears-trunk@googlegroups.com
+Recommended Installation Environment
+------------------------------------
 
-Prerequisites For All Methods
------------------------------
+We will assume here that you are installing into this environment:
 
-  1. Python
-  2. Setuptools
-  3. virtualenv
-  4. Database & Drivers
-  5. other dependencies
+    * Linux Operating System (Debian or RPM based)
+    * GCC (or another C compiler for your platform, XCode for OS-X,
+      Mingw32 or VisualStudio for Win32)
+    * Python 2.5 or 2.6 (see also :ref:`python24install`)
+    * Python headers for building C extensions (often split into a "dev"
+      package on Linux distributions)
+    * SetupTools_ (version 0.6c9) (or Distribute_ 0.6c9 or above)
+    * a :ref:`virtualenv` isolated environment
 
-Python
-~~~~~~
+.. _setuptools: http://pypi.python.org/pypi/setuptools
+.. _Distribute: http://pypi.python.org/pypi/distribute
 
-TurboGears works with any version of python between 2.4 and 2.6. The
-most widely deployed version of python at the moment of this writing
-is version 2.5.  Python 2.4 requires additional steps which will be
-covered below where needed.  Python 3.0 is currently unsupported due
-to lack of support in many of our upstream packages.
+System Package Installation
+---------------------------
 
-We recommend you use your system's default python install or follow
-the instructions provided here: http://python.org/download/
-
-If you don't know which version of python you have installed you can
-find out with the following command:
+For Debian/Ubuntu systems:
 
 .. code-block:: bash
 
-   $ python --version
-   Python 2.5.2
+    $ sudo aptitude install build-essential python-dev python-setuptools python-virtualenv
 
-Installing setuptools
-~~~~~~~~~~~~~~~~~~~~~
-
-You may already have setuptools installed.  If you have the
-"easy_install" command, you should be all set.
-
-On Windows
-""""""""""
-
-Download http://peak.telecommunity.com/dist/ez_setup.py and then run
-it from the command line.
-
-On UNIX
-"""""""
+For RHEL systems (see :ref:`python24install`):
 
 .. code-block:: bash
 
-    wget http://peak.telecommunity.com/dist/ez_setup.py | sudo python
+    $ su -c 'rpm -Uvh http://download.fedora.redhat.com/pub/epel/5/i386/epel-release-5-3.noarch.rpm'
+    $ yum install gcc sqlite-devel
+    $ yum --enablerepo=epel-testing install python-virtualenv
 
-You may also use your system's package for setuptools.  Under Ubuntu,
-the command is:
-
-.. code-block:: bash
-
-    sudo apt-get install python-setuptools
-
-On Unix (non-root)
-""""""""""""""""""
-
-If you want to install on a unix based system, but don't have root
-privileges, the easiest thing to do is to install a virtual
-environment first.  Here is an explanation of the `virtualenv install
-method`_.
-
-.. _`virtualenv install method`:  http://peak.telecommunity.com/DevCenter/EasyInstall#creating-a-virtual-python
-
-Post Install
-""""""""""""
-
-.. hint:: You most likely want setuptools 0.6c9 or greater as this one
-   provides fixes to work with svn1.5.  If you ever get an error
-   regarding 'log' please run:
-
-   easy_install -U setuptools
-
-To confirm this worked run:
+For Fedora systems:
 
 .. code-block:: bash
 
-    $ python
-    >>> import setuptools
-    >>> setuptools.__version__
-    '0.6c9'
+    $ yum install gcc sqlite-devel python-virtualenv
 
-What is Virtualenv?
-~~~~~~~~~~~~~~~~~~~
 
-``virtualenv`` is a tool that you can use to keep your Python path
-clean and tidy.  It allows you to install new packages and all of
-their dependencies into a clean working environment, thus eliminating
-the possibility that installing turbogears or some other new package
-will break your existing Python environment.
+Installation for the Impatient
+------------------------------
 
-The other great advantage of virtualenv is that it allows you to run
-multiple versions of the same package in parallel which is great for
-running both the production version and the development version of an
-application on the same machine.
-
-People with a sys-admin background could consider virtualenv as a
-variation of an OS jail (chroot) which is also good for security as
-your installation is totally isolated. This makes virtualenv great for
-deploying production sites.
-
-We strongly advise you to install all your TurboGears apps inside a
-virtualenv.  If you ask for support without a virtualenv to isolate
-your packages we will usually ask you to go get virtualenv before
-proceeding further.
-
-Installing ``virtualenv``:
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-On Windows::
-
-    easy_install virtualenv
-
-On Unix:
+Here's the whole process for the impatient.  It sets up a VirtualEnv, installs
+TurboGears 2.1 into the environment, creates a new quick-started project and
+runs that project with the Paste web server:
 
 .. code-block:: bash
 
-    $ sudo easy_install virtualenv
+    $ virtualenv --no-site-packages -p python2.6 tg2env
+    $ cd tg2env/
+    $ source bin/activate
+    (tg2env)$ easy_install -i http://www.turbogears.org/2.1/downloads/current/index tg.devtools
+    (tg2env)$ paster quickstart tg2env
+    (tg2env)$ cd tg2env/
+    (tg2env)$ python setup.py develop
+    (tg2env)$ nosetests
+    (tg2env)$ paster setup-app development.ini
+    (tg2env)$ paster serve development.ini
+    (tg2env)$ deactivate
+    $
 
-On Unix (non-root):
+.. note:: If you are using Python 2.4, such as on RHEL 5, see :ref:`python24install`
+
+Explaining the Installation Process
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. note:: This section is just a longer explanation of the process above.
+
+This sets up a Python 2.6 VirtualEnv, substitute -p python2.5 if you
+wish to use that version.  The use of --no-site-packages prevents
+conflicts with any packages installed into the platform directories.
+(See :ref:`virtualenv` for details on VirtualEnv)
+
+.. hint:: Please note we are using ``tg2env`` as the name of the
+   virtual environment.  This is simply a convention in our
+   documentation, the name of the virtualenv is up to you, and is
+   normally your project or product name, or a descriptive name
+   such as "testing", "trunk" or "staging".
 
 .. code-block:: bash
 
-    $ easy_install --install-dir=$HOME/lib/python2.5/ --script-dir=$HOME/bin/ virtualenv
+    $ virtualenv --no-site-packages -p python2.6 tg2env
 
-will output something like:
+Here we activate the VirtualEnv, the activation "switches into" the
+isolated environment and makes future setup.py or easy_install operations
+affect just this VirtualEnv.
 
-.. code-block:: text
+.. code-block:: bash
 
-    Searching for virtualenv
-    Reading http://pypi.python.org/simple/virtualenv/
-    Best match: virtualenv 1.3.2
-    Downloading http://pypi.python.org/packages/2.5/v/virtualenv/virtualenv-1.3.2-py2.5.egg#md5=1db8cdd823739c79330a138327239551
-    Processing virtualenv-1.3.2-py2.5.egg
-    .....
-    Processing dependencies for virtualenv
-    Finished processing dependencies for virtualenv
+    $ cd tg2env/
+    $ source bin/activate
 
-Installing Database and Drivers
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+This command installs TurboGears 2.1 into the VirtualEnv.  The -i argument
+tells easy_install to lookup the packages involved by treating that page
+as providing the index page which declares the appropriate package versions
+(and provides links to them).  The "current" URL fragment can be replaced
+with, for instance, "2.1b1" to pull in precisely the first 2.1 beta.  Your
+projects will normally use a particular version of TurboGears.
+
+.. code-block:: bash
+
+    (tg2env)$ easy_install -i http://www.turbogears.org/2.1/downloads/current/index tg.devtools
+
+A large number of packages will be installed.  These are the officially
+required packages which define TurboGears itself.  The Pylons/Paste package
+provides the "paster" command, which we will use to set up an example project.
+
+.. code-block:: bash
+
+    (tg2env)$ paster quickstart example
+    # accept all defaults
+    (tg2env)$ cd example/
+
+The following command will install your new package into your VirtualEnv and
+will download a number of packages which are not technically part of TurboGears,
+but which provide useful features for the quick-started application.
+
+.. code-block:: bash
+
+    (tg2env)$ python setup.py develop
+    # more stuff installed here
+    (tg2env)$ nosetests
+
+The nosetests command runs the quickstarted application's test-suite.  This
+step is optional, but is a good smoke-test to see if you have installed
+correctly.
+Here we create our example application's database (an SQLite database) and
+then serve it on the default port (8080).
+
+.. code-block:: bash
+
+    (tg2env)$ paster setup-app development.ini
+    (tg2env)$ paster serve development.ini
+
+Point your web-browser at http://localhost:8080/ when satisfied that you are
+running correctly, hit CTRL-C to exit from the tg2env virtualenv
+
+.. code-block:: bash
+
+    (tg2env)$ deactivate
+    $
+
+Running the Installed Environment
+---------------------------------
+
+Each time you want to work with your TurboGears install, you need to
+re-activate the VirtualEnv.
+
+.. code-block:: bash
+
+    $ cd tg2env/
+    $ source bin/activate
+    $ cd example/
+    (tg2env)$ paster serve development.ini
+
+.. _upgrading:
+
+Upgrading TurboGears
+--------------------
+
+To upgrade an existing TurboGears installation, activate the VirtualEnv and
+pass the -U flag to easy_install with the "index" URL for the new version
+to which you would like to upgrade:
+
+.. code-block:: bash
+
+    easy_install -U -i http://www.turbogears.org/2.1/downloads/current/index tg.devtools
+
+which will update each dependency which has been upgraded.  Note that it will
+*not* uninstall the previous versions of the packages.
+
+.. _dbdriverinstall:
+
+Install a Database Driver
+-------------------------
 
 .. hint:: The installation of the database backend is a topic outside
    of the scope of this document.
@@ -172,7 +207,7 @@ the pypi_ packages have different names than you might expect.
 
     easy_install MySQL-python
 
-    easy_install PyGreSQL
+    easy_install psycopg2
 
 .. _pypi: http://pypi.python.org
 
@@ -180,340 +215,23 @@ SQLAlchemy also has support for PyGreSQL and the 0.6 version will support pg8000
 which is a fully python driver for postgres.  TG plans to support these when SA 0.6
 is released.
 
-Python 2.4 users will also need to install pysqlite_ themselves in
-order to use the sqlite database in the default configuration. In
-addition, they will need to run
-
-.. code-block:: bash
-
-    easy_install hashlib
-
 .. _engines supported: http://www.sqlalchemy.org/docs/05/reference/dialects/index.html
-.. _pysqlite: http://pypi.python.org/pypi/pysqlite/
 
 Cygwin users can't use sqlite as it does not include the necessary
 binary file (``sqlite3.dll``).  If you want to run Cygwin you'll need
 to install a different database.
 
-Installing Non-Python Dependencies
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-You will most likely need a C compiler and the python header
-files. Please see the appropriate section below.
-
-Windows
-"""""""
-
-We include pre-compiled binaries for windows in our package index.
-
-If you want to help us keep all binaries up to date please write to
-turbogears-trunk@googlegroups.com to become part of our windows egg
-building team
-
-You may also want the `win32api`_ package as it provides some very
-useful tools for windows developers, the first you will encounter is
-the ability to make virtualenv work with paths that contain spaces.
-
-See also pylunch_.
-
-.. _win32api: http://starship.python.net/crew/mhammond/win32/
-.. _pylunch: http://www.ohloh.net/p/pylunch
-
-Cygwin
-""""""
-
-You must perform all operations, including setup operations, within
-DOS command windows, not Cygwin command window.
-
-MacOS
-"""""
-
-Xcode is required to build some binary dependancies and is available
-on the OS X CD or at http://developer.apple.com/tools/xcode/.
-
-Debian, Ubuntu
-"""""""""""""""
-
-Debian derived Linux versions require ``python-dev`` and
-``build-essential``::
-
-    $ apt-get install python-dev
-    $ apt-get install build-essential
-
-RedHat, Fedora, CentOS
-""""""""""""""""""""""
-
-Fedora users will need the ``python-devel`` rpm::
-
-    $ yum install python-devel
-
-Gentoo
-""""""
-
-Nothing extra is required as Gentoo has a full development environment
-configured by default.
-
-Other Linux And UNIX
-""""""""""""""""""""
-
-You'll need a working version of the GCC compiler installed, as well
-as the Python headers.
-
-Installing TurboGears
----------------------
-
-We provide several methods for installing TurboGears which depend on
-the level of control you want over it
-
-    1. tutorial (still not complete)
-    2. tg2-bootstrap.py
-    3. plain virtualenv
-    4. using pip (experimental)
-    5. development version
-
-.. hint:: Please note we are using ``tg2env`` as the name of the
-   virtual environment.  This is simply a convention in our
-   documentation, the name of the virtualenv depends totally on the
-   user and should be named according to the project it contains.
-
-Automatic Installation
-~~~~~~~~~~~~~~~~~~~~~~
-
-If this is your first time using TurboGears you can use the bootstrap
-script.  `tg2-bootstrap.py` is a custom virtualenv script.  It will:
-
- * create a virtualenv for you
- * install the latest TurboGears in it
-
-Download and run the script with the following commands:
-
-.. code-block:: bash
-
-   wget http://www.turbogears.org/2.1/downloads/current/tg2-bootstrap.py
-   python tg2-bootstrap.py --no-site-packages tg2env
-
-
-Manual Installation
-~~~~~~~~~~~~~~~~~~~
-
-First, ``cd`` to the directory where you want your virtual environment
-for TurboGears 2. Note the virtualenv will be created as a
-subdirectory here.
-
-Now create a new virtual environment named `tg2env`
-
-.. code-block:: bash
-
-    $ virtualenv --no-site-packages tg2env
-
-that produces something like this::
-
-     Using real prefix '/usr/local'
-     New python executable in tg2env/bin/python
-     Installing setuptools............done.
-
-Activate Your Virtualenv
-""""""""""""""""""""""""
-
-First go inside the virtualenv::
-
-    $ cd tg2env
-
-On Windows you activate a virtualenv with the command::
-
-    Scripts\activate.bat
-
-On UNIX you activate a virtualenv with the command:
-
-.. code-block:: bash
-
-    $ source bin/activate
-
-If you are on Unix your prompt should change to indicate that you're
-in a virtualenv.  It will look something like this::
-
-    (tg2env)username@host:~/tg2env$
-
-The net result of activating your virtualenv is that your PATH
-variable now points to the tools in `tg2evn/bin` and your python will
-look for libraries in `tg2evn/lib`.
-
-Therefore you need to reactivate your virtualenv every time you want
-to work on your ``tg2env`` environment.
-
-Install TurboGears 2
-""""""""""""""""""""
-
-You'll be able to install the latest released version of TurboGears
-via:
-
-.. code-block:: bash
-
-    (tg2env)$ easy_install -i http://www.turbogears.org/2.1/downloads/current/index tg.devtools
-
-What's up with the -i argument?  We all know that setup tools ability to pull dependent
-packages  properly is less than optimal.  TG cannot ensure that every package on pypi will work
-with TG at any given time. For this reason, we have set up a known set of packages that _wil_ work
-So, while TG2 _is_ on pypi, and it will _probably_ work, the only way to install in a way where
-functionality is certain is to utilize the index where we have hand plucked packages for your use.
-
-.. warning:: if you are upgrading from a previous TG2 version your
-   command should be:
-
-    .. code-block:: bash
-
-        (tg2env)$ easy_install -U -i http://www.turbogears.org/2.1/downloads/current/index tg.devtools
-
-.. warning:: If your Python is version 2.4, you must make sure to
-   install Beaker 1.4 or higher. Though it should be automatic, you
-   may need to run this command to get it:
-
-    .. code-block:: bash
-
-        easy_install -U beaker
-
-TurboGears and all of its dependencies should download and install
-themselves.  (This may take several minutes.)
-
-Deactivating The Environment
-""""""""""""""""""""""""""""
-
-When you are done working simply run the ``deactivate`` virtualenv
-shell command::
-
-    (tg2env)user@host:~/tg2env$ deactivate
-    user@host:~/tg2env$
-
-This isn't really needed but it's good practice if you want to switch
-your shell to do some other work.
-
-Installation Using Pip (Experimental)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-`pip`_ (or pip installs packages) is an experimental easy_install
-replacement. It provides many improvements over it's predecessor and
-aims to be a full replacement.
-
-.. warning:: pip is not supported under windows!
-
-Just add the ``--pip`` flag to the bootstrap script::
-
-  $ python tg2-bootstrap.py --no-site-packages --pip tg2env
-
-.. _pip: http://pypi.python.org/pypi/pip
-
-Installing The Development Version Of Turbogears 2
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Getting Mercurial
-""""""""""""""""""
-
-    * All major Linux distributions have this installed. The package
-      is normally named ``mercurial``
-    * On windows you can download the `TortoiseHG installer`_
-    * On other platforms you may install the HG command line utility with an easy_install command::
-
-       easy_install mercurial
-
-.. _TortoiseHG installer: http://mercurial.selenic.com/wiki/TortoiseHg
-
-Getting The Source
-""""""""""""""""""
-
-Check out the latest code from the subversion repositories:
-
-.. code-block:: bash
-
-  (tg2dev)$ hg clone http://hg.turbogears.org/tgdevtools-dev/ tgdevtools
-  (tg2dev)$ hg clone http://hg.turbogears.org/tg-dev/ tg
-
-Installing The Sources
-""""""""""""""""""""""
-
-Tell setuptools to use these versions that you have just checked out
-via Mercurial:
-
-* TurboGears 2 :
-
-.. code-block:: bash
-
-  (tg2dev)$ cd tg
-  (tg2dev)$ python setup.py develop -i http://www.turbogears.org/2.1/downloads/current/index
-
-* TurboGears 2 developer tools:
-
-.. code-block:: bash
-
-  (tg2dev)$ cd ../tgdevtools
-  (tg2dev)$ python setup.py develop -i http://www.turbogears.org/2.1/downloads/current/index
-
-Source Install Via Pip
-""""""""""""""""""""""
-
-
-use the ``--trunk`` flag to the bootstrap script::
-
-  $ python tg2-bootstrap.py --no-site-packages --trunk tg2env
-
-or install via pip manually
-
-.. code-block:: bash
-
-   $ easy_install pip sqlalchemy
-   $ pip install -e 'hg+http://bitbucket.org/turbogears/tg-dev/#egg=TurboGears2'
-   $ pip install -e 'hg+http://bitbucket.org/turbogears/tgdevtools-dev/#egg=tg.devtools'
-
-Validate The Installation
--------------------------
-
-To check if you installed TurboGears 2 correctly, type
-
-.. code-block:: bash
-
-    (tg2env)$ paster --help
-
-and you should see something like::
-
-    Usage: paster [paster_options] COMMAND [command_options]
-
-    Options:
-      --version         show program's version number and exit
-      --plugin=PLUGINS  Add a plugin to the list of commands (plugins are Egg
-                        specs; will also require() the Egg)
-      -h, --help        Show this help message
-
-    Commands:
-      create       Create the file layout for a Python distribution
-      help         Display help
-      make-config  Install a package and create a fresh config file/directory
-      points       Show information about entry points
-      post         Run a request for the described application
-      request      Run a request for the described application
-      serve        Serve the described application
-      setup-app    Setup an application, given a config file
-
-    TurboGears2:
-      quickstart   Create a new TurboGears 2 project.
-      tginfo       Show TurboGears 2 related projects and their versions
-
-Notice the "TurboGears2" command section at the end of the output --
-this indicates that turbogears is installed in your current path.
-
-Paster has replaced the old tg-admin command, and most of the tg-admin
-commands have now been re-implemented as paster commands. For example,
-``tg-admin quickstart`` command has changed to ``paster quickstart``,
-and ``tg-admin info`` command has changed to ``paster tginfo``.
-
-For a full list of turbogears commands see :ref:`Command Line reference
-<command_line_reference>`.
-
 What's Next?
 ============
 
-If you are new to turbogears you will want to continue with the
-:ref:`Quick Start Guide <quickstarting>`.
+    * If you are new to TurboGears you will want to continue with the
+        :ref:`Quick Start Guide <quickstarting>`.
+    * If you are a TG1 user be sure to check out our
+        :ref:`What's new in TurboGears 2 <whatsnew>` page to get a
+        picture of what's changed in TurboGears2.
 
-If you are a TG1 user be sure to check out our :ref:`What's new in
-TurboGears 2 <whatsnew>` page to get a picture of what's changed in
-TurboGears2 so far.
+.. toctree::
+   :maxdepth: 2
+
+   AltInstall
 

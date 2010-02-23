@@ -8,5 +8,6 @@ Getting Started
    :maxdepth: 1
 
    main/DownloadInstall
+   main/AltInstall
    main/QuickStart
 

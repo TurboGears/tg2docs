@@ -12,4 +12,5 @@ Third-party components
    weberror
    webhelpers
    webob
+   virtualenv
 
