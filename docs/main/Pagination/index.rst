@@ -243,5 +243,3 @@ And this is what the end result looks like:
 
 An :download:`Example Project <ToscaSample-0.2dev.zip>` has
 been attached so that you can try this easily.
-
-.. todo:: Difficulty: Easy to Medium. Does pagination still work this way for 2.1?
