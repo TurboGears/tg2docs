@@ -41,7 +41,9 @@ datastore.
 
 OK, enough with theory! Let's get to some real life (sort of)
 examples.  Open up your root controller and add the following import
-at the top the file::
+at the top the file:
+
+.. code-block:: python
 
     from tg import session
 
@@ -50,16 +52,31 @@ other words, it's the session for this particular user.  The session
 can be manipulated in much the same way as a standard python
 dictionary.
 
-Here is how you search for a key in the session::
+Here is how you search for a key in the session:
+
+.. code-block:: python
 
     if session.get('mysuperkey', None):
         # do something intelligent
         pass
 
-and here is how to set a key in the session::
+and here is how to set a key in the session:
+
+.. code-block:: python
 
     session['mysuperkey'] = 'some python data I need to store'
     session.save()
 
 You should note that you need to explicitly save the session in order for your
 keys to be stored in the session. 
+
+You can delete all user session with the `delete()` method of the
+session object:
+
+.. code-block:: python
+
+    session.delete()
+
+Even though it's not customary to delete all user sessions on a production
+environment, you will typically do it for cleaning up after
+usability or functional tests.

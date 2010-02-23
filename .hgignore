@@ -11,3 +11,6 @@ docs/project_code/tosca_forms/ToscaSample.egg-info
 docs/project_code/tosca_forms/toscasample/public/movies/
 docs/project_code/tosca_forms/devdata.db
 *~
+toscasample/dist/
+main/Pagination/*.zip
+devdata.db

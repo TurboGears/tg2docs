@@ -6,6 +6,7 @@ Setting up the TurboGears Test Environment and Testing
 Initial Environment Setup
 ---------------------------
 
+
 Please follow the instructions on the install_ page to get your
 environment started.  Pay special attention to the virtualenv
 setup.  You want to do your TG development within a clean environment
@@ -14,7 +15,7 @@ that will not interfere with any existing projects you may have.
 .. _install: DownloadInstall.html#installing-the-development-version-of-turbogears-2
 
 Package Installation
------------------------
+--------------------
 Because Turbogears allows the user to swap out so many different moving parts,
 we need to be able to prove that we can support these components regularly
 in order to provide a robust experience for our users.
@@ -29,14 +30,16 @@ have problems getting this to work, but if you try this, it will often work::
 You can then install chameleon.genshi successfully::
     
     $ easy_install chameleon.genshi
+
+Tests do have more dependencies than simply using TurboGears because
+they use all the opional module and also some test specific utilities.
+In order to install all of these, make sure that you have TurboGears2
+registered with Setuptools, either by installing it or by seting it up
+in development mode (`setup.py develop`) then ask Setuptools to
+install the test dependencies:
+
+    $ easy_install 'TurboGears2[core-testing]'
     
-It is then recommended you run the tests the first time through setup.py because
-this will install all of the `test_requires` packages from the setup.py script::
-
-    $ python setup.py test
-
-You can in fact run the tests like this every time, but it is a little easier to use
-nose.
 
 Testing
 -------
