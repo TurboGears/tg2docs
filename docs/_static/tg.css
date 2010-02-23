@@ -229,6 +229,14 @@
 }
 /* Misc styling
 *******************************************/
+pre  {
+    background-color:#F0F0F0;
+    border:1px solid #CCC;
+    line-height:1.3em;
+    margin:5px;
+    overflow:auto;
+    padding:10px;
+}
 
 p.logo  {
     display: none;
