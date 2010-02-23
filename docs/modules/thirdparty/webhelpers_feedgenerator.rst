@@ -48,6 +48,31 @@ Example controller method:
             response.content_type = 'application/atom+xml'
             return feed.writeString('utf-8')
 
+To have your feed automatically discoverable by your user's browser,
+you will need to include a link tag to your template/document's head.
+Most browsers render this as a small RSS icon next to the address bar
+on which the user can click to subscribe.
+
+.. code-block:: html
+
+    <head>
+        <link rel="alternate" type="application/atom+xml" href="./atom1" />
+    </head>
+
+Normally you will also want to include an in-page link to the RSS page
+so that users who are not aware of or familiar with the automatic
+discovery can find the RSS feed.  `FeedIcons`_ has a downloadable set
+of icons suitable for use in links.
+
+.. code-block:: html
+
+    <a href="./atom1"><img src="/images/feed-icon-14x14.png" /> Subscribe</a>
+
+.. _`FeedIcons`: http://www.feedicons.com/
+
+The various feed generators will escape your content appropriately
+for the particular type of feed.
+
 .. autoclass:: SyndicationFeed
     :members:
 
@@ -55,5 +80,3 @@ Example controller method:
 
 .. autoclass:: Enclosure
     :members:
-
-.. todo:: Add beginner's documentation on how to link the Feed via link tags for auto-discovery and how to link for manual discovery.  Also need to document e.g. what to do about escaping HTML content or
