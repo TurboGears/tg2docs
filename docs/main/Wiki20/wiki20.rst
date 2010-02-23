@@ -39,7 +39,7 @@ Setup
 
 To go through this tutorial, you'll need:
 
-#.  Python_ 2.4, 2.5 or 2.6.  Note that Mac OSX 10.5 (Leopard) 
+#.  Python_ 2.4, 2.5 or 2.6.  Note that Mac OSX 10.5 (Leopard)
     comes with Python 2.5 pre-installed; for 10.4 and
     before, follow *Macintosh* in the above link.
 
@@ -124,9 +124,9 @@ Now ``paster`` will spit out a bunch of stuff::
 
   Selected and implied templates:
     tg.devtools#turbogears2  TurboGears 2.0 Standard Quickstart Template
-  
+
   ...etc...
-  
+
   reading manifest file 'Wiki_20.egg-info/SOURCES.txt'
   reading manifest template 'MANIFEST.in'
   writing manifest file 'Wiki_20.egg-info/SOURCES.txt'
@@ -503,7 +503,7 @@ When you refresh the output web page you should see "initial data"
 displayed on the page.
 
 .. note:: py.replace_ replaces the *entire tag* (including start and
-  end tags) with the value of the variable provided.  
+  end tags) with the value of the variable provided.
 
    .. _py.replace: http://genshi.edgewall.org/wiki/Documentation/xml-templates.html#id8
 
@@ -677,7 +677,7 @@ that it's now a link.  You probably won't be surprised to find that
 clicking that link produces an error.
 
 
-Hey, Where'S The Page?
+Hey, Where's The Page?
 ======================
 
 What if a Wiki page doesn't exist? We'll take a simple approach: if
