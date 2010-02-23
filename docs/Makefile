@@ -24,8 +24,9 @@ help:
 
 clean:
 	-rm -rf _build/*
+	-rm -rf main/pagination/toscasample/dist
 
-html:
+html: main/Pagination/ToscaSample-0.2dev.zip
 	mkdir -p _build/html _build/doctrees
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) _build/html
 	@echo
@@ -66,3 +67,7 @@ linkcheck:
 	@echo
 	@echo "Link check complete; look for any errors in the above output " \
 	      "or in _build/linkcheck/output.txt."
+
+main/Pagination/ToscaSample-0.2dev.zip:
+	cd main/Pagination/toscasample/ && python setup.py sdist --format zip
+	cp main/Pagination/toscasample/dist/ToscaSample-0.2dev.zip main/Pagination/
