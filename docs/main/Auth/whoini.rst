@@ -3,24 +3,24 @@
 Using who.ini
 =============
 
-Once you have disabled your quickstart configuration 
-(see :ref:`disabling-auth`), you may find yourself wanting to 
-use the `who.ini` configuration mechanism referenced in 
-most `repoze.who` documentation.  This section describes how 
-to create a `who.ini`-based configuration that looks much 
+Once you have disabled your quickstart configuration
+(see :ref:`disabling-auth`), you may find yourself wanting to
+use the `who.ini` configuration mechanism referenced in
+most `repoze.who` documentation.  This section describes how
+to create a `who.ini`-based configuration that looks much
 like the quickstart configuration you just disabled.
 
-Since `repoze.who` is WSGI middleware, you will need to alter 
-your project's `project.config.middleware.py` file to create 
+Since `repoze.who` is WSGI middleware, you will need to alter
+your project's `project.config.middleware.py` file to create
 your middleware from your .ini file::
 
     from repoze.who.config import make_middleware_with_config as make_who_with_config
     ...
         # Wrap your base TurboGears 2 application with custom middleware here
         app = make_who_with_config(
-            app, 
-            global_conf, 
-            app_conf.get('who.config_file','who.ini'), 
+            app,
+            global_conf,
+            app_conf.get('who.config_file','who.ini'),
             app_conf.get('who.log_file','stdout'),
             app_conf.get('who.log_level','debug')
         )
@@ -32,15 +32,15 @@ and add the following to your config file's app:main section::
     who.log_file = stdout
 
 at this point, you are using the standard `repoze.who` configuration mechanism,
-so should be able to follow most `repoze.who` documentation to complete your 
+so should be able to follow most `repoze.who` documentation to complete your
 configurations.
 
 Quickstart via `who.ini`
 ------------------------
 
-If you would like to start off your customizations with something similar 
-to the `repoze.who.quickstart` mechanism, you can use standard mechanisms 
-to set up most of the machinery that the quickstart provides.  Here is a 
+If you would like to start off your customizations with something similar
+to the `repoze.who.quickstart` mechanism, you can use standard mechanisms
+to set up most of the machinery that the quickstart provides.  Here is a
 sample `who.ini` that provides much of the quickstart behaviour::
 
     # Sample of a who.ini file from which to begin configuring
@@ -54,14 +54,14 @@ sample `who.ini` that provides much of the quickstart behaviour::
 
     [plugin:friendlyform]
     # Redirecting form which does login via a "post"
-    # from a regular /login form 
+    # from a regular /login form
     use = repoze.who.plugins.friendlyform:FriendlyFormPlugin
     login_form_url= /login
     login_handler_path = /login_handler
     logout_handler_path = /logout_handler
     rememberer_name = auth_tkt
-    post_login_url = 
-    post_logout_url = 
+    post_login_url =
+    post_logout_url =
 
     [plugin:sqlauth]
     # An SQLAlchemy authorization plugin
@@ -73,7 +73,7 @@ sample `who.ini` that provides much of the quickstart behaviour::
     challenge_decider = repoze.who.classifiers:default_challenge_decider
 
     [identifiers]
-    # We can decide who the user is trying to identify as using either 
+    # We can decide who the user is trying to identify as using either
     # a fresh form-post, or the session identifier cookie
     plugins =
         friendlyform;browser
@@ -124,8 +124,8 @@ we set up our `repoze.who` plugins in the normal manner for `repoze.who`::
     )
 
 This module creates a number of plugins which the `who.ini` file references.
-It is also possible to configure plugins to accept parameters from the 
-`who.ini` configuration file (by specifying a plugin: section and providing 
+It is also possible to configure plugins to accept parameters from the
+`who.ini` configuration file (by specifying a plugin: section and providing
 the parameters).
 
 Next Steps
@@ -138,6 +138,6 @@ References
 ----------
 
  * `Pylons Repoze.who Cookbook`_ -- describes how the `repoze.who` middleware
-   fitted into a Pylons application (TurboGears 2.x is a Pylons application)
+   fitted into a Pylons application (TurboGears |version| is a Pylons application)
 
 .. _`Pylons Repoze.who Cookbook`: http://wiki.pylonshq.com/display/pylonscookbook/Authentication+and+Authorization+with+%60repoze.who%60
