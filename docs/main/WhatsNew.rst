@@ -96,7 +96,7 @@ that makes TG great.  Previously, TurboGears used SQLObject, which implements
 the `ActiveRecord`_ pattern, whereas SQLAlchemy utilizes the Data Mapper Pattern.
 We feel that the `Data Mapper`_ Pattern is more flexible for the longevity of a project,
 in that it gives you direct access to the Table Objects, allowing you to map
-the Related Objects around it.  For those who want everything summed up in a 
+the Related Objects around it.  For those who want everything summed up in a
 single mapping class, SQLAlchemy provides a Declarative form of Object definition
 which implements ActiveRecord, while still giving you access to your tables.
 
@@ -107,7 +107,7 @@ key based in part on foreign key fields of another object.  So while
 account objects, it was very hard to build a data model embodying this
 fact in SQLObject.  This is not true of SQLAlchemy.
 
-Design decisions aside, SA has an active `community`_, and has a well-maintained 
+Design decisions aside, SA has an active `community`_, and has a well-maintained
 codebase that is also well `documented`_.  This makes it a perfect choice for
 us because while we love giving you documentation, there is no way we
 could provide the detail required to do Object Relational Mapping justice.
@@ -132,20 +132,20 @@ Compatibility
 Areas of compatibility:
 
   * Like TurboGears 1.1, TurboGears 2 supports Python 2.4 and above.
-  * TurboGears 1.x and TurboGears 2.x can both be installed on the
+  * TurboGears 1.x and TurboGears |version| can both be installed on the
     same machine.  They are different packages with different
     namespaces.  Right now there are no dependency conflicts.  But
     using virtualenv is highly recommended to eliminate the
     possibility of future dependency conflicts.
-  * Object dispatch is implemented in TurboGears 2.x, so you can use
+  * Object dispatch is implemented in TurboGears |version|, so you can use
     arguments and keywords in functions the same way you did in
     TurboGears 1.x.
-  * Expose and error handling decorators are implemented in TurboGears 2.x,
+  * Expose and error handling decorators are implemented in TurboGears |version|,
     you can use decorators just like TurboGears 1.x.
 
 
 Differences:
-  * CherryPy filters will not work in TurboGears 2.x.  You can write
+  * CherryPy filters will not work in TurboGears |version|.  You can write
     middleware to do what filters did in CherryPy2
   * The @expose decorator has a slightly updated syntax for content
     type declaration

@@ -36,7 +36,7 @@ We cannot stress this enough: Read These Pages!
 Modeling Your Application
 --------------------------
 
-SQLAlchemy is the default data-storage layer for TurboGears 2.x.
+SQLAlchemy is the default data-storage layer for TurboGears |version|.
 The SQLAlchemy-migrate project is the officially supported mechanism
 for updating and migrating your database.
 
@@ -100,7 +100,7 @@ controllers to help you quickly prototype your applications.  The
 Templates/Views
 ---------------
 
-By default your TurboGears 2.x project will be configured to use the
+By default your TurboGears |version| project will be configured to use the
 :ref:`Genshi <genshi>` templating language.  TurboGears allows for the
 use of alternate templating languages.
 
@@ -158,6 +158,7 @@ Installation and Deployment
     :maxdepth: 2
 
     main/DownloadInstall
+    main/AltInstall
     main/Deployment
     main/Deployment/DeployWithAnEgg
     main/Deployment/ModProxy
@@ -212,4 +213,4 @@ Performance and optimization
 Next Steps
 ----------
 
- * :ref:`getting-to-know` -- learn how TurboGears 2.x works, changes since the 1.x release, and how to contribute to the project
+ * :ref:`getting-to-know` -- learn how TurboGears |version| works, changes since the 1.x release, and how to contribute to the project
