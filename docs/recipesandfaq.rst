@@ -206,8 +206,6 @@ Performance and optimization
 
 .. todo:: Difficulty: Medium. optimization tips for SQLAlchemy usage
 
-.. todo:: Difficulty: Easy. Explain usage of tgscheduler and how to use SQLAlchemy in a task
-
 Next Steps
 ----------
 
