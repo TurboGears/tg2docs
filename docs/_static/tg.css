@@ -24,16 +24,18 @@
      padding: 0;
  }
 
- a {
+ a, a:link, a:visited, a:visited {
      color: #FF6600;
+     text-decoration: none;
  }
 
  a:hover {
-     text-decoration: none;
+     text-decoration: underline;
  }
 
  a:visited {
      color: #FFA557;
+     text-decoration: none;
  }
 
  img {
