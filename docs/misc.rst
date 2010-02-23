@@ -230,9 +230,6 @@ Other
 .. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/b718855725da557d?hl=en
           tgext and i18n
 
-.. todo:: Difficulty: Easy. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/da4789ff0e246f8b?hl=en
-          destroy tg2 session
-
 .. todo:: Difficulty: Hard. Performance deployment enhancements pretty much explain all the YSlow issues
             * serving static files from the frontent,  /config/app_cfg.py base_config.serve_static = False
             * compressing JS/html/CSS,etc
