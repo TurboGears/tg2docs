@@ -29,15 +29,15 @@ Apache Deployment
   extension provides a simple to set-up apache environment that
   proxies HTTP requests to your TG2 app.  It can be used to load
   balance across multiple machines.
- 
+
 * mod_rewrite -- Very similar to mod_proxy
   (in fact from the TG2 side they are identical), but mod_rewrite can
   be somewhat more complex to setup itself.
-  
-* :ref:`FastCGI <FastCGI>` -- when apache extensions are not an option 
-  due to webhost restrictions (for example, the want to run suexec on all 
-  userspace scripts), you can create a FastCGI dispatcher that invokes the 
-  WSGI interface. 
+
+* :ref:`FastCGI <FastCGI>` -- when apache extensions are not an option
+  due to webhost restrictions (for example, the want to run suexec on all
+  userspace scripts), you can create a FastCGI dispatcher that invokes the
+  WSGI interface.
 
 NGINX Deployment
 -----------------
@@ -47,20 +47,20 @@ of TurboGears 2 in very high load environments.
 
    .. toctree::
       :maxdepth: 1
-      
+
       Deployment/nginx/load_balance.rst
-      
+
 Another alternative that has yet to be explored by the doc crew is
 `uWSGI <http://projects.unbit.it/uwsgi/wiki/RunOnNginx>`_.
 
-Packaging your app as an egg:
-------------------------------
+Packaging your Application as an Egg
+------------------------------------
 
 You may also want to package your app up as a redistributable egg, TG2
 sets up everything that you need to do this.
 
  :ref:`tgeggdeployment`
- 
+
 
 Integrating with the init system on Un*x (SysV style)
 ---------------------------------------------------------
@@ -83,5 +83,5 @@ Reference
       Deployment/FastCGI
 
 .. todo:: Difficulty: Hard. Document use of IIS with TurboGears thru a proxy.
-.. todo:: Difficulty: Hard. Document usage of http://pypi.python.org/pypi/wsgisvc to deploy as a Win32 service 
+.. todo:: Difficulty: Hard. Document usage of http://pypi.python.org/pypi/wsgisvc to deploy as a Win32 service
 
