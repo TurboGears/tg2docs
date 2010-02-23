@@ -14,19 +14,37 @@ it much).
 Installation and Tools
 ----------------------
 
-This is covered in the main :ref:`downloadinstall`.  You may also want 
-to read :ref:`bitbucket_tutorial`.
+To contribute to core, you will want to do a :ref:`sourceinstall` so that
+you can use Mercurial (hg) to generate patches.  You may want
+to review :ref:`bitbucket_tutorial` if you would like to use the BitBucket
+service to collaborate with other developers easily.
 
+Communication Channels
+----------------------
+
+ * Internet Relay Chat (IRC) is the primary channel for collaboration and
+   communication for the core developers.  `Freenode's TurboGears Channel`_
+   is the primary channel for getting interactive answers to questions.
+ * If you want to post a piece of code, a traceback, or any significant
+   piece of text in the IRC channel, consider using a
+   `PasteBin`_ service.
+ * The `TurboGears mailing list`_ allows for asking longer-form questions
+   and can be accessed without an IRC client, such as when you are behind
+   a corporate firewall.
+
+.. _`TurboGears mailing list`: http://groups.google.com/group/turbogears
+.. _`PasteBin`: http://pastebin.ca/
+.. _`Freenode's TurboGears Channel`: irc://freenode.net/#turbogears
 
 Source Layout
 -------------
 
 TurboGears 2 is composed of two core packages.
 
-* tg package is TurboGears 2 core. 
+* tg package is TurboGears 2 core.
 * tg.devtools is a set of tools used for developing turbogears
     applications but not needed for running them.
-  
+
 Coding Style
 ------------
 
@@ -86,8 +104,8 @@ There are two kinds of docs, and both have their useful place:
     and the sphinx sources of all upstream packages (that use sphinx)
 
 **Manual**
-    The TurboGears 2 documentation is online at
-    http://turbogears.org/2.0/docs/
+    The TurboGears |version| documentation is online at
+    http://turbogears.org/2.1/docs/
 
 Please document your own work. It doesn't have to be Shakespeare, but
 the editors don't enjoy writing documentation any more than you do
