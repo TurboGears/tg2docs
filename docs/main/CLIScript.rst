@@ -68,3 +68,10 @@ following:
      [console_scripts]
      print-usernames = exampleapp.scripts.usernames:main
      """)
+
+Paster Commands and Cron Support
+================================
+
+The :ref:`tgext.command` package provides a class which can be used to
+provide more involved command support, including support for respecting
+PID files, and integration with the paster command-line parsing code.

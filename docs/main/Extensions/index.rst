@@ -23,7 +23,7 @@ objects.
    :maxdepth: 1
 
    Admin/index
-   
+
 Crud
 ----
 
@@ -49,3 +49,16 @@ Spatial Data.
    :maxdepth: 1
 
    Geo/index
+
+Command
+-------
+
+Provides a "full featured" paster command base-class from which you
+can create paster commands that support command-line parsing, PID
+creation and exclusion and similar requirements for setting up
+reliable cron tasks.
+
+.. toctree::
+   :maxdepth: 1
+
+   Command/index
