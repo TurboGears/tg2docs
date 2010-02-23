@@ -192,6 +192,7 @@ Special Effects and Extensions
     main/AuthorizeTutorial
     main/Extensions/Geo/index
     main/CLIScript
+    main/Scheduling
 
 Performance and optimization
 ============================
