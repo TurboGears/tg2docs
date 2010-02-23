@@ -8,24 +8,20 @@ create a robust and reliable upgrade path for an application as it
 changes over time.  TurboGears 2 comes with a tool to incrementally
 test and automatically deploy schema changes as needed.
 
-TurboGears 2 relies on the `sqlalchemy-migrate`_ project to 
+TurboGears 2 relies on the `sqlalchemy-migrate`_ project to
 automate database schema migration.
 
 .. _sqlalchemy-migrate: http://code.google.com/p/sqlalchemy-migrate/
 
-
 Prerequisites
 -------------
 
-This document assumes that you have an existing TurboGears 2 project
+This document assumes that you have an existing TurboGears |version| project
 that uses the built-in support for SQLAlchemy.  If you
 are not yet at that stage, you may want to review the following:
 
 * :ref:`quickstarting`
 * :ref:`sqlalchemy_and_model`
-
-.. _http://turbogears.org/2.0/docs/main/QuickStart.html: http://turbogears.org/2.0/docs/main/QuickStart.html
-.. _http://turbogears.org/2.0/docs/main/SQLAlchemy.html: http://turbogears.org/2.0/docs/main/SQLAlchemy.html
 
 Additionally, it is assumed that you have reached a point in the
 development life cycle where a change must be made to your current data
@@ -33,11 +29,8 @@ model. This could mean adding a column to an existing table, adding a
 table, removing a table, or any number of other database schema
 changes.
 
-The examples in this document will be based on the `TurboGears 2 Wiki
-Tutorial`_, but the information applies to any TurboGears 2 project.
-
-.. _`TurboGears 2 Wiki Tutorial`: http://turbogears.org/2.0/docs/main/Wiki20/wiki20.html
-
+The examples in this document will be based on the :ref:`wiki20`, but
+the information applies to any TurboGears 2 project.
 
 Getting Started
 ---------------

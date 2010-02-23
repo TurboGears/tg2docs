@@ -1,10 +1,10 @@
 .. _downloadinstall:
 
-TurboGears 2.x Standard Installation
-====================================
+TurboGears |version| Standard Installation
+===========================================
 
 This document is intended to get the new developer up-and-running
-quickly with TurboGears 2.x.  It assumes that you will follow the
+quickly with TurboGears |version|.  It assumes that you will follow the
 recommended installation procedures and preferred setup.
 :ref:`altinstall` covers non-standard installation procedures
 such as for :ref:`wininstall`.
@@ -222,7 +222,7 @@ binary file (``sqlite3.dll``).  If you want to run Cygwin you'll need
 to install a different database.
 
 What's Next?
-============
+------------
 
     * If you are new to TurboGears you will want to continue with the
         :ref:`Quick Start Guide <quickstarting>`.
