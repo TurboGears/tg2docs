@@ -45,15 +45,14 @@ For RHEL systems (see :ref:`python24install`):
 .. code-block:: bash
 
     $ su -c 'rpm -Uvh http://download.fedora.redhat.com/pub/epel/5/i386/epel-release-5-3.noarch.rpm'
-    $ yum install gcc sqlite-devel
-    $ yum --enablerepo=epel-testing install python-virtualenv
+    $ su -c 'yum install gcc sqlite-devel'
+    $ su -c 'yum --enablerepo=epel-testing install python-virtualenv'
 
 For Fedora systems:
 
 .. code-block:: bash
 
-    $ yum install gcc sqlite-devel python-virtualenv
-
+    $ su -c 'yum install gcc sqlite-devel python-virtualenv'
 
 Installation for the Impatient
 ------------------------------
