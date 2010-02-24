@@ -195,6 +195,15 @@ Special Effects and Extensions
     main/AuthorizeTutorial
     main/Extensions/Geo/index
 
+Real-time Web
+-------------
+
+.. toctree::
+    :maxdepth: 1
+
+    main/Realtime/index
+    main/Realtime/moksha
+
 Performance and optimization
 ============================
 
