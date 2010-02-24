@@ -7,7 +7,7 @@ This document is intended to get the new developer up-and-running
 quickly with TurboGears |version|.  It assumes that you will follow the
 recommended installation procedures and preferred setup.
 :ref:`altinstall` covers non-standard installation procedures
-such as for :ref:`wininstall`.
+such as for :ref:`wininstall` or :ref:`osxinstall`.
 
 The setup here is a development environment which uses the Paste
 web-server which is easy to set up, but isn't normally used in
@@ -19,14 +19,14 @@ Recommended Installation Environment
 
 We will assume here that you are installing into this environment:
 
-    * Linux Operating System (Debian or RPM based)
-    * GCC (or another C compiler for your platform, XCode for OS-X,
-      Mingw32 or VisualStudio for Win32)
-    * Python 2.5 or 2.6 (see also :ref:`python24install`)
-    * Python headers for building C extensions (often split into a "dev"
-      package on Linux distributions)
-    * SetupTools_ (version 0.6c9) (or Distribute_ 0.6c9 or above)
-    * a :ref:`virtualenv` isolated environment
+* Linux Operating System (Debian or RPM based)
+* GCC (or another C compiler for your platform, XCode for OS-X,
+  Mingw32 or VisualStudio for Win32)
+* Python 2.5 or 2.6 (see also :ref:`python24install`)
+* Python headers for building C extensions (often split into a "dev"
+  package on Linux distributions)
+* SetupTools_ (version 0.6c9) (or Distribute_ 0.6c9 or above)
+* a :ref:`virtualenv` isolated environment
 
 .. _setuptools: http://pypi.python.org/pypi/setuptools
 .. _Distribute: http://pypi.python.org/pypi/distribute
@@ -53,6 +53,8 @@ For Fedora systems:
 .. code-block:: bash
 
     $ su -c 'yum install gcc sqlite-devel python-virtualenv'
+
+For other operating systems, see :ref:`altinstall`.
 
 Installation for the Impatient
 ------------------------------
@@ -82,7 +84,8 @@ runs that project with the Paste web server:
 Explaining the Installation Process
 -----------------------------------
 
-.. note:: This section is just a longer explanation of the process above.
+.. note:: This section is just a longer explanation of the
+   "Installation for the Impatient" process above.
 
 This sets up a Python 2.6 VirtualEnv, substitute -p python2.5 if you
 wish to use that version.  The use of --no-site-packages prevents

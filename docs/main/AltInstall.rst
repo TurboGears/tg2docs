@@ -13,6 +13,7 @@ an existing TurboGears install.
 This includes the following non-standard environments:
 
 * :ref:`wininstall`
+* :ref:`osxinstall`
 * :ref:`linuxrootinstall`
 * :ref:`python24install`
 * :ref:`pipinstall`
@@ -64,15 +65,38 @@ can hit CTRL-C on the command-line to stop the server.
 .. _`Python`: http://www.python.org/download/releases/
 .. _`SetupTools`: http://pypi.python.org/pypi/setuptools
 
+.. _osxinstall:
+
+Mac OSX Install
+---------------
+
+OS-X development is normally done with "stock" Python installed via the
+python.org "one-button installer" (a .dmg file).  It is not normally
+recommended that you use the "system" Python for TurboGears development.
+
+    http://python.org/download/
+
+Once Python is installed, you need to install the SetupTools and VirtualEnv
+packages into the new Python installation.  To do so:
+
+.. code-block:: bash
+
+    $ curl -O http://peak.telecommunity.com/dist/ez_setup.py
+    $ sudo python ez_setup.py "setuptools==0.6c9"
+    $ sudo easy_install virtualenv
+
+At this point, you can continue with the :ref:`downloadinstall` as if you
+were using a Linux machine.
 
 .. _linuxrootinstall:
 
 Linux Root Install
 ------------------
 
-.. note:: You are strongly encouraged to use a virtualenv-based environment for
+.. note:: You are **strongly** encouraged to use a virtualenv-based environment for
     TurboGears, as this allows you to easily manage your TurboGears installation
-    independent of your platform's release schedule.
+    independent of your platform's release schedule.  Most Linux distributions
+    package only extremely old versions of TurboGears.
 
 On RedHat Enterprise Linux (RHEL) 5, you can install TurboGears from official
 RPM packages via:
@@ -95,21 +119,19 @@ RPM see :ref:`linuxrootinstall` above:
 
 .. code-block:: bash
 
-    $ virtualenv --no-site-packages -p python2.6 tg2env
+    $ virtualenv --no-site-packages tg2env
     $ cd tg2env/
     $ source bin/activate
-    (tg2env)$ easy_install hashlib `pysqlite`_ uuid functools
+    (tg2env)$ easy_install hashlib pysqlite uuid functools
 
 .. warning:: For Python 2.4, you must make sure to install Beaker 1.4 or higher.
              Though it should be automatic, you may need to run this command to get it:
 
 .. code-block:: bash
 
-    $ easy_install -U beaker
+    (tg2env)$ easy_install -U beaker
 
 You can continue to follow :ref:`downloadinstall` from this point forward.
-
-.. _pysqlite: http://pypi.python.org/pypi/pysqlite/
 
 .. _pipinstall:
 
@@ -122,12 +144,13 @@ aims to be a full replacement.
 
 .. warning:: pip is not supported under windows!
 
-To install, simply use pip with the same index URL as for a standard
-installation via setuptools:
+To install, use pip with the same index URL (the "-i" argument) as
+for a standard installation via setuptools/easy_install and specify
+the "-E" argument to provide the name of the VirtualEnv to create.
 
 .. code-block:: bash
 
-    $ pip install -i http://www.turbogears.org/2.1/downloads/current/index -E tg2env tg.devtools
+    $ pip install -E tg2env -i http://www.turbogears.org/2.1/downloads/current/index tg.devtools
 
 Which will create a tg2env VirtualEnv and install TurboGears into it.
 From this point, switch to the VirtualEnv, activate it and continue
@@ -168,8 +191,16 @@ Check out the latest code from the subversion repositories:
 
 .. code-block:: bash
 
-  (tg2dev)$ hg clone http://hg.turbogears.org/tgdevtools-dev/ tgdevtools
-  (tg2dev)$ hg clone http://hg.turbogears.org/tg-dev/ tg
+    (tg2dev)$ hg clone http://hg.turbogears.org/tgdevtools-dev/ tgdevtools
+    (tg2dev)$ hg clone http://hg.turbogears.org/tg-dev/ tg
+
+For hacking on the Administrative UI and the CRUD controller:
+
+.. code-block:: bash
+
+    (tg2dev)$ hg clone https://tgext-crud.tgtools.googlecode.com/hg/ tgtools-tgext-crud
+    (tg2dev)$ hg clone https://tgext-admin.tgtools.googlecode.com/hg/ tgtools-tgext-admin
+
 
 Installing The Sources
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -181,15 +212,15 @@ via Mercurial:
 
 .. code-block:: bash
 
-  (tg2dev)$ cd tg
-  (tg2dev)$ python setup.py develop -i http://www.turbogears.org/2.1/downloads/current/index
+    (tg2dev)$ cd tg
+    (tg2dev)$ python setup.py develop -i http://www.turbogears.org/2.1/downloads/current/index
 
 * TurboGears 2 developer tools:
 
 .. code-block:: bash
 
-  (tg2dev)$ cd ../tgdevtools
-  (tg2dev)$ python setup.py develop -i http://www.turbogears.org/2.1/downloads/current/index
+    (tg2dev)$ cd ../tgdevtools
+    (tg2dev)$ python setup.py develop -i http://www.turbogears.org/2.1/downloads/current/index
 
 Source Install Via Pip
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -199,7 +230,7 @@ project as "editable" versions using the Mercurial URLs provided.
 
 .. code-block:: bash
 
-   $ easy_install pip sqlalchemy
-   $ pip install -i http://www.turbogears.org/2.1/downloads/current/index -E tg2env \
+    $ easy_install pip sqlalchemy
+    $ pip install -i http://www.turbogears.org/2.1/downloads/current/index -E tg2env \
         -e 'hg+http://bitbucket.org/turbogears/tg-dev/#egg=TurboGears2' \
         -e 'hg+http://bitbucket.org/turbogears/tgdevtools-dev/#egg=tg.devtools'
