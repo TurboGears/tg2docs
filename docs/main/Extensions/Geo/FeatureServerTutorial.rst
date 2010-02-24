@@ -128,7 +128,7 @@ add some sample data.
     road1 = model.Road(name="Peter St", width=6, geom=WKTSpatialElement(wkt))
     wkt = "LINESTRING(-79.8 38.5, -80.03 38.2, -80.2 37.89)"
     road2 = model.Road(name="George Ave", width=8, geom=WKTSpatialElement(wkt))
-    model.DBSesion.add_all([road1, road2])
+    model.DBSession.add_all([road1, road2])
 
 
 
