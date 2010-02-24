@@ -44,7 +44,7 @@ use. Install PostGIS_ and create a new PostGIS_ enabled database
 called `gis`. Refer to the `PostGIS docs`_ to achieve this. We also
 need to install GeoAlchemy and the python db-api for postgres::
 
-    (tg2env)$ easy_install GeoAlchemy egenix-mx-base pyscopg2
+    (tg2env)$ easy_install GeoAlchemy egenix-mx-base psycopg2
 
 Download and install featureserver from the svn repo::
 
@@ -70,6 +70,7 @@ We assume that we have to model a layer of roads in our
 application. We open the tgfeature/model/__init__.py file in the
 package and add the following model definition::
 
+    from datetime import datetime
     from sqlalchemy import Column, Integer, Unicode, DateTime
     from geoalchemy import GeometryColumn, LineString
     from geoalchemy import GeometryDDL
@@ -122,11 +123,12 @@ add some sample data.
 
 .. code-block:: python
 
+    from geoalchemy import WKTSpatialElement
     wkt = "LINESTRING(-80.3 38.2, -81.03 38.04, -81.2 37.89)"
     road1 = model.Road(name="Peter St", width=6, geom=WKTSpatialElement(wkt))
     wkt = "LINESTRING(-79.8 38.5, -80.03 38.2, -80.2 37.89)"
     road2 = model.Road(name="George Ave", width=8, geom=WKTSpatialElement(wkt))
-    model.DBSesion.add_all([road1, road2])
+    model.DBSession.add_all([road1, road2])
 
 
 
