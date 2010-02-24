@@ -3,7 +3,6 @@
 Routes Integration in TG2
 =========================
 
-
 TurboGears2 does URL dispatch with a combination of TG1 style object
 dispatch, and built in Routes integration.  By default you don't need
 to think about Routes at all, because the framework sets up a default
@@ -20,16 +19,15 @@ The standard setup_routes method looks like this::
 
     def setup_routes(self):
         """Setup the default TG2 routes
-    
+
         Override this and set up your own routes maps if you want to use routes.
         """
         map = Mapper(directory=config['pylons.paths']['controllers'],
                     always_scan=config['debug'])
         # Setup a default route for the root of object dispatch
         map.connect('*url', controller='root', action='routes_placeholder')
-    
+
         config['routes.map'] = map
-    
 
 The key to the default TG2 setup is the one map.connect() call which
 sets up a default route for all urls (via the * wildcard) and sticks
@@ -48,7 +46,7 @@ app into separate object trees and map to each of them them explicitly
 to go to various different ``ObjectDispatchController's
 ``routes_placeholder`` actions.
 
-.. warning: 
+.. warning::
 
   Due to the way ObjectDispatchController overides the standard pylons
   controller call mechanisms, you cannot explicitly route to

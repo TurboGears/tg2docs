@@ -278,9 +278,11 @@ the file*:.
 
     from wiki20.model.page import Page, pages_table
 
-.. warning:: It's very important that this line is at the end because
-   ``pages_table`` requires the rest of the model to be initialized
-   before it can be imported:
+.. warning::
+
+    It's very important that this line is at the end because
+    ``pages_table`` requires the rest of the model to be initialized
+    before it can be imported:
 
 Let's investigate our model a little more.  The ``MetaData`` object is
 automatically created by the ``paste`` command inside the

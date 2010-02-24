@@ -3,7 +3,7 @@
 /**
  * Sphinx Doc Design
  */
- 
+
  body {
      background: #F7F7F7 url("bg_rpt.png") repeat-x top;
      color: #444;
@@ -12,7 +12,7 @@
      padding: 0;
      text-align: center;
  }
- 
+
 
  h1, h2, h3, h4, h5, h6 {
      margin: 0;
@@ -240,4 +240,31 @@ pre  {
 
 p.logo  {
     display: none;
+}
+
+
+div.admonition {
+    margin: 5px;
+    padding: 0;
+}
+div.admonition p {
+    margin: 1em .5em 1em .5em;
+}
+div.admonition p.admonition-title {
+    margin: 0;
+    padding: .25em;
+}
+div.warning {
+    border: thin #ffc0c0 solid;
+}
+div.warning p.admonition-title {
+    color: red;
+    background-color: #fff0f0;
+}
+div.note {
+    border: thin #c0c0ff solid;
+}
+div.note p.admonition-title {
+    color: blue;
+    background-color: #f0f0ff;
 }
