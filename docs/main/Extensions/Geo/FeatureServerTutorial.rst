@@ -44,7 +44,7 @@ use. Install PostGIS_ and create a new PostGIS_ enabled database
 called `gis`. Refer to the `PostGIS docs`_ to achieve this. We also
 need to install GeoAlchemy and the python db-api for postgres::
 
-    (tg2env)$ easy_install GeoAlchemy egenix-mx-base pyscopg2
+    (tg2env)$ easy_install GeoAlchemy egenix-mx-base psycopg2
 
 Download and install featureserver from the svn repo::
 
