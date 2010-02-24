@@ -12,11 +12,11 @@ an existing TurboGears install.
 
 This includes the following non-standard environments:
 
-    * :ref:`wininstall`
-    * :ref:`linuxrootinstall`
-    * :ref:`python24install`
-    * :ref:`pipinstall`
-    * :ref:`sourceinstall`
+* :ref:`wininstall`
+* :ref:`linuxrootinstall`
+* :ref:`python24install`
+* :ref:`pipinstall`
+* :ref:`sourceinstall`
 
 .. _wininstall:
 
@@ -30,7 +30,7 @@ This includes the following non-standard environments:
 
 Install Python (download and run an executable or MSI installer):
 
-    * `Python`_ -- choose version 2.6 or 2.5 for best results
+* `Python`_ -- choose version 2.6 or 2.5 for best results
 
 Download http://peak.telecommunity.com/dist/ez_setup.py and then run it from the
 command line with Python.  Note that you must install a specific version
@@ -125,6 +125,8 @@ aims to be a full replacement.
 To install, simply use pip with the same index URL as for a standard
 installation via setuptools:
 
+.. code-block:: bash
+
     $ pip install -i http://www.turbogears.org/2.1/downloads/current/index -E tg2env tg.devtools
 
 Which will create a tg2env VirtualEnv and install TurboGears into it.
@@ -133,7 +135,6 @@ with the :ref:`downloadinstall`.  PIP can also be used to perform
 a source install using Mercurial, see :ref:`sourceinstall` for details.
 
 .. _pip: http://pypi.python.org/pypi/pip
-
 
 .. _sourceinstall:
 
@@ -149,12 +150,14 @@ BitBucket see :ref:`bitbucket_tutorial`.
 Getting Mercurial
 ~~~~~~~~~~~~~~~~~
 
-    * All major Linux distributions have this software packaged. The package
-      is normally named ``mercurial``
-    * On windows you can download the `TortoiseHG installer`_
-    * On other platforms you may install the HG command line utility with an easy_install command::
+* All major Linux distributions have this software packaged. The package
+  is normally named ``mercurial``
+* On windows you can download the `TortoiseHG installer`_
+* On other platforms you may install the HG command line utility with an easy_install command:
 
-       easy_install mercurial
+.. code-block:: bash
+
+    (tg2dev)$ easy_install mercurial
 
 .. _TortoiseHG installer: http://mercurial.selenic.com/wiki/TortoiseHg
 
@@ -200,4 +203,3 @@ project as "editable" versions using the Mercurial URLs provided.
    $ pip install -i http://www.turbogears.org/2.1/downloads/current/index -E tg2env \
         -e 'hg+http://bitbucket.org/turbogears/tg-dev/#egg=TurboGears2' \
         -e 'hg+http://bitbucket.org/turbogears/tgdevtools-dev/#egg=tg.devtools'
-

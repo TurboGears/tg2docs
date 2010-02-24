@@ -268,3 +268,10 @@ div.note p.admonition-title {
     color: blue;
     background-color: #f0f0ff;
 }
+div.hint {
+    border: thin #c0c0c0 solid;
+}
+div.hint p.admonition-title {
+    color: black;
+    background-color: #f0f0f0;
+}

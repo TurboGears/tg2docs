@@ -192,12 +192,15 @@ which will update each dependency which has been upgraded.  Note that it will
 Install a Database Driver
 -------------------------
 
-.. hint:: The installation of the database backend is a topic outside
-   of the scope of this document.
-
 TurboGears uses SQLAlchemy as its default ORM (Object Relational
 Mapper) layer.  SQLAlchemy maintains excellent documentation on all
 the `engines supported`_.
+
+.. hint:: The installation of the database backend is a topic outside
+   of the scope of this document.  Most Linux distributions can install
+   `PostgreSQL`_ or `MySQL`_ via a simple package-manager call.  You will
+   often need to install a "-dev" package for the client library to be
+   able to build the database client library for Python.
 
 Here are the easy_install commands for two of the most common free SQL
 databases.  We provide these here because they are very common, yet
@@ -205,9 +208,8 @@ the pypi_ packages have different names than you might expect.
 
 .. code-block:: bash
 
-    easy_install MySQL-python
-
-    easy_install psycopg2
+    $ easy_install MySQL-python
+    $ easy_install psycopg2
 
 .. _pypi: http://pypi.python.org
 
@@ -215,20 +217,22 @@ SQLAlchemy also has support for PyGreSQL and the 0.6 version will support pg8000
 which is a fully python driver for postgres.  TG plans to support these when SA 0.6
 is released.
 
-.. _engines supported: http://www.sqlalchemy.org/docs/05/reference/dialects/index.html
-
 Cygwin users can't use sqlite as it does not include the necessary
 binary file (``sqlite3.dll``).  If you want to run Cygwin you'll need
 to install a different database.
 
+.. _`PostgreSQL`: http://www.postgresql.org/
+.. _`MySQL`: http://dev.mysql.com/
+.. _engines supported: http://www.sqlalchemy.org/docs/05/reference/dialects/index.html
+
 What's Next?
 ------------
 
-    * If you are new to TurboGears you will want to continue with the
-        :ref:`Quick Start Guide <quickstarting>`.
-    * If you are a TG1 user be sure to check out our
-        :ref:`What's new in TurboGears 2 <whatsnew>` page to get a
-        picture of what's changed in TurboGears2.
+* If you are new to TurboGears you will likely want to continue with the
+  :ref:`Quick Start Guide <quickstarting>`.
+* If you are a TG1 user be sure to check out our
+  :ref:`What's new in TurboGears 2 <whatsnew>` page to get a
+  picture of what's changed in TurboGears2.
 
 .. toctree::
    :maxdepth: 2

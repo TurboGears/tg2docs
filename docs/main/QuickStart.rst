@@ -147,11 +147,11 @@ and you'll see a nice welcome page.
 .. note:: If you're exploring TurboGears 2 after using TurboGears 1
    you may notice a few things:
 
-      * The old config file `dev.cfg` file is now `development.ini`.
-      * By default the ``paster serve`` command is not in auto-reload mode as
-        the CherryPy server used to be.  If you also want your application to
-        auto-reload whenever you change a source code file just add the
-        ``--reload`` option to ``paster serve``:
+* The old config file `dev.cfg` file is now `development.ini`.
+* By default the ``paster serve`` command is not in auto-reload mode as
+  the CherryPy server used to be.  If you also want your application to
+  auto-reload whenever you change a source code file just add the
+  ``--reload`` option to ``paster serve``:
 
 .. code-block:: bash
 
@@ -173,15 +173,15 @@ there isn't much involved in getting up and running.  In particular,
 you'll want to check out the files directly involved in displaying
 this welcome page:
 
-  * `development.ini` contains the system configuration for development.
-  * `helloworld/controllers/root.py` contains the controller code to create the
-    data for the welcome page along with usage examples for various tg2
-    features.
-  * `helloworld/templates/index.html` is the template turbogears uses to render
-    the welcome page from the dictionary returned by the root controller. It's
-    standard XHTML with some simple namespaced attributes.
-  * `helloworld/public/` is the place to hold static files such as pictures,
-    JavaScript, or CSS files.
+* `development.ini` contains the system configuration for development.
+* `helloworld/controllers/root.py` contains the controller code to create the
+  data for the welcome page along with usage examples for various tg2
+  features.
+* `helloworld/templates/index.html` is the template turbogears uses to render
+  the welcome page from the dictionary returned by the root controller. It's
+  standard XHTML with some simple namespaced attributes.
+* `helloworld/public/` is the place to hold static files such as pictures,
+  JavaScript, or CSS files.
 
 You can easily edit development.ini to change the default server port
 used by the built-in web server::
@@ -205,9 +205,9 @@ development.ini) to have the value 0.0.0.0, like so::
 What's Next?
 ------------
 
- * If you are new to TurboGears you should likely continue on to
-   :ref:`explorequickstart`
- * You may wish to go directly to the :ref:`tutorials` which provide hands-on
-   projects to guide you through learning TurboGears
+* If you are new to TurboGears you should likely continue on to
+  :ref:`explorequickstart`
+* You may wish to go directly to the :ref:`tutorials` which provide hands-on
+  projects to guide you through learning TurboGears
 
 .. _SQLite:  http://www.sqlite.org
