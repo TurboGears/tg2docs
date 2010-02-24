@@ -79,7 +79,7 @@ RPM packages via:
 
 .. code-block:: bash
 
-    yum install TurboGears2 python-tg-devtools
+    $ yum install TurboGears2 python-tg-devtools
 
 .. _python24install:
 

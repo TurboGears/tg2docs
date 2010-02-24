@@ -75,12 +75,13 @@ runs that project with the Paste web server:
     (tg2env)$ paster setup-app development.ini
     (tg2env)$ paster serve development.ini
     (tg2env)$ deactivate
-    $
+
+.. note:: Hit CTRL-C to exit from the "paster serve" command.
 
 .. note:: If you are using Python 2.4, such as on RHEL 5, see :ref:`python24install`
 
 Explaining the Installation Process
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------
 
 .. note:: This section is just a longer explanation of the process above.
 
@@ -151,12 +152,17 @@ then serve it on the default port (8080).
     (tg2env)$ paster serve development.ini
 
 Point your web-browser at http://localhost:8080/ when satisfied that you are
-running correctly, hit CTRL-C to exit from the tg2env virtualenv
+running correctly, hit CTRL-C to exit from the tg2env VirtualEnv.
 
 .. code-block:: bash
 
     (tg2env)$ deactivate
     $
+
+The deactivate command (deactivate.bat on Win32) exits from the VirtualEnv.
+You will need to reactivate the VirtualEnv to run TurboGears again (see
+below).  The presence of the VirtualEnv name in the brackets before your
+prompt lets you know which environment is currently active.
 
 Running the Installed Environment
 ---------------------------------
@@ -170,6 +176,14 @@ re-activate the VirtualEnv.
     $ source bin/activate
     $ cd example/
     (tg2env)$ paster serve development.ini
+
+You will often wish to have the Paste server reload your Python code
+when you change it (normally via an editor).  To start the server
+with reloading enabled use:
+
+.. code-block:: bash
+
+    (tg2env)$ paster serve --reload development.ini
 
 .. _upgrading:
 
@@ -238,4 +252,3 @@ What's Next?
    :maxdepth: 2
 
    AltInstall
-
