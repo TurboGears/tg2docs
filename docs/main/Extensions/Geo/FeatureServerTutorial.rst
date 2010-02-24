@@ -70,6 +70,7 @@ We assume that we have to model a layer of roads in our
 application. We open the tgfeature/model/__init__.py file in the
 package and add the following model definition::
 
+    from datetime import datetime
     from sqlalchemy import Column, Integer, Unicode, DateTime
     from geoalchemy import GeometryColumn, LineString
     from geoalchemy import GeometryDDL
@@ -122,6 +123,7 @@ add some sample data.
 
 .. code-block:: python
 
+    from geoalchemy import WKTSpatialElement
     wkt = "LINESTRING(-80.3 38.2, -81.03 38.04, -81.2 37.89)"
     road1 = model.Road(name="Peter St", width=6, geom=WKTSpatialElement(wkt))
     wkt = "LINESTRING(-79.8 38.5, -80.03 38.2, -80.2 37.89)"
