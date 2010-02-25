@@ -118,6 +118,13 @@ If the person who deployed your application forgot to add the variable
 to his config file he would get the default value provided as the
 second argument of the get() call.
 
+.. note::
+    The ``tg.config`` object is available at import time but until the
+    configuration file is parsed, it only contains the system
+    defaults.  If you need to perform startup time setup based on
+    supplied configuration, you should do so in
+    ``middleware.make_app()`` or in `lib/app_globals.py`.
+
 .. warning::
     If you set a value like enable_subsystem = false, it will be
     loaded into python as the string 'false' which if used in a
