@@ -110,6 +110,15 @@ This starts a python shell with your TurboGears application
 loaded. The most important feature here is that your model is also
 loaded, therefore you can experiment with your database.
 
+.. note::
+
+    Changes made to your database from within `paster shell` are
+    encapsulated in a transaction.  In other words, your changes won't
+    be saved unless you commit::
+
+        import transation
+	transation.commit()
+
 .. _paster setup-app:
 
 paster setup-app

@@ -131,8 +131,6 @@ Installation
 
 Database
 ----------
-.. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/1b82fa2b4a95957e?hl=en
-          How do I save to DB using paster shell
 
 .. todo:: Difficulty: Hard. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/92581851b407cdd6?hl=en migrate
           priority: high
