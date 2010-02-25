@@ -28,9 +28,9 @@ Architectural Overview
 * `MorbidQ`_ -- a simple (non-scalable) STOMP message queue for developers,
   its primary advantage is that the message queue is built into the Orbited
   server, so a simple config setting will enable and configure it
-* TurboGears -- serves the HTML and Javascript code.  TurboGears does not
-  connect to the MorbidQ service in this project, but sending STOMP messages
-  to the server *can* be implemented.
+* TurboGears -- serves the HTML widget which references the Orbited Javascript.
+  TurboGears does not connect to the MorbidQ service in this project, but
+  sending STOMP messages to the server *can* be implemented.
 
 Software Install
 ~~~~~~~~~~~~~~~~
@@ -56,9 +56,6 @@ morbidq package.
 
     (tgenv)$ easy_install twisted orbited
 
-There are example configuration files for Orbited available, and we will
-simply use one of these for our application.
-
 MorbidQ
 ~~~~~~~
 
@@ -70,7 +67,7 @@ If you want to stick with STOMP as you scale up, you can explore the
 .. note::
 
     There are (far) faster message queue engines than Morbid, but most of them use
-    the AMPQ binary protocol.  There is an experimental AMPQ implementation for
+    the AMQQ binary protocol.  There is an experimental AMQQ implementation for
     Javascript available in `Kamaloka-js`_.  It is suggested that you become
     comfortable with real-time-web programming before switching to a full-featured
     Queue server.
@@ -108,20 +105,6 @@ defined ports.  You can hit CTRL-C to stop the server, though we'll want to
 use it in a moment, so you'll likely want to leave it running and start
 another console.
 
-Serving JS Files from TurboGears
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The client-side implementation of Orbited is contained in a series of Javascript
-files which are available in the Orbited distribution.  You can link these into
-your application's "public" directory like so.  Here the application is named
-"rtchat" and we only link the STOMP protocol implementation.
-
-.. code-block:: bash
-
-    (tg2env)$ cd rtchat/public
-    (tg2env)$ ln -s ../../../lib/python2.6/site-packages/orbited-0.7.10-py2.6.egg/orbited/static/*.js ./
-    (tg2env)$ ln -s ../../../lib/python2.6/site-packages/orbited-0.7.10-py2.6.egg/orbited/static/protocols/stomp/stomp.js ./
-
 Chat View (HTML)
 ----------------
 
@@ -132,10 +115,16 @@ view looks like this:
 .. code-block:: html
 
     <?python
-    import simplejson
-    chat_server = 'localhost'
+    # we pull some values out of TurboGears config-file, with defaults
+    # for our tutorial settings.
+    from simplejson import dumps as d
+    orbited_server = config.get( 'orbited_server', 'localhost' )
+    orbited_port = config.get( 'orbited_port', 9000 )
+    stomp_server = config.get( 'stomp_server', 'localhost' )
+    stomp_port = config.get( 'stomp_port', 61613 )
+    orbited_files = 'http://%s:%s/static'%( orbited_server, orbited_port )
     ?>
-    <div id="chat">
+      <div id="chat">
         <h2>Real-time Chat</h2>
         <div class="chat-trace">
         </div>
@@ -144,7 +133,7 @@ view looks like this:
             <input class="chatter" />
             <button class="chat-trigger">Send</button>
         </div>
-    </div>
+      </div>
 
 Orbited/STOMP Javascript Setup
 ------------------------------
@@ -162,7 +151,7 @@ code.  We linked it into our "public" directory above.
 
 .. code-block:: html
 
-    <script type="text/javascript" src="/JSON.js"></script>
+    <script type="text/javascript" src="${orbited_files}/JSON.js"></script>
 
 The Orbited javascript library implements the "proxied socket" mechanism
 which connects to the Orbited server we started above.  We'll use Orbited's
@@ -172,7 +161,7 @@ client library references "TCPSocket" as seen here.
 
 .. code-block:: html
 
-    <script type="text/javascript" src="/Orbited.js"></script>
+    <script type="text/javascript" src="${orbited_files}/Orbited.js"></script>
     <script type="text/javascript">
         // This line is required to allow our chat server and this
         // page to operate on different ports...
@@ -185,7 +174,7 @@ client library references "TCPSocket" as seen here.
         // This object is referenced by stomp.js
         TCPSocket = Orbited.TCPSocket;
     </script>
-    <script type="text/javascript" src="/stomp.js"></script>
+    <script type="text/javascript" src="${orbited_files}/protocols/stomp/stomp.js"></script>
 
 The Chat Client
 ----------------
@@ -196,7 +185,6 @@ you the minimum required to get messages flowing across the MorbidQ server.
 .. code-block:: html
 
     <script type="text/javascript">
-        var chat_server = ${simplejson.dumps( chat_server )};
         var add_message = function( text ) {
             var node = $('<div class="chat-message"></div>');
             node.append( text );
@@ -210,7 +198,7 @@ you the minimum required to get messages flowing across the MorbidQ server.
             stomp.onmessageframe = function( frame ) {
                 add_message( frame.body );
             };
-            stomp.connect(chat_server, 61613);
+            stomp.connect(${d(stomp_server)},${d(stomp_port)} );
             $('.chat-entry .chat-trigger').click( function() {
                 var chatter = $('.chat-entry .chatter');
                 var value = chatter.attr( 'value' );
@@ -270,6 +258,10 @@ What's Next?
 
    moksha
 
+.. note::
+
+    The code on this page is loosely based on `Django, Orbited, Stomp and Co.`_
+
 .. _`Kamaloka-js`: https://fedorahosted.org/kamaloka-js/
 .. _`other STOMP servers available`: http://www.morbidq.com/
 .. _`Orbited`: http://orbited.org/
@@ -278,3 +270,4 @@ What's Next?
 .. _`XMPP`: http://xmpp.org/
 .. _`IRC`: http://en.wikipedia.org/wiki/Internet_Relay_Chat
 .. _`Twisted`: http://www.twistedmatrix.com/
+.. _`Django, Orbited, Stomp and Co.`: http://mischneider.net/?p=125
