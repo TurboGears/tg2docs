@@ -13,6 +13,16 @@ chat is the common "Hello World" of real-time developers.
     You should already be fairly familiar with TurboGears, Javascript and
     JQuery before you begin this tutorial.
 
+.. note::
+
+    The setup described here is *not* a production-ready real-time-web
+    solution. MorbidQ is not a production Message Queue Server, and indeed
+    most production solutions would want to use a more robust and efficient
+    protocol such as AMQP.  Currently AMQP protocols for Javascript are
+    "in development".  This document is intended to let you get started
+    with real-time-web development before you graduate to more mature
+    technologies.
+
 Setup
 -----
 
@@ -67,7 +77,7 @@ If you want to stick with STOMP as you scale up, you can explore the
 .. note::
 
     There are (far) faster message queue engines than Morbid, but most of them use
-    the AMQQ binary protocol.  There is an experimental AMQQ implementation for
+    the AMQP binary protocol.  There is an experimental AMQP implementation for
     Javascript available in `Kamaloka-js`_.  It is suggested that you become
     comfortable with real-time-web programming before switching to a full-featured
     Queue server.
