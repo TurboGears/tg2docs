@@ -282,3 +282,10 @@ div.hint p.admonition-title {
     color: black;
     background-color: #f0f0f0;
 }
+div.admonition-todo {
+    border: thin #e0ffe0 solid;
+}
+div.admonition-todo p.admonition-title {
+    color: black;
+    background-color: #f0fff0;
+}

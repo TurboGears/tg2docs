@@ -12,7 +12,9 @@ like the quickstart configuration you just disabled.
 
 Since `repoze.who` is WSGI middleware, you will need to alter
 your project's `project.config.middleware.py` file to create
-your middleware from your .ini file::
+your middleware from your .ini file:
+
+.. code-block:: python
 
     from repoze.who.config import make_middleware_with_config as make_who_with_config
     ...
@@ -25,7 +27,9 @@ your middleware from your .ini file::
             app_conf.get('who.log_level','debug')
         )
 
-and add the following to your config file's app:main section::
+and add the following to your config file's app:main section:
+
+.. code-block:: ini
 
     who.config_file = %(here)s/who.ini
     who.log_level = debug
@@ -41,7 +45,9 @@ Quickstart via `who.ini`
 If you would like to start off your customizations with something similar
 to the `repoze.who.quickstart` mechanism, you can use standard mechanisms
 to set up most of the machinery that the quickstart provides.  Here is a
-sample `who.ini` that provides much of the quickstart behaviour::
+sample `who.ini` that provides much of the quickstart behaviour:
+
+.. code-block:: ini
 
     # Sample of a who.ini file from which to begin configuring
     # this looks a lot like the "quickstart" application's setup,
@@ -97,7 +103,9 @@ sample `who.ini` that provides much of the quickstart behaviour::
 
 Note that "customwho" is the project name here.  Also note that the `who.ini`
 file references a custom Python module `customwho.lib.auth` which is where
-we set up our `repoze.who` plugins in the normal manner for `repoze.who`::
+we set up our `repoze.who` plugins in the normal manner for `repoze.who`:
+
+.. code-block:: python
 
     """Example of a simplistic, importable authenticator plugin
 
@@ -131,13 +139,13 @@ the parameters).
 Next Steps
 ----------
 
- * :ref:`openid` -- describes how to use a Repoze.who plugin to authenticate
-   users via the OpenID mechanism
+* :ref:`openid` -- describes how to use a Repoze.who plugin to authenticate
+  users via the OpenID mechanism
 
 References
 ----------
 
- * `Pylons Repoze.who Cookbook`_ -- describes how the `repoze.who` middleware
-   fitted into a Pylons application (TurboGears |version| is a Pylons application)
+* `Pylons Repoze.who Cookbook`_ -- describes how the `repoze.who` middleware
+  fitted into a Pylons application (TurboGears |version| is a Pylons application)
 
 .. _`Pylons Repoze.who Cookbook`: http://wiki.pylonshq.com/display/pylonscookbook/Authentication+and+Authorization+with+%60repoze.who%60
