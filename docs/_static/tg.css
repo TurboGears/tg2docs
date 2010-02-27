@@ -261,6 +261,13 @@ div.warning p.admonition-title {
     color: red;
     background-color: #fff0f0;
 }
+div.tip {
+    border: thin #c0ffc0 solid;
+}
+div.tip p.admonition-title {
+    color: green;
+    background-color: #f0fff0;
+}
 div.note {
     border: thin #c0c0ff solid;
 }

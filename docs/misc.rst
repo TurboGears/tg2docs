@@ -13,13 +13,6 @@ Configuration
 .. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/7db400f92f652fd4/95c256ac817a5102?hl=en
           How can I configure genshi?
 
-.. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/daf8db234df8105b?hl=en
-          Critical security update for tg2 users! (session cookie secret)
-
-.. todo:: Difficulty: Medium. Include these docs: http://groups.google.com/group/turbogears/browse_frm/thread/55d6bb9704b3127a?hl=en
-          Accessing configuration
-
-
 
 Authorization/Authentication
 ------------------------------
@@ -138,8 +131,6 @@ Installation
 
 Database
 ----------
-.. todo:: Difficulty: Medium. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/1b82fa2b4a95957e?hl=en
-          How do I save to DB using paster shell
 
 .. todo:: Difficulty: Hard. Incorporate these docs: http://groups.google.com/group/turbogears/browse_frm/thread/92581851b407cdd6?hl=en migrate
           priority: high

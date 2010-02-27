@@ -39,7 +39,7 @@ Differences from TurboGears 1
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In turbogears 1.x branches, the application specific configuration
-variables waswere kept in a .ini file packaged inside the egg. For better
+variables were kept in a .ini file packaged inside the egg. For better
 control over those variables, TG2 is now using a python module that
 contains code.
 
@@ -52,7 +52,7 @@ not evaluate values in
 the .ini files therefore all values are considered strings. This is
 especially important when using boolean attributes and numbers as you
 need to convert them before use inside your project. This will be
-fixed in TG2.1 see `ticket #2240`_
+fixed in TG2.2 see `ticket #2240`_
 
 .. _ticket #2240 : http://trac.turbogears.org/ticket/2240
 
@@ -60,7 +60,7 @@ Differences from Pylons
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 TG2 has done quite a bit of work to simplify the config module in a
-standard pylons quickstart, and to make the configuration in those
+standard Pylons quickstart, and to make the configuration in those
 files as declarative as possible. This makes it easier to make small
 updates to the config, and allows us to move some of the code into the
 framework.
@@ -117,6 +117,13 @@ code::
 If the person who deployed your application forgot to add the variable
 to his config file he would get the default value provided as the
 second argument of the get() call.
+
+.. note::
+    The ``tg.config`` object is available at import time but until the
+    configuration file is parsed, it only contains the system
+    defaults.  If you need to perform startup time setup based on
+    supplied configuration, you should do so in
+    ``middleware.make_app()`` or in `lib/app_globals.py`.
 
 .. warning::
     If you set a value like enable_subsystem = false, it will be
@@ -179,10 +186,10 @@ merged in with the config values from the .ini file you're using to
 launch your app, and placed in ``tg.config`` (also known as
 ``pylons.config``).
 
-As we said, in addition to the attributes on the ``base_config``
-object there are a number of methods which are used to setup the
-environment for your application, and to create the actual Turbogears
-WSGI application, and all the middleware you need.
+As we mentioned previously, in addition to the attributes on the
+``base_config`` object there are a number of methods which are used to
+setup the environment for your application, and to create the actual
+TurboGears WSGI application, and all the middleware you need.
 
 You can override ``base_config``'s methods to further customize your
 application's WSGI stack, for various advanced use cases, like adding
@@ -262,6 +269,18 @@ Stand Alone
 error handling, HTTP status code error pages, etc.  This is intended
 for the case where you're embedding the TG app in some other WSGI app
 which handles these things for you.
+
+
+Cookie Secret
++++++++++++++++
+
+The ``beaker.session.secret`` key of the ``base_config`` object
+contains the secret used to store user sessions.  Pylons automatically
+generates a random secret for you when you create a project.  If an
+attacker gets his hands on this key, he will be able to forge a valid
+session an use your application at though he was logged in.  In the
+event of a security breach, you can change this key to invalidate all
+user sessions.
 
 
 Advanced Configuration
