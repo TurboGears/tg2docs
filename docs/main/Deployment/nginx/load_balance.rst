@@ -16,16 +16,18 @@ Using Nginx as a Reverse Proxy
 ------------------------------
 
 It's pretty simple to get TurboGears set up behind a Nginx server so that
-it proxies requests to the CherryPy server. Here is a sample configuration that 
-not only proxies to your TurboGears application, but serves static content with 
+it proxies requests to the CherryPy server. Here is a sample configuration that
+not only proxies to your TurboGears application, but serves static content with
 Nginx and load balances between two TurboGears application instances as well.
+
+.. todo:: references CherryPy, update for TG |version|
 
 ::
 
     http {
         # boilerplate nginx config ...
 
-        upstream mycluster { 
+        upstream mycluster {
             server 127.0.0.1:8080;
             server 127.0.0.1:8081;
         }
@@ -40,7 +42,7 @@ Nginx and load balances between two TurboGears application instances as well.
             location = /favicon.ico  {
                 root /path/to/YourProject/package/public/images;
             }
-          
+
             # proxy to turbogears app
             location / {
                 proxy_pass          http://mycluster;
