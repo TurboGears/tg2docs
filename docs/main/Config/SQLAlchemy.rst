@@ -13,7 +13,7 @@ SQLAlchemy and Transaction Config Settings
 
 Though the majority of folks will use TurboGears with SQLAlchemy, there
 are those who have interest in running the full stack of TG with a non-relational
-database like mongodb or couchdb.  There are a few settings that allow this,
+database like `MongoDB`_ or `CouchDB`_.  There are a few settings that allow this,
 the most pertinent is: use_sqlalchemy:
 
 ``base_config.use_sqlalchemy`` -- Set to False to turn off sqlalchemy support
@@ -29,6 +29,8 @@ rolling back when controller code fails, TG handles this for you automatically.
 ``base_config.use_transaction_manager`` -- Set to False to turn off the
 Transaction Manager and handle transactions yourself.
 
+.. _`MongoDB`: http://www.mongodb.org/
+.. _`CouchDB`: http://couchdb.apache.org/
 
 ``AppConfig`` Method Overrides
 -------------------------------
