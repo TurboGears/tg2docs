@@ -79,10 +79,13 @@ Handling HTTP Requests (Controllers)
 
     modules/thirdparty/webhelpers_feedgenerator
 
+.. todo:: Document "community" sites; user-signup mechanisms (e.g. tgext.registration2), OpenID,
+   Recaptcha, etceteras as sub-section
+
 Automatic Forms/Controllers
 ---------------------------
 
-The TurboGears Admin system is built on top of the Sprox and tg.ext.crud
+The TurboGears Admin system is built on top of the Sprox and tgext.crud
 system.  You can use the same automatically generated forms and
 controllers to help you quickly prototype your applications.  The
 :ref:`Movie Tutorial <movie-tutorial>` introduces this usage of
@@ -166,6 +169,8 @@ Installation and Deployment
     main/Deployment/lighttpd+fcgi
 
 .. todo:: Difficulty Medium: document how to "freeze" applications (PIP, zc.buildout, etceteras) for re-deployment with precisely the same software on each machine (no downloads etceteras)
+.. todo:: document use of Nginx beyond just saying you can do it
+.. todo:: (maybe) document use of Twisted WSGI wrapper?
 
 Tools
 =====
@@ -195,6 +200,11 @@ Special Effects and Extensions
     main/AuthorizeTutorial
     main/Extensions/Geo/index
 
+.. todo:: Document use of `Ming`_ and `MongoDB`_ with TurboGears
+
+.. _`Ming`: http://merciless.sourceforge.net/
+.. _`MongoDB`: http://www.mongodb.org/
+
 Real-time Web
 -------------
 
@@ -223,4 +233,4 @@ Performance and optimization
 Next Steps
 ----------
 
- * :ref:`getting-to-know` -- learn how TurboGears |version| works, changes since the 1.x release, and how to contribute to the project
+* :ref:`getting-to-know` -- learn how TurboGears |version| works, changes since the 1.x release, and how to contribute to the project
