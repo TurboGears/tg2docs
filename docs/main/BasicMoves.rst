@@ -96,8 +96,8 @@ called when you go to /index (or even just /).  We can tell our
 controller to respond at a new URL by defining a new method.
 
 In this case we will add a new method called hello, which just returns
-a string.  TG2 allows us to bypass the template process and return a
-string directly to the http response, which will be returned to the
+a string.  TurboGears |version| allows us to bypass the template process
+and return a string directly to the http response, which will be returned to the
 browser directly.
 
 Edit helloworld/controllers/root.py:
@@ -111,7 +111,7 @@ Edit helloworld/controllers/root.py:
 
   class RootController(BaseController):
 
-      ### skipped index method are here! 
+      ### skipped index method are here!
       #  (there are also a few other items above it)
 
       @expose()
@@ -195,12 +195,13 @@ that case, just return an empty dictionary:
 Oops, we made a mistake!  We're trying to use variables in index.html
 which we're not creating in our controller. But, let's take advantage
 of this mistake to take a quick look at the interactive debugger page
-that TG2 gives you when you get a python exception in your code.
+that TurboGears |version| gives you when you get a python exception in
+your code.
 
 Browse http://localhost:8080/ to see the error.  Here is a screenshot.
 
 .. image:: ../_static/basicmoves_oops.png
-  
+
 This gives you an opportunity to explore the full stack trace
 interactively.  If you click on the little + icon, you can see what
 local variables are set at that frame in the call stack, and you can

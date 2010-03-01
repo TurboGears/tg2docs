@@ -332,24 +332,24 @@ Here is an example controller and a chart outlining the way urls are mapped to i
 .. code-block:: python
 
     class WikiController(TGController):
-    
+
         def index(self):
             """returns a list of wiki pages"""
             ...
-            
+
         def default(self, *args):
             """returns one wikipage"""
             ...
-            
+
         def create(self, title, text, author='anonymous', **kw):
             wikipage = Page(title=tile, text=text, author=author, tags=str(kw))
             DBSession.add(wikipage)
-            
+
         def update(self, title, **kw):
             wikipage = DBSession.query(Page).get(title)
             for key, value in kw:
                 setattr(wikipage, key, value)
-    
+
         def delete(self, title):
             wikipage = DBSession.query(Page).get(title)
             DBSession.delete(wikipage)
@@ -380,8 +380,8 @@ id = int(id) to cast it into an int before usage.  Another way to
 accomplish this feat is to use the @validate decorator, which is
 explained in :ref:`Validation`
 
-Differences Between Dispatch In Tg1 And TG2
------------------------------------------------
+Differences Between Dispatch In TurboGears 1.x and 2.x
+------------------------------------------------------
 
 Here are the major differences in dispatch between
 CherryPy/Turbogears1 and TurboGears 2.
@@ -415,7 +415,7 @@ Advanced Topics
    RestControllers
    WSGIAppControllers
 
-   
+
 API References
 ------------------
 

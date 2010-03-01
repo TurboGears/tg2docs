@@ -33,7 +33,7 @@ You can customize the interaction with the user through four kinds of
   to tell whether it's possible to authenticate the user (e.g., if it finds
   HTTP Authentication headers in the HTTP request). If so, it will extract the
   data required for the authentication (e.g., username and password, or a
-  session cookie). There may be many identifiers and :mod:`repoze.who` will run 
+  session cookie). There may be many identifiers and :mod:`repoze.who` will run
   each of them until one finds the required data to authenticate the user.
 * If at least one of the identifiers could find data necessary to authenticate
   the current user, then an ``authenticator plugin`` will try to use the
@@ -47,20 +47,20 @@ You can customize the interaction with the user through four kinds of
   by the `authenticator`.
 * For authenticated users, :mod:`repoze.who` provides the ability to load
   related data (e.g., real name, email) in the WSGI environment so that it can
-  be easily used in the application. Such a functionality is provided by 
+  be easily used in the application. Such a functionality is provided by
   so-called ``metadata provider plugins``. There may be many metadata providers
   and :mod:`repoze.who` will run them all.
 
-When :mod:`repoze.who` needs to store data about the authenticated user in the 
-WSGI environment, it uses its ``repoze.who.identity`` key, which can be 
+When :mod:`repoze.who` needs to store data about the authenticated user in the
+WSGI environment, it uses its ``repoze.who.identity`` key, which can be
 accessed using the code below::
 
     from tg import request
-    
+
     # The authenticated user's data kept by repoze.who:
     identity = request.environ.get('repoze.who.identity')
 
-Such a value is a dictionary and is often called "the identity dict". It will 
+Such a value is a dictionary and is often called "the identity dict". It will
 only be defined if the current user has been authenticated.
 
 .. tip::
@@ -68,19 +68,19 @@ only be defined if the current user has been authenticated.
     There is a short-cut to the code above in the WSGI ``request``, which will
     be defined in ``{yourproject}.lib.base.BaseController`` if you enabled
     authentication and authorization when you created the project.
-    
+
     For example, to check whether the user has been authenticated you may
     use::
-    
+
         # ...
         from tg import request
         # ...
         if request.identity:
             flash('You are authenticated!')
-     
+
      ``request.identity`` will equal to ``None`` if the user has not been
      authenticated.
-     
+
      Likewise, this short-cut is also set in the template context as
      ``tg.identity``.
 
@@ -96,17 +96,17 @@ TurboGears itself doesn't deal directly with :mod:`repoze.who`. It's configured
 through :mod:`repoze.what` because it has to configure :mod:`repoze.who` in a
 special way so that authorization can work.
 
-By default, :mod:`repoze.what` in TG2 configures :mod:`repoze.who` to use its
-:class:`repoze.who.plugins.form.RedirectingFormPlugin` as the first
-identifier and challenger -- using ``/login`` as the relative URL that will 
-display the login form, ``/login_handler`` as the relative URL where the 
-form will be sent and ``/logout_handler`` as the relative URL where the 
+By default, :mod:`repoze.what` in TurboGears |version| configures :mod:`repoze.who`
+to use its :class:`repoze.who.plugins.form.RedirectingFormPlugin` as the first
+identifier and challenger -- using ``/login`` as the relative URL that will
+display the login form, ``/login_handler`` as the relative URL where the
+form will be sent and ``/logout_handler`` as the relative URL where the
 user will be logged out. The so-called rememberer of such identifier will
 be an instance of :class:`repoze.who.plugins.cookie.AuthTktCookiePlugin`.
-All these settings can be customized through 
+All these settings can be customized through
 :mod:`repoze.what.plugins.quickstart`.
 
-You don't have to use :mod:`repoze.who` directly either, unless you decide not 
+You don't have to use :mod:`repoze.who` directly either, unless you decide not
 to use it the way TurboGears configures it through :mod:`repoze.what`.
 
 
@@ -116,5 +116,5 @@ Advanced topics
 If you're looking for different authentication methods, you may want to visit
 `the repoze.who website <http://static.repoze.org/whodocs/>`_ to check if the
 plugin you're looking for is already available or how to create your own plugins.
-Then you should also check the :mod:`repoze.what` documentation to learn how to 
+Then you should also check the :mod:`repoze.what` documentation to learn how to
 setup the new settings.

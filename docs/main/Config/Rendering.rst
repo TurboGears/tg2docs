@@ -34,13 +34,13 @@ render function you want to use.
 
 ``base_config.renderers`` -- This is a list of render functions that
 ought to be prepared for use in the app.  This is a shortcut for the
-four renderers that TG2 provides out of the box. 
+four renderers that TurboGears |version| provides out of the box.
 TG provides renderers for: `'genshi'`, `'mako'`, `'jinja'`, and `'json'`.
 
-In 2.1, If you would like to add additional renderers, you can 
+In 2.1, If you would like to add additional renderers, you can
 add it to the renderers list, and then provide a setup_mytl_renderer
 method in your custom AppConfig, where mytl is the name of your
-template language. 
+template language.
 
 
 ``base_config.use_legacy_renderer`` -- If ``True`` old style buffet
@@ -53,8 +53,8 @@ want to change this.  But if you want to use the standard
 genshi/mako/jinja file system based template search paths, set this to
 `False`.  The main advantage of dotted template names is that it's
 very easy to store template files in zipped eggs, but if you're not
-using packaged TG2 app components there are some advantages to the
-search path syntax.
+using packaged TurboGears |version| app components there are some
+advantages to the search path syntax.
 
 ``base_config.renderers`` -- a dictionary with the render function
 name as the key, and the actual configured render function as the
@@ -63,7 +63,7 @@ name to ``base_config.renderers`` but for custom renderers you want to
 set the renderer up, and set it in this dictionary directly.
 
 
-Making a module available to all Genshi templates 
+Making a module available to all Genshi templates
 ---------------------------------------------------
 Sometimes you want to expose an entire module to all of the templates
 in your templates directory.  Perhaps you have a form library you
@@ -73,15 +73,15 @@ This is possible in TG.
 First, we must modify our app_cfg.py so that you can share your
 link across all templates::
 
-  base_config.variable_provider = helpers.add_global_tmpl_vars 
+  base_config.variable_provider = helpers.add_global_tmpl_vars
 
 Next, you want to modify the lib/helpers.py module of your application
 to include the newly added ``add_global_tmpl_vars`` method::
 
   import mymodule
-  
+
   def add_global_tmpl_vars():
-       return dict(mymodule=mymodule) 
+       return dict(mymodule=mymodule)
 
 That's pretty much it, you should have access to mymodule in every
 template now.

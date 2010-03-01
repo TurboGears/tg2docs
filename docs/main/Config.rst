@@ -13,14 +13,14 @@ Overview
 --------
 
 Like TurboGears 1, the application configuration is separated from the
-deployment specific information.  In TG2 there is a config module,
-containing several configuration specific python files -- these are
-done in python (not as INI files), because they actually setup the TG2
-application and its associated WSGI middleware. Python provides an
-incredibly flexible config system with all kinds of tools to keep you
-from having to repeat yourself.  But it comes with some significant
-drawbacks, python is more complex than INI, and is less declarative so
-can be less obvious.
+deployment specific information.  In TurboGears |version| there is a
+config module, containing several configuration specific python files --
+these are done in python (not as INI files), because they actually setup
+the TurboGears |version| application and its associated WSGI middleware.
+Python provides an incredibly flexible config system with all kinds of
+tools to keep you from having to repeat yourself.  But it comes with
+some significant drawbacks, python is more complex than INI, and is less
+declarative so can be less obvious.
 
 But we believe these drawbacks are more than overcome by the power and
 flexibility of python based configuration for the app because these
@@ -40,8 +40,8 @@ Differences from TurboGears 1
 
 In turbogears 1.x branches, the application specific configuration
 variables were kept in a .ini file packaged inside the egg. For better
-control over those variables, TG2 is now using a python module that
-contains code.
+control over those variables, TurboGears |version| is now using a python
+module that contains code.
 
 The advantage of this new method is that the configuration can contain
 complex python objects without adding a dependency on ConfigObj (which
@@ -52,16 +52,16 @@ not evaluate values in
 the .ini files therefore all values are considered strings. This is
 especially important when using boolean attributes and numbers as you
 need to convert them before use inside your project. This will be
-fixed in TG2.2 see `ticket #2240`_
+fixed in TurboGears 2.2 see `ticket #2240`_
 
 .. _ticket #2240 : http://trac.turbogears.org/ticket/2240
 
 Differences from Pylons
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-TG2 has done quite a bit of work to simplify the config module in a
-standard Pylons quickstart, and to make the configuration in those
-files as declarative as possible. This makes it easier to make small
+TurboGears |version| has done quite a bit of work to simplify the
+config module in a standard Pylons quickstart, and to make the configuration
+in those files as declarative as possible. This makes it easier to make small
 updates to the config, and allows us to move some of the code into the
 framework.
 
@@ -168,11 +168,11 @@ defaults in its ``__init__``.  But equally important it provides us
 with several methods that work on the config values to produce the two
 functions that set up your TurboGears app.
 
-We've taken care to make sure that the entire setup of the TG2
-framework is done in code which you as the application developer
-control. You can easily customize it to your needs.  If the standard
-config options we provide don't do what you need, you can subclass and
-override ``AppConfig`` to get exactly the setup you want.
+We've taken care to make sure that the entire setup of the
+TurboGears |version| framework is done in code which you as the
+application developer control. You can easily customize it to your needs.
+If the standard config options we provide don't do what you need, you
+can subclass and override ``AppConfig`` to get exactly the setup you want.
 
 The ``base_config`` object that is created in ``app_cfg.py`` should be
 used to set whatever configuration values that belong to the
@@ -288,8 +288,9 @@ Advanced Configuration
 
 Sometimes you need to go beyond the basics of setting configuration
 options.  We've created a number of methods that you can use to override the way
-that particular pieces of the TG2 stack are configured.  The basic way you
-override the configuration within app.cfg looks something like this::
+that particular pieces of the TurboGears |version| stack are configured.
+The basic way you override the configuration within app.cfg looks something
+like this::
 
     from tg.configuration import AppConfig
     from tw2.core.middleware import TwMiddleware

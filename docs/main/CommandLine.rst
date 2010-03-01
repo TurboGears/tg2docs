@@ -46,10 +46,10 @@ What are the TurboGears commands?
 ==================================
 
 Please note that not all ``paster`` commands are expected to work with
-a TG2 project. However, if you experience an error using paster we
-encourage you to report it. Below is a list of the most important
-commands you will use in your journey in the world of TG2. Be sure to
-run ``paster help`` on each of them to get all the possible command
+a TurboGears |version| project. However, if you experience an error using
+paster we encourage you to report it. Below is a list of the most important
+commands you will use in your journey in the world of TurboGears |version|.
+Be sure to run ``paster help`` on each of them to get all the possible command
 line switches.
 
 ====================================  ===========================================
@@ -57,7 +57,7 @@ paster command                        action
 ====================================  ===========================================
 `paster quickstart`_ <project_name>   initialize new project
 `paster serve`_  <config_file>        serve project configured in <config_file>
-`paster tginfo`_                      list tg files in current path 
+`paster tginfo`_                      list tg files in current path
 `paster shell`_ <config_file>         start python shell, loading project models
 `paster setup-app`_  <config_file>    initialize project using config_file
 ====================================  ===========================================

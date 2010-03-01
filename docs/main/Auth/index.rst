@@ -23,9 +23,9 @@ to check your bank account, you'll probably have to provide you Id number and
 your card's PIN). In other words, finding `who` you are.
 
 ``Authorization``, on the other hand, is the act of granting access to given
-resources depending on whether you have permission to use them. For example, 
-allowing registered members to leave comments on a blog, or allowing your 
-friends to see your pictures while others cannot. 
+resources depending on whether you have permission to use them. For example,
+allowing registered members to leave comments on a blog, or allowing your
+friends to see your pictures while others cannot.
 In other words, finding `what` you may do.
 
 TurboGears 2 applications may take advantage of a robust, extendable, pluggable
@@ -35,14 +35,15 @@ which should be really simple in most situations. Such a system is made up of
 two independent components, well integrated into TurboGears:
 
   * :mod:`repoze.who`, a framework for ``authentication`` in WSGI applications.
-    You normally don't have to care about it because by default TG2
+    You normally don't have to care about it because by default TurboGears |version|
     applications ship all the code to set it up (as long as you had selected
     such an option when you created the project), but if you need something
     more advanced you are at the right place.
   * :mod:`repoze.what`, the successor of :mod:`tg.ext.repoze.who` and
-    :mod:`tgext.authorization` (used in unstable TG2 releases), is a framework 
-    for ``authorization`` that is mostly compatible with the TurboGears 1.x 
-    `Identity` authentication, identification and authorization system.
+    :mod:`tgext.authorization` (used in unstable TurboGears |version| releases),
+    is a framework for ``authorization`` that is mostly compatible with the
+    TurboGears 1.x `Identity` authentication, identification and authorization
+    system.
 
 You may store your users' credentials where you want (e.g., in a database, an
 LDAP server, an .htaccess file) and also store your authorization settings
@@ -56,10 +57,10 @@ data may be found.
 The three pillars: Users, groups and permissions
 ------------------------------------------------
 
-:mod:`repoze.what` uses a common pattern based on the ``users`` (authenticated 
-or anonymous) of your web application, the ``groups`` they belong to and the 
+:mod:`repoze.what` uses a common pattern based on the ``users`` (authenticated
+or anonymous) of your web application, the ``groups`` they belong to and the
 ``permissions`` granted to such groups. But you can extend it to check for many
-other conditions (such as checking that the user comes from a given country, 
+other conditions (such as checking that the user comes from a given country,
 based on her IP address, for example).
 
 The authentication framework (:mod:`repoze.who`) only deals with the
@@ -71,11 +72,11 @@ source(s) that handle your groups and those that handle your permissions.
 Getting started, quickly
 ------------------------
 
-While :mod:`repoze.what` only deals with authorization, its SQL plugin 
-provides a module to setup authentication via :mod:`repoze.who` so that you can 
-get started with authentication and authorization very quickly. It may be 
-enabled while creating the TG2 project or afterwards, and it may be easily 
-replaced by a custom solution.
+While :mod:`repoze.what` only deals with authorization, its SQL plugin
+provides a module to setup authentication via :mod:`repoze.who` so that you can
+get started with authentication and authorization very quickly. It may be
+enabled while creating the TurboGears |version| project or afterwards, and it
+may be easily replaced by a custom solution.
 
 To use it on a new project, just answer "yes" during the `paster quickstart`
 process when it asks you if you want authorization::
@@ -83,9 +84,9 @@ process when it asks you if you want authorization::
   Do you need authentication and authorization in this project? [yes]
 
 You'll then get authentication and authorization code added for you, including
-the SQLAlchemy-powered model definitions in ``{yourpackage}.model.auth`` 
-and the relevant settings in ``{yourpackage}.config.app_cfg``. It also defines 
-the default users, groups and permissions in ``{yourpackage}.websetup``, which 
+the SQLAlchemy-powered model definitions in ``{yourpackage}.model.auth``
+and the relevant settings in ``{yourpackage}.config.app_cfg``. It also defines
+the default users, groups and permissions in ``{yourpackage}.websetup``, which
 you may want to customize.
 
 Before trying to login and try authorization with the rows defined in
@@ -97,9 +98,9 @@ command from your project's root directory::
 .. note::
   This module is :mod:`repoze.what.plugins.quickstart` and only works if your
   users' credentials, groups and permissions are stored in a `SQLAlchemy
-  <http://www.sqlalchemy.org/>`_ -managed 
-  database. To implement it on an existing project, or customize the model 
-  structure assumed by it, you have to read the documentation for 
+  <http://www.sqlalchemy.org/>`_ -managed
+  database. To implement it on an existing project, or customize the model
+  structure assumed by it, you have to read the documentation for
   :mod:`repoze.what.plugins.quickstart`.
 
 

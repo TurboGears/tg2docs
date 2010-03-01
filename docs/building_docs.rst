@@ -106,7 +106,7 @@ still in the virtualenv.
 
        easy_install -i http://dev.camptocamp.com/packages/mapfish/1.1/index --allow-hosts=dev.camptocamp.com mapfish==1.1
 
-After this, you should be able to verify your tg2.1 installation with
+After this, you should be able to verify your TurboGears |version| installation with
 
 .. code-block:: bash
 

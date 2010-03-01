@@ -1,7 +1,7 @@
 .. _apache_mod_proxy:
 
-Running TG2 behind Apache with Mod Proxy
-========================================
+Running TurboGears |version| behind Apache with Mod Proxy
+=========================================================
 
 :status: Draft
 
@@ -9,9 +9,9 @@ Running TG2 behind Apache with Mod Proxy
     :depth: 2
 
 
-By running your TurboGears2 application behind Apache you can take
-advantage of Apache's HTTPS abilities or have it serve your static
-files.
+By running your TurboGears |version| application behind Apache you
+can take advantage of Apache's HTTPS abilities or have it serve
+your static files.
 
 
 Using Apache As A Reverse Proxy
@@ -21,9 +21,10 @@ Using Apache As A Reverse Proxy
 TurboGears Configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you're mounting your TG2 app at the root of the website, there's
-nothing you need to do.  But if you're mounting it somewhere else, you
-need to edit production.ini to include these changes::
+If you're mounting your TurboGears |version| app at the root of the
+website, there's nothing you need to do.  But if you're mounting it
+somewhere else, you need to edit production.ini to include these
+changes::
 
   [app:main]
   use = egg:your_project_name
@@ -37,10 +38,10 @@ need to edit production.ini to include these changes::
 basically this just tells paster where your app is going to be mounted
 so that it can manage the URL's for you properly.
 
-.. warning:: You will also want to make sure that you disable the debugger middleware. 
+.. warning:: You will also want to make sure that you disable the debugger middleware.
 
 Make sure you have this line in production.ini ::
-	
+
    full_stack = False
 
 
@@ -107,7 +108,7 @@ Finally, go to your TurboGears project directory and in a console
 run::
 
         paster serve production.ini
-        
+
 .. note:: The above command assumes you have created a config file named ``production.ini``.
 
 Now you should be able to see your webpage in full TurboGears glory at
@@ -125,7 +126,7 @@ client. Therefore we used the ``AddDefaultCharset utf-8`` directive
 above to override the Apache default in the TurboGears virtual host
 section.
 
-TG2 also automatically sets the charset property by modifying the
-``Content-type`` HTTP header on each request that returns ``text/*``
-or ``application/json`` content types. Apache notices this pre-existing
-header and passes it through.
+TurboGears |version| also automatically sets the charset property by
+modifying the ``Content-type`` HTTP header on each request that
+returns ``text/*`` or ``application/json`` content types. Apache
+notices this pre-existing header and passes it through.

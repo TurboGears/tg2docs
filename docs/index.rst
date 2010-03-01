@@ -26,7 +26,7 @@ to generating web content.
 The TurboGears Stack: An Overview
 ------------------------------------
 
-TG2 represents a change from some of the components in TurboGears 1.x, but
+TurboGears 2.x represents a change from some of the components in TurboGears 1.x, but
 we've now invested in a set of components that we think will continue to be at
 the center of python web development for years to come.  From the beginning
 TurboGears was designed to be a Full Stack framework built from best-of-breed
