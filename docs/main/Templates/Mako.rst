@@ -6,19 +6,18 @@ Why Mako?
 Mako provides another template rendering solution for TurboGears, it has a
 couple of advantages:
 
- * Is very fast! (as fast as some C engines).
- * Mako is supported by Jython (and therefore TG projects utilizing Mako will run on Jython).
- * Mako uses inheritance instead of matching to combine page tempates.   This is often easier
-   for developers to understand and see where problems lie.
- * Mako provides namespaces that behaves just like regular python code.
- * Mako syntax is much closer to standard python than many XML-based languages like TAL or Genshi.
- * Mako contains callable blocks.
- * Mako can be be used to generate non-html markup as neither the template or the output needs to be valid html.
- * Mako is the default in Pylons, so Pylons users will feel at home with it's use.
+* Is very fast! (as fast as some C engines).
+* Mako is supported by Jython (and therefore TG projects utilizing Mako will run on Jython).
+* Mako uses inheritance instead of matching to combine page tempates.   This is often easier for developers to understand and see where problems lie.
+* Mako provides namespaces that behaves just like regular python code.
+* Mako syntax is much closer to standard python than many XML-based languages like TAL or Genshi.
+* Mako contains callable blocks.
+* Mako can be be used to generate non-html markup as neither the template or the output needs to be valid html.
+* Mako is the default in Pylons, so Pylons users will feel at home with it's use.
 
 For more information see http://www.makotemplates.org
 
-However it has one major tradeoff. The main reason for it's speed gain over genshi is the lack of "(x)html" validation. Some see this as 
+However it has one major tradeoff. The main reason for it's speed gain over genshi is the lack of "(x)html" validation. Some see this as
 an advantage some as a disavantage. This tradeoff can be mitigated with the use of a validator during development.
 
 TurboGears mako Support
@@ -43,7 +42,7 @@ You can also set it as the default renderer by setting::
 
    base_config.default_renderer = "mako"
 
-You do not need to set the default renderer to mako, but if your 
+You do not need to set the default renderer to mako, but if your
 project will be using mako primarily, it is a good idea to do so.
 
 Dotted Lookup Support
@@ -56,7 +55,7 @@ within your template as well.
 Local Support
 --------------
 Mako support also includes support for ``local:`` in your template name.  What this
-allows you to do is to tell TurboGears to look for the referenced template in the 
+allows you to do is to tell TurboGears to look for the referenced template in the
 locally executing namespace, as apposed to a fully-dotted name.  This allows you to
 write extensions that can "plug in" to an existing TurboGears project by providing
 direct access to a project's master template.  tgext.admin takes advantage of this; most
@@ -68,10 +67,10 @@ templates have the following code at the beginning of their files::
 Exposing a mako template
 -------------------------
 
-If you have your project's default set to genshi, don't fret, you may still use 
+If you have your project's default set to genshi, don't fret, you may still use
 mako within your app.  Simply preface your template name with mako, producing
 an expose decorator that might look like this::
-    
+
     @expose('mako:mytgapp.templates.my_awesome_mako_template')
     def my_awesome_controller_method(self, **kw):
         ...
