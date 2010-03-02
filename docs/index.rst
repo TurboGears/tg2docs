@@ -1,7 +1,7 @@
 .. _mainindex:
 
-TurboGears Documentation
-========================
+TurboGears |version| Documentation
+==================================
 
 .. image:: main/images/python_logo.png
    :align: right
@@ -18,10 +18,26 @@ the codebase remains less than 2000 lines of executable code.
 It is important to note that this version of TurboGears is a reinvention
 of the original TurboGears project developed by Kevin Dangoor.  TurboGears2
 was developed to increase cooperation between the Python Web Framework
-community, especially with the Pylons project.  TurboGears also leverages
+community, especially with the `Pylons`_ project.  TurboGears also leverages
 WSGI (Web Server Gateway Interface) components available today.  :term:`WSGI`
 allows web applications to share a common api to provide a layered approach
 to generating web content.
+
+.. note::
+
+   TurboGears |version| *is* `Pylons`_.  TurboGears philosophy is to provide
+   a fully-configured Pylons application "stack" that lets a new user get
+   "up and running" quickly, but which allows more advanced users to swap
+   in new components easily. By having a standard stack, TurboGears can
+   provide out-of-the-box functionality such as the :ref:`tgext-admin` which
+   lets you edit your model objects directly through the web.
+
+   The TurboGears project attempts to select technologies which are robust,
+   efficient and flexible enough that most of the time you won't have to
+   replace anything, but the flexibility to replace components as your
+   needs change is a key feature of the framework.
+
+   See :ref:`why_not_merge_with_pylons`
 
 The TurboGears Stack: An Overview
 ------------------------------------
@@ -124,7 +140,8 @@ Indices and tables
 
 .. note:: These documents are a :ref:`work in progress <todolist>`, so please feel free to tackle some of the items and send in patches!
 
-.. todo:: Difficulty: Medium. make docs more linky.   provide link to pylons, and why tg2 is now based on it.   eventually, I'd really like to see links to pylonsbook for specific "more information", and how turbogears is different/expands upon it
+.. todo:: Difficulty: Medium. make docs more linky.
+.. todo:: Link to Pylons book for specific "more information"
 
 .. glossary::
 
