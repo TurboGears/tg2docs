@@ -14,30 +14,13 @@ only to TurboGears.  Although TurboGears provides fully featured ORM
 (Object Relational Mapper), Templating Languages, and URL dispatch mechanisms,
 the codebase remains less than 2000 lines of executable code.
 
-
 It is important to note that this version of TurboGears is a reinvention
-of the original TurboGears project developed by Kevin Dangoor.  TurboGears2
+of the original TurboGears project developed by Kevin Dangoor.  TurboGears 2.x
 was developed to increase cooperation between the Python Web Framework
 community, especially with the `Pylons`_ project.  TurboGears also leverages
 WSGI (Web Server Gateway Interface) components available today.  :term:`WSGI`
 allows web applications to share a common api to provide a layered approach
 to generating web content.
-
-.. note::
-
-   TurboGears |version| *is* `Pylons`_.  TurboGears philosophy is to provide
-   a fully-configured Pylons application "stack" that lets a new user get
-   "up and running" quickly, but which allows more advanced users to swap
-   in new components easily. By having a standard stack, TurboGears can
-   provide out-of-the-box functionality such as the :ref:`tgext-admin` which
-   lets you edit your model objects directly through the web.
-
-   The TurboGears project attempts to select technologies which are robust,
-   efficient and flexible enough that most of the time you won't have to
-   replace anything, but the flexibility to replace components as your
-   needs change is a key feature of the framework.
-
-   See :ref:`why_not_merge_with_pylons`
 
 The TurboGears Stack: An Overview
 ------------------------------------
@@ -50,7 +33,6 @@ components.  TurboGears takes some of the guesswork out of choosing from the
 various components available by providing you with a set of productive defaults,
 while still providing the abilty to change those defaults if something better
 meets the needs of your project.
-
 
 The TurboGears stack is made up of a four main components that aim at increasing
 web development productivity.  Each of these components can in fact be used
@@ -79,14 +61,15 @@ syntax.
 Pylons_ is our web server of choice.  Pylons is a good choice for our web server,
 because it embraces WSGI, and is also broken into smaller swappable components.  Pylons
 gives us routing, caching, sessions, and a set of thread-safe globals to make
-development easier.
+development easier. :ref:`why_not_merge_with_pylons` because we want to provide
+a "fully configured" application stack to enable features such as the
+:ref:`tgext-admin`.
 
 SQLAlchemy_ has been called the best Object Relational Mapper in *any* language.
 SQLAlchemy provides a solid foundation to build your data-driven application from.
 SA allows you to abstract your database to Python objects, while still giving
 you access to your database in tabular, and even SQL form.  Using SQLAlchemy also gives
 you the ability to use a number of add-on tools like migrate_ and bootalchemy_.
-
 
 .. _ToscaWidgets: http://toscawidgets.org
 .. _Genshi: http://genshi.edgewall.com

@@ -34,6 +34,8 @@ changes here and there, but one member of the TurboGears 2 training
 class at PyCon said "I didn't notice a lot that was new in terms of
 how you put a TurboGears application together."
 
+.. _why_not_merge_with_pylons:
+
 Why Not Just Merge With Pylons?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
