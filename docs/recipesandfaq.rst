@@ -162,7 +162,7 @@ Installation and Deployment
 
     main/DownloadInstall
     main/AltInstall
-    main/Deployment
+    main/Deployment/index
     main/Deployment/DeployWithAnEgg
     main/Deployment/ModProxy
     main/Deployment/modwsgi+virtualenv
