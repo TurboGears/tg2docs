@@ -1,56 +1,37 @@
 .. _apache_mod_wsgi:
 
-Deploying TurboGears using Apache with mod_wsgi
-=================================================
+Apache with mod_wsgi and VirtualEnv
+====================================
 
-The mod_wsgi site documents how to use virtualenv:
+.. note::
 
-http://code.google.com/p/modwsgi/wiki/VirtualEnvironments
+   This setup is part of the :ref:`deploy_standard` for TurboGears.
+   It is recommended for new TurboGears developers.
 
-You can then deploy your TG2 app as described here:
+The :ref:`deploy_apache` provides a fast, robust WSGI environment
+via the mod_wsgi extension.  This document describes how to setup
+TurboGears for use with mod_wsgi in a reasonably straightforward
+configuration which tends to work well for most users.
 
-http://code.google.com/p/modwsgi/wiki/IntegrationWithPylons
+Installation
+------------
 
+The mod_wsgi extension is not normally installed by default with
+Apache, but is packaged for installation on most Linux distributions.
+For Debian/Ubuntu machines:
 
-Deployment using mod_wsgi and apache.
--------------------------------------
+.. code-block:: bash
 
-Below instructions will tell you how to quickly deploy your TG2 app
-using mod_wsgi.
+   sudo aptitude install apache2 libapache2-mod-wsgi
 
-Install modwsgideploy
----------------------
+.. todo:: document Fedora/RHEL installation
 
-PYPI
-~~~~
+We're going to use a helper which generates a template for our
+Apache deployment, so we need to install that too:
 
-You can install modwsgideploy from PyPi::
+.. code-block: bash
 
- easy_install modwsgideploy
-
-Done.
-
-Source Install
-~~~~~~~~~~~~~~
-
-You also have a choice of getting the source and installing it.  You
-should use this in a virtual environment, for example::
-
- virtualenv --no-site-packages BASELINE
- source BASELINE/bin/activate
-
-Install [:Bazaar:] if its not already installed on your system::
-
- easy_install bzr
-
-Branch out the code. This will pull all the revision history. If you want just the recent one use checkout::
-
- bzr branch https://code.launchpad.net/~szybalski/modwsgideploy/trunk/ modwsgideploy_code
-
-Install it::
-
- cd modwsgideploy_code/trunk
- python setup.py develop
+   (tg2env)$ easy_install modwsgideploy
 
 Run modwsgi_deploy
 ------------------
@@ -86,7 +67,7 @@ Next we create a virtual environment::
  easy_install -i http://www.turbogears.org/2.0/downloads/current/index tg.devtools
  paster quickstart myapp
 
- 
+
 Then we install a little helper app modwsgideploy::
 
  easy_install modwsgideploy
@@ -104,7 +85,7 @@ You should see an apache folder like this inside 'myapp'::
  |   |-- myapp
  |   |-- myapp.wsgi
  |   `-- test.wsgi
- 
+
 
 1. Read the README.txt
 2. myapp is a apache configuration file that you need to copy into
@@ -136,19 +117,52 @@ In multiple process load balanced deployments (such as this one) it is
 very possible that a given request will pull resources from multiple
 processes.
 
-You may want to make sure that the TG controllers are loaded up even 
+You may want to make sure that the TG controllers are loaded up even
 before the first request comes in to handle this, so you should add::
 
   import paste.fixture
   app = paste.fixture.TestApp(application)
   app.get("/")
 
-to the end of the wsgi-script that starts your application.  
-    
+to the end of the wsgi-script that starts your application.
+
 This will fetch the index page of your app, thus assuring that it's
 ready to handle all of your requests immediately.  This avoids a
 problem where your controller page is not yet loaded so widgets aren't
 initialized, but a request comes in for a widget resource the
 ToscaWidgets middleware doesn't have registered yet.
 
+Source Install of ModWSGI
+~~~~~~~~~~~~~~
 
+You also have a choice of getting the source and installing it.  You
+should use this in a virtual environment, for example::
+
+ virtualenv --no-site-packages BASELINE
+ source BASELINE/bin/activate
+
+Install [:Bazaar:] if its not already installed on your system::
+
+ easy_install bzr
+
+Branch out the code. This will pull all the revision history. If you want just the recent one use checkout::
+
+ bzr branch https://code.launchpad.net/~szybalski/modwsgideploy/trunk/ modwsgideploy_code
+
+Install it::
+
+ cd modwsgideploy_code/trunk
+ python setup.py develop
+
+
+
+References
+-----------
+
+The mod_wsgi site documents how to use virtualenv:
+
+http://code.google.com/p/modwsgi/wiki/VirtualEnvironments
+
+You can then deploy your TG2 app as described here:
+
+http://code.google.com/p/modwsgi/wiki/IntegrationWithPylons
