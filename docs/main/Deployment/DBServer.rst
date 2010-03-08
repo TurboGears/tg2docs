@@ -6,7 +6,7 @@ Deploy a Production Database
 Most production sites will use a dedicated database server rather than
 relying on the in-process SQLite engine.  Dedicated servers are generally
 better able to handle multiple simultaneous clients, are more robust,
-and can be split onto dedicated machines to increase performance.
+and can be moved onto dedicated machines to increase performance.
 
 The subject of installing, managing and configuring database servers
 is *far* outside the scope of this document.  There are many books,
@@ -52,7 +52,6 @@ test the database using the command-line psql client from PostgreSQL:
 .. code-block:: bash
 
     $ psql -U username -h localhost databasename
-    (realtime-tut)$ psql -U username -h localhost databasename
     Password for user username:
     Welcome to psql 8.3.8, the PostgreSQL interactive terminal.
 
