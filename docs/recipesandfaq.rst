@@ -163,10 +163,6 @@ Installation and Deployment
     main/DownloadInstall
     main/AltInstall
     main/Deployment/index
-    main/Deployment/DeployWithAnEgg
-    main/Deployment/ModProxy
-    main/Deployment/modwsgi+virtualenv
-    main/Deployment/lighttpd+fcgi
 
 .. todo:: Difficulty Medium: document how to "freeze" applications (PIP, zc.buildout, etceteras) for re-deployment with precisely the same software on each machine (no downloads etceteras)
 .. todo:: document use of Nginx beyond just saying you can do it
