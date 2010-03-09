@@ -35,6 +35,8 @@ machines this command looks like this:
 
     sudo aptitude install apache2
 
+.. todo:: document Fedora/RHEL installation
+
 which will install Apache and configure it to start automatically
 on system startup.  Apache is configurable via a series of config
 files installed in (normally) `/etc/apache2` with the directories
@@ -108,32 +110,48 @@ There are two implementations of this strategy in Apache:
   (in fact from the TurboGears side they are identical), but
   mod_rewrite can be somewhat more complex to setup.
 
-Apache Config for the Impatient
---------------------------------
+.. _`deploy_apache_enable`:
 
-If you are new to Apache, you will likely want to use the
-:ref:`modwsgi_deploy <deploy_standard>` paster script to generate
-an initial Apache configuration file and wsgi script for your project.
-You can copy the generated config into Apache's `sites-available`
-directory and run:
+Enable Your Apache Site
+-----------------------
+
+Once you have:
+
+* setup your (:ref:`mod_wsgi <apache_mod_wsgi>`) environment
+* :ref:`Deployed your Database <deploy_db>`
+* :ref:`Deployed your Code <deploy_code>`
+* :ref:`Created your Production INI <deploy_ini>` (including testing with the paster server)
+* Tweaked your Apache config
+
+You can copy the Apache config file to your Apache `sites-available`
+directory, enable it, and restart Apache.
 
 .. code-block:: bash
 
-    $ sudo a2ensite sitename
-    $ sudo apache2ctl configtest
-    $ sudo apache2ctl restart
+   $ sudo cp myapp/apache/myapp /etc/apache2/sites-available
+   $ sudo chown root:root /etc/apache2/sites-available/myapp
+   $ sudo a2ensite sitename
+   $ sudo apache2ctl configtest
+   $ sudo apache2ctl restart
 
-to restart Apache with your new site.
+You should now be able to load your site at the configured location
+(by default `http://localhost/myapp`).  If your site doesn't appear,
+check the Apache error log:
+
+.. code-block:: bash
+
+   $ less /var/log/apache2/error.log
+
+normally either your Python application will have encountered an error
+in the .wsgi script.  Pay particular attention to the PYTHONPATHS,
+as this is one of the most common issues that prevents your site from
+running.
 
 What's Next
 ------------
 
-* :ref:`deploy_standard` -- describes the standard deployment environment
-  which includes Apache and :ref:`apache_mod_wsgi`
-* :ref:`deploy_nginx` -- is an alternate "asynchronous" web server which focusses
-  on speed and real-time-web features
-* :ref:`lighttpd_fcgi` -- is an alternate deployment strategy using a
-  lightweight web-server with a FastCGI interface
+* :ref:`mod_wsgi <apache_mod_wsgi>` -- the recommended deployment environment for Apache
+* :ref:`deploy_standard` -- gives an overview of the standard installation pattern
 * `Apache docs`_ -- the official Apache documentation
 
 .. _`Apache docs`: http://httpd.apache.org/docs/
