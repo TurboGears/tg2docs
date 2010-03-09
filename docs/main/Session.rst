@@ -1,3 +1,5 @@
+.. _`session`
+
 Web Session Usage
 =================
 
@@ -68,7 +70,7 @@ and here is how to set a key in the session:
     session.save()
 
 You should note that you need to explicitly save the session in order for your
-keys to be stored in the session. 
+keys to be stored in the session.
 
 You can delete all user session with the `delete()` method of the
 session object:
