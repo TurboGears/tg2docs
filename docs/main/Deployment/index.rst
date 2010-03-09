@@ -12,13 +12,17 @@ suitable for use by non-technical users.
 
    Deploying a web application incorrectly can seriously compromise
    not just the application itself, but the entire server on which
-   it is installed.
+   it is installed.  If you are unsure about any process or idea,
+   do not deploy until you *are* sure.
 
 If you are new to web development, you should likely stick with the
 :ref:`deploy_standard`. If you are an old hand, feel free to choose
 :ref:`deploy_alternate`.  TurboGears is extremely flexible in how
 it can be run and this documentation only begins to cover the
 available approaches.
+
+Standard Deployments
+--------------------
 
 .. toctree::
    :maxdepth: 1
@@ -28,12 +32,26 @@ available approaches.
    ModWSGI
    DBServer
    ProductionINI
-   Alternate
+   Code
    DeployWithAnEgg
+
+Alternative Deployments
+-----------------------
+
+These sections describe non-standard approaches to deployment.  You
+should not likely use these unless you are comfortable with web
+development and deployment or you have some particular need which
+is not met by the standard deployment pattern (above).
+
+.. toctree::
+   :maxdepth: 1
+
+   Alternate
    nginx/index
    ModProxy
    Daemon
    FastCGI
    lighttpd+fcgi
+   Checkout
 
 .. todo:: Difficulty: Hard. Document use of IIS with TurboGears thru a proxy.
