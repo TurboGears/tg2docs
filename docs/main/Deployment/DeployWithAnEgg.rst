@@ -3,18 +3,16 @@
 Deploying your TG application with an Egg and Easy Install
 ===========================================================
 
-:status: Official
-
 .. contents::
     :depth: 3
 
 
-How to Build an .egg File for Your Project
+How to Build a .egg File for Your Project
 ------------------------------------------
 
 An egg is Python's new distribution format, comparable to a ``.jar`` in Java.
-It's basically a zip file with a particular directory structure containing the 
-code and a bit of metadata. You can get details on eggs directly from the 
+It's basically a zip file with a particular directory structure containing the
+code and a bit of metadata. You can get details on eggs directly from the
 inventor at the `PEAK Developers' Center`_.
 
 A freshly quickstarted project will have a ``setup.py`` file. This file allows
@@ -24,7 +22,7 @@ switching to your project directory and running::
 
     python setup.py bdist_egg
 
-This will produce an egg file for the current version of your project in the 
+This will produce an egg file for the current version of your project in the
 ``./dist`` folder.
 
 
@@ -37,10 +35,10 @@ and do::
     [sudo] easy_install *myapp*.egg
 
 .. note:: If you do not have ``easy_install`` on the target machine, you need
-   to install the setuptools_ package first to get it, either through your 
+   to install the setuptools_ package first to get it, either through your
    operating system's software package system or by downloading the
    bootstrapping program `ez_setup.py`_. Conveniently, ``ez_setup.py`` also
-   takes the same arguments that ``easy_install`` takes, so ``python 
+   takes the same arguments that ``easy_install`` takes, so ``python
    ez_setup.py *myapp*.egg`` will do the full install. Be sure to switch
    over to ``easy_install`` after the first run.
 
@@ -48,7 +46,7 @@ and do::
 Installing Dependencies
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-As long as the ``setup.py`` lists TurboGears as a requirement (see the section 
+As long as the ``setup.py`` lists TurboGears as a requirement (see the section
 on `adding requirements`_), it should be possible for somebody to install your
 application with just the egg and ``easy_install`` or ``ez_setup.py`` including
 the installation of TurboGears itself and all its dependencies.
@@ -61,14 +59,14 @@ the installation of TurboGears itself and all its dependencies.
 
     Please be also aware that by default the ``setup.py`` file of a quickstarted
     project will require a TurboGears version that is equal or newer than the
-    version which was used to run ``paster quickstart``. This means if you 
-    install your application and TurboGears is not installed or only an older 
-    version than required, ``easy_install`` will fetch and install the newest 
-    TurboGears version it can find. **This includes beta versions and release 
+    version which was used to run ``paster quickstart``. This means if you
+    install your application and TurboGears is not installed or only an older
+    version than required, ``easy_install`` will fetch and install the newest
+    TurboGears version it can find. **This includes beta versions and release
     candidates of future TurboGears versions with a higher major version number.**
-    If you want to ensure that your application will only install a known good 
-    TurboGears version, you should add a more specific version constraint for 
-    TurboGears in ``setup.py`` (again, see `adding requirements`_ on how to do this). 
+    If you want to ensure that your application will only install a known good
+    TurboGears version, you should add a more specific version constraint for
+    TurboGears in ``setup.py`` (again, see `adding requirements`_ on how to do this).
 
 
 Running Your Application
@@ -77,7 +75,7 @@ Running Your Application
 TurboGears apps take advantage of the paster serve functionality by
 providing a way to start the server as you would any other paste application
 
-Once you have your application installed in the proper location simply 
+Once you have your application installed in the proper location simply
 cd to that location and type the following command::
 
     $ paster serve production.ini
@@ -97,7 +95,7 @@ first and only argument to your start script.
 The Production Database
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-Your production configuration should specify location and parameters for the 
+Your production configuration should specify location and parameters for the
 production database_ that your project will use.
 
 This can be the same database as the one you created with ``paster setup-app``
@@ -158,14 +156,14 @@ How to Make Your Project Available on PyPI
 ----------------------------------------------------
 
 If you decide to share your creation with the world, the easiest way to do so
-is by using the Python Package Index.  Before you can upload your project 
+is by using the Python Package Index.  Before you can upload your project
 to PyPI, you will need an account. You can create one on the `PyPI registration page`_.
 
 .. _PyPI registration page: http://www.python.org/pypi?:action=register_form
 
 After you have created an account, you will need to tell setuptools your
 account information for uploading the file. See the `distutils documentation`_
-for details on this. 
+for details on this.
 
 Now that you have your account configured and you've updated the metadata in
 ``setup.py``, you need to register a page for your application. setuptools
@@ -181,7 +179,7 @@ automatically. Here is the command you need::
 Any eggs you created in the process should also be available in the ``dist/``
 folder of your project.
 
-You can also register projects and upload your eggs manually. This 
+You can also register projects and upload your eggs manually. This
 `setuptools tutorial`_ should be enough to get you going.
 
 .. _setuptools tutorial: http://wiki.python.org/moin/CheeseShopTutorial

@@ -47,11 +47,11 @@ is not met by the standard deployment pattern (above).
    :maxdepth: 1
 
    Alternate
-   nginx/index
-   ModProxy
    Daemon
+   ModProxy
    FastCGI
    lighttpd+fcgi
    Checkout
+   nginx/index
 
 .. todo:: Difficulty: Hard. Document use of IIS with TurboGears thru a proxy.
