@@ -23,7 +23,6 @@ approaches.
    ModWSGI
    DBServer
    ProductionINI
-   modwsgi+virtualenv
    DeployWithAnEgg
    nginx/index
    ModProxy
