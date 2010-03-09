@@ -1,4 +1,4 @@
-.. _`session`
+.. _session:
 
 Web Session Usage
 =================
