@@ -20,7 +20,9 @@ approaches.
    Standard
    Alternate
    Apache
+   ModWSGI
    DBServer
+   ProductionINI
    modwsgi+virtualenv
    DeployWithAnEgg
    nginx/index
