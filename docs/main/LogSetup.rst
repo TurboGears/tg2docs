@@ -1,3 +1,5 @@
+.. _`config_logging`:
+
 Configuring and using the Logging System
 =========================================
 
@@ -24,28 +26,28 @@ To enable the viewing of ALL messages within the pylons and TG stacks you will n
 
     [loggers]
     keys = root
-    
+
     [logger_root]
     level = NOTSET
     handlers = console
-    
+
     [handlers]
     keys = console
-    
+
     [handler_console]
     class = StreamHandler
     args = (sys.stderr,)
     level = NOTSET
     formatter = generic
-    
+
     [formatters]
     keys = generic
-    
+
     [formatter_generic]
     format = %(asctime)s,%(msecs)03d %(levelname)-5.5s [%(name)s] %(message)s
     datefmt = %H:%M:%S
 
-    
+
 
 As an additional reference to the pylons write up, the RotatingFileHandler_ class is documented here::
 
