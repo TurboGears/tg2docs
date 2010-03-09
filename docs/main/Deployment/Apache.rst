@@ -92,9 +92,7 @@ localhost (private) interface.  For this strategy:
 
 * you are responsible for keeping your TurboGears process running, starting
   it at boot, and generally making sure that it can receive the requests
-  from the Apache server.  You may need to create an `Upstart`_ or `Sys-V Init`
-  script to kick off your TurboGears process, or you may wish to use a
-  service such as `supervisord`_ to monitor and restart your application.
+  from the Apache server.  See :ref:`deploy_daemon`.
 * You can run the TurboGears process as any user you like, and you can even
   run it in a "screen" session during development
 * You can easily restart the TurboGears process
