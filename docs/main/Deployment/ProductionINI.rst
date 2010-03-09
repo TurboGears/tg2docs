@@ -1,7 +1,7 @@
 .. _deploy_ini:
 
-Creating a Production Config
-=============================
+Production Config
+=================
 
 Your production config file looks much like your `development.ini` file,
 but you will generally need to make a number of changes to make your config
@@ -107,9 +107,16 @@ Check File-Storage Locations
 
 You will likely replace your entire application checkout directory every time
 you re-deploy your application, so things such as persistent session-storage,
-and cache directories should be located outside your checkout.  The appropriate
-location is somewhat open to sysadmin preference, but a good default choice
-would be `/var/local/myappname`, which would create config lines like this:
+and cache directories should be located outside your checkout.
+
+If you are deploying with an egg, you can continue to use %(here)s in the config
+to reference the "deployment directory" (where you production.ini file is),
+and this will be outside the egg's path.  (This is the :ref:`deploy_standard`)
+
+If you are using a source-code-checkout into the deployment location, the
+appropriate location is somewhat open to sysadmin preference, but a good
+default choice would be `/var/local/myappname`, which would create config
+lines like this:
 
 .. code-block:: ini
 
@@ -119,8 +126,13 @@ would be `/var/local/myappname`, which would create config lines like this:
    beaker.cache.data_dir = /var/local/myapp/cache
    beaker.cache.lock_dir = /var/local/myapp/locks
 
+You will need to create these directories and make them writable by the
+www-data user.
+
 See :ref:`caching` and :ref:`session` for discussions of the Beaker system
 along with alternative deployment options, such as the use of :ref:`memcache`.
+
+See :ref:`deploy_code` for dicussions of how to deploy
 
 Check Log-file Options
 ----------------------
@@ -134,7 +146,7 @@ application log-files from filling up your server's hard-disk.
 
    [handler_logfile]
    class = logging.handlers.RotatingFileHandler
-   args = ('/var/log/myapp.log', 'a',1024*1024*50,3)
+   args = ('/var/log/myapp/myapp.log', 'a',1024*1024*50,3)
    level = WARN
    formatter = generic
 
@@ -149,7 +161,27 @@ You'll want to reduce the SQLAlchemy logging level to WARN in most cases:
    [logger_sqlalchemy]
    level = WARN
 
+You will want to be sure that the /var/log/myapp directory exists, and is
+writable by the www-data user.
+
+.. code-block:: bash
+
+   $ sudo mkdir /var/log/myapp
+   $ sudo chown www-data:www-data /var/log/myapp
+
 See :ref:`config_logging` for more details.
+
+Test your Config
+-----------------
+
+Your paster config-file is a regular config-file, and often you can run
+it with the `Paste` web-server.  Keep in mind that your config file will
+likely specify file-paths that only the www-data user can write to, so
+you will likely need to run paster as the www-data user:
+
+.. code-block:: bash
+
+   $ sudo -u paster server production.ini
 
 .. _deploy_ini_scc:
 
