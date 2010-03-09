@@ -1,4 +1,6 @@
-NGINX Deployment
+.. _nginx:
+
+NGINX Web Server
 -----------------
 
 Nginx is a very fast asynchronous web server that can be used in front
