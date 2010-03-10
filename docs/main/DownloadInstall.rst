@@ -145,6 +145,11 @@ but which provide useful features for the quick-started application.
 The nosetests command runs the quickstarted application's test-suite.  This
 step is optional, but is a good smoke-test to see if you have installed
 correctly.
+
+.. note:: Quick-Start has created a large number of files for you at this
+   point.  You can :ref:`Explore the QuickStarted Project <explorequickstart>`
+   if you like.
+
 Here we create our example application's database (an SQLite database) and
 then serve it on the default port (8080).
 
