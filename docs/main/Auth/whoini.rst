@@ -131,10 +131,22 @@ we set up our `repoze.who` plugins in the normal manner for `repoze.who`:
         {'sqlauth': _source_adapters['permission']},
     )
 
+    # THIS IS CRITICALLY IMPORTANT!  Without this your site will
+    # consider every repoze.what predicate True!
+    from repoze.what.plugins.pylonshq import booleanize_predicates
+    booleanize_predicates()
+
 This module creates a number of plugins which the `who.ini` file references.
 It is also possible to configure plugins to accept parameters from the
 `who.ini` configuration file (by specifying a plugin: section and providing
 the parameters).
+
+..  warning::
+
+    Without the `booleanize_predicates()` call you will find that almost all
+    TurboGears code will fail.  TurboGears calls this when the authorization
+    stack is enabled (we have disabled it, you will recall), and most TurboGears
+    code was written to expect the authorization stack to be enabled.
 
 Next Steps
 ----------

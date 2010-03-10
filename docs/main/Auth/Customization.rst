@@ -379,6 +379,27 @@ commenting) the following line from
 Then you may also want to delete those settings like ``base_config.sa_auth.*``
 -- they'll be ignored.
 
+..  warning::
+
+    DANGER!  The use of the convenient "booleanized" predicates from
+    `repoze.what` within TurboGears means that almost all TurboGears
+    code relies on the truth value of a predicate being True/False.
+    By disabling the TurboGears customization this behaviour will cease
+    and all predicates will evaluate to True in all cases.
+
+    Your site is "failing open"!  Every user now has manage permission
+    (and every other permission!).
+
+    You **must** call this function on
+    initialization:
+
+    ..  code-block:: python
+
+        from repoze.what.plugins.pylonshq import booleanize_predicates
+        booleanize_predicates()
+
+    To restore this critical behavior and protect your site!
+
 Next Steps
 ----------
 
