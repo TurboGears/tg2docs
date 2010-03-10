@@ -3,50 +3,32 @@
 Running TurboGears |version| behind Apache with Mod Proxy
 =========================================================
 
-:status: Draft
+By running your TurboGears |version| application behind
+:ref:`Apache <deploy_apache>` you can take advantage of Apache's
+HTTPS abilities or have it serve your static files, but keep your
+Paste server independent of the Apache server.
 
-.. contents::
-    :depth: 2
+This can allow, for instance, wsgi applications to be run as
+regular Unix users instead of under the www-data user account.
 
-
-By running your TurboGears |version| application behind Apache you
-can take advantage of Apache's HTTPS abilities or have it serve
-your static files.
-
-
-Using Apache As A Reverse Proxy
--------------------------------
-
+.. note:: We recommend the use of :ref:`apache_mod_wsgi` where
+   possible, as it is part of the :ref:`deploy_standard` and
+   should provide better performance in general.
 
 TurboGears Configuration
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
-If you're mounting your TurboGears |version| app at the root of the
-website, there's nothing you need to do.  But if you're mounting it
-somewhere else, you need to edit production.ini to include these
-changes::
+..  warning::
+    You will need a :ref:`deploy_ini` for your application.  There
+    are significant security implications to a Production Config file,
+    do **not** just copy your development.ini file!
 
-  [app:main]
-  use = egg:your_project_name
-  filter-with = proxy-prefix
-  # Usual options here
-
-  [filter:proxy-prefix]
-  use = egg:PasteDeploy#prefix
-  prefix = /wherever_your app_is mounted
-
-basically this just tells paster where your app is going to be mounted
-so that it can manage the URL's for you properly.
-
-.. warning:: You will also want to make sure that you disable the debugger middleware.
-
-Make sure you have this line in production.ini ::
-
-   full_stack = False
-
+If you are not mounting your application at the "root" of your site,
+you will need to configure a proxy filter in your `production.ini` file.
+See :ref:`deploy_ini_mountpoint` for details.
 
 Apache Configuration
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 Here is how to configure Apache 2 as a reverse proxy for your
 TurboGears2 application.
@@ -114,9 +96,8 @@ run::
 Now you should be able to see your webpage in full TurboGears glory at
 the address configured as ``ServerName`` above.
 
-
 Setting The Correct Charset
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 The default templates used by TurboGears specify ``utf-8`` as a
 charset.  The Apache default charset, returned in the ``Content-Type``

@@ -19,12 +19,17 @@ it using the `develop` option to setup.py.
    $ sudo -u www-data svn checkout file:///var/svn/myapp/production myapp
    $ cd myapp
    $ sudo -u www-data bash
+   $ mkdir python-eggs
    $ source /usr/local/pythonenv/myapp/bin/activate
    $ python setup.py develop
    $ exit
 
 by default :ref:`modwsgi_deploy <deploy_modwsgi_deploy>` will have specified
-that `production.ini` is in the root directory of this checkout.  See
+that `production.ini` is in the root directory of this checkout. See
 :ref:`deploy_ini_scc` for details on why you might **not** want that file to be
 checked into your main repository.
 
+Similarly, you will need to make sure that your Beaker session and cache
+directories are not sub-directories of the source code checkout if you
+are planning on deleting and re-checking-out the source for each release.
+(See :ref:`deploy_ini_beaker` for details).

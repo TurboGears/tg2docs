@@ -3,7 +3,9 @@
 Lighttpd and FastCGI
 ====================
 
-.. highlight:: bash
+.. todo:: clean up the LightHTTPD + FastCGI deployment documentation
+.. todo:: consolidate the 3 FastCGI documents (Mod-FastCGI, NGINX FastCGI
+   and LightHTTPD FastCGI) as well as the Mod-Proxy stuff.
 
 Lighttpd has strong build-in FastCGI support. This makes FCGI the method of choice to deploy a TurboGears2 application in a production environment.
 
@@ -16,8 +18,6 @@ Flup implements a multithreading fastcgi server.
 Because of the Global Interpreter Lock (GIL) one Python process can only run one thread at once, but whenever a thread blocks, it releases the lock.
 This is exactly the workload expected for a webserver.
 If you want to use more than one physical core, start more python processes.
-
-.. highlight:: python
 
 You need a script to start the FastCGI server with your application.
 Additionally you have to load the paths to your virtual environment.
@@ -97,7 +97,7 @@ Add to production.ini in section ``[app:main]``::
     filter-with = proxy-prefix
 
 And as an additional section::
-    
+
     [filter:proxy-prefix]
     use = egg:PasteDeploy#prefix
     prefix = /
@@ -105,6 +105,3 @@ And as an additional section::
 This will force the URL transmitted from Lighttpd to TurboGears to "/".
 
 Reload lighttpd to enable the changes. You should now have a process named "dispatch.py" with several threads.
-
-
-

@@ -21,9 +21,6 @@ If you are new to web development, you should likely stick with the
 it can be run and this documentation only begins to cover the
 available approaches.
 
-Standard Deployments
---------------------
-
 .. toctree::
    :maxdepth: 1
 
@@ -35,9 +32,6 @@ Standard Deployments
    Code
    DeployWithAnEgg
 
-Alternative Deployments
------------------------
-
 These sections describe non-standard approaches to deployment.  You
 should not likely use these unless you are comfortable with web
 development and deployment or you have some particular need which
@@ -47,11 +41,12 @@ is not met by the standard deployment pattern (above).
    :maxdepth: 1
 
    Alternate
+   Checkout
    Daemon
    ModProxy
    FastCGI
    lighttpd+fcgi
-   Checkout
    nginx/index
 
-.. todo:: Difficulty: Hard. Document use of IIS with TurboGears thru a proxy.
+.. todo:: Document processes for repeatable local-only releases: Local PyPI,
+   PIP, recordeggs, whole-virtualenv checkin/checkout.

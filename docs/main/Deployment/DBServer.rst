@@ -1,7 +1,7 @@
 .. _deploy_db:
 
-Deploy a Production Database
-=============================
+Production Database
+===================
 
 Most production sites will use a dedicated database server rather than
 relying on the in-process SQLite engine.  Dedicated servers are generally
@@ -23,19 +23,28 @@ TurboGears.
    use strong passwords for all accounts, *even* if you only expose the
    DB on a "trusted" port.
 
+Either PostgreSQL or MySQL is a good default choice for a database server,
+using either one is considered part of a :ref:`deploy_standard` and should
+"just work".
+
 .. _deploy_postgresql:
 
 PostgreSQL
 -----------
 
-PostgreSQL is a mature, robust, efficient ACID database server.  It
+PostgreSQL is a mature, robust, efficient `ACID`_ database server.  It
 is available for all major platforms, and has GUI administrative tools
-(though almost all "serious" users use the robust command-line tools).
+(though almost all "serious" users use the command-line tools).
+
+.. _`ACID`: http://en.wikipedia.org/wiki/ACID
 
 PostgreSQL is very well packaged on most Linux distributions, generally
 the packages will automatically create a default `database cluster`
 so that all you need to do is to create a user and a database, then
 configure your application to use that database:
+
+Create (DB) User and Database
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
@@ -46,7 +55,12 @@ configure your application to use that database:
     $ sudo -u postgres createdb --owner=username databasename
 
 at this point you have a database server and a user account that can
-access (just) the one database you've created.  If you want, you can
+access (just) the one database you've created.
+
+Test Database Connection
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you want, you can
 test the database using the command-line psql client from PostgreSQL:
 
 .. code-block:: bash
@@ -74,9 +88,12 @@ them immediately against your database.
     command in psql!  This is a raw connection to the database and
     you are logged in as the owner of the database.
 
+Alter Production Config
+~~~~~~~~~~~~~~~~~~~~~~~
+
 Once you are satisfied that your database is defined and accessible,
-you alter your production.ini file.  The SQLAlchemy URL should point
-at the database you've created:
+you can alter your :ref:`deploy_ini` file to reference it.  The
+SQLAlchemy URL should point at the database you've created:
 
 .. code-block:: ini
 
@@ -90,21 +107,33 @@ at the database you've created:
    check the production.ini file into your development repository, instead
    check it into your configuration-management database (e.g. etckeeper),
    and restrict the file's read permissions as appropriate to allow only the
-   server process to read it.
+   server process (www-data) to read it.
+
+   See :ref:`deploy_ini_scc`
+
+Install Driver
+~~~~~~~~~~~~~~
 
 You need to add a PostgreSQL database driver to  your VirtualEnv to
-be able to access the server:
+be able to access the server.
 
 .. code-block:: bash
 
     (tg2env)$ easy_install psycopg2
 
-Now you can initialize your application's database:
+Initialize Database
+~~~~~~~~~~~~~~~~~~~
+
+Now you can initialize your application's database (see :ref:`deploy_ini` for
+how to create the `production.ini` file):
 
 .. code-block:: bash
 
     (tg2env)$ paster setup-app production.ini
     (tg2env)$ paster serve production.ini
+
+References
+~~~~~~~~~~
 
 Obviously this is only scratching the surface of PostgreSQL installation
 and maintenance.  For further information:
@@ -115,13 +144,20 @@ and maintenance.  For further information:
 
 .. _`The PostgreSQL Docs`: http://www.postgresql.org/docs/8.4/interactive/index.html
 
-.. todo:: Document setup of MySQL
-.. todo:: Document setup of MongoDB
-.. todo:: Document setup of Oracle (low priority)
-.. todo:: Document setup of MSSQL (low priority)
-
 What's Next?
 -------------
 
 * :ref:`deploy_standard` -- if you are deploying your application, you likely want
   to continue working through the standard deployment pattern
+* :ref:`deploy_which_database` -- discusses how to go about choosing an alternate
+  database engine.
+* :ref:`dbdriverinstall` -- discusses initial setup of database drivers
+
+
+.. todo:: Priority high: Document setup of MySQL
+.. todo:: Priority low: Document setup of Oracle
+.. todo:: Priority low: Document setup of MSSQL
+.. todo:: Priority low: Document deployment issues with SQLite
+
+.. todo:: Priority medium: Document setup of MongoDB/Ming (not here)
+.. todo:: Priority low: Document setup of CouchDB (not here)

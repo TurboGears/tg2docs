@@ -1,7 +1,7 @@
 .. _deploy_code:
 
-Deploying Your Project
-======================
+Deploying Your Project Code
+===========================
 
 There are a number of ways you can deploy your application's code in
 production.  While there is an "officially" standard way to deploy

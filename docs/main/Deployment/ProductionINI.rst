@@ -6,10 +6,10 @@ Production Config
 Your production config file looks much like your `development.ini` file,
 but you will generally need to make a number of changes to make your config
 "production ready".  There are a lot of warnings in this document because
-there are a lot of ways to seriously compromize your security by
+there are a lot of ways to seriously compromise your security by
 mis-handling or mis-configuring a `production.ini` file.
 
-.. note:
+.. note::
    Throughout this document we'll refer to this file as `production.ini`.
    The file can be named anything you like, and there can be multiple versions,
    such as having `myapp-staging.ini` and `myapp-production.ini` to
@@ -27,11 +27,11 @@ Set debug=false
 
 .. warning::
 
-   You **MUST** set debug=false in your `production.ini`, the Paste
-   web-server in debug mode provides interactive debugging which allows
+   You **MUST** set debug=false in your `production.ini`, Paste
+   in debug mode provides interactive debugging which allows
    any user of the site to run arbitrary Python code!  This must **never**
    happen on a production site (or even a development site which is
-   exposed to the other machines), as it will give any visitor to the
+   exposed to other machines), as it will give any visitor to the
    site complete control of your server.
 
 In your configuration, you will find a line that looks like this in the
@@ -41,7 +41,7 @@ In your configuration, you will find a line that looks like this in the
 
    [DEFAULT]
    ...
-   # WARGING == If debug is not set to false, you'll get the interactive
+   # WARNING == If debug is not set to false, you'll get the interactive
    # debugger on production, which is a huge security hole.
    debug = false
 
@@ -81,9 +81,13 @@ Set Your Production Database URL
 You will need to alter the SQLAlchemy database URL to reflect your production
 database.  See :ref:`deploy_db`.
 
-.. warning:
+.. warning::
    Keep in mind that anyone who has access to
-   this file will now be able to connect to your database. See :ref:`deploy_ini_scc`
+   this file will now be able to connect to your database.  The
+   SQLAlchemy URL includes the username and password to log in as
+   your DB user.
+
+   See :ref:`deploy_ini_scc`
 
 Change Your Keys
 ----------------
@@ -102,21 +106,29 @@ be updated:
 
 These values should not be shared.  See :ref:`deploy_ini_scc`
 
+.. _deploy_ini_beaker:
+
 Check File-Storage Locations
 ----------------------------
 
-You will likely replace your entire application checkout directory every time
+..  warning::
+
+    This section does not apply if you are :ref:`deploying your code <deploy_code>`
+    using an :ref:`egg <tgeggdeployment>` (which is the :ref:`deploy_standard`).
+    It likely applies if you :ref:`deploy_checkout`.
+
+You may be planning to replace your entire application checkout directory every time
 you re-deploy your application, so things such as persistent session-storage,
-and cache directories should be located outside your checkout.
+and cache directories should be located outside your checkout.  By default the
+quick-started application will use %(here)s variables to control where the
+cache and session data is stored.  If your production.ini is in your source-code
+checkout (see :ref:`deploy_ini_scc` for issues with this), this will be a
+directory that will potentially be deleted frequently, and you will need to
+specify an alternate location.
 
-If you are deploying with an egg, you can continue to use %(here)s in the config
-to reference the "deployment directory" (where you production.ini file is),
-and this will be outside the egg's path.  (This is the :ref:`deploy_standard`)
-
-If you are using a source-code-checkout into the deployment location, the
-appropriate location is somewhat open to sysadmin preference, but a good
-default choice would be `/var/local/myappname`, which would create config
-lines like this:
+The appropriate location for application data-storage is somewhat open to
+sysadmin preference, but a good default choice would be
+`/var/local/myappname`, which would require config lines like this:
 
 .. code-block:: ini
 
@@ -132,7 +144,7 @@ www-data user.
 See :ref:`caching` and :ref:`session` for discussions of the Beaker system
 along with alternative deployment options, such as the use of :ref:`memcache`.
 
-See :ref:`deploy_code` for dicussions of how to deploy
+See :ref:`deploy_code`.
 
 Check Log-file Options
 ----------------------
@@ -171,6 +183,36 @@ writable by the www-data user.
 
 See :ref:`config_logging` for more details.
 
+.. _deploy_ini_mountpoint:
+
+Configure Proxy Mount Point
+---------------------------
+
+..  warning:: This section **only** applies to "proxied" sites, which are
+    *not* part of the :ref:`deploy_standard`.
+
+If you are **not** mounting your application at the root of your site
+(i.e. you are mounting your application as a sub-site of some larger site)
+**and** are using a non-embedded WSGI environment (such as a reverse proxy)
+then you will need to configure TurboGears so that it knows how to
+resolve application URLs from that base URL.
+
+.. code-block:: ini
+
+  # DO NOT DO THIS WITH MOD-WSGI!
+  [app:main]
+  ...
+  filter-with = proxy-prefix
+
+  [filter:proxy-prefix]
+  use = egg:PasteDeploy#prefix
+  prefix = /wherever_your_app_is mounted
+
+See the `PasteDeploy Documentation`_ for details on the prefix middleware
+being configured here.
+
+.. _`PasteDeploy documentation`: http://pythonpaste.org/deploy/modules/config.html
+
 Test your Config
 -----------------
 
@@ -181,14 +223,14 @@ you will likely need to run paster as the www-data user:
 
 .. code-block:: bash
 
-   $ sudo -u paster server production.ini
+   $ sudo -u www-data server production.ini
 
 .. _deploy_ini_scc:
 
 Check In Your Config
 --------------------
 
-.. warning:
+.. warning::
 
    Your `production.ini` contains secrets, keys, passwords, and everything
    else an attacker would need to crack your application and potentially

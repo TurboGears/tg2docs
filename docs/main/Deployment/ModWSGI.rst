@@ -165,7 +165,19 @@ files.
 When you are finished, you can continue on to :ref:`deploy_apache_enable`.
 
 Possible Issues
-~~~~~~~~~~~~~~~
+----------------
+
+Print Statements
+~~~~~~~~~~~~~~~~
+
+If you have used print statements anywhere in your codebase, you can
+expect your Mod-WSGI applications to crash.  Mod-WSGI will error out
+if there is *any* attempt to write to stdout (which is what print does
+by default).  Use the logging module instead of print throughout
+your codebase.
+
+Widget Resource Race Condition
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In multiple process load balanced deployments (such as this one) it is
 very possible that a given request will pull resources from multiple
