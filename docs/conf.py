@@ -13,6 +13,7 @@
 
 import sys, os
 from tg.release import version as tg_release_version
+from pkg_resources import get_distribution, VersionConflict
 
 # If your extensions are in another directory, add it here. If the directory
 # is relative to the documentation root, use os.path.abspath to make it
@@ -171,3 +172,15 @@ latex_documents = [
 code_scm = 'svn'
 code_path = test_path = os.path.dirname(os.path.abspath(__file__)) + os.path.sep + 'project_code' + os.path.sep
 
+# We can't build the docs with older Sphinx and the error that is
+# shown is not helpful at all so we print something better.
+def check_sphinx_vers():
+    min_vers = "0.6.4"
+    try:
+        get_distribution("sphinx >= %s" % min_vers)
+    except VersionConflict:
+        sys.stderr.write("Your version of Sphinx is too old. "
+                         "Please upgrade to Sphinx %s or later.\n" % min_vers)
+        sys.exit(1)
+
+check_sphinx_vers()
