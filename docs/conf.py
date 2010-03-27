@@ -56,7 +56,7 @@ master_doc = 'toc'
 
 # General substitutions.
 project = 'TG2'
-copyright = '2009, TurboGears DocTeam'
+copyright = '2009-2010, TurboGears DocTeam'
 
 # The default replacements for |version| and |release|, also used in various
 # other places throughout the built documents.

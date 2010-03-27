@@ -228,3 +228,4 @@ Other
 .. todo:: Difficulty: Medium. Add shell script which validates environment for building docs
 
 
+.. todo:: Difficulty: Medium. main/ToscaWidgets/forms.rst uses the archive directive. This outputs an absolute path relative to root on the machine that builds the docs. Fix the code so it is relative to _build/html/_static
