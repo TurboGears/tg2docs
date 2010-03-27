@@ -69,8 +69,8 @@ runs that project with the Paste web server:
     $ cd tg2env/
     $ source bin/activate
     (tg2env)$ easy_install -i http://www.turbogears.org/2.1/downloads/current/index tg.devtools
-    (tg2env)$ paster quickstart tg2env
-    (tg2env)$ cd tg2env/
+    (tg2env)$ paster quickstart example
+    (tg2env)$ cd example/
     (tg2env)$ python setup.py develop
     (tg2env)$ nosetests
     (tg2env)$ paster setup-app development.ini
