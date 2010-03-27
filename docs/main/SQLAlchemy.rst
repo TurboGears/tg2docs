@@ -161,7 +161,7 @@ oriented way of manipulating your data::
           self.description = description
 
       def __repr__(self):
-          return "<Movie('%s','%s', '%s')>" % (self.title, self.year, self.description)
+          return (u"<Movie('%s','%s', '%s')>" % (self.title, self.year, self.description)).encode('utf-8')
 
 
 If you don't define the __init__ method. You will need to update the
