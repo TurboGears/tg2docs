@@ -497,7 +497,7 @@ And then the Group definition::
         users = relation('User', secondary=user_group_table, backref='groups')
 
         def __repr__(self):
-            return '<Group: name=%s>' % self.group_name
+            return (u'<Group: name=%s>' % self.group_name).encode('utf-8')
 
         def __unicode__(self):
             return self.group_name
@@ -547,8 +547,8 @@ more easily.
 .. code-block:: python
 
         def __repr__(self):
-            return '<User: email="%s", display name="%s">' % (
-                    self.email_address, self.display_name)
+            return (u'<User: email="%s", display name="%s">' % (
+                    self.email_address, self.display_name)).encode('utf-8')
 
         def __unicode__(self):
             return self.display_name or self.user_name
@@ -672,7 +672,7 @@ simple to understand. And that brings us to the end of our file::
                           backref='permissions')
 
         def __repr__(self):
-            return '<Permission: name=%s>' % self.permission_name
+            return (u'<Permission: name=%s>' % self.permission_name).encode('utf-8')
         def __unicode__(self):
             return self.permission_name
 

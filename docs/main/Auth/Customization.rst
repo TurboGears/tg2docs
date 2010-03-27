@@ -172,7 +172,7 @@ quickstart, you should follow the instructions described in this section:
             users = relation('User', secondary=user_group_table, backref='groups')
         
             def __repr__(self):
-                return '<Group: name=%s>' % self.group_name
+                return (u'<Group: name=%s>' % self.group_name).encode('utf-8')
         
         
         class User(DeclarativeBase):
@@ -194,8 +194,8 @@ quickstart, you should follow the instructions described in this section:
             created = Column(DateTime, default=datetime.now)
         
             def __repr__(self):
-                return '<User: email="%s", display name="%s">' % (
-                        self.email_address, self.display_name)
+                return (u'<User: email="%s", display name="%s">' % (
+                        self.email_address, self.display_name)).encode('utf-8')
         
             @property
             def permissions(self):

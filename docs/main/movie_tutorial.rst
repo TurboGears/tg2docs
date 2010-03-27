@@ -80,9 +80,9 @@ We'll create a new file "movie.py" in our "model" directory with this content::
         genre = relation('Genre',foreign_keys=genre_id )
         reviewed = Column(Boolean, nullable=False, default=False )
         def __repr__(self):
-            return "<Movie('%s','%s', '%s')>" % (
+            return (u"<Movie('%s','%s', '%s')>" % (
                 self.title, self.year, self.description
-            )
+            )).encode('utf-8')
     class Genre(DeclarativeBase):
         __tablename__ = 'genre'
         id = Column(Integer,primary_key=True)
