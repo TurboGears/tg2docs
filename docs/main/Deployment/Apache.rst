@@ -47,7 +47,7 @@ Deployment Patterns
 --------------------
 
 Normally in an Apache deployment Apache is configured to serve your
-application's :ref:`static_files` folder directly.  This provides a
+application's static files folder directly.  This provides a
 significant performance advantage over having TurboGears serve these
 files.  Apache accesses the files directly from the disk and serves
 them without needing to load them into memory all at once.

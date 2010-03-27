@@ -119,11 +119,10 @@ Apache Mod-WSGI configuration file and .wsgi script.
    (tg2env)$ python setup.py develop
    (tg2env)$ paster modwsgi_deploy --help
 
-.. ignore::
-    .. code-block:: bash
+.. code-block:: bash
 
-       (tg2env)$ easy_install modwsgideploy
-       (tg2env)$ paster modwsgi_deploy --help
+   (tg2env)$ easy_install modwsgideploy
+   (tg2env)$ paster modwsgi_deploy --help
 
 .. todo:: When we have the branch integrated, replace with easy_install modwsgideploy
 
