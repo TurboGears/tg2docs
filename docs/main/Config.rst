@@ -282,6 +282,15 @@ session an use your application at though he was logged in.  In the
 event of a security breach, you can change this key to invalidate all
 user sessions.
 
+Authentication Character Set
++++++++++++++++++++++++++++++
+
+Set ``base_config.sa_auth.charset`` to define the character encoding for your
+user's login.  This is especially important if you expect your users to have
+non-ascii usernames and passwords.  To set it to utf-8, your add this to your
+app_config.py file.::
+
+   base_config.sa_auth.charset = 'utf-8'
 
 Advanced Configuration
 -------------------------
