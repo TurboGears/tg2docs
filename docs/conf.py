@@ -140,6 +140,24 @@ html_last_updated_fmt = '%b %d, %Y'
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'TG2doc'
 
+# Options for epub output
+# -----------------------
+epub_basename = 'TurboGears_2.1'
+epub_title = 'TurboGears Documentation for Version ' + release
+epub_author = 'TurboGears Documentation Team'
+epub_language = 'en'
+epub_publisher = 'TurboGears'
+epub_identifier = 'http://www.turbogears.org/'
+epub_scheme = 'URL'
+epub_pre_files = []
+epub_post_files = []
+epub_exclude_files = ['_downloads/ToscaSample-0.2dev.zip', '_static/doctools.js', '_static/underscore.js',
+                      '_static/screenshot.tiff', '_static/searchtools.js', '_static/turbogears.pdf',
+                      '_static/ToscaWidgetsFormsExample.zip', '_static/trunk.zip', '_static/jquery.js',
+                      '_static/Wiki20_final.zip', '_static/tutorials/Helloworld.zip', '_static/tutorials/Wiki-20.zip',
+                      '_static/tutorials/sqlautocode/moviedemo.db'
+                      ]
+epub_tocdepth = 2
 
 # Options for LaTeX output
 # ------------------------

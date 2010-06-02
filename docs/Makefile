@@ -32,6 +32,11 @@ html: main/Pagination/ToscaSample-0.2dev.zip
 	@echo
 	@echo "Build finished. The HTML pages are in _build/html."
 
+epub:
+	mkdir -p _build/epub _build/doctress
+	$(SPHINXBUILD) -b epub $(ALLSPHINXOPTS) _build/epub
+	@echo
+	@echo "Build finished. The epub is in _build/html"
 web:
 	mkdir -p _build/web _build/doctrees
 	$(SPHINXBUILD) -b web $(ALLSPHINXOPTS) _build/web

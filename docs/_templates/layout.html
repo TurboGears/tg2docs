@@ -3,6 +3,7 @@
 {% block relbar1 %}{% endblock %}
 
 {% block sidebar1 %}
+{% if not embedded %}
 <!--[if gte IE 5.5]>
 <![if lt IE 7]>
 <style type="text/css">
@@ -26,18 +27,23 @@ filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='{{ pathto('_stati
   </ul>
   
 </div>
+{% endif %}
 {% endblock %}
 
 {% block rootrellink %}
+{% if not embedded %}
   <li>
   <a href="{{ pathto('index') }}"><b>TurboGears--{{ release }}</b></a>
   </li>
+{% endif %}
 {% endblock %}
 
 {% block relbaritems %}
+{% if not embedded %}
   {% if current_page_name != 'index' %}
     <li> <b>/</b> <a href="{{ pathto(current_page_name) }}">{{ title }}</a></li>
   {% endif %}
+{% endif %}
 {% endblock %}
 
 {%- block document %}
@@ -48,8 +54,10 @@ filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='{{ pathto('_stati
       {%- endif %}
           <div class="body">
             {% block body %}{% endblock %}
+{% if not embedded %}
             <div id="disqus_thread"></div><script type="text/javascript" src="http://disqus.com/forums/tg-site/embed.js"></script><noscript><a href="http://tg-site.disqus.com/?url=ref">View the discussion thread.</a></noscript>
           </div>
+{% endif %}
       {%- if builder != 'htmlhelp' %}
         </div>
       {%- endif %}
@@ -60,6 +68,7 @@ filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='{{ pathto('_stati
 {% block footer %}
 {{ super() }}
 
+{% if not embedded %}
 <script type="text/javascript">
 //<![CDATA[
 (function() {
@@ -85,4 +94,5 @@ var pageTracker = _gat._getTracker("UA-7088080-2");
 pageTracker._trackPageview();
 } catch(err) {}</script>
 
+{% endif %}
 {% endblock %}
