@@ -84,8 +84,12 @@ You could use different names if you must.
 
 We need several additional packages to support documentation development:
 
+mapfish
+   tgext.geo relies on MapFish, so we install it.
 python_memcached
    This is requirement for the way we generate docs, provides memcache module
+sphinx
+   Sphinx_ is the tool used to generate html from the rst files.
 sqlalchemy
    This is required for the documentation to avoid generating warnings when
    it is built.
@@ -98,13 +102,7 @@ still in the virtualenv.
 .. code-block:: bash
 
 
-   easy_install sqlalchemy python_memcached tgext.geo
-
-.. note::  tgext.geo may complain about not being able to install one of its
-   dependencies: MapFish.   This is not critical for building the docs, but
-   if this continues to be a problem you can install it with::
-
-       easy_install -i http://dev.camptocamp.com/packages/mapfish/1.1/index --allow-hosts=dev.camptocamp.com mapfish==1.1
+   easy_install sqlalchemy python_memcached tgext.geo mapfish sphinx
 
 After this, you should be able to verify your TurboGears |version| installation with
 
@@ -112,12 +110,6 @@ After this, you should be able to verify your TurboGears |version| installation 
 
    paster tginfo
 
-
-We also need Sphinx_ which enables us to generate html from the rst files.  This can be installed by running easy_install:
-
-.. code-block:: bash
-
-    easy_install sphinx
 
 Finally, we are ready to set up the documentation.   If you feel ready and
 willing to assist with the documentation efforts, I hope you have contacted

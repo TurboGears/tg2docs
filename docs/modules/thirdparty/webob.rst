@@ -17,16 +17,6 @@ WebOb
 .. autofunction:: html_escape
 .. autofunction:: timedelta_to_seconds
 
-.. autoclass:: FakeCGIBody
-    :members:
-.. autoclass:: ResponseBodyFile
-    :members:
-.. autoclass:: AppIterRange
-    :members:
-.. autofunction:: _rfc_reference
-.. autofunction:: _cgi_FieldStorage__repr__patch
-
-
 :mod:`webob.acceptparse`
 ------------------------
 .. currentmodule:: webob.acceptparse
@@ -75,6 +65,11 @@ WebOb
 .. automodule:: webob.datastruct
 .. autoclass:: EnvironHeaders
     :members:
+
+:mod:`webob.descriptors`
+------------------------
+.. currentmodule:: webob.descriptors
+.. autofunction:: _rfc_reference
 
 :mod:`webob.etag`
 ------------------------
@@ -169,6 +164,24 @@ mod:`webob.exc`
 .. autoclass:: NoVars
     :members:
 
+:mod:`webob.request`
+--------------------
+.. currentmodule:: webob.request
+
+.. autoclass:: FakeCGIBody
+    :members:
+.. autofunction:: _cgi_FieldStorage__repr__patch
+
+
+:mod:`webob.response`
+---------------------
+.. currentmodule:: webob.response
+
+.. autoclass:: ResponseBodyFile
+    :members:
+.. autoclass:: AppIterRange
+    :members:
+    
 :mod:`webob.statusreasons`
 --------------------------
 .. currentmodule:: webob.statusreasons

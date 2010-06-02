@@ -74,6 +74,8 @@ Session
 .. autoclass:: SignedCookie
 .. autoclass:: Session
 .. autoclass:: SessionObject
+.. autofunction:: b64decode
+.. autofunction:: b64encode
 
 Synchronization
 ---------------
@@ -94,8 +96,6 @@ Util
 .. autoclass:: SyncDict
 .. autoclass:: WeakValuedRegistry
 .. autoclass:: ThreadLocal
-.. autofunction:: b64decode
-.. autofunction:: b64encode
 .. autofunction:: verify_directory
 .. autofunction:: encoded_path
 .. autofunction:: verify_options
