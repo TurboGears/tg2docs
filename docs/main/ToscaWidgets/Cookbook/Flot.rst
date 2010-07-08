@@ -150,11 +150,11 @@ some example data. The root controller could be as follows::
             d2 = [(0, 3), (4, 8), (8, 5), (9, 13)]
             # a None value signifies separate line segments
             d3 = [(0, 12), (7, 12), None, (7, 2.5), (12, 2.5)]
-            return dict(page='index', flot=flot, data=[d1, d2, d3])
+            return dict(page='index', data=[d1, d2, d3])
 
 The widget can be displayed in the flotsample.templates.index template by::
 
-   <div py:replace="flot(data=data)"/>
+   <div py:replace="tmpl_context.flot(data=data)"/>
 
 Our simple example graph will now be drawn like this:
 
@@ -181,14 +181,14 @@ Here is an example::
             dict(data=d4, lines=dict(show=True)),
             dict(data=d5, lines=dict(show=True), points=dict(show=True))
         ]
-        return dict(page='index', flot=flot, data=data,
+        return dict(page='index', data=data,
             label='Different graph types')
 
 Note that we passed a different label to be displayed to the template.
 In the template, we must pass that label to the widget. It will then
 override the default label the widget was instantiated with::
 
-   <div py:replace="flot(data=data, label=label)"/>
+   <div py:replace="tmpl_context.flot(data=data, label=label)"/>
 
 This is how our second example is displayed:
 
@@ -229,13 +229,13 @@ Here is a more complex example showing how to set various options::
                 (math.pi*3/2, u'3\u03c0/2'), (math.pi*2, u'2\u03c0')]),
             yaxis=dict(ticks=10, min=-2, max=2),
             grid=dict(backgroundColor='#fffaff'))
-        return dict(page='index', flot=flot, data=data, options=options,
+        return dict(page='index', data=data, options=options,
             label='Setting various options')
 
 Again, we need to adapt the template a little in order to pass our
 custom options to the widget::
 
-   <div py:replace="flot(data=data, label=label, options=options)"/>
+   <div py:replace="tmpl_context.flot(data=data, label=label, options=options)"/>
 
 This will now be displayed as follows:
 
