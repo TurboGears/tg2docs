@@ -206,7 +206,7 @@ Either will produce a new dropdown like this:
 Creating Custom Dropdown Data
 -------------------------------
 
-Sometimes providing a fieldname alone is not enough of a customization to que your users into what
+Sometimes providing a fieldname alone is not enough of a customization to inform your users into what
 they should be selecting.  For this example, we will provide both name and description for the Genre field.
 This requires us to override the genre widget with one of our choosing.  We will exend the existing
 sprox dropdown widget, modifying the update_params method to inject both name and description into
@@ -266,7 +266,7 @@ Dojo
 Your users may not appreciate the simplicity of a standard multi-select.  Getting users
 to hold down the Control key while selecting multiple items is difficult.  Luckily
 we have built a widget utilizing the Dojo library which makes this a little more
-intuative for the users.  If you would like to take advantage of this capability, all
+intuitive for the users.  If you would like to take advantage of this capability, all
 we must do is swap out our AddRecordForm with the one provided by sprox.dojo.  The
 code looks like this::
 
@@ -367,7 +367,7 @@ Conclusion
 --------------
 
 :class:`sprox.formbase.FormBase` class provides a flexible mechanism for creating customized forms.
-It provides sensicle widgets and validators based on your schema, but can be overridden for your own
+It provides sensible widgets and validators based on your schema, but can be overridden for your own
 needs.  FormBase provides declarative addition of fields, ways to limit and omit fields to a set that
 is appropriate for your application.  Sprox provides automated drop-down boxes, as well as providing
 a way to override those widgets for your purposes.  sprox.dojo provides a select shuttle widget to allow your
