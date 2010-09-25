@@ -47,25 +47,21 @@ Testing
 Automated unit tests are essential to make the future growth of the
 project as error free as possible.
 
-TurboGears 2 uses Nose_, which makes testing easy. You can run the
-tests in each of the source directories just by running `nosetests`.
-For example, to run the test on the TG2 server:
+Although TurboGears2 uses Nose_ you should run tests with ``setup.py``:
 
 .. code-block:: bash
-
   (tg2dev)$ cd tg2
-  (tg2dev)$ nosetests
+  (tg2dev)$ python setup.py test 
+
+Sometimes Nose_ may present false import errors, se we recommend running 
+``setup.py`` as above if you get failed tests with ``ImportError``.
 
 .. _Nose: http://somethingaboutorange.com/mrl/projects/nose/
-
-Default options for `nosetests` can often be found in the
-`[nosetests]` section of `setup.cfg` and additional options can be
-passed on the command line.  See the Nose_ documentation for details.
 
 With any luck, your tests will run and produce something like the following output::
 
    ----------------------------------------------------------------------
-    Ran 245 tests in 2.457s
+    Ran 281 tests in 2.144s
 
     OK
 
