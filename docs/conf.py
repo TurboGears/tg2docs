@@ -62,7 +62,7 @@ copyright = '2009-2010, TurboGears DocTeam'
 # other places throughout the built documents.
 #
 # The short X.Y version.
-version = '2.1'
+version = '2.1rc1'
 # The full version, including alpha/beta/rc tags.
 
 release = tg_release_version
