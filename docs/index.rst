@@ -72,7 +72,7 @@ you access to your database in tabular, and even SQL form.  Using SQLAlchemy als
 you the ability to use a number of add-on tools like migrate_ and bootalchemy_.
 
 .. _ToscaWidgets: http://toscawidgets.org
-.. _Genshi: http://genshi.edgewall.com
+.. _Genshi: http://genshi.edgewall.org
 .. _Pylons: http://pylonshq.com
 .. _SQLAlchemy: http://sqlalchemy.org
 .. _migrate: http://code.google.com/p/sqlalchemy-migrate/
