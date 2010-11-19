@@ -36,10 +36,10 @@ Testing Notes and Links
 From Admin Through Creating Your Own Widgets
 --------------------------------------------
 
-* http://turbogears.org/2.0/docs/main/Extensions/Admin/index.html
-* http://turbogears.org/2.0/docs/main/Extensions/Crud/index.html
-* http://turbogears.org/2.0/docs/main/RestControllers.html?highlight=moviedemo
-* http://turbogears.org/2.0/docs/main/ToscaWidgets/forms.html
+* http://turbogears.org/2.1/docs/main/Extensions/Admin/index.html
+* http://turbogears.org/2.1/docs/main/Extensions/Crud/index.html
+* http://turbogears.org/2.1/docs/main/RestControllers.html?highlight=moviedemo
+* http://turbogears.org/2.1/docs/main/ToscaWidgets/forms.html
 * http://www.sprox.org/tutorials/table.html
 * http://www.sprox.org/tutorials/form.html
 * http://code.google.com/p/pythontutorials/source/browse/docs/twtut/ajax_tutorial.rst

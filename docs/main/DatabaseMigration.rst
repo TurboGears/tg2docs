@@ -219,5 +219,5 @@ mailing list.  Problems integrating sqlalchemy-migrate into a
 TurboGears project should be sent to the `TurboGears mailing list`_.
 
 .. _`sqlalchemy-migrate documentation`: http://code.google.com/p/sqlalchemy-migrate/w/list
-.. _`TurboGears SQLAlchemy documentation`: http://turbogears.org/2.0/docs/main/SQLAlchemy.html
+.. _`TurboGears SQLAlchemy documentation`: http://turbogears.org/2.1/docs/main/SQLAlchemy.html
 .. _`TurboGears mailing list`: http://groups.google.com/group/turbogears

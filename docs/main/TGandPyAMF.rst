@@ -36,7 +36,7 @@ Installing Stuff:
 -----------------
 
 If you haven't installed TG2, you'll need to do that first (see
-:ref:`downloadinstall`).  You'll need TurboGears version 2.0 or higher
+:ref:`downloadinstall`).  You'll need TurboGears version 2.1 or higher
 for this to work.  All released versions of TG2 should work, but early
 SVN versions may need to be updated.  Once you've got an up-to-date
 version of TG2, you'll need to install PyAMF, which you can do by::

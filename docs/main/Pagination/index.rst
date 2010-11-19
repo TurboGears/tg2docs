@@ -12,7 +12,7 @@ We start where the MovieDemo left off. See the `ToscaSample`_ tutorial
 or download the zipped ToscaWidgetsFormsExample_.
 
 .. _ToscaWidgetsFormsExample: ../../_downloads/ToscaSample-0.2dev.zip
-.. _ToscaSample: http://www.turbogears.org/2.0/docs/main/ToscaWidgets/forms.html
+.. _ToscaSample: http://www.turbogears.org/2.1/docs/main/ToscaWidgets/forms.html
 
 Populating The Database
 ^^^^^^^^^^^^^^^^^^^^^^^

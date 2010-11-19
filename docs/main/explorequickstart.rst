@@ -255,7 +255,7 @@ Quickstarted Project Templates
 
     <head>
       <meta content="text/html; charset=UTF-8" http-equiv="content-type" py:replace="''"/>
-      <title>Welcome to TurboGears 2.0, standing on the
+      <title>Welcome to TurboGears 2.1, standing on the
       shoulders of giants, since 2007</title>
     </head>
 

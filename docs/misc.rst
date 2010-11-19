@@ -87,7 +87,7 @@ Controllers
 .. todo:: Difficulty: Medium. Document @restrict decorator, restricts request types that a given method will respond to
 
 .. todo:: Difficulty: Medium. incorporate custom routes docs from here http://simplestation.com/locomotion/routes-in-turbogears2/
-          percious: There is a better way of doing this by overriding _dispatch in 2.0
+          percious: There is a better way of doing this by overriding _dispatch in 2.1
           so I would wait until I re-write RoutedController with _dispatch before documenting this
 
 .. todo:: Difficulty: Hard. RestController requires that all data come in as a key/value pair, can't just get raw POST body. 
@@ -117,7 +117,7 @@ Controllers
 Installation
 ---------------
 
-.. todo:: Difficulty: Medium. http://turbogears.org/2.0/docs/main/DownloadInstall.html references 
+.. todo:: Difficulty: Medium. http://turbogears.org/2.1/docs/main/DownloadInstall.html references 
           ttp://www.turbogears.org/2.0/downloads/current/tg2-bootstrap.py and this needs to be updated. 
           Or does it? request from percious, the code to generate the installer currently has 
           tg.devtools/scripts/_installer.py and it's fixed at 2.0 only update needed is to hg

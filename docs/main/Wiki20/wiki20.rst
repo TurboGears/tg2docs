@@ -123,7 +123,7 @@ for files in directories based on these names.
 Now ``paster`` will spit out a bunch of stuff::
 
   Selected and implied templates:
-    tg.devtools#turbogears2  TurboGears 2.0 Standard Quickstart Template
+    tg.devtools#turbogears2  TurboGears 2.1 Standard Quickstart Template
 
   ...etc...
 

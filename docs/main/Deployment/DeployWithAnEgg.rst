@@ -141,14 +141,14 @@ package ``FooBar`` as an installation requirement::
         version=0.1,
         zip_safe=False,
         install_requires = [
-            "TurboGears >= 2.0",
+            "TurboGears >= 2.1",
             "FooBar"
         ],
         ...
 
 If you need a specific version of the package you can use comparison operators
 against the version name. You can see that happening in the above example, as
-this project depends on "TurboGears version 2.0 or greater". See the setuptools_
+this project depends on "TurboGears version 2.1 or greater". See the setuptools_
 documentation for more information on declaring dependencies.
 
 
