@@ -66,9 +66,9 @@ in the same `pythonenv` directory).
    $ sudo -u www-data bash
    $ cd myapp
    $ source bin/activate
-   $ easy_install -i http://www.turbogears.org/2.1/downloads/current/index tg.devtools
-   $ mkdir python-eggs
-   $ exit
+   (myapp)$ easy_install -i http://www.turbogears.org/2.1/downloads/current/index tg.devtools
+   (myapp)$ mkdir python-eggs
+   (myapp)$ exit
 
 .. note::
 
@@ -91,16 +91,18 @@ dominant source for packages.
    allows you to explicitly control which packages are installed and
    keep local copies of them to prevent external dependencies.
 
-.. warning::
+Deploying Your Project Code
+---------------------------
 
-   The tg.devtools package does *not* automatically install all of the
-   dependencies of a QuickStarted TurboGears |version| package.  Your
-   package should declare its dependencies so that when it is installed
-   into the VirtualEnv it will pull in the required dependencies!
+You have a number of options for deploying your code.  See :ref:`deploy_code`.
 
-   See :ref:`deploy_code`
+If you are following this :ref:`deploy_standard`, you should be sure to deploy
+the code of your project to `/usr/local/turbogears/myapp`.
 
-.. _`deploy_modwsgi_deploy`:
+If you are going to :ref:`deploy_checkout`, make sure to install
+`/usr/local/turbogears/myapp`'s dependencies (into `/usr/local/pythonenv/myapp`)
+and generate its meta-data by using the `develop` option to
+`/usr/local/turbogears/myapp/setup.py`.
 
 modwsgi_deploy Helper Script
 ----------------------------
@@ -113,16 +115,17 @@ Apache Mod-WSGI configuration file and .wsgi script.
 
 .. code-block:: bash
 
-   (tg2env)$ easy_install bzr
-   (tg2env)$ bzr branch http://bazaar.launchpad.net/~mcfletch/modwsgideploy/parameterized/
-   (tg2env)$ cd parameterized/trunk
-   (tg2env)$ python setup.py develop
-   (tg2env)$ paster modwsgi_deploy --help
-
-.. code-block:: bash
-
-   (tg2env)$ easy_install modwsgideploy
-   (tg2env)$ paster modwsgi_deploy --help
+   $ cd ~
+   $ easy_install bzr
+   $ bzr branch http://bazaar.launchpad.net/~mcfletch/modwsgideploy/parameterized/
+   $ cd parameterized/trunk
+   $ source /usr/local/pythonenv/bin/activate
+   (myapp)$ python setup.py develop
+   (myapp)$ paster modwsgi_deploy --help
+   (myapp)$
+   (myapp)$ cd /usr/local/turbogears/myapp
+   (myapp)$ paster modwsgi_deploy --logging [other options you choose]
+   (myapp)$ deactivate
 
 .. todo:: When we have the branch integrated, replace with easy_install modwsgideploy
 
