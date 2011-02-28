@@ -11,7 +11,7 @@ PAPEROPT_a4     = -D latex_paper_size=a4
 PAPEROPT_letter = -D latex_paper_size=letter
 ALLSPHINXOPTS   = -d _build/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
 
-.PHONY: help clean html web htmlhelp latex changes linkcheck
+.PHONY: help clean html web htmlhelp latex pickle changes linkcheck
 
 help:
 	@echo "Please use \`make <target>' where <target> is one of"
@@ -19,6 +19,7 @@ help:
 	@echo "  web       to make files usable by Sphinx.web"
 	@echo "  htmlhelp  to make HTML files and a HTML help project"
 	@echo "  latex     to make LaTeX files, you can set PAPER=a4 or PAPER=letter"
+	@echo "  pickle    to make a pickle file ready for consumption by a Python application"
 	@echo "  changes   to make an overview over all changed/added/deprecated items"
 	@echo "  linkcheck to check all external links for integrity"
 
@@ -59,6 +60,13 @@ latex:
 	@echo "Build finished; the LaTeX files are in _build/latex."
 	@echo "Run \`make all-pdf' or \`make all-ps' in that directory to" \
 	      "run these through (pdf)latex."
+		  
+pickle:
+	mkdir -p _build/pickle _build/doctrees
+	$(SPHINXBUILD) -b pickle $(ALLSPHINXOPTS) _build/pickle
+	@echo
+	@echo "Build finished; now you can process the pickle files located in:"
+	@echo "  _build/pickle"
 
 changes:
 	mkdir -p _build/changes _build/doctrees
