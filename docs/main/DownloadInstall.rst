@@ -81,6 +81,8 @@ runs that project with the Paste web server:
 
 .. note:: If you are using Python 2.4, such as on RHEL 5, see :ref:`python24install`
 
+.. note:: You might get an error at the end of the "paster quickstart" command if your LC_CTYPE environment variable is not correctly set
+
 Explaining the Installation Process
 -----------------------------------
 
