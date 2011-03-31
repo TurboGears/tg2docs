@@ -117,6 +117,7 @@ First of all we need to declare or SortableColumn class that will return the lin
 	class SortableColumn(Column):
 	    def __init__(self, title, name):
 		super(SortableColumn, self).__init__(name)
+		self._title_ = title
 	   
 	    def set_title(self, title):
 		self._title_ = title
