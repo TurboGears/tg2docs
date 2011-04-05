@@ -1,8 +1,8 @@
 .. _recipes-and-faq:
 
-=======================
-Working with TurboGears
-=======================
+================
+Tips and Recipes
+================
 
 This page collects documentation which describes how to work with
 TurboGears to accomplish an effect.  Normally you should have completed

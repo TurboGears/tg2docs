@@ -1,8 +1,8 @@
 .. _getting-to-know:
 
-==========================
-Getting To Know TurboGears
-==========================
+===================
+The Gears in Detail
+===================
 
 This document describes the internal workings of TurboGears, how 
 the system is constructed, how the pieces fit together, and how 

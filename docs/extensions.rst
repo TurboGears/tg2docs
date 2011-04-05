@@ -1,8 +1,8 @@
 .. _extensions-and-tools:
 
-====================
-Extensions and Tools
-====================
+==========================
+Extending and Contributing
+==========================
 
    .. toctree::
       :maxdepth: 2
