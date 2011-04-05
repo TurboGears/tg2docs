@@ -22,7 +22,7 @@ class RootController(BaseController):
         try:
             page = DBSession.query(Page).filter_by(pagename=pagename).one()
         except InvalidRequestError:
-            raise tg.redirect("notfound", pagename = pagename)
+            raise redirect("notfound", pagename = pagename)
         page = DBSession.query(Page).filter_by(pagename=pagename).one()
         content = publish_parts(page.data, writer_name="html")["html_body"]
         root = tg.url('/')

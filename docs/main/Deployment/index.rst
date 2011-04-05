@@ -31,6 +31,7 @@ available approaches.
    ProductionINI
    Code
    DeployWithAnEgg
+   OptimizingTWResources
 
 These sections describe non-standard approaches to deployment.  You
 should not likely use these unless you are comfortable with web

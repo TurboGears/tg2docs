@@ -40,7 +40,7 @@ class RootController(BaseController):
         try:
             page = DBSession.query(Page).filter_by(pagename=pagename).one()
         except InvalidRequestError:
-            raise tg.redirect("notfound", pagename = pagename)
+            raise redirect("notfound", pagename = pagename)
         content = publish_parts(page.data, writer_name="html")["html_body"]
         root = url('/')
         content = wikiwords.sub(r'<a href="%s\1">\1</a>' % root, content)

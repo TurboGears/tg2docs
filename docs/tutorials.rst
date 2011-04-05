@@ -13,6 +13,7 @@ Advanced Tutorials
    main/SimpleWidgetForm
    main/ToscaWidgets/forms
    main/Pagination/index
+   main/DataGrid/index
    main/Auth/index
    main/AuthorizeTutorial
 
