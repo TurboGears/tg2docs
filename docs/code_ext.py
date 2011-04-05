@@ -1,9 +1,18 @@
 # -*- coding: utf-8 -*-
 """
-    TurboGears Documentation Extensions
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    TurboGears Code Documentation Extensions
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     Extensions to improve documentation management and effectiveness.
+
+    These are the features implemented (see http://tinyurl.com/38ljs55):
+
+    * Include external resources
+      - From local files
+      - From sections of local files
+      - From a VCS (revision or tag), Subversion and Mercurial supported
+    * Test sample projects
+    * Compress sample projects
 
     :copyright: Copyright 2008 by Bruno Melo.
     :license: MIT.
@@ -22,9 +31,8 @@ from docutils.statemachine import ViewList
 from sphinx import util
 
 import nose
-from mercurial import hg, ui
 
- 
+
 beginmarker_re = re.compile(r'##\{(?P<section>.+)}')
 endmarker_re = re.compile(r'##')
 
@@ -68,26 +76,56 @@ def search(source, section):
                     if not (beginmarker_re.search(source[line]) \
                             or endmarker_re.search(source[line])) ])
 
+try:
+    import pysvn
+except ImportError:
+    SvnClient = None
+else:
+    class SvnClient:
+        """ Class that represents a Subversion client """
 
-class HgClient:
-    """ Class that represents a Mercurial client """
-    def __init__(self, path):
-        self.repo = hg.repository(ui.ui(interactive=False), path=path)
+        def __init__(self):
+            self.client = pysvn.Client()
 
-    def get_file(self, path, revision='tip'):
-        return self.repo.changectx(revision).filectx(path).data()
+        def get_file(self, path, revision='HEAD'):
+            if revision == 'HEAD':
+                return self.client.cat(path,
+                    pysvn.Revision(pysvn.opt_revision_kind.head))
+            else:
+                return self.client.cat(path,
+                    pysvn.Revision(pysvn.opt_revision_kind.number,
+                    str(revision)))
 
-    
+try:
+    from mercurial import hg, ui
+except ImportError:
+    HgClient = None
+else:
+    class HgClient:
+        """ Class that represents a Mercurial client """
+
+        def __init__(self, path):
+            self.repo = hg.repository(ui.ui(interactive=False), path=path)
+
+        def get_file(self, path, revision='tip'):
+            return self.repo.changectx(revision).filectx(path).data()
+
 
 def get_file(path, revision = None, type = None, repository = None):
     """ Read file from local filesystem or from a SCM repository. """
     if revision:
         if type == 'svn':
-            scm = SVNClient()
+            if ient:
+                scm = ient()
+            else:
+                raise Exception("Subversion client not available")
         elif type == 'hg':
-            scm = HgClient(repository)
+            if HgClient:
+                scm = HgClient(repository)
+            else:
+                raise Exception("Mercurial client not available")
         else:
-            raise Exception, "SCM tool not correctly specified"
+            raise Exception("SCM tool not correctly specified")
         data = scm.get_file(path, revision).splitlines()
     else:
         fp = open(path)
@@ -108,7 +146,7 @@ def code_directive(name, arguments, options, content, lineno,
     else:
         file_path = os.path.normpath(os.path.join(environment.config.code_path,
                                                   file_name))
-    
+
     try:
         if options.has_key('revision'):
             data = get_file(file_path, options['revision'],
@@ -122,7 +160,7 @@ def code_directive(name, arguments, options, content, lineno,
         else:
             source = format_block('\n'.join(data))
         retnode = nodes.literal_block(source, source)
-        retnode.line = 1   
+        retnode.line = 1
     except Exception, e:
         retnode = state.document.reporter.warning(
             'Reading file %r failed: %r' % (arguments[0], str(e)), line=lineno)
@@ -148,20 +186,20 @@ def test_directive(name, arguments, options, content, lineno,
                         content_offset, block_text, state, state_machine):
     """ Directive to test code from external files """
     environment = state.document.settings.env
-    
+
     test = arguments[0]
     if not test.startswith(os.sep):
         test = os.path.join(environment.config.test_path, test)
-        
+
     if options.has_key('options'):
         opts = options['options'].split(',')
         # adjust the options to nose
         opts = map(lambda s: "--%s" % s.strip(), opts)
-        
+
         opts.append(test)
     else:
         opts = [test]
-    
+
     opts.insert(0, __file__)
     result = nose.run(argv = opts)
     if not result:
@@ -183,24 +221,24 @@ def archive_directive(name, arguments, options, content, lineno,
     """ Directive to create a archive (zip) from a sample project """
     environment = state.document.settings.env
     static_path = environment.config.html_static_path[0]
-    
+
     directory = arguments[0]
-    
+
     if options.has_key('file'):
         filename = options['file']
     else:
         filename = os.path.basename(directory.rstrip(os.sep)) + '.zip'
-        
+
     archive_file = zipfile.ZipFile(os.path.dirname(os.path.abspath(__file__))
                         + '%s%s%s' % (os.sep, static_path, os.sep)
                         + filename, "w")
-    
+
     if directory.startswith(os.sep):
         dir = directory
     else:
         dir = os.path.normpath(os.path.join(environment.config.code_path,
                     directory))
-        
+
     for root, dirs, files in os.walk(dir,topdown=False):
         for name in files:
             file = os.path.join(root, name)
@@ -224,19 +262,19 @@ def archive_directive(name, arguments, options, content, lineno,
 
 
 def setup(app):
-    code_options = {'section': directives.unchanged, 
+    code_options = {'section': directives.unchanged,
                     'language': directives.unchanged,
                     'test': directives.unchanged,
                     'revision': directives.unchanged}
     test_options = {'options': directives.unchanged}
     archive_options = {'file': directives.unchanged}
-    
+
     app.add_config_value('code_path', '', True)
     app.add_config_value('code_scm', '', True)
     app.add_directive('code', code_directive, 1, (1, 0, 1),  **code_options)
-    
+
     app.add_directive('test', test_directive, 1, (1, 0, 1),  **test_options)
     app.add_config_value('test_path', '', True)
 
     app.add_directive('archive', archive_directive, 1, (1, 0, 1), **archive_options)
-    
+
