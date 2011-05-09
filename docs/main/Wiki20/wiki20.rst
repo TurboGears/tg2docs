@@ -138,8 +138,14 @@ directory name "Wiki-20".  Go in there and take a look around::
 
     $ cd Wiki-20
 
-``paster`` provides a simple mechanism for running a TurboGears
-project.  From inside the ``Wiki-20`` directory, run this command::
+Now to be able to run the project you will need to install it and
+its dependencies. This can be quickly achieved by running from
+inside the ``Wiki-20`` directory::
+
+    $ python setup.py develop
+
+Then ``paster`` provides a simple mechanism for running a TurboGears
+project.  Again from the ``Wiki-20`` directory, run this command::
 
     $ paster serve --reload development.ini
 
