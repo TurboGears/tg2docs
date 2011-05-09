@@ -1,8 +1,8 @@
 .. _tutorials:
 
-=========
-Tutorials
-=========
+==================
+Advanced Tutorials
+==================
 
 .. toctree::
    :maxdepth: 1
@@ -13,10 +13,10 @@ Tutorials
    main/SimpleWidgetForm
    main/ToscaWidgets/forms
    main/Pagination/index
+   main/DataGrid/index
    main/Auth/index
    main/AuthorizeTutorial
 
-============================
 Moving From Other Frameworks
 ============================
 
@@ -25,7 +25,6 @@ Moving From Other Frameworks
 
    main/CakePHPIntro
 
-=================================
 Extended Tutorials / White Papers
 =================================
 

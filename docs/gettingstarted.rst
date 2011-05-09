@@ -14,4 +14,4 @@ to :ref:`quickstarting`, after which they should explore the :ref:`tutorials`
    main/AltInstall
    main/QuickStart
    main/explorequickstart
-   tutorials
+
