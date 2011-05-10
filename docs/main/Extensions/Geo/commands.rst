@@ -1,7 +1,7 @@
 :mod:`tgext.geo.commands` -- tgext.geo Commands
 ===============================================
 
-.. automodule:: tgext.geo.commands
+.. module:: tgext.geo.commands
 
 Module Contents
 ---------------

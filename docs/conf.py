@@ -257,7 +257,7 @@ todo_include_todos = True
 # Add Intersphinx crosslinks here
 intersphinx_mapping = {
     'paste': ('http://pythonpaste.org', None),
-    'pylons': ('http://www.pylonshq.com/docs/en/1.0', None),
+    'pylons': ('http://docs.pylonsproject.org/projects/pylons_framework/dev/', None),
     'python': ('http://docs.python.org', None),
     'sprox': ('http://sprox.org', None),
     'sqlalchemy': ('http://www.sqlalchemy.org/docs', None),
