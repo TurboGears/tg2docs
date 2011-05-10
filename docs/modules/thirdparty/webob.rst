@@ -59,6 +59,13 @@ WebOb
 
 
 
+:mod:`webob.datastruct`
+------------------------
+.. currentmodule:: webob.datastruct
+.. automodule:: webob.datastruct
+.. autoclass:: EnvironHeaders
+    :members:
+
 :mod:`webob.descriptors`
 ------------------------
 .. currentmodule:: webob.descriptors
