@@ -24,10 +24,10 @@ it using the `develop` option to setup.py.
    $ python setup.py develop
    $ exit
 
-by default :ref:`modwsgi_deploy <deploy_modwsgi_deploy>` will have specified
-that `production.ini` is in the root directory of this checkout. See
-:ref:`deploy_ini_scc` for details on why you might **not** want that file to be
-checked into your main repository.
+by default modwsgi_deploy will have specified that `production.ini` is
+in the root directory of this checkout. See :ref:`deploy_ini_scc` for
+details on why you might **not** want that file to be checked into
+your main repository.
 
 Similarly, you will need to make sure that your Beaker session and cache
 directories are not sub-directories of the source code checkout if you
