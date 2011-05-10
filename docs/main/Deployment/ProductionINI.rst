@@ -263,5 +263,5 @@ What's Next?
 
 * :ref:`deploy_db` -- you will normally have to run `paster setup-app` with your
   `production.ini` in order to initialize your database
-* :ref:`deploy_modwsgi_deploy` -- if you are using the :ref:`deploy_standard`
+* deploy_modwsgi_deploy -- if you are using the :ref:`deploy_standard`
   you will need to move your production.ini to expected location
