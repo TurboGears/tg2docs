@@ -59,18 +59,6 @@ WebOb
 
 
 
-:mod:`webob.datastruct`
-------------------------
-.. currentmodule:: webob.datastruct
-.. automodule:: webob.datastruct
-.. autoclass:: EnvironHeaders
-    :members:
-
-:mod:`webob.descriptors`
-------------------------
-.. currentmodule:: webob.descriptors
-.. autofunction:: _rfc_reference
-
 :mod:`webob.etag`
 ------------------------
 .. currentmodule:: webob.etag
@@ -143,14 +131,6 @@ mod:`webob.exc`
 .. autoclass:: HTTPInsufficientStorage
 .. autoclass:: HTTPExceptionMiddleware
 
-:mod:`webob.headerdict`
-------------------------
-.. currentmodule:: webob.headerdict
-.. automodule:: webob.headerdict
-.. autoclass:: HeaderDict
-    :members:
-
-
 :mod:`webob.multidict`
 ------------------------
 .. currentmodule:: webob.multidict
@@ -180,17 +160,4 @@ mod:`webob.exc`
 .. autoclass:: ResponseBodyFile
     :members:
 .. autoclass:: AppIterRange
-    :members:
-    
-:mod:`webob.statusreasons`
---------------------------
-.. currentmodule:: webob.statusreasons
-.. automodule:: webob.statusreasons
-
-
-:mod:`webob.updatedict`
-------------------------
-.. currentmodule:: webob.updatedict
-.. automodule:: webob.updatedict
-.. autoclass:: UpdateDict
     :members:
