@@ -11,6 +11,8 @@
    extensions
    gettingtoknow
    recipesandfaq
+   oldindex
+   toc
    
 
 The TurboGears documentation

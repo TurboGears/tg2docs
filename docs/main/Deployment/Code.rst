@@ -12,11 +12,11 @@ component of your application (compared to the libraries that make up
 TurboGears), so you will likely re-deploy your code many times,
 possibly many times *per day*.
 
-* :ref:`Deploy with an Egg<tgeggdeployment>` -- which can be installed via
-  `easy_install` or `PIP` into your :ref:`deploy_modwsgi_appenv` with the
-  :ref:`deploy_ini` being the only file in the
-  :ref:`modwsgi_deploy <deploy_modwsgi_deploy>` directory
-  (`/usr/local/turbogears/myapp/` by default)
+* :ref:`Deploy with an Egg<tgeggdeployment>` -- which can be installed
+  via `easy_install` or `PIP` into your :ref:`deploy_modwsgi_appenv`
+  with the :ref:`deploy_ini` being the only file in the
+  deploy_modwsgi_deploy directory (`/usr/local/turbogears/myapp/` by
+  default)
 * :ref:`deploy_checkout` (often of a branch or a tag)
   directly into the `deployment` directory by the www-data user.  Note that
   this requires some changes to your .ini file!

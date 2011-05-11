@@ -72,11 +72,11 @@ in the same `pythonenv` directory).
 
 .. note::
 
-   The python-eggs directory is used by Mod-WSGI to unpack "zipped" eggs which
-   contain binary extensions (.so files).  Python cannot load those packages
-   unless they are on the file-system.  Configuring this directory will be
-   automatically done in the .wsgi file created by the
-   :ref:`deploy_modwsgi_deploy`.
+   The python-eggs directory is used by Mod-WSGI to unpack "zipped"
+   eggs which contain binary extensions (.so files).  Python cannot
+   load those packages unless they are on the file-system.
+   Configuring this directory will be automatically done in the .wsgi
+   file created by the deploy_modwsgi_deploy.
 
 Your application's lib/pythonX.X/site-packages directory will be added to the
 WSGI environment's path via a `WSGIPythonPath` directive, and will be moved

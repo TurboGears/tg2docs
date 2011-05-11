@@ -11,22 +11,6 @@ Module Contents
 .. autofunction:: render_mako
 .. autofunction:: render_genshi
 
-Legacy Render Functions
-^^^^^^^^^^^^^^^^^^^^^^^
-
-.. autofunction:: render
-.. autofunction:: render_response
-
-Legacy Buffet Functions
-^^^^^^^^^^^^^^^^^^^^^^^
-
-.. autoexception:: BuffetError
-.. autoclass:: Buffet
-    :members:
-.. autoexception:: TemplateEngineMissing
-.. autoclass:: MyghtyTemplatePlugin
-    :members:
-
 .. glossary::
 
     app_globals

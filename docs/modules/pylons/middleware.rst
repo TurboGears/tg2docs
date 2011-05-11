@@ -8,7 +8,6 @@ Module Contents
 
 .. autoclass:: StatusCodeRedirect
     :members: __init__
-.. autoclass:: StaticJavascripts
 .. autofunction:: ErrorHandler
 
 note:
@@ -32,6 +31,3 @@ Legacy
 .. versionchanged:: 0.9.7
     These functions were deprecated in Pylons 0.9.7, and have been superseded
     by the :class:`StatusCodeRedirect` middleware.
-
-.. autofunction:: pylons.middleware.ErrorDocuments
-.. autofunction:: pylons.middleware.error_mapper

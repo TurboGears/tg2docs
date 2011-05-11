@@ -9,9 +9,9 @@ Prerequisites
 -------------
 
 We start where the MovieDemo left off. See the `ToscaSample`_ tutorial
-or download the zipped ToscaWidgetsFormsExample_.
+or download the zipped ToscaWidgetsFormsExample (TODO: must be
+recreated, not currently available).
 
-.. _ToscaWidgetsFormsExample: ../../_downloads/ToscaSample-0.2dev.zip
 .. _ToscaSample: http://www.turbogears.org/2.1/docs/main/ToscaWidgets/forms.html
 
 Populating The Database
@@ -240,6 +240,3 @@ Add this to the CSS in ``public/css/pagination.css``::
 And this is what the end result looks like:
 
 .. image:: tg2pagination_fig3.png
-
-An :download:`Example Project <ToscaSample-0.2dev.zip>` has
-been attached so that you can try this easily.

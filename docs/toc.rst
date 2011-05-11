@@ -85,7 +85,6 @@ All To Do Items From The Docs
 
    todo
    misc
-   index
 
 .. todo:: Difficulty: Medium. Validate that toctree maxdepth values are appropriate
 

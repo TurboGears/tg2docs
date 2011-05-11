@@ -32,14 +32,6 @@ Functions that convert from text markup languages to HTML
 .. autofunction:: textilize
 
 
-Secure Forms
-============
-
-.. automodule:: webhelpers.html.secure_form
-
-.. autofunction:: secure_form
-
-
 Tags
 ====
 

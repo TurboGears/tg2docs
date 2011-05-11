@@ -50,6 +50,7 @@ project as error free as possible.
 Although TurboGears2 uses Nose_ you should run tests with ``setup.py``:
 
 .. code-block:: bash
+
   (tg2dev)$ cd tg2
   (tg2dev)$ python setup.py test 
 
