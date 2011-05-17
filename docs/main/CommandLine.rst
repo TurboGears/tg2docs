@@ -116,8 +116,8 @@ loaded, therefore you can experiment with your database.
     encapsulated in a transaction.  In other words, your changes won't
     be saved unless you commit::
 
-        import transation
-	transation.commit()
+        import transaction
+	transaction.commit()
 
 .. _paster setup-app:
 
