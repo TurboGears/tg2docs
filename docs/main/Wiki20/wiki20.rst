@@ -349,16 +349,22 @@ Initializing The Tables
 
 Before you can use your database, you need to initialize it and add
 some data.  There's built in support for this in TurboGears using
-``paster setup-app`` and `Wiki-20/wiki20/websetup.py`.  The quickstart
-template gives you a basic template for this file:
+``paster setup-app``.  The quickstart template gives you a basic 
+template database setup inside the ``websetup/boostrap.py`` file
+which by default creates two users, one manager group and one
+manage permission:
 
 .. highlight:: python
 
-.. code:: wiki_snippets/websetup_v1.py
+We need to update the file to create our `FrontPage` data just before
+the ``DBSession.flush()`` command by adding::
 
-We need to update the file to create our `FrontPage` data:
+    page = model.Page("FrontPage", "initial data")
+    model.DBSession.add(page)
 
-.. code:: wiki_snippets/websetup_v2.py
+The resulting boostrap file will look like:
+
+.. code:: wiki_snippets/websetup_bootstrap.py
 
 If you're familiar with SQLAlchemy this should look pretty standard to
 you.  One thing to note is that we use::
