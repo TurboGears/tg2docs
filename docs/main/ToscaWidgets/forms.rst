@@ -138,7 +138,7 @@ would load the options in your controller method from an imaginary
         """Form to add new movie data record."""
         tmpl_context.form = create_movie_form
         return dict(modelname='Movie',
-            genre_options=DBSession.query(MovieGenera.id, MovieGenera.title),
+            genre_options=model.DBSession.query(model.MovieGenera.id, model.MovieGenera.title),
             page='ToscaSample New Movie')
 
 .. highlight:: html+genshi
