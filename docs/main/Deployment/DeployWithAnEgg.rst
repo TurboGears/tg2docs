@@ -26,6 +26,15 @@ This will produce an egg file for the current version of your project in the
 ``./dist`` folder.
 
 
+.. note:: Please note that your .egg file cannot be installed in a
+   .zip file, so you must always have "zip_safe=False" in your
+   setup.py file. It needs to be in your setup call, so make sure to
+   add it. If you don't, and you install the egg, then your
+   application will fail in numerous ways, including an inability to
+   find templates, CSS files, JS files, everything. All you will see
+   are 404 error messages. So please make sure to include it for your
+   (and your users') sakes. Thank you.
+
 How to Install Your .egg
 ------------------------
 
