@@ -75,7 +75,6 @@ Appendices
 
 .. toctree::
    :hidden:
-   :glob:
 
-   appendices/*
+   appendices/preprelease
    
