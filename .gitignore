@@ -18,3 +18,4 @@ docs/project_code/tosca_forms/ToscaSample.egg-info
 docs/project_code/tosca_forms/toscasample/public/movies/
 docs/project_code/tosca_forms/devdata.db
 docs/main/Pagination/*.zip
+book/_build
