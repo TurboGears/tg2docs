@@ -2,6 +2,25 @@
  Preparing a Release of TurboGears
 ===================================
 
+Prerequisites
+=============
+
+ 1. You have a working knowledge of how to use a `virtualenv`_.
+ 2. You have shell access to the `turbogears`_ site.
+ 3. You have permissions to update configuration and run builds on
+    `Jenkins`_
+ 4. You know how to run the nosetests on your local git clones of
+    TurboGears.
+ 5. You have to have a working knowledge of git, and how to do merging
+    and branching.
+
+With those prerequisites in mind, this document will not cover all the
+command lines that you could run. Instead, we will specify steps as
+"activate your virtualenv" or "run nosetests" or the like.
+
+Summary of Steps
+================
+
 Preparing a release of TurboGears is going to take some time and
 effort. It is unlikely to be completed in a mere day or two, so please
 plan on taking some time to work through it all.
@@ -16,7 +35,7 @@ The steps for the release, in summary, are as follows:
  6. Preparing changelog and release announcement
  7. Finalizing and merging branches
  8. Preparing packages
- 9. Uploading the new eggbasket to turbogears.org
+ 9. Making the New Eggbasket the Current on Turbogears.org
  10. Pushing to `PyPI`_
  11. Publishing release annoucement and closing milestones
 
@@ -83,13 +102,9 @@ Preparing Your Environment
 --------------------------
 
 Create a new virtual environment, and get "basketweaver" and "yolk"
-installed. You will need them both. Do so like so:
-
-.. code-block:: bash
-
-   user@host:~> virtualenv --no-site-packages ${HOME}/eggvenv
-   user@host:~> source ${HOME}/eggvenv/bin/activate
-   user@host:~> easy_install basketweaver yolk
+installed. You will need them both. They will be used later to find
+the eggs that can be updated, download the .tar.gz files, and prepare
+an eggbasket for public consumption.
 
 Finally, you will need to make sure you have a copy of Python 2.4 and
 Python 2.6 installed and ready to work.
@@ -137,27 +152,16 @@ in each of them: setup.py has a "dependency_links" attribute. Change
 the word "current" to "next", and commit the change. Don't push the
 change to the world yet, though. You're not ready for that just yet.
 
+Make sure to change the template itself in
+tg2devtools/devtools/templates/turbogears/setup.py_tmpl !
+
 Installing Packages
 -------------------
 
-Finally you can install the packages! You will need to take the
-following steps. The only differences should be that you will change
-the version of Python (between 2.4 and 2.6) for your tests.
-
-.. code-block:: bash
-
-   user@host:~> virtualenv --no-site-packages -p /path/to/python2.6 ${HOME}/tg21-py26
-   user@host:~> source ${HOME}/tg21-py26/bin/activate
-   user@host:~> cd ${HOME}/tg2
-   user@host:~> python setup.py develop
-   user@host:~> cd ${HOME}/tg2devtools
-   user@host:~> python setup.py develop
-   user@host:~> cd ${HOME}/tg2docs
-   user@host:~> python setup.py develop
-   user@host:~> mkdir ${HOME}/tg21testing
-   user@host:~> cd ${HOME}/tg21testing
-   user@host:~> cd ${HOME}
-   user@host:~> STATIC_DEPS=true CFLAGS="-fPIC -lgcrypt" easy_install lxml
+For both Python 2.4 and Python 2.6, create a new virtualenv, install
+lxml (to do so, use ``STATIC_DEPS=true CFLAGS="-fPIC -lgcrypt"
+easy_install lxml``), and run ``python setup.py develop`` for each of
+the repositories.
 
 Finding the Packages to Upgrade
 -------------------------------
@@ -179,18 +183,13 @@ need to remove all the local .egg files (except for the TurboGears2
 
 Once done, the following commands should help you get new package
 versions for all packages that have upgrades, and get ready to install
-them.
+them. The following command will help you to upgrade all possible
+packages.
 
 .. code-block:: bash
 
-   user@host:~> cd ${HOME}/eggbasket
    user@host:~> for pkg in `yolk -a -U | awk '{ print $1 }'` ; do echo Downloading ${pkg} ; yolk -F ${pkg}; done
-   user@host:~> rm -rf index pip* distribute* virtualenvwrapper*
-   user@host:~> source ${HOME}/eggvenv/bin/activate
    user@host:~> makeindex *
-   user@host:~> deactivate
-   user@host:~> rm -rf ${HOME}/tg21-py26
-
 
 Complete the process, looking in the virtual environment's
 site-packages directory. Use yolk to download any/all packages you
@@ -198,41 +197,66 @@ can, download the rest manually, and keep reiterating until yolk shows
 nothing more than pip, distribute, and (optionally) virtualenvwrapper.
 
 Testing the Upgraded Packages
-=============================
+-----------------------------
 
 Once you complete the process to get all packages as upgraded as
 possible, it's time to start the testing. This is likely to be very
-easy. Make sure to the following commands with both Python 2.4 and
-Python 2.6. Run the following commands:
+easy. Make sure to test the installations with both Python 2.4 and
+Python 2.6. Use ``python setup.py nosetests`` to run them.
+
+Now, at any point, if a package will not work, you need to either find
+a fix or revert to a previous version of that package. The choice must
+be made on a case by case basis.
+
+Testing Jenkins With The Upgraded Packages And Code
+===================================================
+
+Now that you have both Python 2.4 and Python 2.6 testing cleanly with
+the next branch locally, it's time to take your eggbasket from your
+machine, and place it on the `turbogears`_ server. A command similar
+to this will help:
 
 .. code-block:: bash
 
-   user@host:~> cd ${HOME}/tg2
-   user@host:~> STATIC_DEPS="true" CFLAGS="-fPIC -lgcrypt" easy_install lxml
-   user@host:~> python setup.py develop
-   user@host:~> python setup.py nosetests
-   user@host:~> cd ${HOME}/tg2devtools
-   user@host:~> python setup.py develop
-   user@host:~> mkdir ${HOME}/tmp
-   user@host:~> cd ${HOME}/tmp
-   user@host:~> paster quickstart
+   rsync -avP ${HOME}/eggbasket/ user@turbogears.org:eggbasket/
 
-Preparing changelog and release announcement
+Once done, you will need to make it visible to the world under the
+downloads directory. Make sure that it matches the URL you placed in
+setup.py. Also pay close attention to the permissions when you do so.
+
+After doing this, visit `Jenkins`_ and update the build processes for
+the tg-next packages. Ideally, they will become very simple. Even
+still, verify all of the processes, and make sure that they work as
+expected.
+
+Once done, you can finally do ``git push`` on all of the
+repositories. Run the actual builds for all of the tg-next packages,
+and make sure they come out clean. If so, the real work is done
+finally. The rest will only take you an hour or so. Otherwise,
+determine the problem, fix it, update the build process, ``git push``
+(if applicable), and re-run the builds until they do come out clean.
+
+As you go through the configuration on `Jenkins`_, please remember
+this one very important thing: We are looking to make the installation
+process as easy as possible. Follow that guideline, so that we can
+make the process easier for our users.
+
+Preparing Changelog And Release Announcement
 ============================================
 
-Finalizing and merging branches
+Finalizing And Merging Branches
 ===============================
 
-Preparing packages
+Preparing Packages
 ==================
 
-Uploading the new eggbasket to turbogears.org
-=============================================
+Making the New Eggbasket the Current on Turbogears.org
+======================================================
 
-Pushing to `PyPI`_
-==================
+Pushing to `PyPI`_ and `SourceForge`_
+=====================================
 
-Publishing release annoucement and closing milestones
+Publishing Release Annoucement And Closing Milestones
 =====================================================
 
 .. _eggbasket: http://www.turbogears.org/2.1/downloads/current/
@@ -245,3 +269,4 @@ Publishing release annoucement and closing milestones
 .. _TG2Docs: https://sourceforge.net/p/turbogears2/tg2docs/
 .. _TG ML: http://groups.google.com/group/turbogears
 .. _TG-Dev ML: http://groups.google.com/group/turbogears-trunk
+.. _virtualenv: http://pypi.python.org/pypi/virtualenv
