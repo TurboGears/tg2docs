@@ -13,6 +13,8 @@ Prerequisites
     TurboGears.
  5. You have to have a working knowledge of git, and how to do merging
     and branching.
+ 6. You need permission to update the TurboGears2 and tg.devtools
+    packages on `PyPI`_
 
 With those prerequisites in mind, this document will not cover all the
 command lines that you could run. Instead, we will specify steps as
@@ -32,12 +34,14 @@ The steps for the release, in summary, are as follows:
  3. Closing remaining tickets
  4. Upgrading all local packages as high as possible
  5. Testing Jenkins with the upgraded packages and code
- 6. Preparing changelog and release announcement
- 7. Finalizing and merging branches
- 8. Preparing packages
- 9. Making the New Eggbasket the Current on Turbogears.org
- 10. Pushing to `PyPI`_
- 11. Publishing release annoucement and closing milestones
+ 6. Finalizing Changes On 'next' Branch
+ 7. Preparing changelog and release announcement
+ 8. Preparing packages and the documentation
+ 9. Uploading the documentation
+ 10. Making the New Eggbasket the Current on Turbogears.org
+ 11. Pushing to `PyPI`_
+ 12. Publishing release annoucement and closing milestones
+ 13. Final Cleanup
 
 Below, we discuss each of these steps in detail.
 
@@ -241,23 +245,111 @@ this one very important thing: We are looking to make the installation
 process as easy as possible. Follow that guideline, so that we can
 make the process easier for our users.
 
+Finalizing Changes On 'next' Branch
+===================================
+
+After all the changes that you've made so far, the final changes are
+simply to get the new version numbers into the distributed files.
+
+ * In `TG2`_:
+ 
+   * Update tg/release.py to have the new version number.
+   * Update the dependency_links in setup.py to reference the
+     "current" URL instead of "next" URL.
+   
+ * In `TG2Devtools`_:
+ 
+   * Update setup.py:
+   
+     * Update the version number
+     * Update the install requirements so that it requires TurboGears2
+       >= the new version number
+     * Update the dependency_links to reference the "current" URL
+       instead of "next" URL.
+       
+   * Update devtools/templates/turbogears/setup.py_tmpl:
+   
+     * Update the dependency_links to reference the "current" URL
+       instead of "next" URL.
+     * Update the install requirements so that it requires TurboGears2
+       >= the new version number
+
+Commit all of these changes, but do not push them public, not yet.
+
 Preparing Changelog And Release Announcement
 ============================================
 
-Finalizing And Merging Branches
-===============================
+For each of the three repositories, you will need to review the commit
+logs since the last release. Gather up the summaries for each one, and
+prepare a new file. Use the standard `GNU Changelog`_ format. However,
+instead of recording individual file changes, record only the
+summaries. We don't need the file changes since Git records those
+changes for us.
 
-Preparing Packages
-==================
+Review the `SourceForge`_ tickets for this milestone, and record any
+tickets that were closed for this repository but were not referenced
+in the summaries you've already recorded.
+
+The changelog files you've made will be the commit message for the
+tags you are about to make.
+
+In addition, prepare a release announcement. Anything I can say here
+sounds condescending. You should prepare it, though, so that as soon
+as you reach the "Publish" step, it's all done in a few minutes.
+
+Preparing Packages And The Documentation
+========================================
+
+First, merge the branch "next" onto the branch "master". Then, tag the
+master branch with the new version number, and use the changelog
+you've generated as the commit message. The tag should be an annotated
+tag (i.e.: ``git tag -a"``).
+
+Do this for each of the three repositories.
+
+For the documentation, go into the appropriate directory, and type
+``make html`` (either the docs or the book, whichever is needed to be
+uploaded).
+
+Uploading The Documentation
+===========================
+
+When you run ``make html``, it will create a directory
+"_build/html". Upload the contents of that directory and replace the
+current directory with it. For instance, if you used rsync to upload
+to your user account on the server, and fixed the permissions so that
+the website user could read the files, you could then do ``rsync -avP
+--delete /path/to/new/docs /path/to/web/docs/directory`` and have
+everything properly uploaded/visible to the users.
 
 Making the New Eggbasket the Current on Turbogears.org
 ======================================================
 
-Pushing to `PyPI`_ and `SourceForge`_
-=====================================
+Log in to the `turbogears`_ website. Go into the directory where you
+stored the "next" directory, and rename "next" to the version you are
+releasing. Remove the "current" link, and then do a symbolic link from
+the version being released to "current", like so: ``ln -s 2.1.1
+current``
+
+Pushing to `PyPI`_
+==================
+
+For all three repositories, do ``python setup.py upload``.
 
 Publishing Release Annoucement And Closing Milestones
 =====================================================
+
+Publish your release announcement to the places of your choice. We
+recommend your blog(s) and twitter. In addition, update the
+`turbogears`_ "Current Status" page to reflect the new release.
+
+Final Cleanup
+=============
+
+For each of the three repositories, merge the "master" branch to the
+"development" branch.
+
+You're done. Sit back and enjoy having accomplished a release.
 
 .. _eggbasket: http://www.turbogears.org/2.1/downloads/current/
 .. _turbogears: http://www.turbogears.org/
@@ -270,3 +362,4 @@ Publishing Release Annoucement And Closing Milestones
 .. _TG ML: http://groups.google.com/group/turbogears
 .. _TG-Dev ML: http://groups.google.com/group/turbogears-trunk
 .. _virtualenv: http://pypi.python.org/pypi/virtualenv
+.. _GNU Changelog: http://www.gnu.org/prep/standards/html_node/Change-Logs.html
