@@ -2,6 +2,13 @@
  Building Applications with TurboGears 2
 =========================================
 
+Preface
+=======
+
+* :doc:`preface/history`
+* What You Need To Know Before Getting Started
+* Typographical Conventions
+
 Part I - The Basics
 ===================
 
@@ -79,6 +86,7 @@ Appendices
    :hidden:
    :glob:
 
+   preface/history
    appendices/preprelease
    appendices/modules/*
    
