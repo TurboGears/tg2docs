@@ -6,8 +6,9 @@ Preface
 =======
 
 * :doc:`preface/history`
-* What You Need To Know Before Getting Started
+* :doc:`preface/prereqs`
 * Typographical Conventions
+* Acknowledgements
 
 Part I - The Basics
 ===================
@@ -87,6 +88,7 @@ Appendices
    :glob:
 
    preface/history
+   preface/prereqs
    appendices/preprelease
    appendices/modules/*
    
