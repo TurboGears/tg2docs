@@ -20,6 +20,7 @@ import sys, os
 #sys.path.insert(0, os.path.abspath('.'))
 
 # -- General configuration -----------------------------------------------------
+autodoc_default_flags = ['members', 'show-inheritance']
 
 # If your documentation needs a minimal Sphinx version, state it here.
 #needs_sphinx = '1.0'
@@ -259,3 +260,19 @@ epub_copyright = u'2011, Michael J. Pedersen and the TurboGears Community'
 
 # Example configuration for intersphinx: refer to the Python standard library.
 # intersphinx_mapping = {'http://docs.python.org/': None}
+
+intersphinx_mapping = {
+    'paste': ('http://pythonpaste.org', None),
+    'pylons': ('http://docs.pylonsproject.org/projects/pylons_framework/dev/', None),
+    'python': ('http://docs.python.org', None),
+    'sprox': ('http://sprox.org', None),
+    'sqlalchemy': ('http://www.sqlalchemy.org/docs', None),
+    'rum': ('http://docs.python-rum.org', None),
+    'tw': ('http://toscawidgets.org/documentation/ToscaWidgets/', None),
+    'twdynforms': ('http://toscawidgets.org/documentation/tw.dynforms/', None),
+    'twforms': ('http://toscawidgets.org/documentation/tw.forms/', None),
+    'twjquery': ('http://toscawidgets.org/documentation/tw.jquery/', None),
+    'webob': ('http://pythonpaste.org/webob/', None),
+    'webtest': ('http://pythonpaste.org/webtest/', None),
+}
+

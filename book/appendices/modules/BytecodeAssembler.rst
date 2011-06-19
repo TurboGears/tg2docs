@@ -1,0 +1,1 @@
+.. automodule:: peak.util.assembler

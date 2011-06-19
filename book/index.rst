@@ -1,11 +1,12 @@
-=======================================
- Building Applications with TurboGears
-=======================================
+=========================================
+ Building Applications with TurboGears 2
+=========================================
 
 Part I - The Basics
 ===================
 
 * Background Materials (i.e.: history, what the reader is expected to know)
+* Whetting the Appetite: Make a Wiki in 20 Minutes
 * Getting TurboGears Installed and Serving Pages
 * Configuring TurboGears - Where the main configuration files are, and what their values mean
 * Specifying A Web App To Be Developed Throughout The Book
@@ -71,10 +72,13 @@ Appendices
 
   * :doc:`appendices/preprelease`
   
-* Reference - All the modules we supply by default, a complete alphabetical reference
+* :ref:`modindex`
+* :ref:`genindex`
 
 .. toctree::
    :hidden:
+   :glob:
 
    appendices/preprelease
+   appendices/modules/*
    
