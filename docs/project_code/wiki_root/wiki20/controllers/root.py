@@ -2,7 +2,7 @@
 from wiki20.lib.base import BaseController
 import tg
 from tg import expose, flash
-from pylons.i18n import ugettext as _
+from tg.i18n import ugettext as _
 from tg import redirect, validate
 from wiki20.model import DBSession, metadata
 #from dbsprockets.dbmechanic.frameworks.tg2 import DBMechanic

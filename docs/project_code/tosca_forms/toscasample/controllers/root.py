@@ -2,7 +2,7 @@
 
 from toscasample.lib.base import BaseController
 from tg import expose, flash, require, url, request, redirect
-from pylons.i18n import ugettext as _, lazy_ugettext as l_
+from tg.i18n import ugettext as _, lazy_ugettext as l_
 from toscasample.controllers.error import ErrorController
 
 ##{import}

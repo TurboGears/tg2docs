@@ -7,7 +7,6 @@ from tg.render import render
 
 import toscasample.model as model
 
-from pylons.i18n import _, ungettext, N_
 from tw.api import WidgetBunch
 
 class Controller(object):

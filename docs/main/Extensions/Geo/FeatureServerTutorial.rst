@@ -319,7 +319,7 @@ predicate as an additional parameter to FeatureServerController:
 
 .. code-block:: python
 
-    from pylons.i18n import ugettext as _, lazy_ugettext as l_
+    from tg.i18n import ugettext as _, lazy_ugettext as l_
     from repoze.what import predicates
     from tgext.geo.featureserver import FeatureServerController
 

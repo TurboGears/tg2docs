@@ -38,7 +38,6 @@ Modify the default ``controllers.py`` to read as follows:
     """Main Controller"""
     from helloworld.lib.base import BaseController
     from tg import expose, flash
-    from pylons.i18n import ugettext as _
     #from tg import redirect, validate
     #from helloworld.model import DBSession
 
@@ -95,7 +94,7 @@ Line By Line Explanation
     """Main Controller"""
     from helloworld.lib.base import BaseController
     from tg import expose, flash
-    from pylons.i18n import ugettext as _
+    from tg.i18n import ugettext as _
     #from tg import redirect, validate
     #from helloworld.model import DBSession
 
