@@ -1,12 +1,11 @@
 .. _database_migration:
 
-Database Schema Migration in TurboGears 2
-=========================================
+Database Schema Migrations
+==============================
 
-An automated method of applying database schema migrations helps to
-create a robust and reliable upgrade path for an application as it
-changes over time.  TurboGears 2 comes with a tool to incrementally
-test and automatically deploy schema changes as needed.
+Since version 2.1.1 TurboGears has integrated migrations support
+for each new quickstarted project. For previous versions or to
+manually manage migrations please refer to :ref:`manual_database_migration`
 
 TurboGears 2 relies on the `sqlalchemy-migrate`_ project to
 automate database schema migration.
@@ -16,7 +15,7 @@ automate database schema migration.
 Prerequisites
 -------------
 
-This document assumes that you have an existing TurboGears |version| project
+This document assumes that you have an existing **TurboGears >= 2.1.1** project
 that uses the built-in support for SQLAlchemy.  If you
 are not yet at that stage, you may want to review the following:
 
@@ -35,75 +34,41 @@ the information applies to any TurboGears 2 project.
 Getting Started
 ---------------
 
-The sqlalchemy-migrate library provides a ``migrate`` script that should
-be in your path.  The ``migrate`` script wraps several
-sqlalchemy-migrate commands much like the ``paster`` script wraps
-commands.  You can verify that the migrate script is in your path and
-retrieve a list of available commands by running the following::
+TurboGears provides a ``paster migrate`` command to manage schema migration.
+You can run ``paster migrate db_version`` to see the current version
+of your schema::
 
-    $ migrate --help
+    $ paster migrate -c development.ini db_version
+    Migrations repository 'migration',
+    database url 'sqlite:////private/tmp/migr/devdata.db'
 
-Two additions to your TurboGears 2 project are required for
-sqlalchemy-migrate to manage the database schema:
+    0
 
-* A repository on the file system of schema revisions
-* A database table for maintaining migration state in the managed database.
+This is possible because when ``paster setup-app development.ini`` is ran 
+a ``migrate_version`` table is created in your database. 
+This table will keep the current version
+of your schema to track when applying migrations is required.
 
-
-Create a Repository
-~~~~~~~~~~~~~~~~~~~
-
-To create a repository of schema revisions we issue the following command
-in the root of the project::
-
-    $ migrate create migration "Wiki20 Migrations"
-
-The first argument to the ``create`` command, ``migration``, is the
-directory that will contain the repository of schema revisions.  The second
-argument to the ``create`` command, 'Wiki20 Migrations', is the name of
-the newly created migration repository.  The command should return
-without generating any output, and a new directory, migration, should
-now exist in the project root with the following content::
-
-    __init__.py
-    __init__.pyc
-    manage.py
-    migrate.cfg
-    README
-    versions
-
-
-Place the Database under Version Control
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Our repository is ready.  Now we must create a table
-for maintaining revision state in our managed database. The ``migrate``
-script provides for this step as well:
-
-    $ migrate version_control sqlite:///devdata.db migration
-
-The two arguments to the ``version_control`` command are a valid
-SQLAlchemy database URL and the path to your sqlalchemy-migrate
-revision repository. You will need to run the ``version_control``
-command against each database instance for your application.  If you
-have a development, test, and production database, all three databases
-will need to be placed under version_control.
-
-If you examine your database, you will now find a new table named
-``migrate_version``.  It will contain one row::
+If you examine your database, you should be able to see schema version tracking
+table and check what it is the current version of your schema::
 
     sqlite> .headers on
     sqlite> select * from migrate_version;
     repository_id|repository_path|version
-    Wiki20 Migrations|migration|0
+    migration|migration|0
+
+This is exactly like running the ``paster migrate db_version`` command, both
+should tell you the same database version. In this case as we just created
+the project the reported version is 0.
 
 Note that the ``repository_id`` column should uniquely identify your
 project's set of migrations.  Should you happen to deploy multiple
-projects in one database, each sqlalchemy-migrate repository will
-insert and maintain a row in the ``migrate_version`` table.
+projects in one database, you will be able to manage multiple schema
+versions by changing the ``repository_id`` variable in the
+``migration/migrate.cfg`` of each project to a different value.
 
 
-Integrating sqlalchemy-migrate in the Development Process
+Integrating Migrations in the Development Process
 ----------------------------------------------------------
 
 With the database under version control and a repository for schema
@@ -117,17 +82,20 @@ model.
 Create Your First Change Script
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The ``migrate`` script will create an empty change script for you,
+The ``paster migrate script`` command will create an empty change script for you,
 automatically naming it and placing it in your repository::
 
-    $ migrate script --repository=migration initial_schema
+    $ paster migrate script 'Initial Schema'
 
-The command will return without producing any output, but the new script
-will be in your repository::
+The command will return by just printing the migrations repository where it is
+going to create the new script::
+
+    $ paster migrate script 'Initial Schema
+    Migrations repository 'migration',
+    database url 'sqlite:////private/tmp/migr/devdata.db'
 
     $ ls migration/versions
-    001_initial_schema.py  __init__.py  __init__.pyc
-
+    001_Initial_Schema.py __init__.py
 
 Edit the Script
 ~~~~~~~~~~~~~~~
@@ -139,7 +107,7 @@ respectively::
     from sqlalchemy import *
     from migrate import *
 
-    metadata = MetaData(migrate_engine)
+    metadata = MetaData()
     pages_table = Table("pages", metadata,
                         Column("id", Integer, primary_key=True),
                         Column("pagename", Text, unique=True),
@@ -147,15 +115,16 @@ respectively::
                         )
 
 
-    def upgrade():
+    def upgrade(migrate_engine):
         # Upgrade operations go here. Don't create your own engine; use the engine
         # named 'migrate_engine' imported from migrate.
+        metadata.bind = migrate_engine
         pages_table.create()
 
-    def downgrade():
+    def downgrade(migrate_engine):
         # Operations to reverse the above upgrade go here.
+        metadata.bind = migrate_engine
         pages_table.drop()
-
 
 Test the Script
 ~~~~~~~~~~~~~~~
@@ -166,9 +135,14 @@ Although testing a new change script is optional, it is clearly a good
 idea.  After you execute the following test command, you will ideally be
 successful::
 
-    $ migrate test migration sqlite:///devdata.db
-    Upgrading... done
-    Downgrading... done
+    $ paster migrate test
+    Migrations repository 'migration',
+    database url 'sqlite:////private/tmp/migr/devdata.db'
+    
+    Upgrading...
+    done
+    Downgrading...
+    done
     Success
 
 If you receive an error while testing your script, one of two issues
@@ -180,33 +154,56 @@ is probably the cause:
 If there is a bug in your change script, you can fix the bug and rerun
 the test.
 
-If you are working through this document with an existing application,
-your database probably already contains the initial schema for your
-project.  In this case, you cannot test the change script against your
-existing database because it will try to create tables that already
-exist.  To test the script while preserving your existing data, you
-will need to create a second database, place it under version_control,
-and test the script against the new database.  Since your original database
-already contains the schema defined in your change script, you will need
-to update the ``migrate_version`` table manually to reflect this situation::
-
-    sqlite> update migrate_version set version=1;
-
-
 Deploy the Script
 ~~~~~~~~~~~~~~~~~
 
 The script is now ready to be deployed::
 
-    migrate upgrade sqlite:///devdata.db migration
+    $ paster migrate upgrade
 
-One quirk to note: the arguments to ``upgrade`` are in the opposite
-order compared to the ``test`` command.  If your database is already at
-the most recent revision, the command will produce no output.  If
-migrations are applied, you will see output similar to the following::
+If your database is already at the most recent revision, the command
+will produce no output.  If migrations are applied, you will see 
+output similar to the following::
 
-    0 -> 1... done
+    Migrations repository 'migration',
+    database url 'sqlite:////private/tmp/migr/devdata.db'
 
+    0 -> 1... 
+    done
+
+Keeping your websetup on sync
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Each time you create a new migration you should consider keeping your
+websetup in sync with it. For example if you create a new table inside
+a migration when you will run ``paster setup-app`` on a new database
+it will already have the new table as you probably declared it in your
+model too but the migrations version will be 0. So trying to run any
+migration will probably crash due to the existing table.
+
+To prevent this your ``websetup`` script should always initialize the
+database in the same state where it would be after applying all the
+available migrations. To ensure this you will have to add at the end
+of the ``websetup/bootstrap.py`` script a pool of commands to set the
+schema version to the last one::
+
+    from migrate.versioning.schema import ControlledSchema
+    schema = ControlledSchema(config['pylons.app_globals'].sa_engine, 'migration')
+    print 'Setting database version to %s' % schema.repository.latest
+    schema.update_repository_table(0, schema.repository.latest)
+
+Downgrading your schema
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+There are some cases in which downgrading your schema might be required.
+In those cases you can perform the ``paster migrade downgrade`` command::
+
+    $ paster migrate downgrade 0
+    Migrations repository 'migration',
+    database url 'sqlite:////private/tmp/migr/devdata.db'
+    
+    1 -> 0... 
+    done
 
 Additional Information and Help
 -------------------------------
