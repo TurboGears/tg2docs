@@ -48,7 +48,7 @@ Modify the default ``controllers.py`` to read as follows:
              return "<h1>Hello World</h1>"
 
          @expose()
-         def default(self, *args, **kw):
+         def _default(self, *args, **kw):
              return "This page is not ready"
 
 
@@ -57,11 +57,11 @@ browser, you'll see a page with the message "Hello World" on it. In
 addition, any of `these URLs`_ will return the same result.
 
 
-Implementing A Catch-All Url Via The ``default()`` Method
+Implementing A Catch-All Url Via The ``_default()`` Method
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 URLs not explicitly mapped to other methods of the controller will
-generally be directed to the method named ``default()``. With the
+generally be directed to the method named ``_default()``. With the
 above example, requesting any URL besides ``/index``, for example
 ``http://localhost:8080/hello``, will return the message "This page is
 not ready".
@@ -156,14 +156,14 @@ class.  Each of the URLs
 is mapped to the ``RootController.index()`` method.
 
 If a URL is requested and does not map to a specific method, the
-``default()`` method of the controller class is called::
+``_default()`` method of the controller class is called::
 
-    def default(self):
+    def _default(self):
         return "This page is not ready"
 
 
 In this example, all pages except the `three URLs`_ listed above will
-map to the default method.
+map to the _default method.
 
 As you can see from the examples, the response to a given URL is
 determined by the method it maps to.
@@ -336,7 +336,7 @@ Here is an example controller and a chart outlining the way urls are mapped to i
             """returns a list of wiki pages"""
             ...
 
-        def default(self, *args):
+        def _default(self, *args):
             """returns one wikipage"""
             ...
 
@@ -358,7 +358,7 @@ Here is an example controller and a chart outlining the way urls are mapped to i
 +====================================================+============+=================================================+
 | /                                                  | index      |                                                 |
 +----------------------------------------------------+------------+-------------------------------------------------+
-| /NewPage                                           | default    | args : ['NewPage']                              |
+| /NewPage                                           | _default   | args : ['NewPage']                              |
 +----------------------------------------------------+------------+-------------------------------------------------+
 | /create/NewPage?text=More Information              | create     | text: 'More Information'                        |
 +                                                    |            +-------------------------------------------------+

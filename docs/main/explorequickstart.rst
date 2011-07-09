@@ -79,7 +79,7 @@ Modify the default ``controllers.py`` to read as follows:
              return "<h1>Hello World</h1>"
 
          @expose()
-         def default(self, *args, **kw):
+         def _default(self, *args, **kw):
              return "This page is not ready"
 
 

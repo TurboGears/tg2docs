@@ -84,9 +84,6 @@ ToscaWidgets
 Controllers
 --------------
 
-.. todo:: Difficulty: Easy. Document the name change of default and lookup methods
-            See http://trac.turbogears.org/ticket/2502
-
 .. todo:: Difficulty: Medium. Document @restrict decorator, restricts request types that a given method will respond to
 
 .. todo:: Difficulty: Medium. incorporate custom routes docs from here http://simplestation.com/locomotion/routes-in-turbogears2/

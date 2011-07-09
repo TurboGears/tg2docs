@@ -18,7 +18,7 @@ class RootController(BaseController):
     #admin = DBMechanic(SAProvider(metadata), '/admin')
 
     @expose('wiki20.templates.page')
-    def default(self, pagename="FrontPage"):
+    def _default(self, pagename="FrontPage"):
         try:
             page = DBSession.query(Page).filter_by(pagename=pagename).one()
         except InvalidRequestError:

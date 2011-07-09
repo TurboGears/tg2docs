@@ -31,7 +31,7 @@ class RootController(BaseController):
     error = ErrorController()
 
     @expose('wiki20.templates.page')
-    def default(self, pagename="FrontPage"):
+    def _default(self, pagename="FrontPage"):
         page = DBSession.query(Page).filter_by(pagename=pagename).one()
         return dict(wikipage=page)
 
