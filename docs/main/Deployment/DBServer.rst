@@ -48,7 +48,7 @@ Create (DB) User and Database
 
 .. code-block:: bash
 
-    $ sudo aptitude install postgresql
+    $ sudo apt-get install postgresql
     $ sudo -u postgres createuser
     # interactive questions here, including password
     # your user doesn't need any particular permissions

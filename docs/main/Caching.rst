@@ -210,7 +210,7 @@ might look like this on an Ubuntu host:
 
 .. code-block:: bash
 
-    sudo aptitude install memcached
+    sudo apt-get install memcached
     sudo vim /etc/default/memcached
     # ENABLE_MEMCACHED=yes
     sudo vim /etc/memcached.conf

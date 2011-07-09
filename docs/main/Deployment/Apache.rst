@@ -33,7 +33,7 @@ machines this command looks like this:
 
 .. code-block:: bash
 
-    sudo aptitude install apache2
+    sudo apt-get install apache2
 
 .. todo:: document Fedora/RHEL installation
 

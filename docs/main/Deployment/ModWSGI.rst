@@ -11,7 +11,7 @@ To install:
 
 .. code-block:: bash
 
-   $ sudo aptitude install apache2 libapache2-mod-wsgi
+   $ sudo apt-get install apache2 libapache2-mod-wsgi
 
 .. _`deploy_modwsgi_virtualenv`:
 
