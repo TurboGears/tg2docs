@@ -82,3 +82,17 @@ session object:
 Even though it's not customary to delete all user sessions on a production
 environment, you will typically do it for cleaning up after
 usability or functional tests.
+
+Avoid automatic session extension
+-----------------------------------
+
+TurboGears by default automatically extends session life time
+at every request if a session is already available. You can
+avoid this behavior by changing your application configuration
+
+.. code-block:: python
+
+    beaker.session.tg_avoid_touch = true
+
+This will also prevent TurboGears from causing an automatic
+session save at every request.
