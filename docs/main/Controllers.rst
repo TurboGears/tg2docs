@@ -379,6 +379,22 @@ id = int(id) to cast it into an int before usage.  Another way to
 accomplish this feat is to use the @validate decorator, which is
 explained in :ref:`Validation`
 
+Ignore Unused Parameters
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+By default TurboGears2 will complain about parameters that the controller
+method was not expecting. If this is causing any issue as you need to share
+between all the urls a parameter that it is used by your javascript framework
+or for any other reason, you can use ``ignore_parameters`` option to have
+TurboGears2 ignore them. Just add the list of parameters to ignore in
+*config/app_cfg.py*::
+
+    base_config.ignore_parameters = ['timestamp', 'param_name']
+
+You will still be able to access them from the ``tg.request`` object if you
+need them for any reason.
+    
+
 Differences Between Dispatch In TurboGears 1.x and 2.x
 ------------------------------------------------------
 
