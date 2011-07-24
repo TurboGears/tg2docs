@@ -49,10 +49,41 @@ the list of renderers to prepare in base_config::
 You can also set it as the default renderer by setting::
 
    base_config.default_renderer = "jinja"
-   
+
 The `Jinja docs`_ cover template syntax very well, so we'll not repeat it here. Instead, we refer you
 to their site.
+
+Extensions
+------------------
+
+Jinja2 supports loading extensions to add new tags, this is supported on
+TG2 by adding the import name to the extension list in base_config::
+
+  base_config.jinja_extensions = ['jinja2.ext.i18n', 'jinja2.ext.loopcontrols']
+
+The setting jinja_extensions is a list of strings, each string is the import name
+of one extension, in this example 'jinja2.ext.i18n' is a module in our
+python installation (which comes with jinja2).
+
+More on jinja extensions on the `Jinja extension section`_ from the jinja documents.
+
+Filters
+-------------------
+
+Jinja2 supports loading functions to add new filters, this is supported on
+TG2 by adding the function directly to the filter list in base_config::
+
+  base_config.jinja_filters = [my_filter, other_filter_function]
+
+As you can see here we are using the functions directly, you can also have
+jinja2 autoload your filters by creating a file called jinja_filters.py inside
+the folder templatetools on you lib filter of you application.
+
+More on jinja filters on the `Jinja custom filter section`_ from the jinja documents.
+
 
 .. _django-templates: http://docs.djangoproject.com/en/dev/ref/templates/api
 .. _dojo's DTL: http://dojotoolkit.org/book/dojo-book-0-9/part-5-dojox/dojox-dtl
 .. _Jinja docs: http://jinja.pocoo.org/2/documentation/templates
+.. _Jinja extension section: http://jinja.pocoo.org/docs/extensions/
+.. _Jinja custom filter section: http://jinja.pocoo.org/docs/api/#custom-filters
