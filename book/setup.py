@@ -11,6 +11,8 @@ setup(
     zip_safe=False,
     install_requires=[
         'sphinx>=1.0.7',
+        'pyvcs',
+        'dulwich',
     ],
     dependency_links=[
         "http://www.turbogears.org/2.1/downloads/current/"

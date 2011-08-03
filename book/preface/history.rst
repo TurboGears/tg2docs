@@ -1,6 +1,7 @@
-=======================================
+
+***************************************
  The History of the TurboGears Project
-=======================================
+***************************************
 
 In September 2005, Kevin Dangoor released a brand new framework, one that would allow developers to use the Model-View-Controller model with code that is as natural as writing a function. Simple, elegent, and it raised excitement levels in the Python web development community: Within the first 3 months, the screencast that announced TurboGears had received over 30,000 downloads.
 

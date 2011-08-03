@@ -1,6 +1,6 @@
-=======================
+#######################
  What You Need To Know
-=======================
+#######################
 
 This book will guide you from being a novice with TurboGears to a
 fully informed developer capable of deploying projects for your
