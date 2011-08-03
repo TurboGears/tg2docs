@@ -9,15 +9,15 @@ method for dispatch.  They are described below.
 The Default Method
 ------------------
 
-The developer may decide to provied a ``default`` method within their
+The developer may decide to provied a ``_default`` method within their
 controller which is called when the dispatch mechanism cannot find
 an appropriate method in your controllers to call.  This 
-default method might look something like this::
+_default method might look something like this::
 
     class WikiController(BaseController):
     
       @expose('mytgapp.wiki.new)
-      def default(self, *args):
+      def _default(self, *args):
         """
           Return a page to prompt the user to create a new wiki page."""
         """
@@ -30,7 +30,7 @@ The Lookup Method
 ``_lookup`` and ``_default`` are called in identical situations: when
 "normal" object traversal is not able to find an exposed method, it
 begins popping the stack of "not found" handlers.  If the handler is a
-"default" method, it is called with the rest of the path as positional
+"_default" method, it is called with the rest of the path as positional
 parameters passed into the default method.
 
 The not found handler stack can also contain "lookup" methods, which
@@ -77,7 +77,7 @@ In other situations, you might have a several-layers-deep "_lookup"
 chain, e.g. for editing hierarchical data
 (/client/1/project/2/task/3/edit).
 
-The benefit over "default" handlers is that you *return* an object
+The benefit over "_default" handlers is that you *return* an object
 that acts as a sub-controller and continue traversing rather than
 *being* a controller and stopping traversal altogether.  This allows
 you to use actual objects with data in your controllers.

@@ -68,7 +68,7 @@ Modify the default ``controllers.py`` to read as follows:
     """Main Controller"""
     from helloworld.lib.base import BaseController
     from tg import expose, flash
-    from pylons.i18n import ugettext as _
+    from tg.i18n import ugettext as _
     #from tg import redirect, validate
     #from helloworld.model import DBSession
 
@@ -79,7 +79,7 @@ Modify the default ``controllers.py`` to read as follows:
              return "<h1>Hello World</h1>"
 
          @expose()
-         def default(self, *args, **kw):
+         def _default(self, *args, **kw):
              return "This page is not ready"
 
 
@@ -700,7 +700,6 @@ that you re-use throughout your app.
     from tg import TGController, tmpl_context
     from tg.render import render
     from tg import request
-    from pylons.i18n import _, ungettext, N_
     from tw.api import WidgetBunch
     import my_intranet.model as model
 

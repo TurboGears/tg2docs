@@ -2,7 +2,7 @@
 """Main Controller"""
 
 from tg import expose, flash, require, url, request, redirect
-from pylons.i18n import ugettext as _, lazy_ugettext as l_
+from tg.i18n import ugettext as _, lazy_ugettext as l_
 
 from wiki20.lib.base import BaseController
 from wiki20.model import DBSession, metadata
@@ -37,7 +37,7 @@ class RootController(BaseController):
     error = ErrorController()
 
     @expose('wiki20.templates.page')
-    def default(self, pagename="FrontPage"):
+    def _default(self, pagename="FrontPage"):
         try:
             page = DBSession.query(Page).filter_by(pagename=pagename).one()
         except InvalidRequestError:

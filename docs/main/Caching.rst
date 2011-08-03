@@ -72,7 +72,7 @@ cache from within a controller module:
 
 .. code-block:: python
 
-    from pylons import cache
+    from tg import cache
     @expose()
     def some_action(self, day):
         # hypothetical action that uses a 'day' variable as its key
@@ -210,7 +210,7 @@ might look like this on an Ubuntu host:
 
 .. code-block:: bash
 
-    sudo aptitude install memcached
+    sudo apt-get install memcached
     sudo vim /etc/default/memcached
     # ENABLE_MEMCACHED=yes
     sudo vim /etc/memcached.conf
@@ -299,7 +299,7 @@ response to the browser. This will cause the browser to use its own
 locally-cached copy.
 
 :func:`etag_cache` returns `pylons.response` for legacy purposes
-(`pylons.response` should be used directly instead).
+(`tg.response` should be used directly instead).
 
 ETag-based caching requires a single key which is sent in the ETag HTTP header
 back to the browser. The `RFC specification for HTTP headers
@@ -310,7 +310,7 @@ its own copy, this decision is based on the URL and the ETag key.
 
 .. code-block:: python
 
-    from pylons.controllers.util import etag_cache
+    from tg.controllers.util import etag_cache
     def my_action(self):
         etag_cache('somekey')
         return render('/show.myt', cache_expire=3600)
@@ -319,7 +319,7 @@ Or to change other aspects of the response:
 
 .. code-block:: python
 
-    from pylons.controllers.util import etag_cache
+    from tg.controllers.util import etag_cache
     from tg import response
     def my_action(self):
         etag_cache('somekey')

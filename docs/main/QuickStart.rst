@@ -43,6 +43,13 @@ Here's what our choices for this tutorial look like::
 This will create a new directory which contains a few files in a
 directory tree, with some code already set up for you.
 
+.. note::
+
+    Passing *--minimal* to the quickstart command will create an empty
+    project with only the RootController. 
+    While this is not reccomended for new users it might speed up the 
+    process of starting a new project for expert users.
+
 Let's go in there and you can take a look around.
 
 .. code-block:: bash

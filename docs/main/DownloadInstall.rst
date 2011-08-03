@@ -38,7 +38,7 @@ For Debian/Ubuntu systems:
 
 .. code-block:: bash
 
-    $ sudo aptitude install build-essential python-dev python-setuptools python-virtualenv
+    $ sudo apt-get install build-essential python-dev python-setuptools python-virtualenv
 
 For RHEL systems (see :ref:`python24install`):
 
