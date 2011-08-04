@@ -120,6 +120,25 @@ def get_file(state, path, revision = None, repository = None):
     data = repo.file_contents(path, revision).splitlines()
     return data
 
+def list_files(state, path='', repo=None):
+    """ list all files and folders in the repository """
+    if not repo:
+        git = get_backend('git')
+        repo = git.Repository(localgitpath(state))
+    files, folders = repo.list_directory(path)
+    if path:
+        rpath = '%s/' % (path)
+    else:
+        rpath = ''
+    files = ['%s%s' % (rpath, f) for f in files]
+    for f in folders:
+        if path:
+            rpath = '%s/%s' % (path, f)
+        else:
+            rpath = f
+        files.extend(list_files(state, rpath, repo))
+    return files
+    
 def code_directive(name, arguments, options, content, lineno,
                         content_offset, block_text, state, state_machine):
     """ Directive to handle code sample related stuf   """
@@ -138,8 +157,12 @@ def code_directive(name, arguments, options, content, lineno,
         data = get_file(state, file_name, revision,
                         environment.config.code_path)
         if options.has_key('section'):
-            section = options['section']
-            source = format_block(search(data, section))
+            sections = [x.strip() for x in options['section'].split(',')]
+            res = []
+            for section in sections:
+                res.extend(format_block(search(data, section)))
+                res.extend('')
+            source = '\n'.join(data)
         else:
             source = format_block('\n'.join(data))
         retnode = nodes.literal_block(source, source)
@@ -219,19 +242,14 @@ def archive_directive(name, arguments, options, content, lineno,
                         + '%s%s%s' % (os.sep, static_path, os.sep)
                         + filename, "w")
 
-    if directory.startswith(os.sep):
-        dir = directory
+    if options.has_key('root'):
+        base = options['root']
     else:
-        dir = os.path.normpath(os.path.join(environment.config.code_path,
-                    directory))
+        base = ''
 
-    for root, dirs, files in os.walk(dir,topdown=False):
-        for name in files:
-            file = os.path.join(root, name)
-            zipfilename = string.replace(file, dir, '')
-            if zipfilename[0] == os.sep:
-                zipfilename = zipfilename[1:]
-            archive_file.write(file, str(zipfilename), zipfile.ZIP_DEFLATED)
+    fnames = list_files(state, base)
+    for name in fnames:
+        archive_file.writestr(name, '\n'.join(get_file(state, name)))
 
     archive_file.close()
 
@@ -253,7 +271,8 @@ def setup(app):
                     'test': directives.unchanged,
                     'revision': directives.unchanged}
     test_options = {'options': directives.unchanged}
-    archive_options = {'file': directives.unchanged}
+    archive_options = {'file': directives.unchanged,
+                       'root': directives.unchanged}
 
     app.add_config_value('code_url', '', True)
     app.add_config_value('code_path', '', True)
