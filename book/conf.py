@@ -42,7 +42,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Building Applications with TurboGears'
+project = u'Batteries Included: Developing Web Applications with TurboGears2'
 copyright = u'2011, Michael J. Pedersen and the TurboGears Community'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -166,7 +166,7 @@ html_static_path = ['_static']
 #html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'BuildingApplicationswithTurboGearsdoc'
+htmlhelp_basename = 'BatteriesIncluded_DevelopingWebApplicationsWithTurboGears2'
 
 
 # -- Options for LaTeX output --------------------------------------------------
@@ -180,7 +180,7 @@ htmlhelp_basename = 'BuildingApplicationswithTurboGearsdoc'
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'BuildingApplicationswithTurboGears.tex', u'Building Applications with TurboGears Documentation',
+  ('index', 'BatteriesIncluded_DevelopingWebApplicationsWithTurboGears2.tex', u'Batteries Included: Developing Web Applications with TurboGears2',
    u'Michael J. Pedersen and the TurboGears Community', 'manual'),
 ]
 
@@ -213,7 +213,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'buildingappswithturbogears', u'Building Applications with TurboGears Documentation',
+    ('index', 'batteriesincluded_developingwebapplicationswithturbogears2', u'Batteries Included: Developing Web Applications with TurboGears2',
      [u'Michael J. Pedersen and the TurboGears Community'], 1)
 ]
 
@@ -221,7 +221,7 @@ man_pages = [
 # -- Options for Epub output ---------------------------------------------------
 
 # Bibliographic Dublin Core info.
-epub_title = u'Building Applications with TurboGears'
+epub_title = u'Batteries Included: Developing Web Applications with TurboGears2'
 epub_author = u'Michael J. Pedersen and the TurboGears Community'
 epub_publisher = u'Michael J. Pedersen and the TurboGears Community'
 epub_copyright = u'2011, Michael J. Pedersen and the TurboGears Community'
