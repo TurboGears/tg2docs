@@ -38,8 +38,8 @@ from sphinx import util
 import nose
 
 
-beginmarker_re = re.compile(r'##\{(?P<section>.+)}')
-endmarker_re = re.compile(r'##')
+beginmarker_re = re.compile(r'##\{B:(?P<section>.+)}')
+endmarker_re = re.compile(r'##\{E:(?P<section>.+)}')
 already_pulled = False
 
 # This is based on 'Multi-line string block formatting' recipe by Brett Levin
@@ -160,9 +160,9 @@ def code_directive(name, arguments, options, content, lineno,
             sections = [x.strip() for x in options['section'].split(',')]
             res = []
             for section in sections:
-                res.extend(format_block(search(data, section)))
-                res.extend('')
-            source = '\n'.join(data)
+                res.append(format_block(search(data, section)))
+                res.append('')
+            source = '\n'.join(res)
         else:
             source = format_block('\n'.join(data))
         retnode = nodes.literal_block(source, source)

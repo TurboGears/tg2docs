@@ -2,11 +2,15 @@
 Whetting the Appetite: Make a Wiki in 20 Minutes
 ================================================
 
-.. archive:: wiki_root/trunk
+.. archive:: wiki20
+   :root: Wiki-20
 
-Welcome!  This tutorial will show you how to create a simple wiki with
-TurboGears 2. It is designed to be your first experience with
-TurboGears 2.
+How does TurboGears2 help you get development done quickly? We'll show
+you by developing a simple wiki application that should take you no
+more than 20 minutes to complete. We're going to do this without
+explaining the steps in detail (that is what this book is for, after
+all). As a result, you'll see how easily you can make your own web
+applications once you are up to speed on what TurboGears2 offers.
 
 If you're not familiar with the concept of a wiki you might want to
 check out `the Wikipedia entry <http://en.wikipedia.org/wiki/Wiki>`_.
@@ -27,7 +31,7 @@ suggestions for improvement of the docs, not for seeking support.
 If you want to see the final version you can download a copy of the
 `wiki code`_.
 
-.. _`wiki code`: ../../_static/tutorials/Wiki-20.zip
+.. _`wiki code`: ../_static/wiki20.zip
 
 .. _TurboGears discussion list: http://groups.google.com/group/turbogears
 
@@ -38,11 +42,13 @@ Setup
 
 To go through this tutorial, you'll need:
 
-#.  Python_ 2.4, 2.5 or 2.6.  Note that Mac OSX 10.5 (Leopard)
-    comes with Python 2.5 pre-installed; for 10.4 and
-    before, follow *Macintosh* in the above link.
+#.  Python_ 2.4, 2.5, 2.6 or 2.7.  Note that Mac OSX 10.5 (Leopard)
+    comes with Python 2.5 pre-installed.
 
-#.  :ref:`downloadinstall`
+#.  virtualenv_. Not that on many Linux based systems you will need to
+    install a Python development package for this to work, such as
+    python-devel or python-dev. In addition, virtualenv is available
+    via most package managers, so can be installed that way.
 
 #.  docutils_ 0.4 or later,
     which is used for the wiki's formatting. ``docutils`` is not a required
@@ -86,6 +92,7 @@ This tutorial doesn't cover Python at all. Check the `Python
 Documentation`_ page for more coverage of Python.
 
 .. _Python: http://www.python.org/download/
+.. _virtualenv: http://pypi.python.org/pypi/virtualenv
 .. _docutils: http://cheeseshop.python.org/pypi/docutils
 .. _ipython shell: http://ipython.scipy.org/
 .. _ipython docs: http://ipython.scipy.org/moin/Documentation
@@ -95,12 +102,12 @@ Documentation`_ page for more coverage of Python.
 Quickstart
 ==========
 
-TurboGears provides a suite of tools for working with projects by
+TurboGears2 provides a suite of tools for working with projects by
 adding several commands to the Python command line tool ``paster``. A
-few will be touched upon in this tutorial. (Check the :ref:`Command
-Line Reference <commandline-reference>` for a full listing.) The first
-tool you'll need is ``quickstart``, which initializes a TurboGears
-project.  Go to a command line window and run the following command::
+few will be touched upon in this tutorial. (Check the
+:doc:`../appendices/commandline` for a full listing.) The first tool
+you'll need is ``quickstart``, which initializes a TurboGears project.
+Go to a command line window and run the following command::
 
     $ paster quickstart
 
@@ -113,16 +120,18 @@ choices for this tutorial look like::
 
     $ paster quickstart
     Enter project name: Wiki 20
-    Enter package name [wiki20]: wiki20
-    Do you need authentication and authorization in this project? [yes] no
+    Enter package name [wiki20]: 
+    Would you prefer mako templates? (yes/[no]): no
+    Do you need authentication and authorization in this project? ([yes]/no): no
 
+    
 We recommend you use the names given here: this documentation looks
 for files in directories based on these names.
 
 Now ``paster`` will spit out a bunch of stuff::
 
   Selected and implied templates:
-    tg.devtools#turbogears2  TurboGears 2.1 Standard Quickstart Template
+    tg.devtools#turbogears2  TurboGears 2. Standard Quickstart Template
 
   ...etc...
 
@@ -136,6 +145,13 @@ without spaces for convenience: project name "Wiki 20" resulted in the
 directory name "Wiki-20".  Go in there and take a look around::
 
     $ cd Wiki-20
+
+You need to update the dependencies in the file "setup.py". Currently,
+it looks like this:
+
+.. code:: Wiki-20/setup.py
+   :revision: f8464682ad9c5f4c3b6a31211a038468a2caba95
+   :section: setupdeps
 
 Now to be able to run the project you will need to install it and
 its dependencies. This can be quickly achieved by running from
@@ -273,6 +289,7 @@ Since a wiki is basically a linked collection of pages, we'll define a
 `page.py` in the ``Wiki-20/wiki20/model/`` directory:
 
 .. code:: README.txt
+
 
 In order to easily use our model within the application, modify the
 `Wiki-20/wiki20/model/__init__.py` file to add ``Page`` and

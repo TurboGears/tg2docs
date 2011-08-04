@@ -277,4 +277,4 @@ intersphinx_mapping = {
 }
 
 # Custom code_ext config values
-code_url = 'git://github.com/alex/pyvcs.git'
+code_url = 'git://git.code.sf.net/p/turbogears2/tg2tut'

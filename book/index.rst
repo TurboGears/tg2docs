@@ -2,6 +2,8 @@
  Building Applications with TurboGears 2
 =========================================
 
+.. note:: This page is filled with notes about what each chapter should become. As the chapter gets filled in with a proper document, the notes will be removed, leaving only the clean table of contents. Until then, the notes are left in for future reference.
+
 #########
  Preface
 #########
@@ -23,6 +25,11 @@ Part I - The Basics
 * :doc:`part1/wiki20`
 * Getting TurboGears Installed and Serving Pages
 * Specifying A Web App To Be Developed Throughout The Book
+
+.. toctree::
+   :hidden:
+
+   part1/wiki20
 
 ##########################
 Part II - Making A Web App
@@ -77,6 +84,7 @@ Part IV - Alternatives and Extensions
 Appendices
 ##########
 
+* :doc:`appendices/commandline`
 * Multiple Domains Served by Single TG2 Application Instance
 * Testing and Debugging TG2 Applications
 * External Tutorials
@@ -97,6 +105,7 @@ Appendices
    :hidden:
    :glob:
 
+   appendices/commandline
    appendices/preprelease
    appendices/modules/*
    
