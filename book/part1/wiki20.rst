@@ -31,10 +31,6 @@ suggestions for improvement of the docs, not for seeking support.
 If you want to see the final version you can download a copy of the
 `wiki code`_.
 
-.. _`wiki code`: ../_static/wiki20.zip
-
-.. _TurboGears discussion list: http://groups.google.com/group/turbogears
-
 Setup
 =====
 
@@ -50,31 +46,12 @@ To go through this tutorial, you'll need:
     python-devel or python-dev. In addition, virtualenv is available
     via most package managers, so can be installed that way.
 
-#.  docutils_ 0.4 or later,
-    which is used for the wiki's formatting. ``docutils`` is not a required
-    part of TurboGears, but is needed for this tutorial. Install it with::
-
-        $ easy_install docutils
-
-    When using ``easy_install`` it doesn't matter what directory you're in.
-    If you don't have ``easy_install`` you only need to run
-    http://peak.telecommunity.com/dist/ez_setup.py from any directory.
-
 #.  A web browser.
 
 #.  Your favorite editor.
 
 #.  Two command line windows
     (you only *need* one, but two is nicer).
-
-#.  A database. Python 2.5 comes with ``sqlite``, so if you have
-    Python 2.5, don't do anything (though you will need sqlite3.0+ if
-    you want to browse the database from the command line). If you're
-    running Python 2.4, your best bet is sqlite 3.2+ with `pysqlite
-    <http://cheeseshop.python.org/pypi/pysqlite>`_ 2.0+. Install it
-    with::
-
-        $ easy_install pysqlite
 
 #.  **Optional:** If you're not aware of it, you may also find the
     `ipython shell`_ to be helpful. It supports attribute tab completion for
@@ -91,13 +68,52 @@ To go through this tutorial, you'll need:
 This tutorial doesn't cover Python at all. Check the `Python
 Documentation`_ page for more coverage of Python.
 
-.. _Python: http://www.python.org/download/
-.. _virtualenv: http://pypi.python.org/pypi/virtualenv
-.. _docutils: http://cheeseshop.python.org/pypi/docutils
-.. _ipython shell: http://ipython.scipy.org/
-.. _ipython docs: http://ipython.scipy.org/moin/Documentation
-.. _Python Documentation: http://www.python.org/doc
+Virtual Environment
+===================
 
+The use of a virtual environment is highly recommended. It allows you
+to segregate your development work from the system, so you can freely
+experiment without worrying about breaking some other package. The use
+of it is two steps: Making the directory structure for the virtual
+environment, and activating it.
+
+Making the Virtual Environment
+------------------------------
+
+This is the same across all platforms. Use the following command::
+
+     $ virtualenv --no-site-packages path/to/virtualenvironment
+
+The "--no-site-packages" ensures that your virtual environment is just
+what comes with Python. Using that, you ensure that you have no
+unknown conflicts while doing your development.
+
+Activating the Virtual Environment
+----------------------------------
+
+On Linux and other UNIX (or UNIX-like) operating systems, use this
+command::
+
+   $ source path/to/virtualenvironment/bin/activate
+
+On Windows, use this command::
+
+   C:\> path\to\virtualenvironment\bin\activate
+   
+On all platforms, when you are done, use the "deactivate" command to
+return to using your system wide Python installation.
+
+Installing the Development Tools
+================================
+
+Once you have your development environment prepared (using the
+instructions for making a virtualenv above), installing TurboGears2
+itself is extremely easy. Run this command::
+
+     $ easy_install tg.devtools
+
+Wait a few moments as the dependencies are installed and prepared for
+you.
 
 Quickstart
 ==========
@@ -111,8 +127,6 @@ Go to a command line window and run the following command::
 
     $ paster quickstart
 
-.. _command line reference : http://docs.turbogears.org/2.0/CommandLine
-
 You'll be prompted for the name of the project (this is the pretty
 name that human beings would appreciate), and the name of the package
 (this is the less-pretty name that Python will like).  Here's what our
@@ -122,7 +136,7 @@ choices for this tutorial look like::
     Enter project name: Wiki 20
     Enter package name [wiki20]: 
     Would you prefer mako templates? (yes/[no]): no
-    Do you need authentication and authorization in this project? ([yes]/no): no
+    Do you need authentication and authorization in this project? ([yes]/no): yes
 
     
 We recommend you use the names given here: this documentation looks
@@ -150,8 +164,14 @@ You need to update the dependencies in the file "setup.py". Currently,
 it looks like this:
 
 .. code:: Wiki-20/setup.py
-   :revision: f8464682ad9c5f4c3b6a31211a038468a2caba95
+   :revision: a88c887745f6457f8348bac861538665f8496ff5
    :section: setupdeps
+
+You need to add "docutils" to the list. TurboGears2 does not require
+docutils, but the wiki we are building does. In addition, if you are
+using Python 2.4, you need to add "pysqlite". For this tutorial, we
+are using the SQLite_ database, and Python 2.4 does not include
+support for it out of the box.
 
 Now to be able to run the project you will need to install it and
 its dependencies. This can be quickly achieved by running from
@@ -168,7 +188,7 @@ The ``--reload`` flag means that changes that you make in the project
 will automatically cause the server to restart itself. This way you
 immediately see the results.
 
-Point your browser to http://localhost:8080, and you'll see a nice
+Point your browser to http://localhost:8080 , and you'll see a nice
 welcome page. You now have a working project!  And you can access the
 project from within the python/ipython shell by typing::
 
@@ -190,26 +210,31 @@ TurboGears follows the `Model-View-Controller paradigm`_
 (a.k.a. "MVC"), as do most modern web frameworks like Rails, Django,
 Struts, etc.
 
-* **Model**: For a web application, the "model" refers to the way the
-    data is stored. In theory, any object *can* be your model. In
-    practice, since we're in a database-driven world, your model will
-    be based on a relational database. By default TurboGears 2 uses
-    the powerful, flexible, and relatively easy-to-use SQLAlchemy
-    object relational mapper to build your model and to talk to your
+**Model**
+    For a web application, the "model" refers to the way the data is
+    stored. In theory, any object *can* be your model. In practice,
+    since we're in a database-driven world, your model will be based
+    on a relational database. By default TurboGears 2 uses the
+    powerful, flexible, and relatively easy-to-use SQLAlchemy object
+    relational mapper to build your model and to talk to your
     database. We'll look at this in a later section.
 
-* **View**: To minimize duplication of effort web frameworks use
-    *templating engines* which allow you to create "template"
-    files. These specify how a page will always look, with hooks
-    where the templating engine can substitute information provided
-    by your web application.  TurboGears 2's default templating
-    engine is `Genshi`_, although several other engines are supported
-    out of the box and can be configured in your `config/app_cfg.py`
-    file (see :ref:`alternative_templates`)
+**View**
+    To minimize duplication of effort web frameworks use *templating
+    engines* which allow you to create "template" files. These specify
+    how a page will always look, with hooks where the templating
+    engine can substitute information provided by your web
+    application.  TurboGears 2's default templating engine is
+    `Genshi`_, although several other engines are supported out of the
+    box and can be configured in your `config/app_cfg.py` file (see
+    part IV of this book).
 
-* **Controller**: The controller is the way that you tell your web
-    application how to respond to events that arrive on the server. In
-    a web application, an "event" usually means "visiting a page" or
+    .. todo:: add link to part IV when it is written
+
+**Controller**
+    The controller is the way that you tell your web application how
+    to respond to events that arrive on the server. In a web
+    application, an "event" usually means "visiting a page" or
     "pressing a submit button" and the response to an event usually
     consists of executing some code and displaying a new page.
 
@@ -218,10 +243,10 @@ Controller Code
 
 .. highlight:: python
 
-`Wiki-20/wiki20/controllers/root.py` is the code that causes the
-welcome page to be produced. After the imports the first line of code
-creates our main controller class by inheriting from TurboGears'
-``BaseController``::
+`Wiki-20/wiki20/controllers/root.py` (see below) is the code that
+causes the welcome page to be produced. After the imports the first
+line of code creates our main controller class by inheriting from
+TurboGears' ``BaseController``::
 
     class RootController(BaseController):
 
@@ -250,14 +275,17 @@ of the ``index`` method. TG takes the key:value pairs in this
 dictionary and turns them into local variables that can be used in the
 template.
 
+.. code:: Wiki-20/wiki20/controllers/root.py
+   :revision: a88c887745f6457f8348bac861538665f8496ff5
+
 
 Displaying The Page
 -------------------
 
-`Wiki-20/wiki20/templates/index.html` is the template specified by the
-``@expose()`` decorator, so it formats what you view on the welcome
-screen. Look at the file; you'll see that it's standard XHTML with
-some simple namespaced attributes. This makes it very
+`Wiki-20/wiki20/templates/index.html` (see below) is the template
+specified by the ``@expose()`` decorator, so it formats what you view
+on the welcome screen. Look at the file; you'll see that it's standard
+XHTML with some simple namespaced attributes. This makes it very
 designer-friendly, and well-behaved design tools will respect all the
 `Genshi`_ attributes and tags.  You can even open it directly in your
 browser.
@@ -270,11 +298,8 @@ directives in the sections on :ref:`Editing pages <editing_pages>` and
 :ref:`Adding views <adding_views>`.
 
 
-.. _Model-View-Controller paradigm: http://en.wikipedia.org/wiki/Model-view-controller
-.. _plugins available: http://www.turbogears.org/cogbin/
-.. _Genshi: http://genshi.edgewall.org/wiki/Documentation/xml-templates.html
-
-Next, we'll set up our data model, and create a database.
+.. code:: Wiki-20/wiki20/templates/index.html
+   :revision: a88c887745f6457f8348bac861538665f8496ff5
 
 Wiki Model and Database
 =======================
@@ -288,25 +313,25 @@ Since a wiki is basically a linked collection of pages, we'll define a
 ``Page`` class as the name of our model. Create a new file called
 `page.py` in the ``Wiki-20/wiki20/model/`` directory:
 
-.. code:: README.txt
+.. code:: Wiki-20/wiki20/model/page.py
+   :revision: 5a429eb6c366afe80a21523b7bf334f2b57e588e
 
 
 In order to easily use our model within the application, modify the
-`Wiki-20/wiki20/model/__init__.py` file to add ``Page`` and
-``pages_table`` to the module. Add the following line *at the end of
-the file*:.
+`Wiki-20/wiki20/model/__init__.py` file to add ``Page`` to the
+module. Add the following line *at the end of the file*:.
 
 .. code-block:: python
 
-    from wiki20.model.page import Page, pages_table
+    from wiki20.model.page import Page
 
 .. warning::
 
     It's very important that this line is at the end because
-    ``pages_table`` requires the rest of the model to be initialized
+    ``Page`` requires the rest of the model to be initialized
     before it can be imported:
 
-Let's investigate our model a little more.  The ``MetaData`` object is
+Let's investigate our model a little more.  The ``metadata`` object is
 automatically created by the ``paste`` command inside the
 ``__init__.py`` file. It's a "single point of truth" that keeps all
 the information necessary to connect to and use the database. It
@@ -319,25 +344,23 @@ In this case, the metadata object configures itself using the
 `development.ini` file, which we'll look at in the next
 section.
 
-The SQLAlchemy ``Table`` object defines what a single table looks like
-in the database, and adds any necessary constraints (so, for example,
-even if your database doesn't enforce uniqueness, SQLAlchemy will
-attempt to do so). The first argument in the ``Table`` constructor is
-the name of that table inside the database. Next is the aforementioned
-``metadata`` object followed by the definitions for each ``Column``
-object. As you can see, ``Column`` objects are defined in the same way that you
-define them within a database: name, type, and constraints.
+The SQLAlchemy ``DeclarativeBase`` object defines what a single Python
+object looks like in the database, and adds any necessary constraints
+(so, for example, even if your database doesn't enforce uniqueness,
+SQLAlchemy will attempt to do so). It provides the metadata object
+mentioned above, and makes it very easy to define mappings from
+objects to tables in your database.
 
-The ``Table`` object provides the representation of a database table,
-but we want to just work with objects, so we create an extremely
-simple class to represent our objects within TurboGears. The above
-idiom is quite common: you create a very simple class like ``Page``
-with nothing in it, and add all the interesting stuff using
-``mapper()``, which attaches the ``Table`` object to our class.
+An object defined using the DeclarativeBase has a set of class level
+variables (instead of instance level) which define the columns. As you
+can see, ``Column`` objects are defined in the same way that you
+define them within a database: name, type, and constraints.
 
 Note that it's also possible to start with an existing database, but
 that's a more advanced topic that we won't cover in this tutorial.  If you
-would like more information on how to do that, check out :ref:`sqlautocode`.
+would like more information on how to do that, check out sqlautocode.
+
+.. todo:: add internal links to sqlautocode when ready.
 
 Database Configuration
 ----------------------
@@ -380,7 +403,8 @@ the ``DBSession.flush()`` command by adding::
 
 The resulting boostrap file will look like:
 
-.. code:: wiki_snippets/websetup_bootstrap.py
+.. code:: Wiki-20/wiki20/websetup/bootstrap.py
+
 
 If you're familiar with SQLAlchemy this should look pretty standard to
 you.  One thing to note is that we use::
@@ -592,7 +616,7 @@ like this:
 For now, the new method is identical to the ``index`` method; the only
 difference is that the resulting dictionary is handed to the ``edit``
 template. To see it work, go to
-http://localhost:8080/edit/FrontPage. However, this only works because
+http://localhost:8080/edit/FrontPage . However, this only works because
 FrontPage already exists in our database; if you try to edit a new
 page with a different name it will fail, which we'll fix in a later
 section.
@@ -802,4 +826,14 @@ are almost always incorporated.
 
 .. _`Genshi templating engine`: http://genshi.edgewall.org/wiki/Documentation/templates.html
 .. _`SQLAlchemy ORM`: http://www.sqlalchemy.org/
-
+.. _`wiki code`: ../_static/wiki20.zip
+.. _TurboGears discussion list: http://groups.google.com/group/turbogears
+.. _Python: http://www.python.org/download/
+.. _virtualenv: http://pypi.python.org/pypi/virtualenv
+.. _ipython shell: http://ipython.scipy.org/
+.. _ipython docs: http://ipython.scipy.org/moin/Documentation
+.. _Python Documentation: http://www.python.org/doc
+.. _SQLite: http://www.sqlite.org/
+.. _Model-View-Controller paradigm: http://en.wikipedia.org/wiki/Model-view-controller
+.. _plugins available: http://www.turbogears.org/cogbin/
+.. _Genshi: http://genshi.edgewall.org/wiki/Documentation/xml-templates.html
