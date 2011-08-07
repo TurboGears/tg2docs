@@ -81,7 +81,7 @@ paster serve
 This is used to start the built-in server.  This is a very robust
 implementation (multi-threaded, SSL support, etc.) which means several
 people use it in production. That said, you should take a look at our
-:ref:`tgdeployment` docs. The most common usage for this command is:
+deployment docs. The most common usage for this command is:
 
 .. code-block:: bash
 
@@ -89,6 +89,8 @@ people use it in production. That said, you should take a look at our
 
 The above command will enable the reloading of the server every time
 you save a file, which is a very nice feature :)
+
+.. todo:: Add links to our deployment docs when done
 
 .. _paster tginfo:
 

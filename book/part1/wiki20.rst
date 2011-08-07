@@ -836,10 +836,11 @@ to explore:
 .. todo:: Add link to help show how to add jQuery support
 
 If you had any problems with this tutorial, or have ideas on how to
-make it better, please let us know on the mailing list! Suggestions
+make it better, please let us know on the `mailing list`_! Suggestions
 are almost always incorporated.
 
 
+.. _`mailing list`: http://groups.google.com/group/turbogears
 .. _`Genshi templating engine`: http://genshi.edgewall.org/wiki/Documentation/templates.html
 .. _`SQLAlchemy ORM`: http://www.sqlalchemy.org/
 .. _`wiki code`: ../_static/wiki20.zip

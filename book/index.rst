@@ -100,6 +100,7 @@ Appendices
   
 * :ref:`Alphabetical Module Index <modindex>`
 * :ref:`Index <genindex>`
+* :doc:`appendices/todo`
 
 .. toctree::
    :hidden:
@@ -108,4 +109,5 @@ Appendices
    appendices/commandline
    appendices/preprelease
    appendices/modules/*
+   appendices/todo
    
