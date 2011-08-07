@@ -1,3 +1,5 @@
+.. migrated to book, do not update this page further. see book/appendices/commandlist.rst
+
 .. archive:: wiki_root/trunk
 
 .. _wiki20:

@@ -1,3 +1,5 @@
+.. migrated to book, do not update this page further. see book/appendices/commandlist.rst
+
 .. _command_line_reference:
 
 Command Line Reference
