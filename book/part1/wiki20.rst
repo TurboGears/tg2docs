@@ -445,12 +445,10 @@ that processed data to a template.
 at `Wiki-20/wiki20/controllers/root.py`.  Here's what it looks like
 now:
 
-.. code:: wiki_snippets/controllers_root_v1.py
+.. code:: Wiki-20/wiki20/controllers/root.py
+   :revision: a88c887745f6457f8348bac861538665f8496ff5
 
-The first thing we need to do is uncomment the line that imports
-``DBSession``.
-
-Next we must import the ``Page`` class from our model. At the end of
+First, we must import the ``Page`` class from our model. At the end of
 the ``import`` block, add this line::
 
     from wiki20.model.page import Page
@@ -495,8 +493,9 @@ it up.
 
 Here's the whole file after incorporating the above modifications:
 
-.. code:: wiki_snippets/controllers_root_v2.py
-
+.. code:: Wiki-20/wiki20/controllers/root.py
+   :revision: 133a5a52b778c916cc4441deb44ab99e08e89e46
+   
 Now our ``index()`` method fetches a record from the database
 (creating an instance of our mapped ``Page`` class along the way), and
 returns it to the template within a dictionary.
@@ -533,8 +532,9 @@ Tell Genshi to pull in the headers and footers for the page.
 Copy the contents of `index.html` into a new file called `page.html`.
 Now modify it for our purposes:
 
-.. code:: wiki_snippets/templates_page_v1.html
-
+.. code:: Wiki-20/wiki20/templates/page.html
+   :revision: e610faabe4758844256dcc946258ad89badf7905
+   
 This is a basic XHTML page with three substitutions:
 
 1.  In the ``<title>`` tag, we substitute the name of the page, using
@@ -545,13 +545,15 @@ This is a basic XHTML page with three substitutions:
 2.  In the second ``<div>`` element, we substitute the page name again
     with Genshi's ``py:replace``:
 
-    .. code:: wiki_snippets/templates_page_v1.html
-		:section: PageName
-
+    .. code:: Wiki-20/wiki20/templates/page.html
+       :revision: e610faabe4758844256dcc946258ad89badf7905
+       :section: PageName
+   
 3.  In the third ``<div>``, we put in the contents of our``wikipage``:
 
-    .. code:: wiki_snippets/templates_page_v1.html
-		:section: PageContent
+    .. code:: Wiki-20/wiki20/templates/page.html
+       :revision: e610faabe4758844256dcc946258ad89badf7905
+       :section: PageContent
 
 When you refresh the output web page you should see "initial data"
 displayed on the page.
@@ -563,7 +565,7 @@ displayed on the page.
 
 .. admonition:: For the curious...
 
-   Do you wonder what those html comments like ##{PageContent} are?
+   Do you wonder what those html comments like ##{B:PageContent} are?
    They do not matter for this tutorial and are only to help the
    documentation (you're soaking in it!) isolate certain lines of code
    to display, like above.
@@ -590,18 +592,21 @@ know this is an editing page. Here are the changes for ``edit.html``.
 #. Change the title in the header to reflect that we are editing the
    page:
 
-	.. code:: wiki_root/wiki20/templates/edit.html
-		:section: Head
+   .. code:: Wiki-20/wiki20/templates/edit.html
+      :revision: 64df312db3002afd53b04d62319e57d7356ee4c9
+      :section: Head
 
 #. Change the div that displays the page:
 
-    .. code:: wiki_snippets/templates_page_v1.html
-		:section: PageContent
+    .. code:: Wiki-20/wiki20/templates/page.html
+       :revision: e610faabe4758844256dcc946258ad89badf7905
+       :section: PageContent
 
    with a div that contains a standard HTML form:
 
-	.. code:: wiki_root/wiki20/templates/edit.html
-		:section: Form
+   .. code:: Wiki-20/wiki20/templates/edit.html
+      :revision: 64df312db3002afd53b04d62319e57d7356ee4c9
+      :section: Form
 
 .. highlight:: python
 
@@ -611,7 +616,8 @@ form, we'll add an ``edit`` method to our controller in
 `Wiki-20/wiki20/controllers/root.py`. The new `root.py` file looks
 like this:
 
-.. code:: wiki_snippets/controllers_root_v3.py
+.. code:: Wiki-20/wiki20/controllers/root.py
+   :revision: 66831c2877f1bdfb357018be2eaeb3ba83d96387
 
 For now, the new method is identical to the ``index`` method; the only
 difference is that the resulting dictionary is handed to the ``edit``
@@ -633,14 +639,16 @@ When we displayed our wiki's edit form in the last section, the form's
 However, we're also going to make another important change. Our
 ``index`` method is *only* called when you either go to ``/`` or
 ``/index``. If you change the ``index`` method to the special method
-``default``, then ``default`` will be automatically called whenever
-nothing else matches. ``default`` will take the rest of the URL and
-turn it into positional parameters.
+``_default``, then ``_default`` will be automatically called whenever
+nothing else matches. ``_default`` will take the rest of the URL and
+turn it into positional parameters. This will cause the wiki to become
+the default when possible.
 
 Here's our new version of `root.py` which includes both ``default``
 and ``save``:
 
-.. code:: wiki_snippets/controllers_root_v4.py
+.. code:: Wiki-20/wiki20/controllers/root.py
+   :revision: 39410f7744de3ac88391d26f1ff3797e8a9dc6b3
 
 Unlike the previous methods we've made, ``save`` just uses a plain
 ``@expose()`` without any template specified. That's because we're
@@ -677,7 +685,8 @@ sounds like a job for a regular expression.
 Here's the new version of `root.py`, which will be explained
 afterwards:
 
-.. code:: wiki_snippets/controllers_root_v5.py
+.. code:: Wiki-20/wiki20/controllers/root.py
+   :revision: 3d7f5ceea10e87e510f97f78bb870275293a1d1d
 
 We need some additional imports, including ``re`` for regular
 expressions and a method called ``publish_parts`` from ``docutils``.
@@ -687,7 +696,7 @@ collection of lowercase letters and numbers followed by another
 uppercase letter and more letters and numbers. The ``wikiwords``
 regular expression describes a WikiWord.
 
-In ``default``, the new lines begin with the use of ``publish_parts``,
+In ``_default``, the new lines begin with the use of ``publish_parts``,
 which is a utility that takes string input and returns a dictionary of
 document parts after performing conversions; in our case, the
 conversion is from Restructured Text to HTML.  The input
@@ -711,15 +720,16 @@ understandable if you recognize that the ``%s`` gets substituted with
 ``root``, then the substitution is done which replaces the ``\1`` with
 the string matching the regex.
 
-Note that ``default()`` is now returning a ``dict`` containing an
+Note that ``_default()`` is now returning a ``dict`` containing an
 additional key-value pair: ``content=content``. This will not break
 ``wiki20.templates.page`` because that page is only looking for
 ``page`` in the dictionary, however if we want to do something
 interesting with the new key-value pair we'll need to edit
 ``wiki20.templates.page``:
 
-.. code:: wiki_snippets/templates_page_v6.html
-	:language: html
+.. code:: Wiki-20/wiki20/templates/page.html
+   :revision: 3d7f5ceea10e87e510f97f78bb870275293a1d1d
+   :language: html
 
 Since ``content`` comes through as XML, we can strip it off using the
 ``XML()`` function to produce plain text (try removing the function
@@ -737,14 +747,15 @@ Hey, Where's The Page?
 What if a Wiki page doesn't exist? We'll take a simple approach: if
 the page doesn't exist, you get an edit page to use to create it.
 
-In the ``default`` method, we'll check to see if the page exists. If
+In the ``_default`` method, we'll check to see if the page exists. If
 it doesn't, we'll redirect to a new ``notfound`` method. We'll add
-this method after the ``index`` method and before the ``edit``
+this method after the ``_default`` method and before the ``edit``
 method. Here are the changes we make to the controller:
 
-.. code:: wiki_snippets/controllers_root_v7.py
+.. code:: Wiki-20/wiki20/controllers/root.py
+   :revision: 2f70ae5753f91724424858e07bcd612c9b696a97
 
-The ``default`` code changes illustrate the "better to beg forgiveness
+The ``_default`` code changes illustrate the "better to beg forgiveness
 than ask permission" pattern which is favored by most Pythonistas --
 we first try to get the page and then deal with the exception by
 redirecting to a method that will make a new page.
@@ -776,7 +787,8 @@ add one, we'll start with a new template, `pagelist.html`. We'll copy
 
 After editing, our `pagelist.html` looks like:
 
-.. code:: wiki_root/wiki20/templates/pagelist.html
+.. code:: Wiki-20/wiki20/templates/pagelist.html
+   :revision: 9e9b683642740bc6fc1dfcc45f535829c7881705
    :language: html
 
 The section in bold represents the Genshi code of interest. You can
@@ -791,8 +803,9 @@ engine`_ at their site.
 We must also modify the controller to implement ``pagelist`` and to
 create and pass ``pages`` to our template:
 
-.. code:: wiki_snippets/controllers_root_v8.py
-    :language: python
+.. code:: Wiki-20/wiki20/controllers/root.py
+   :revision: 9e9b683642740bc6fc1dfcc45f535829c7881705
+   :language: python
 
 Here, we select all of the ``Page`` objects from the database, and
 order them by pagename.
@@ -800,11 +813,12 @@ order them by pagename.
 We can also modify `page.html` so that the link to the page list is
 available on every page:
 
-.. code:: wiki_snippets/templates_page_v9.html
-	:language: html
+.. code:: Wiki-20/wiki20/templates/page.html
+   :revision: 9e9b683642740bc6fc1dfcc45f535829c7881705
+   :language: html
 
 You can see your pagelist by clicking the link on a page or by going
-directly to http://localhost:8080/pagelist.
+directly to http://localhost:8080/pagelist .
 
 
 Further Exploration
@@ -813,11 +827,13 @@ Further Exploration
 Now that you have a working Wiki, there are a number of further places
 to explore:
 
-#. You can add JSON support via MochiKit (see :ref:`jsonmochikit`)
+#. You can add JSON support via jQuery
 
 #. You can learn more about the `Genshi templating engine`_.
 
 #. You can learn more about the `SQLAlchemy ORM`_.
+
+.. todo:: Add link to help show how to add jQuery support
 
 If you had any problems with this tutorial, or have ideas on how to
 make it better, please let us know on the mailing list! Suggestions
