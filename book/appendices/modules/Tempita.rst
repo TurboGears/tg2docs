@@ -1,1 +1,5 @@
+=======
+Tempita
+=======
+
 .. automodule:: tempita

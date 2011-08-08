@@ -1,1 +1,5 @@
+========
+Pygments
+========
+
 .. automodule:: pygments

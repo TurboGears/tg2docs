@@ -1,1 +1,5 @@
+=========
+decorator
+=========
+
 .. automodule:: decorator

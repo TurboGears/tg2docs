@@ -1,1 +1,5 @@
+#####
+ kid
+#####
+
 .. automodule:: kid

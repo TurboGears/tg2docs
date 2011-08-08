@@ -1,1 +1,5 @@
+======
+Routes
+======
+
 .. automodule:: routes

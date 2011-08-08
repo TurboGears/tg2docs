@@ -1,1 +1,0 @@
-.. automodule:: zope.sqlalchemy

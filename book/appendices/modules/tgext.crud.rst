@@ -1,1 +1,0 @@
-.. automodule:: tgext.crud

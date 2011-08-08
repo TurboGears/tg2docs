@@ -1,1 +1,5 @@
+========
+coverage
+========
+
 .. automodule:: coverage

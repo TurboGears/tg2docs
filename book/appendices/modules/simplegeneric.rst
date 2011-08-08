@@ -1,1 +1,5 @@
+=============
+simplegeneric
+=============
+
 .. automodule:: simplegeneric
