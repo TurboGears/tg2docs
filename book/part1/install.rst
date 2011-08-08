@@ -1,6 +1,6 @@
-===============================
- From Nothing to Serving Pages
-===============================
+=====================================================
+Installing TurboGears2: From Nothing to Serving Pages
+=====================================================
 
 We've covered some of this material in the previous chapter
 (:doc:`wiki20`), but in this chapter we are going to cover it in more
