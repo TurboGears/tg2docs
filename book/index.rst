@@ -23,13 +23,14 @@ Part I - The Basics
 ###################
 
 * :doc:`part1/wiki20`
-* Getting TurboGears Installed and Serving Pages
+* :doc:`part1/install`
 * Specifying A Web App To Be Developed Throughout The Book
 
 .. toctree::
    :hidden:
 
    part1/wiki20
+   part1/install
 
 ##########################
 Part II - Making A Web App
@@ -98,9 +99,9 @@ Appendices
 
   * :doc:`appendices/preprelease`
   
+* :doc:`appendices/todo`
 * :ref:`Alphabetical Module Index <modindex>`
 * :ref:`Index <genindex>`
-* :doc:`appendices/todo`
 
 .. toctree::
    :hidden:
