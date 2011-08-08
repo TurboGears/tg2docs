@@ -13,6 +13,7 @@
    recipesandfaq
    oldindex
    toc
+   main/ManualDatabaseMigration
    
 
 The TurboGears documentation

@@ -58,7 +58,7 @@ addition, any of `these URLs`_ will return the same result.
 
 
 Implementing A Catch-All Url Via The ``_default()`` Method
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 URLs not explicitly mapped to other methods of the controller will
 generally be directed to the method named ``_default()``. With the
