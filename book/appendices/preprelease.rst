@@ -29,18 +29,18 @@ plan on taking some time to work through it all.
 
 The steps for the release, in summary, are as follows:
 
- 1. Ticket system triage
- 2. Repository branching
- 3. Closing remaining tickets
- 4. Upgrading all local packages as high as possible
- 5. Testing Jenkins with the upgraded packages and code
+ 1. Ticket System Triage
+ 2. Repository Branching
+ 3. Closing Remaining Tickets
+ 4. Upgrading All Local Packages As High As Possible
+ 5. Testing Jenkins With The Upgraded Packages And Code
  6. Finalizing Changes On 'next' Branch
- 7. Preparing changelog and release announcement
- 8. Preparing packages and the documentation
- 9. Uploading the documentation
- 10. Making the New Eggbasket the Current on Turbogears.org
+ 7. Preparing Changelog And Release Announcement
+ 8. Preparing Packages And The Documentation
+ 9. Uploading The Documentation
+ 10. Making The New Eggbasket The Current On Turbogears.org
  11. Pushing to `PyPI`_
- 12. Publishing release annoucement and closing milestones
+ 12. Publishing Release Annoucement And Closing Milestones
  13. Final Cleanup
 
 Below, we discuss each of these steps in detail.
@@ -99,7 +99,7 @@ Upgrading all local packages as high as possible
 ================================================
 
 This part is fairly involved. As you will be uploading the result onto
-the `TurboGears`_ site, is highly recommended that you have shell
+the `TurboGears`_ site, it is highly recommended that you have shell
 access to it.
 
 Preparing Your Environment
@@ -226,7 +226,8 @@ to this will help:
 
 Once done, you will need to make it visible to the world under the
 downloads directory. Make sure that it matches the URL you placed in
-setup.py. Also pay close attention to the permissions when you do so.
+setup.py. Also pay close attention to the permissions when you do so,
+making sure that they are world-readable.
 
 After doing this, visit `Jenkins`_ and update the build processes for
 the tg-next packages. Ideally, they will become very simple. Even
@@ -322,7 +323,7 @@ the website user could read the files, you could then do ``rsync -avP
 --delete /path/to/new/docs /path/to/web/docs/directory`` and have
 everything properly uploaded/visible to the users.
 
-Making the New Eggbasket the Current on Turbogears.org
+Making The New Eggbasket The Current On Turbogears.org
 ======================================================
 
 Log in to the `turbogears`_ website. Go into the directory where you
