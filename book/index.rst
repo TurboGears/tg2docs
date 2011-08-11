@@ -24,13 +24,14 @@ Part I - The Basics
 
 * :doc:`part1/wiki20`
 * :doc:`part1/install`
-* Specifying A Web App To Be Developed Throughout The Book
+* :doc:`part1/hiringpond`
 
 .. toctree::
    :hidden:
 
    part1/wiki20
    part1/install
+   part1/hiringpond
 
 ##########################
 Part II - Making A Web App
