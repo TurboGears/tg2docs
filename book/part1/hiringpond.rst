@@ -5,7 +5,8 @@
 As we go through this book, it is helpful to have a goal. In our case,
 we will develop an application that is helpful to you, and to the web
 community at large. Specifically, we're going to build a resume
-hosting site.
+hosting site, and the rest of this chapter is devoted to explaining
+what it will have, and what it will do for the users of the site.
 
 The site will allow the poster to set up a chronological work history,
 complete with bullet points and links to various workplaces. It will
