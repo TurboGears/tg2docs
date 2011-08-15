@@ -8,6 +8,11 @@ community at large. Specifically, we're going to build a resume
 hosting site, and the rest of this chapter is devoted to explaining
 what it will have, and what it will do for the users of the site.
 
+This is a very condensed description. Over time, as the pieces get
+written, they will be fleshed out here to make things clearer, and
+provide links to the relevant chapters. For now, please bear with the
+shortness. It will get better.
+
 The site will allow the poster to set up a chronological work history,
 complete with bullet points and links to various workplaces. It will
 feature a skills matrix, allowing the poster to group related skills
