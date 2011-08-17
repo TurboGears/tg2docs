@@ -86,6 +86,14 @@ sitting in your system. You can explore the code and begin working
 through any of the `sf.net tickets`_ you wish, or even on your own new
 features that have not yet been submitted.
 
+Note that, for all repositories, work is to be done off of the
+``development`` branch. Either work directly on that branch, or do the
+work on a branch made from the ``development`` branch. The ``master``
+branch is reserved for released code.
+
+When working on your feature or ticket, make certain to add the test
+cases. Without them, the code will not be accepted.
+
 .. _TurboGears2: http://sourceforge.net/p/turbogears2/home/
 .. _SourceForge: http://www.sourceforge.net/
 .. _Paster: http://www.pythonpaste.org/
