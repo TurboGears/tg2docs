@@ -56,6 +56,8 @@ exact process to install virtualenv.
 If none of these methods work, please feel free to ask on the `mailing
 list`_ for help, and we'll work through it with you.
 
+.. _whyvirtualenv:
+
 virtualenv Notes
 ----------------
 

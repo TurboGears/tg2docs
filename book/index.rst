@@ -92,24 +92,26 @@ Appendices
 * External Tutorials
 * Contributing
 
-  * Git - basic usage pages (a quick tutorial for people to get their feet wet)
-  * Preparing Your Development Environment
-  * Testing Your Changes
+  * :doc:`appendices/contributing/prepenv`
+  * :doc:`appendices/contributing/testingchanges`
   
 * Maintainer's Guide
 
   * :doc:`appendices/preprelease`
   
-* :doc:`appendices/todo`
-* :ref:`Alphabetical Module Index <modindex>`
-* :ref:`Index <genindex>`
-
 .. toctree::
    :hidden:
    :glob:
 
    appendices/commandline
+   appendices/contributing/prepenv
+   appendices/contributing/testingchanges
    appendices/preprelease
    appendices/modules/*
    appendices/todo
+   
+* :doc:`appendices/todo`
+* :ref:`Alphabetical Module Index <modindex>`
+* :ref:`Index <genindex>`
+
    
