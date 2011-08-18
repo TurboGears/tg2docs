@@ -44,7 +44,8 @@ exact process to install virtualenv.
    example: ``apt-get install python-virtualenv`` or ``yum install
    virtualenv``).
 
-#. Attempt a plain ``easy_install`` via ``easy_install virtualenv``
+#. From the command line, attempt a plain ``easy_install`` via
+ ``easy_install virtualenv``
 
 #. Your platform may need to have the Python header files
    installed. You will need to work with whatever tools come with your
@@ -62,14 +63,14 @@ virtualenv Notes
 ----------------
 
 When you use virtualenv, you have many options available to you (use
-``virtualenv --help`` to see the full list). We are only going to
-cover basic use here.
+``virtualenv --help`` from the command line to see the full list). We
+are only going to cover basic use here.
 
 The first thing you need to know is that virtualenv is going to make a
 directory which amounts to a private installation of Python. This
 means it will have bin, include, and lib directories. Most commonly,
 you will be using the files in the bin directory: specifically,
-activate will become your best friend.
+the new command ``activate`` will become your best friend.
 
 The second thing you need to know is that you will *rarely* want to
 use the system site-packages directory, and we **never** recommend it
@@ -100,8 +101,8 @@ virtualenv.
 
 For the duration of this book, we will assume that the virtualenv you
 are using is located at *${HOME}/tg2env*. Please change the commands
-we give to you to match your system if you choose to use a different
-directory for your virtualenv.
+we give to you to match your system's directory structure if you
+choose to use a different directory for your virtualenv.
 
 Once you have a virtualenv, you must activate it. On a UNIX/Linux/Mac
 OSX machine, from the command line, you do the following::
@@ -115,6 +116,10 @@ On Windows systems, from the command line, you do the following::
 That's it. From this point onward, any ``easy_install`` commands will
 automatically use your virtualenv, as will your setup.py scripts that
 will be developed in later chapters.
+
+When you are done with this virtualenv, use the command
+``deactivate``. This will return your environment to what it was, and
+allow you to work with the system wide Python installation.
 
 Installing TurboGears2
 ======================
@@ -147,7 +152,7 @@ Getting Pages Visible in Your Browser
 
 You will now need to create an application using what you've
 installed. The steps below describe how to create a basic application
-for an application named "Tester". It is assumed to be created at *${HOME}/tester*::
+for an application named "Tester". It is assumed to be created at *${HOME}/Tester*::
 
     $ cd ${HOME}
     $ paster quickstart
@@ -155,7 +160,7 @@ for an application named "Tester". It is assumed to be created at *${HOME}/teste
     Enter package name [tester]: 
     Would you prefer mako templates? (yes/[no]): no
     Do you need authentication and authorization in this project? ([yes]/no): yes
-    $ cd tester
+    $ cd Tester
     $ python setup.py develop
     $ paster setup-app development.ini
     $ paster serve development.ini
