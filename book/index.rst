@@ -1,6 +1,6 @@
-=========================================
- Building Applications with TurboGears 2
-=========================================
+=================================================
+TurboGears2 Web Applications (Batteries Included)
+=================================================
 
 .. note:: This page is filled with notes about what each chapter should become. As the chapter gets filled in with a proper document, the notes will be removed, leaving only the clean table of contents. Until then, the notes are left in for future reference.
 

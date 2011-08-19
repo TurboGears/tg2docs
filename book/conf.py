@@ -42,7 +42,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Batteries Included: Developing Web Applications with TurboGears2'
+project = u'TurboGears2 Web Applications (Batteries Included)'
 copyright = u'2011, Michael J. Pedersen and the TurboGears Community'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -93,15 +93,15 @@ pygments_style = 'sphinx'
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = 'default'
+html_theme = 'tgtheme'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
-#html_theme_options = {}
+html_theme_options = {}
 
 # Add any paths that contain custom themes here, relative to this directory.
-#html_theme_path = []
+html_theme_path = ['.']
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
@@ -133,7 +133,11 @@ html_static_path = ['_static']
 #html_use_smartypants = True
 
 # Custom sidebar templates, maps document names to template names.
-#html_sidebars = {}
+html_sidebars = {
+    '*': ['globaltoc.html', 'sourcelink.html'],
+    '*/**': ['localtoc.html', 'relations.html', 'sourcelink.html'],
+}
+
 
 # Additional templates that should be rendered to pages, maps page names to
 # template names.
@@ -149,7 +153,7 @@ html_static_path = ['_static']
 #html_split_index = False
 
 # If true, links to the reST sources are added to the pages.
-#html_show_sourcelink = True
+html_show_sourcelink = False
 
 # If true, "Created using Sphinx" is shown in the HTML footer. Default is True.
 #html_show_sphinx = True
@@ -166,7 +170,7 @@ html_static_path = ['_static']
 #html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'BatteriesIncluded_DevelopingWebApplicationsWithTurboGears2'
+htmlhelp_basename = 'Turbogears2webapplications_Batteriesincluded'
 
 
 # -- Options for LaTeX output --------------------------------------------------
@@ -180,7 +184,7 @@ htmlhelp_basename = 'BatteriesIncluded_DevelopingWebApplicationsWithTurboGears2'
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'BatteriesIncluded_DevelopingWebApplicationsWithTurboGears2.tex', u'Batteries Included: Developing Web Applications with TurboGears2',
+  ('index', 'Turbogears2webapplications_Batteriesincluded.tex', u'TurboGears2 Web Applications (Batteries Included)',
    u'Michael J. Pedersen and the TurboGears Community', 'manual'),
 ]
 
@@ -213,7 +217,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'batteriesincluded_developingwebapplicationswithturbogears2', u'Batteries Included: Developing Web Applications with TurboGears2',
+    ('index', 'turbogears2webapplications_batteriesincluded', u'TurboGears2 Web Applications (Batteries Included)',
      [u'Michael J. Pedersen and the TurboGears Community'], 1)
 ]
 
@@ -221,7 +225,7 @@ man_pages = [
 # -- Options for Epub output ---------------------------------------------------
 
 # Bibliographic Dublin Core info.
-epub_title = u'Batteries Included: Developing Web Applications with TurboGears2'
+epub_title = u'TurboGears2 Web Applications (Batteries Included)'
 epub_author = u'Michael J. Pedersen and the TurboGears Community'
 epub_publisher = u'Michael J. Pedersen and the TurboGears Community'
 epub_copyright = u'2011, Michael J. Pedersen and the TurboGears Community'
