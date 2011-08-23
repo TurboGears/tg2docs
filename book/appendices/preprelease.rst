@@ -162,10 +162,8 @@ tg2devtools/devtools/templates/turbogears/setup.py_tmpl !
 Installing Packages
 -------------------
 
-For both Python 2.4 and Python 2.6, create a new virtualenv, install
-lxml (to do so, use ``STATIC_DEPS=true CFLAGS="-fPIC -lgcrypt"
-easy_install lxml``), and run ``python setup.py develop`` for each of
-the repositories.
+For both Python 2.4 and Python 2.6, create a new virtualenv and run
+``python setup.py develop`` for each of the repositories.
 
 Finding the Packages to Upgrade
 -------------------------------
