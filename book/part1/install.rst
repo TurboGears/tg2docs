@@ -45,7 +45,7 @@ exact process to install virtualenv.
    virtualenv``).
 
 #. From the command line, attempt a plain ``easy_install`` via
- ``easy_install virtualenv``
+   ``easy_install virtualenv``
 
 #. Your platform may need to have the Python header files
    installed. You will need to work with whatever tools come with your

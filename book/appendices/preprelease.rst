@@ -274,6 +274,14 @@ simply to get the new version numbers into the distributed files.
      * Update the install requirements so that it requires TurboGears2
        >= the new version number
 
+ * In `TG2Docs`_:
+ 
+   * Update book/setup.py:
+
+     * Update the version number
+     * Update the dependency_links to reference the "current" URL
+       instead of "next" URL.
+
 Commit all of these changes, but do not push them public, not yet.
 
 Preparing Changelog And Release Announcement
