@@ -38,10 +38,11 @@ The steps for the release, in summary, are as follows:
  7. Preparing Changelog And Release Announcement
  8. Preparing Packages And The Documentation
  9. Uploading The Documentation
- 10. Making The New Eggbasket The Current On Turbogears.org
- 11. Pushing to `PyPI`_
- 12. Publishing Release Annoucement And Closing Milestones
- 13. Final Cleanup
+ 10. Making The Source Distribution For The New Eggbasket
+ 11. Making The New Eggbasket The Current On Turbogears.org
+ 12. Pushing to `PyPI`_
+ 13. Publishing Release Annoucement And Closing Milestones
+ 14. Final Cleanup
 
 Below, we discuss each of these steps in detail.
 
@@ -320,6 +321,28 @@ to your user account on the server, and fixed the permissions so that
 the website user could read the files, you could then do ``rsync -avP
 --delete /path/to/new/docs /path/to/web/docs/directory`` and have
 everything properly uploaded/visible to the users.
+
+*Do not forget the book!* Enter the tg2docs/book folder, and run
+ ``make html``. This will produce the necessary html files for the
+ book. Upload the contents of the book/_build/html directory to the
+ webserver. Use similar commands as were used for copying the older
+ html docs to complete the process.
+
+Making The Source Distribution For The New Eggbasket
+====================================================
+
+At this point, everything is prepared, with one exception: The source
+distributions for TurboGears2 and tg.devtools must be placed in the
+eggbasket. Enter your local repository directory for both ``TG2.x
+Core`` and ``TG2.x DevTools`` and run ``python setup.py sdist``. In
+both of them, you will produce a directory named ``dist`` with a
+.tar.gz file for the new version. Copy these files to your
+``${HOME}/eggbasket``, then go to ``${HOME}/eggbasket`` and run
+``makeindex *``.
+
+Using the steps in ``Testing Jenkins With The Upgraded Packages And
+Code``, upload the updated (and finalized) eggbasket to the
+turbogears.org web server.
 
 Making The New Eggbasket The Current On Turbogears.org
 ======================================================
