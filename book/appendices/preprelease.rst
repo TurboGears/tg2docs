@@ -275,7 +275,11 @@ simply to get the new version numbers into the distributed files.
        >= the new version number
 
  * In `TG2Docs`_:
- 
+
+   * Update book/conf.py and docs/conf.py:
+
+     * Update version and release to be the new version
+     
    * Update book/setup.py:
 
      * Update the version number
