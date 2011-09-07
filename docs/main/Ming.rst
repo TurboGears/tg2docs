@@ -32,6 +32,19 @@ To generate a Ming based project you just need to
 pass the ``--ming`` option to the quickstart command.
 For more informations refer to the :ref:`quickstarting` section.
 
+TurboGears will rely on the unit of work pattern of Ming
+flushing the session for you at the end of each request.
+This will happen only if everything went fine.
+In case of an exception the session won't be flushed
+and any change performed throught the ORM layer won't
+happen avoiding an incosistent environment due to
+half made changes.
+
+.. note:: Note that if you perform any change outside the
+          ming unit of work or if you flush the session
+          yourself you might still end with an inconsistent
+          environment.
+
 Getting Started
 ---------------
 
