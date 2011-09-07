@@ -45,8 +45,8 @@ directory tree, with some code already set up for you.
 
 .. note::
 
-    Passing *--minimal* to the quickstart command will create an empty
-    project with only the RootController. 
+    Passing ``--minimal`` to the ``paster quickstart`` command will
+    create an empty project with only the RootController.
     While this is not reccomended for new users it might speed up the 
     process of starting a new project for expert users.
 
@@ -209,6 +209,57 @@ development.ini) to have the value 0.0.0.0, like so::
   ...
   host = 0.0.0.0
 
+Using MongoDB
+---------------
+
+TurboGears supports MongoDB_ out of the box by using the Ming_ ORM.
+Ming_ was made to look like SQLAlchemy, so if you are proficient with
+SQLAlchemy and MongoDB it should be easy for you to get used to the Ming_
+query language. This also makes easy to port a TurboGears SQLAlchemy based
+application to MongoDB.
+
+To create a project using MongoDB_ you just need to pass the ``--ming``
+option to the ``paster quickstart`` command.
+
+.. code-block:: bash
+
+    $ paster quickstart --ming
+
+The quickstarted project will provide an authentication and authorization
+layer like the one that is provided for the SQLAlchemy version. This
+means that you will have the same users and groups you had on the standard
+quickstarted project and also that all the predicates to check for authorization
+should work like before.
+
+The main difference is that you won't be able to use the application
+without having a running MongoDB_ database on the local machine.
+
+By default the application will try to connect to a server on port
+*27017* on local machine using a database that has the same name
+of your package.
+
+This can be changed by editing the development.ini file::
+
+    ming.url = mongodb://localhost:27017/
+    ming.db = myproject
+
+Now that everything is in place to start using MongoDB_ as your
+database server you just need to proceed the usual way by filling
+your database.
+
+.. code-block:: bash
+
+      $ paster setup-app development.ini
+
+The quickstart command from above will create the authentication
+collections and setup a default user/password for you::
+
+      user: manager
+      password: managepass
+
+For more informations about Ming_ and MongoDB_ support please
+refer to the :ref:`ming_and_model` section.
+
 What's Next?
 ------------
 
@@ -218,3 +269,5 @@ What's Next?
   projects to guide you through learning TurboGears
 
 .. _SQLite:  http://www.sqlite.org
+.. _MongoDB: http://www.mongodb.org
+.. _Ming: http://merciless.sourceforge.net/tour.html

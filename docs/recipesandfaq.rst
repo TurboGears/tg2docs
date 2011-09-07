@@ -37,6 +37,7 @@ Modeling Your Application
 --------------------------
 
 SQLAlchemy is the default data-storage layer for TurboGears |version|.
+Ming is supported as the alternative storage layer for MongoDB.
 The SQLAlchemy-migrate project is the officially supported mechanism
 for updating and migrating your database.
 
@@ -46,6 +47,7 @@ for updating and migrating your database.
     main/SQLAlchemy
     main/Config/SQLAlchemy
     main/DatabaseMigration
+    main/Ming
 
 .. todo:: Document initial DB setup in websetup.py
 .. todo:: Link DB setup (MySQL, PostgreSQL, etceteras) docs
