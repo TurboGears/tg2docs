@@ -35,6 +35,8 @@ Useful Methods
 
 .. autofunction:: url
 
+.. autofunction:: lurl
+
 Other Classes
 ---------------
 
