@@ -115,41 +115,92 @@ for the ``__mongometa__`` attribute of the mapped class.
 TurboGears will ensure indexes for your each time the application
 is started, this is performed inside the ``init_model`` function.
 
-Adding More Data to Groups
+Handling Relationships
 ----------------------------
 
-By default the Ming support will come with models for ``User``
-and ``Permission`` while the groups will be handled as a list
-of group names inside the users and permissions. This reduces
-the number of requests that have to be done to the the database
-each time the user visits a page to detect its permissions and groups
-resulting in a performance improvement.
+Ming comes with support to one-to-many and many-to-one Relations_
+they provide an easy to use access to related objects. The fact
+that this relation is read only isn't a real issue as the related
+objects will have a ``ForeignIdProperty`` which can be changed
+to add or remove objects to the relation.
 
-If you want to add metadata to the groups you can use the same
-solution that TurboGears Ming support uses for the permissions.
-Create a ``Group`` MappedClass and put it in relation with the ``User``
-the same way the ``permissions`` property of the ``User`` does for the
-``Permission``.
+As MongoDB provides too many ways to express a many-to-many
+relationship, those kind of relations are instead left on their own.
+TurboGears anyway provides a tool to make easier to access and
+modify those relationships.
+
+``tgming.ProgrammaticRelationProperty`` provides easy access to
+those relationships exposing them as a list while leaving to the
+developer the flexibility to implement the relationship as it
+best suites the model.
+
+A good example of how the ProgrammaticRelationProperty works
+is the ``User`` to ``Group`` relationship:
 
 .. code-block:: python
+
+    from tgming import ProgrammaticRelationProperty
 
     class Group(MappedClass):
         class __mongometa__:
             session = DBSession
             name = 'tg_group'
-            unique_indexes = [('group_name',),]
 
-        _id = FieldProperty(s.ObjectId)
         group_name = FieldProperty(s.String)
-        description = FieldProperty(s.String)
 
     class User(MappedClass):
-        [...]
+        class __mongometa__:
+            session = DBSession
+            name = 'tg_user'
 
-        @property
-        def groups_info(self):
-            return Group.query.find(dict(group_name={'$in':self.groups})).all()
+        _groups = FieldProperty(s.Array(str))
 
+        def _get_groups(self):
+            return Group.query.find(dict(group_name={'$in':self._groups})).all()
+        def _set_groups(self, groups):
+            self._groups = [group.group_name for group in groups]
+        groups = ProgrammaticRelationProperty(Group, _get_groups, _set_groups)
+
+In this case each user will have one or more groups stored with their group_name
+inside the `User._groups` array. Accessing `User.groups` will provide a list
+of the groups the user is part of. This list is retrieved using `User._get_groups`
+and can be set with `User._set_groups`.
+
+Using Synonyms
+-------------------------------
+
+There are cases when you will want to adapt a value from the database
+before loading and storing it. A simple example of this case is the
+password field, this will probably be encrypted with some kind of
+algorithm which has to be applied before saving the field itself.
+
+To handle those cases TurboGears provides the ``tgming.SynonymProperty``
+accessor. This provides a way to hook two functions which have to be
+called before storing and retrieving the value to adapt it.
+
+.. code-block:: python
+
+    from tgming import SynonymProperty
+
+    class User(MappedClass):
+        class __mongometa__:
+            session = DBSession
+            name = 'tg_user'
+
+        _password = FieldProperty(s.String)
+
+        def _set_password(self, password):
+            self._password = self._hash_password(password)
+        def _get_password(self):
+            return self._password
+        password = SynonymProperty(_get_password, _set_password)
+
+In the previous example the password property is stored encrypted inside the
+`User._password` field but it is accessed using the `User.password` property
+which encrypts it automatically before setting it.
+
+
+.. _Relations: http://merciless.sourceforge.net/orm.html#relating-classes
 .. _Intro to Ming: http://merciless.sourceforge.net/tour.html
 .. _ORM Tutorial: http://merciless.sourceforge.net/orm.html
 .. _MongoDB: http://www.mongodb.org
