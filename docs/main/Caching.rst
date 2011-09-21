@@ -120,10 +120,26 @@ Template Caches
 ^^^^^^^^^^^^^^^
 
 In templates, the cache ``namespace`` will automatically be set to the name of
-the template being rendered. Nothing else is required for basic caching, unless
-the developer wishes to control for how long the template is cached and/or
-maintain caches of multiple versions of the template.
+the template being rendered. To cache a template you just have to return
+the ``tg_cache`` option from the controller that renders the cached template.
 
+``tg_cache`` is a dictionary that accepts the following keys:
+
+ * key: The cache key. Default: None
+ * expire: how long the cache must stay alive. Default: never expires
+ * type: memory, dbm, memcached. Default: dbm
+
+if any of the keys is available the others will default, if all three
+are missing caching will be disabled.
+For example to enable caching for 1 hour for the profile of an user:
+
+.. code-block:: python
+
+    @expose('myproj.templates.profile')
+    def profile(self, username):
+        user = DBSession.query(User).filter_by(user_name=user_name).first()
+        return dict(user=user, tg_cache=dict(key=user_name, expire=3600))
+ 
 Other Cache Operations
 ^^^^^^^^^^^^^^^^^^^^^^
 
