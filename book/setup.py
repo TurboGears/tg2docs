@@ -2,7 +2,7 @@ from setuptools import find_packages, setup
 
 setup(
     name='TurboGears2Docs',
-    version='2.1.2',
+    version='2.1.3',
     author='TurboGears Community',
     url='http://www.turbogears.org/',
     license='MIT',
