@@ -116,8 +116,50 @@ them into the key.
     is a `cache miss`, that is, if the cache does not currently have
     the given key recorded (or the recorded key has expired).
 
-Template Caches
-^^^^^^^^^^^^^^^
+Other Cache Operations
+^^^^^^^^^^^^^^^^^^^^^^
+
+The cache also supports the removal values from the cache, using the key(s) to
+identify the value(s) to be removed and it also supports clearing the cache
+completely, should it need to be reset.
+
+.. code-block:: python
+
+    # Clear the cache
+    mycache.clear()
+
+    # Remove a specific key
+    mycache.remove_value('some_key')
+
+Template Caching
+--------------------
+
+Genshi Loader Cache
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+``genshi`` will retrieve the templates from a cache if they have not changed. 
+This cache has a default size of 25, when there are more than 25, 
+the least recently used templates will be removed from this cache.
+
+You can change this behavior by setting the ``genshi.max_cache_size`` option
+into the development.ini:
+
+.. code-block:: ini
+
+    [app:main]
+    genshi.max_cache_size=100    
+
+Another speed boost can be achieved by disabling template automatic reloading
+in ``app_cfg.py``.
+
+.. code-block:: python
+
+    base_config = AppConfig()
+    base_config.auto_reload_templates = False
+
+
+Prerendered Templates Caches
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 In templates, the cache ``namespace`` will automatically be set to the name of
 the template being rendered. To cache a template you just have to return
@@ -139,21 +181,8 @@ For example to enable caching for 1 hour for the profile of an user:
     def profile(self, username):
         user = DBSession.query(User).filter_by(user_name=user_name).first()
         return dict(user=user, tg_cache=dict(key=user_name, expire=3600))
- 
-Other Cache Operations
-^^^^^^^^^^^^^^^^^^^^^^
 
-The cache also supports the removal values from the cache, using the key(s) to
-identify the value(s) to be removed and it also supports clearing the cache
-completely, should it need to be reset.
 
-.. code-block:: python
-
-    # Clear the cache
-    mycache.clear()
-
-    # Remove a specific key
-    mycache.remove_value('some_key')
 
 Configuring Beaker
 ------------------
