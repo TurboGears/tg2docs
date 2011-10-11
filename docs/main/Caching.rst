@@ -149,13 +149,12 @@ into the development.ini:
     [app:main]
     genshi.max_cache_size=100    
 
-Another speed boost can be achieved by disabling template automatic reloading
-in ``app_cfg.py``.
+Another speed boost can be achieved by disabling template automatic reloading.
 
-.. code-block:: python
+.. code-block:: ini
 
-    base_config = AppConfig()
-    base_config.auto_reload_templates = False
+    [app:main]
+    auto_reload_templates = false
 
 
 Prerendered Templates Caches
