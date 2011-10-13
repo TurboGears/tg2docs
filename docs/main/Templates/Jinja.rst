@@ -71,13 +71,17 @@ Filters
 -------------------
 
 Jinja2 supports loading functions to add new filters, this is supported on
-TG2 by adding the function directly to the filter list in base_config::
+TG2 by adding the function directly to the filter dictionary in base_config,
+where they key is the name the template will use to lookup the filter::
 
-  base_config.jinja_filters = [my_filter, other_filter_function]
+  base_config.jinja_filters = {'my_filter': my_filter, 'other_filter_function': other_filter_function}
 
 As you can see here we are using the functions directly, you can also have
 jinja2 autoload your filters by creating a file called jinja_filters.py inside
-the folder templatetools on you lib filter of you application.
+the folder templatetools on you lib filter of you application. If you use the
+jinja_filters.py file, try to keep module namespace pollution to a minimum, a
+good alternative is to use the __all__ variable to hide all functions and imports
+and only expose the filter functions to the auto importer mechanism.
 
 More on jinja filters on the `Jinja custom filter section`_ from the jinja documents.
 
