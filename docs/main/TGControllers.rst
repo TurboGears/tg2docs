@@ -82,6 +82,37 @@ that acts as a sub-controller and continue traversing rather than
 *being* a controller and stopping traversal altogether.  This allows
 you to use actual objects with data in your controllers.
 
-Plus, it makes RESTful URLs much easier than they were in TurboGears
-1.
+Plus, it makes RESTful URLs much easier than they were in TurboGears 1.
+
+
+Mount Points and Dispatch
+---------------------------
+
+Since TurboGears 2.1.4 it is possible to ask for various informations
+about the request dispatchment and controllers mount points.
+
+Those informations can be useful when writing controllers that
+you plan to reuse in multiple applications or mount points,
+making possible for example to generate all the urls knowing
+where they are mounted.
+
+For statically mounted controllers the exposed informations are:
+
+* The ``mount_point`` property of a controller. If statically mounted
+  it will return where the controller is mounted. This is the
+  url to call when you want to access that controller.
+* The ``mount_steps`` property of a controller. If statically mounted
+  it will return the complete list of parents of that controller.
+
+In the case you are dispatching the request yourself, for example
+through a ``_lookup`` method, the ``mount_point`` and ``mount_steps``
+informations won't be available. In this case you can rely
+on some other functions exposed by TG:
+
+* The ``tg.request.controller_state`` object keeps track of all
+  the steps provided to dispatch the request.
+* The ``tg.dispatched_controller()`` method when called inside
+  a request will return the last statically mounted controller.
+  This can be useful to detect which controller finished the
+  request dispatch using the ``_lookup`` method.
 

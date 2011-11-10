@@ -106,7 +106,7 @@ that you are importing a BaseController, which your RootController must inherit
 from.   If you're particularly astute, you'll have noticed that you import this
 BaseController from the lib module of your own project, and not from TurboGears.
 
-TurboGears provides a base TGController which is imported in the lib
+TurboGears provides a base :doc:`TGController <TGControllers>` which is imported in the lib
 folder of the current project (HelloWorld/helloworld/lib) so that you
 can modify it to suit the needs of your application. For example, you
 can define actions which will happen on every request, add parameters
@@ -418,6 +418,8 @@ CherryPy/Turbogears1 and TurboGears 2.
   you on from there, it just joins the URL the user requested, with
   the absolute or relative URL you provide.  Using absolute URLs is
   recommended.
+
+
 
 
 Advanced Topics
