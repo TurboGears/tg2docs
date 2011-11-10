@@ -229,10 +229,26 @@ User Defined Middleware:
 ------------------------
 
 You can define custom middlware that does whatever you want it to do
-and pass into the application constructor in app_cfg.py.  It will then
-be placed at this point in the stack so you have access to automatic
-database transactions, sessions, the cache and all of the other stuff
-added by previous middleware.
+and pass into the application constructor in ``middleware.py``.
+ 
+To use a middleware before the TurboGears stack is processed you can
+wrap the application returned by ``make_base_app`` function:
+
+.. code-block:: python
+
+    app = make_base_app(global_conf, full_stack=True, **app_conf)
+    app = MyMiddleware(app)
+    return app
+
+To use a middleware that is TurboGears specific and wants to have the full
+TurboGears stack available (session, authentication, database, etc...)
+you can pass the middleware class to the ``make_base_app`` and it
+will be created wrapping the application:
+
+.. code-block:: python
+
+    app = make_base_app(global_conf, full_stack=True, wrap_app=MyMiddleware, **app_conf)
+    return app
 
 If you prefer to have more control over where your middleware is
 placed in the stack, you can do that by subclassing AppConfig or
