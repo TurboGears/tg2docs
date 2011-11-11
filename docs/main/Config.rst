@@ -223,25 +223,52 @@ adding the following code your your app_cfg.py file::
     base_config.mimetype_lookup = {'.ext':'my-mimetype'}
 
 
-Startup and Shutdown
+Hooks and Events
 +++++++++++++++++++++
 
-TurboGears allows you to attach callables both to the startup of the
-server, and the shut down.  The startup is called before the environment
-is loaded, and the shutdown code runs when the python process shuts down.
-Heres an example of "hello, world" using startup and shutdown in your
-app_cfg.py file::
+TurboGears allows you to attach callables to a wide set of events.
+Most of those are available as both controller events and system
+wide events.
 
+To register a system wide even you can use the ``register_hook`` method
+of the ``base_config`` object in your ``app_cfg.py`` file::
+    
     def on_startup():
         print 'hello, startup world'
 
     def on_shutdown():
         print 'hello, shutdown world'
 
+    def before_render(remainder, params, output):
+        print 'system wide before render'
+
     # ... (base_config init code)
 
-    base_config.call_on_startup = [on_startup]
-    base_config.call_on_shutdown = [on_shutdown]
+    base_config.register_hook('startup', on_startup) 
+    base_config.register_hook('shutdown', on_shutdown)
+    base_config.register_hook('before_render', before_render)
+
+To register controller based hook you can use the event decorators::
+
+    from tg.decorators import before_render
+
+    def before_render_cb(remainder, params, output):
+        print 'Going to render', output
+
+    class MyController(TGController):
+        @expose()
+        @before_render(before_render_cb)
+        def index(self, *args, **kw):
+            return dict(page='index')
+
+Available events are:
+
+* ``startup()`` - application wide only, called when the application starts
+* ``shutdown()`` - application wide only, called when the application exits 
+* ``before_validate(remainder, params)`` - Called before performing validation
+* ``before_call(remainder, params)`` - Called after valdation, before calling the actual controller method
+* ``before_render(remainder, params, output)`` - Called before rendering a controller template, ``output`` is the controller return value
+* ``after_render(response)`` - Called after finishing rendering a controller template
 
 Static Files
 ++++++++++++++++
