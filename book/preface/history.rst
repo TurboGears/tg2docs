@@ -17,7 +17,7 @@ Alberto Valverde led TurboGears until real life commitments pulled him away. In 
 
 On July 1, 2008, the first public beta of the TurboGears 2.x line was made available. This would not solidify into TurboGears 2.0 until May, 2009.
 
-The TurboGears 2.1 release cycle took longer than normal, with activity slowing down tremendously through 2010. The leadership of the project had found itself swamped with real life concerns, resulting in significant delars. The release of 2.1 was finally launched in November, 2010.
+The TurboGears 2.1 release cycle took longer than normal, with activity slowing down tremendously through 2010. The leadership of the project had found itself swamped with real life concerns, resulting in significant delays. The release of 2.1 was finally launched in November, 2010.
 
 In October, 2010, discussions began with the Pylons and Repoze.BFG communities to merge. TurboGears, Pylons, and Repoze.BFG agreed to merge into one framework. Work is under way to produce TurboGears 3, named Orion, using the merged framework (Pyramid) as a base. No publicly available version of Orion has occurred yet.
 
