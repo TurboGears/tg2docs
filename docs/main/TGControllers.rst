@@ -116,3 +116,5 @@ on some other functions exposed by TG:
   This can be useful to detect which controller finished the
   request dispatch using the ``_lookup`` method.
 
+The application ``RootController`` can usually be retrieved from
+``tg.config['application_root_module'].RootController``
