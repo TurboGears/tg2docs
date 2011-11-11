@@ -32,7 +32,7 @@ Tutorial
 For this tutorial, we will be implementing a form to add a movie to a
 movie database. Let's create a new example project to try this out::
 
-    $ paster quickstart ToscaSample
+    $ paster quickstart -s -n ToscaSample
 
 Confirm the package name ``toscasample``. We don't need authentication
 and authorization for this sample project.
