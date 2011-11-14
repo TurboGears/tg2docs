@@ -56,18 +56,38 @@ Here is the model definition we will be using for this tutorial::
 Putting The CRUD Into REST
 --------------------------
 
-Baby Steps
-~~~~~~~~~~
+Easy CrudRestController
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The first thing we want to do is instantiate a CrudRestController.  We
-import the controller from the extension, and then provide it with a
+The first thing we want to do is instantiate a EasyCrudRestController.  
+We import the controller from the extension, and then provide it with a
 model class that it will use for its data manipulation.  For this
 example we will utilize the Movie class.::
 
-    from tgext.crud import CrudRestController
+    from tgext.crud import EasyCrudRestController
     from moviedemo.model import DBSession, Movie
 
-    class MovieController(CrudRestController):
+    class MovieController(EasyCrudRestController):
+        model = Movie
+    
+    class RootController(BaseController):
+        movies = MovieController(DBSession)
+
+That will provide a simple and working CRUD controller already configured
+with some simple views to list, create, edit and delete objects of
+type Movie.
+
+Creating our own CrudRestController
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The ``EasyCrudRestController`` provides a preconfigured ``CrudRestController``
+but often you will need to customized it for your needs. To do that
+we can start over with a clean controller and start customizing it::
+
+    from tgext.crud import EasyCrudRestController
+    from moviedemo.model import DBSession, Movie
+
+    class MovieController(EasyCrudRestController):
         model = Movie
     
     class RootController(BaseController):
