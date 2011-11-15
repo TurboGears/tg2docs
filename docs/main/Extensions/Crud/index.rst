@@ -84,10 +84,10 @@ The ``EasyCrudRestController`` provides a preconfigured ``CrudRestController``
 but often you will need to customized it for your needs. To do that
 we can start over with a clean controller and start customizing it::
 
-    from tgext.crud import EasyCrudRestController
+    from tgext.crud import CrudRestController
     from moviedemo.model import DBSession, Movie
 
-    class MovieController(EasyCrudRestController):
+    class MovieController(CrudRestController):
         model = Movie
     
     class RootController(BaseController):
