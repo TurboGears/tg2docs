@@ -248,7 +248,7 @@ of the ``base_config`` object in your ``app_cfg.py`` file::
     base_config.register_hook('shutdown', on_shutdown)
     base_config.register_hook('before_render', before_render)
 
-To register controller based hook you can use the event decorators::
+To register controller based hooks you can use the event decorators::
 
     from tg.decorators import before_render
 
@@ -261,10 +261,19 @@ To register controller based hook you can use the event decorators::
         def index(self, *args, **kw):
             return dict(page='index')
 
-Available events are:
+Available Hooks
+####################
 
 * ``startup()`` - application wide only, called when the application starts
-* ``shutdown()`` - application wide only, called when the application exits 
+* ``shutdown()`` - application wide only, called when the application exits
+* ``before_config(app) -> app`` - application wide only, called after constructing the application,
+    but before setting up most of the options and middleware.
+    Must return the application itself.
+    Can be used to wrap the application into middlewares that have to be executed having the full TG stack available.
+* ``after_config(app) -> app`` - application wide only, called after finishing setting everything up.
+    Must return the application iself.
+    Can be used to wrap the application into middleware that have to be executed before the TG ones.
+    Can also be used to modify the Application by mounting additional subcontrollers inside the RootController.
 * ``before_validate(remainder, params)`` - Called before performing validation
 * ``before_call(remainder, params)`` - Called after valdation, before calling the actual controller method
 * ``before_render(remainder, params, output)`` - Called before rendering a controller template, ``output`` is the controller return value
