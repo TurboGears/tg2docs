@@ -56,10 +56,10 @@ Here is the model definition we will be using for this tutorial::
 Putting The CRUD Into REST
 --------------------------
 
-Easy CrudRestController
+EasyCrudRestController
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The first thing we want to do is instantiate a EasyCrudRestController.  
+The first thing we want to do is instantiate a ``EasyCrudRestController``.
 We import the controller from the extension, and then provide it with a
 model class that it will use for its data manipulation.  For this
 example we will utilize the Movie class.::
@@ -77,11 +77,52 @@ That will provide a simple and working CRUD controller already configured
 with some simple views to list, create, edit and delete objects of
 type Movie.
 
+Customizing EasyCrudRestController
++++++++++++++++++++++++++++++++++++++
+
+The ``EasyCrudRestController`` provides some quick customization tools.
+Having been thought to quickly prototype parts of your web applications
+the EasyCrudRestController permits both to tune forms options and to
+add utility methods on the fly::
+
+    class TicketCrudController(EasyCrudRestController):
+        model = Ticket
+
+        __form_options__ = {
+            '__hide_fields__':['_id', 'status', 'sprint'],
+            '__field_order__':['title', 'description'],
+            '__field_widget_types__':{'description':TextArea}
+        }
+
+        __setters__ = {
+                'done':('status', 'done'),
+                'todo':('status', 'new'),
+                'revert':('sprint', lambda ticket:ticket.sprint.project.backlog),
+                'sprint':('sprint', lambda ticket:ticket.sprint.project.last_sprint),
+        }
+
+The ``__form_options__`` dictionary will permit to tune the forms configuration.
+The specified options will be applied to both the form used to create new entities
+and to edit the existing ones.
+To have a look at the available options refer to
+`Sprox FormBase <http://sprox.org/modules/sprox.formbase.html#module-sprox.formbase>`_
+
+The ``__setters__`` option provides a way to add new simple methods on the fly
+to the controller. The key of the provided dictionary is the name of the method, while
+the value is a tuple where the first argument is the attribute of the object
+that has to be changed. The second argument is the value that has to be set, if the
+second argument is a callable it will be called passing the object to edit as the
+argument.
+
+In the previous example calling http://localhost:8080/tickets/5/done will set the
+ticket 5 status to done.
+
+
 Creating our own CrudRestController
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The ``EasyCrudRestController`` provides a preconfigured ``CrudRestController``
-but often you will need to customized it for your needs. To do that
+but often you will need to deeply customize it for your needs. To do that
 we can start over with a clean controller and start customizing it::
 
     from tgext.crud import CrudRestController
