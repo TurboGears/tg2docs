@@ -34,8 +34,10 @@ movie database. Let's create a new example project to try this out::
 
     $ paster quickstart -s -n ToscaSample
 
-Confirm the package name ``toscasample``. We don't need authentication
-and authorization for this sample project.
+Confirm the package name ``toscasample``. We need authentication and
+authorization for this sample project, so make sure to say yes. If you
+don't, then the database model will not be generated, and the rest of
+this tutorial will not work.
 
 Let's start with a simple SQLAlchemy model that has only a Movie
 object.  Add the following line at the bottom of
