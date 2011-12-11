@@ -2,7 +2,7 @@ from setuptools import find_packages, setup
 
 setup(
     name='TurboGears2Docs',
-    version='2.1.3',
+    version='2.1.4',
     author='TurboGears Community',
     url='http://www.turbogears.org/',
     license='MIT',
@@ -15,6 +15,6 @@ setup(
         'dulwich',
     ],
     dependency_links=[
-        "http://www.turbogears.org/2.1/downloads/next/"
+        "http://www.turbogears.org/2.1/downloads/current/"
         ]
 )
