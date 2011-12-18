@@ -28,7 +28,7 @@ On a Linux machine with virtualenv already installed, this is accomplished with:
     virtualenv --no-site-packages movies
     cd movies
     source bin/activate
-    easy_install tg.devtools
+    easy_install -i http://tg.gy/current/index/ tg.devtools
 
 Complete instructions for setting up TurboGears, VirtualEnv and the like
 are available on the :ref:`Download and Install <DownloadInstall>` page.

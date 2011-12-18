@@ -110,7 +110,7 @@ Once you have your development environment prepared (using the
 instructions for making a virtualenv above), installing TurboGears2
 itself is extremely easy. Run this command::
 
-     $ easy_install tg.devtools
+     $ easy_install -i http://tg.gy/current/index/ tg.devtools
 
 Wait a few moments as the dependencies are installed and prepared for
 you.
