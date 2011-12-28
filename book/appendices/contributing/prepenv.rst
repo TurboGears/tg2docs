@@ -73,13 +73,13 @@ following steps:
    `TG2.x Devtools`_, and `TG2.x Docs`_).
 
 #. Enter the top level directory for your TG2.x Core clone, and run
-   ``python setup.py develop``
+   ``python setup.py tgdevelop`` and ``python setup.py tgdeps``
 
 #. Enter the top level directory for your TG2.x Devtools clone, and
-   run ``python setup.py develop``
+   run ``python setup.py tgdevelop`` and ``python setup.py tgdeps``
 
 #. Enter the ``book`` directory for your TG2.x Docs clone, and
-   run ``python setup.py develop``
+   run ``python setup.py tgdevelop`` and ``python setup.py tgdeps``
 
 After you've done all this, you have a working copy of the code
 sitting in your system. You can explore the code and begin working
