@@ -68,7 +68,7 @@ runs that project with the Paste web server:
     $ virtualenv --no-site-packages -p python2.6 tg2env
     $ cd tg2env/
     $ source bin/activate
-    (tg2env)$ easy_install -i http://tg.gy/current/index/ tg.devtools
+    (tg2env)$ easy_install -i http://tg.gy/current tg.devtools
     (tg2env)$ paster quickstart example
     (tg2env)$ cd example/
     (tg2env)$ python setup.py develop
@@ -122,7 +122,7 @@ projects will normally use a particular version of TurboGears.
 
 .. code-block:: bash
 
-    (tg2env)$ easy_install -i http://tg.gy/current/index/ tg.devtools
+    (tg2env)$ easy_install -i http://tg.gy/current tg.devtools
 
 A large number of packages will be installed.  These are the officially
 required packages which define TurboGears itself.  The Pylons/Paste package
@@ -205,7 +205,7 @@ to which you would like to upgrade:
 
 .. code-block:: bash
 
-    easy_install -U -i http://tg.gy/current/index/ tg.devtools
+    easy_install -U -i http://tg.gy/current tg.devtools
 
 which will update each dependency which has been upgraded.  Note that it will
 *not* uninstall the previous versions of the packages.

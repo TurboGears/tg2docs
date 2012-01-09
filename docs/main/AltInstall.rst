@@ -52,7 +52,7 @@ so that you can run Python and easy_install from the command line.
     c:\working>c:\Python26\Scripts\virtualenv.exe example
     c:\working>cd example
     c:\working\example>Scripts\activate.bat
-    (example) C:\working\example>easy_install.exe -i http://tg.gy/current/index/ tg.devtools
+    (example) C:\working\example>easy_install.exe -i http://tg.gy/current tg.devtools
     (example) C:\working\example>paster quickstart example
     (example) C:\working\example>cd example
     (example) C:\working\example\example>python setup.py develop

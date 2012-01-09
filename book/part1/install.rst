@@ -142,7 +142,7 @@ tg.devtools
 
 After activating your virtualenv, you only need to run one command::
 
-    $ easy_install -i http://tg.gy/current/index/ tg.devtools
+    $ easy_install -i http://tg.gy/current tg.devtools
 
 That's it. Once it completes, you now have the TurboGears2 framework
 and development tools installed.
@@ -222,7 +222,7 @@ To summarize the entire process::
 
    $ virtualenv --no-site-packages ${HOME}/tg2env
    $ source ${HOME}/tg2env/bin/activate
-   $ easy_install -i http://tg.gy/current/index/ tg.devtools
+   $ easy_install -i http://tg.gy/current tg.devtools
    $ paster quickstart
    $ cd appname
    $ python setup.py tgdevelop
