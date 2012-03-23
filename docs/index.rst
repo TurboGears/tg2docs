@@ -59,4 +59,4 @@ playing around:
 Visiting *http://localhost:8080/index* you will see a ready made sample application
 with a brief introduction to the framework itself.
 
-Explore the `TurboGears Tutorials <tutorials>` to get started with TurboGears!
+Explore the :ref:`TurboGears Tutorials <tutorials>` to get started with TurboGears!
