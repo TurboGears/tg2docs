@@ -25,7 +25,6 @@ We cannot stress this enough: Read These Pages!
     main/Validation
     main/Controllers
     main/Templates/Genshi
-    main/ToscaWidgets/ToscaWidgets
     main/Config
     main/LogSetup
     main/StaticFile
@@ -63,8 +62,6 @@ Handling HTTP Requests (Controllers)
     main/Session
     main/Validation
     main/FormBasics
-    main/ToscaWidgets/ToscaWidgets
-    main/ToscaWidgets/forms
     main/Pagination/index
 
     main/Auth/index
@@ -120,7 +117,6 @@ Note: most new users do not need to choose an alternate templating language.
     main/Templates/ChameleonGenshi
     main/Templates/Mako
     main/Templates/Jinja
-    main/ToscaWidgets/Cookbook/ReCaptcha
 
 Javascript Libraries
 --------------------
@@ -136,16 +132,27 @@ Mochikit package which was the default in TurboGears 1.x.
     :maxdepth: 1
 
     main/GlobalJSLib
-    main/ToscaWidgets/Cookbook
-    main/ToscaWidgets/Cookbook/FlexiGrid
-    main/ToscaWidgets/Cookbook/Flot
-    main/ToscaWidgets/Cookbook/JQueryTreeView
-    main/ToscaWidgets/Cookbook/JQueryAjaxForm
-    main/Wiki20/JSONMochiKit
     main/StaticFile
 
 .. todo:: JQuery, Dojo, EXT usage doc-links
 .. todo:: Link documentation for doing JSON RPC/Ajax here
+
+Old Recipes
+----------------------
+
+..  toctree::
+    :maxdepth: 1
+
+    deprecated/ToscaWidgets/ToscaWidgets
+    deprecated/ToscaWidgets/forms
+    deprecated/ToscaWidgets/Cookbook
+    deprecated/ToscaWidgets/Cookbook/ReCaptcha
+    deprecated/ToscaWidgets/Cookbook/FlexiGrid
+    deprecated/ToscaWidgets/Cookbook/Flot
+    deprecated/ToscaWidgets/Cookbook/JQueryTreeView
+    deprecated/ToscaWidgets/Cookbook/JQueryAjaxForm
+    deprecated/Wiki20/JSONMochiKit
+
 
 Testing
 =======

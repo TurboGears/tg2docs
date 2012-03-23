@@ -47,7 +47,7 @@ project_url = 'http://www.turbogears.org'
 # built documents.
 #
 # The short X.Y version.
-version = '2.1.4'
+version = '2.2'
 # The full version, including alpha/beta/rc tags.
 release = max(tg_release_version, version)
 
@@ -257,17 +257,17 @@ todo_include_todos = True
 # Add Intersphinx crosslinks here
 intersphinx_mapping = {
     'paste': ('http://pythonpaste.org', None),
-    'pylons': ('http://docs.pylonsproject.org/projects/pylons_framework/dev/', None),
     'python': ('http://docs.python.org', None),
     'sprox': ('http://sprox.org', None),
     'sqlalchemy': ('http://www.sqlalchemy.org/docs', None),
     'rum': ('http://docs.python-rum.org', None),
     'tw': ('http://toscawidgets.org/documentation/ToscaWidgets/', None),
     'twdynforms': ('http://toscawidgets.org/documentation/tw.dynforms/', None),
+    'tw2' : ('http://tw2core.readthedocs.org/en/latest/', None),
     'twforms': ('http://toscawidgets.org/documentation/tw.forms/', None),
     'twjquery': ('http://toscawidgets.org/documentation/tw.jquery/', None),
     'webob': ('http://pythonpaste.org/webob/', None),
-    'webtest': ('http://pythonpaste.org/webtest/', None),
+    'webtest': ('http://pythonpaste.org/webtest/', None)
 }
 
 # The maximum number of days to cache remote inventories.

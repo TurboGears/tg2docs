@@ -4,19 +4,10 @@
 Extended Table of Contents
 ==========================
 
-Return to the :ref:`mainindex`
+Return to the :ref:`index`
 
-Getting Started with TurboGears
-===============================
-
-.. toctree::
-   :maxdepth: 3
-
-   gettingstarted
-
-
-Tutorials
-=========
+Getting Started and Tutorials
+==============================
 
 
 .. toctree::
