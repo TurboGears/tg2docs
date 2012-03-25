@@ -284,11 +284,12 @@ p.admonition-title:after {
 }
 
 pre {
-  padding: 5px;
+  padding: 10px;
   background-color: {{ theme_codebgcolor }};
   color: {{ theme_codetextcolor }};
   line-height: 120%;
-  border: 1px solid #ac9;
+  font-size: 110%;
+  border: 2px solid #C6C9CB;
   border-left: none;
   border-right: none;
 }
