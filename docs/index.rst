@@ -16,9 +16,9 @@ The TurboGears documentation
 ============================
 
 +----------------------------------------------+-------------------------------------------------+------------------------------------------------------------+-------------------------------------------------+----------------------------------------------+
-| .. container:: part-tutorials                | .. container:: part-gears                       | .. container:: part-extending                              | .. container:: part-recipes                     | .. container:: part-reference                |
+| .. container:: part-tutorials                |  .. container:: part-recipes                    | .. container:: part-extending                              | .. container:: part-gears                       | .. container:: part-reference                |
 |                                              |                                                 |                                                            |                                                 |                                              |
-|    :ref:`Get Started <tutorials>`            |    :ref:`The Gears in Detail <getting-to-know>` |    :ref:`Extensions and Tools <extensions-and-tools>`      |    :ref:`Tips and Recipes <recipes-and-faq>`    |    :ref:`Index and API Reference <genindex>` |
+|    :ref:`Get Started <tutorials>`            |    :ref:`Recipes and Tips <recipes-and-faq>`    |    :ref:`Extensions and Tools <extensions-and-tools>`      |  :ref:`About TurboGears <getting-to-know>`      |    :ref:`Index and API Reference <genindex>` |
 +----------------------------------------------+-------------------------------------------------+------------------------------------------------------------+-------------------------------------------------+----------------------------------------------+
 
 The TurboGears Web Framework

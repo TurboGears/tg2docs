@@ -27,7 +27,6 @@ We cannot stress this enough: Read These Pages!
     main/Templates/Genshi
     main/Config
     main/LogSetup
-    main/StaticFile
     main/Internationalization
 
 .. todo:: link repoze.who, repoze.what, and the other key middleware
@@ -114,7 +113,6 @@ Note: most new users do not need to choose an alternate templating language.
     main/Templates/Genshi
     main/master_html
     main/Templates/index
-    main/Templates/ChameleonGenshi
     main/Templates/Mako
     main/Templates/Jinja
 
@@ -132,7 +130,6 @@ Mochikit package which was the default in TurboGears 1.x.
     :maxdepth: 1
 
     main/GlobalJSLib
-    main/StaticFile
 
 .. todo:: JQuery, Dojo, EXT usage doc-links
 .. todo:: Link documentation for doing JSON RPC/Ajax here

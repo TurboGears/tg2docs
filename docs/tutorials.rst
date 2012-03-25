@@ -19,6 +19,7 @@ to get start with your first real web application.
    main/QuickStart
    main/BasicMoves
    TurboGears Book: 20 Minutes Wiki Tutorial <http://www.turbogears.org/book/part1/wiki20.html>
+   main/TwForms
 
 ==================
 Advanced Tutorials
