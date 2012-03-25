@@ -690,7 +690,6 @@ that you re-use throughout your app.
     from tg import TGController, tmpl_context
     from tg.render import render
     from tg import request
-    from tw.api import WidgetBunch
     import my_intranet.model as model
 
     __all__ = ['BaseController']
