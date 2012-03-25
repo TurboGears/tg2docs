@@ -1,19 +1,25 @@
 .. _extensions-and-tools:
 
 ==========================
-Extending and Contributing
+Extensions and Tools
 ==========================
 
-   .. toctree::
-      :maxdepth: 2
+TG2 has some extensions which offer built-in functionality you can add
+to your application.  This is somewhat different from installing a
+WSGI application in your stack because the extensions are intended to
+be more tightly integrated with the components that make up a
+TurboGears application.
 
-      main/Extensions/index
+This is a list of core TurboGears extensions and tutorials that involve optional packages.
 
    .. toctree::
       :maxdepth: 1
 
-      main/Caching
-      main/LogSetup
-      main/Scheduling
+      main/Extensions/Crud/index
+      main/Extensions/Admin/index
+      main/Extensions/Geo/index
+      main/Extensions/Command/index
+      main/Extensions/Scheduling
 
+      main/AuthorizeTutorial
 

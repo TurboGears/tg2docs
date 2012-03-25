@@ -57,7 +57,7 @@ Quick Example
 
 Here's a simple example of the TG2.
 
-Suppose using ``tg-admin quickstart`` you generate a TurboGears project
+Suppose using ``paster quickstart`` you generate a TurboGears project
 named "HelloWorld". Your default controller code would be created in the
 file ``HelloWorld/helloworld/controllers/root.py``.
 
@@ -109,7 +109,7 @@ Let's take a look at the RootController:
 
         """
         secc = SecureController()
-        admin = Catwalk(model, DBSession)
+        admin = AdminController(model, DBSession, config_type=TGAdminConfig)
         error = ErrorController()
 
         @expose('my_intranet.templates.index')
@@ -226,7 +226,7 @@ We provide them by adding a method to the controller like this ...
 
 ::
 
-    @expose(template="helloworld.templates.sample")
+    @expose("helloworld.templates.sample")
     def example(self):
         mydata = {'person':'Tony Blair','office':'President'}
         return mydata
@@ -362,10 +362,10 @@ as part of your app.  These aren't stored in a /public url, but are just
 served up by your app if they exist at the url requested.
 
 So an index.html file in the root of public would respond to index requests
-BEFORE they get to your app.  So, be carefull what you put in here ;)
+BEFORE they get to your app.  So, be careful what you put in here ;)
 
 The up side of this is that favicon.ico and and other static files can
-easily be placed anywhere in your url hirearcy that you want.
+easily be placed anywhere in your url hierarchy that you want.
 
 
 .. warning::
@@ -389,7 +389,7 @@ SQLAlchemy in quickstart
 
 model/__init__.py
 
-Without the comments, here's the package initializaiton for the models:
+Without the comments, here's the package initialization for the models:
 
 .. code-block:: python
 
@@ -513,14 +513,6 @@ details for now, except to say that it creates a users attribute on every
 Next, let's take a look at the user object definition, but we'll split this
 one into a couple of pieces.
 
-One thing to notice in the initial definition of the object, is the special
-info, attribute we're passing to some of the column definitions. The
-'info' argument is just a way to register some information about what's
-in that column, what kind of validators to use for it, etc.
-
-In this case, we're telling Rum(http://python-rum.org/) some extra
-information it can can use generate an admin interface for your models.
-
 .. code-block:: python
 
     class User(DeclarativeBase):
@@ -532,11 +524,9 @@ information it can can use generate an admin interface for your models.
 
         user_id = Column(Integer, autoincrement=True, primary_key=True)
         user_name = Column(Unicode(16), unique=True, nullable=False)
-        email_address = Column(Unicode(255), unique=True, nullable=False,
-                               info={'rum': {'field':'Email'}})
+        email_address = Column(Unicode(255), unique=True, nullable=False)
         display_name = Column(Unicode(255))
-        _password = Column('password', Unicode(80),
-                           info={'rum': {'field':'Password'}})
+        _password = Column('password', Unicode(80))
         created = Column(DateTime, default=datetime.now)
 
 The ``_password`` column is used to store the password, but it's going to
@@ -768,7 +758,7 @@ look into next.
 Config
 ------------
 
-TG2 like Pylons inverts your normal relationship with a web framework.
+TG2 inverts your normal relationship with a web framework.
 Normal web frameworks tell you where to put your code and how the
 framework will set up the context in which that code is called by the
 framework.   TG2 does it the other way round, where the web framework
@@ -1047,8 +1037,7 @@ deploy the app.
 
 As part of the app loading process the ``base_config`` object will
 be merged in with the config values from the .ini file you're using
-to launch your app, and placed in ``tg.config``
-(also known as ``pylons.config``).
+to launch your app, and placed in ``tg.config``.
 
 
 Tests

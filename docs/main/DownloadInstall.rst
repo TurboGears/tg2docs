@@ -125,7 +125,7 @@ projects will normally use a particular version of TurboGears.
     (tg2env)$ easy_install -i http://tg.gy/current tg.devtools
 
 A large number of packages will be installed.  These are the officially
-required packages which define TurboGears itself.  The Pylons/Paste package
+required packages which define TurboGears itself.  The Paste package
 provides the "paster" command, which we will use to set up an example project.
 
 .. code-block:: bash

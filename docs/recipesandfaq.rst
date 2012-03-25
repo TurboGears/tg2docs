@@ -189,7 +189,7 @@ Tools
     main/Config
     main/LogSetup
     main/CLIScript
-    main/Scheduling
+    main/Extensions/Scheduling
 
 .. todo: Difficulty Easy: document Debugging
 

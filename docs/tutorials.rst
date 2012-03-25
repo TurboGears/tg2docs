@@ -5,15 +5,19 @@ Getting Started
 ==================
 
 Most new users should follow the :ref:`downloadinstall` and then continue on
-to :ref:`quickstarting`, after which they should explore the :ref:`explorequickstart`
+to :ref:`quickstarting`, after which they should look at the first
+few basic moves in :ref:`basic_moves`.
+
+When you feel confident with your understanding of TurboGears at high level
+you should give a look at our TurboGears Book and its 20 Minutes Wiki Tutorial
+to get start with your first real web application.
 
 .. toctree::
    :maxdepth: 1
 
    main/DownloadInstall
-   main/AltInstall
    main/QuickStart
-   main/explorequickstart
+   main/BasicMoves
    TurboGears Book: 20 Minutes Wiki Tutorial <http://www.turbogears.org/book/part1/wiki20.html>
 
 ==================
@@ -21,16 +25,20 @@ Advanced Tutorials
 ==================
 
 This is a set of more advanced tutorial that cover some common framework usages.
+We suggest to give a look at the :ref:`explorequickstart` tutorial for a better
+grasp of a tipical TurboGears web application structure.
 
 .. toctree::
    :maxdepth: 1
 
+   main/explorequickstart
+   main/AltInstall
    main/DatabaseMigration
-   main/BasicMoves
    main/Pagination/index
    main/DataGrid/index
+   main/Caching
    main/Auth/index
-   main/AuthorizeTutorial
+   main/LogSetup
 
 Moving From Other Frameworks
 ============================
