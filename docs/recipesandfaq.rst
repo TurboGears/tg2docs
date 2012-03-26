@@ -43,9 +43,10 @@ for updating and migrating your database.
     :maxdepth: 1
 
     main/SQLAlchemy
-    main/Config/SQLAlchemy
     main/DatabaseMigration
+    main/Config/MasterSlave
     main/Ming
+    main/Config/SQLAlchemy
 
 .. todo:: Document initial DB setup in websetup.py
 .. todo:: Link DB setup (MySQL, PostgreSQL, etceteras) docs
