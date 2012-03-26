@@ -47,6 +47,7 @@ for updating and migrating your database.
     main/Config/MasterSlave
     main/Ming
     main/Config/SQLAlchemy
+    main/MultipleDatabases
 
 .. todo:: Document initial DB setup in websetup.py
 .. todo:: Link DB setup (MySQL, PostgreSQL, etceteras) docs
@@ -197,7 +198,6 @@ Special Effects and Extensions
 ..  toctree::
     :maxdepth: 1
 
-    main/MultipleDatabases
     main/TGandPyAMF
     main/TGandFirePython
     main/AuthorizeTutorial
