@@ -57,7 +57,7 @@ Driving the balancer
 
 TurboGears provides a set of utilities to let you change the default behavior
 of the load balancer. Those include the **@with_engine(engine_name)** decorator
-and the **DBSession().using_engine(engine_name)** method.
+and the **DBSession().using_engine(engine_name)** context.
 
 The with_engine decorator
 ---------------------------
@@ -126,13 +126,15 @@ Forcing Single Queries on a node
 ----------------------------------
 
 Single queries can be forced to execute on a specific node using the
-``using_engine`` method of the ``BalancedSession``.
+``using_engine`` method of the ``BalancedSession``. This method
+returns a context manager, until queries are executed inside this
+context they are run on the constrained engine:
 
 .. code-block:: python
 
-    master_session = DBSession().using_engine('master')
-    master_session.query(model.User).all()
-    master_session.query(model.Permission).all()
+    with DBSession().using_engine('master'):
+        DBSession.query(model.User).all()
+        DBSession.query(model.Permission).all()
     DBSession.query(model.Group).all()
 
 In the previous example the Users and the Permissions will be
