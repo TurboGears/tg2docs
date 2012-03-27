@@ -51,14 +51,6 @@ Useful Utilities and Tools
 
        utilities
 
-Testimonials, White Papers, and Case Studies
-============================================
-
-.. toctree::
-   :maxdepth: 3
-
-   testimonials
-
 
 Indices and tables
 ==================

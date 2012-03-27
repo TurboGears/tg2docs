@@ -17,9 +17,10 @@ This is a list of core TurboGears extensions and tutorials that involve optional
 
       main/Extensions/Crud/index
       main/Extensions/Admin/index
-      main/Extensions/Geo/index
+      main/Extensions/Pluggable/index
       main/Extensions/Command/index
       main/Extensions/Scheduling
+      main/Extensions/Geo/index
 
       main/AuthorizeTutorial
 

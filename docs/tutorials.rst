@@ -49,14 +49,6 @@ Moving From Other Frameworks
 
    main/CakePHPIntro
 
-Extended Tutorials / White Papers
-=================================
-
-.. toctree::
-   :maxdepth: 1
-
-   whitepapers/cardlist
-
 Sometimes, you don't need a tutorial. Sometimes, you just need to see
 some sample code, or get a specific answer to a specific question, and
 tutorials are just too much for you. If that's you, might we suggest
