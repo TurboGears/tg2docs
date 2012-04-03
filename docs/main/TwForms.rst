@@ -142,6 +142,43 @@ already has validation for the *MovieForm* and when the form is submitted
 after checking that there is a title and director will also check that
 both *director* and *director_verify* fields equals.
 
+Relocatable Widget Actions
+==========================
+
+Whenever you run your application on a mount point which is not the root of
+the domain name your actions will have to poin to the right path inside the
+mount point.
+
+In TurboGears2 this is usually achieved using the ``tg.url`` function which
+checks the `SCRIPT_NAME` inside the request environment to see where
+the application is mounted. The issue with widget actions is that widgets
+actions are globally declared and ``tg.url`` cannot be called outside of
+a request.
+
+Calling ``tg.url`` while declaring a form and its action will cause a crash
+to avoid this TurboGears provides a lazy version of the url method which
+is evaluated only when the widget is displayed (``tg.lurl``):
+
+.. code-block:: python
+
+    from tg import lurl
+
+    class MovieForm(twf.Form):
+        class child(twf.TableLayout):
+            title = twf.TextField(validator=twc.Required)
+            director = twf.TextField(value="Default Director", validator=twc.Required)
+            genres = twf.CheckBoxList(options=['Action', 'Comedy', 'Romance', 'Sci-fi'])
+
+        action = lurl('/save_movie')
+
+Using ``tg.lurl`` the form action will be correctly written depending on
+where the application is mounted.
+
+Please pay attention that usually when registering resources on ToscaWidgets (both
+tw1 and tw2) it won't be necessary to call neither ``tg.url`` or ``tg.lurl`` as
+all the ``Link`` subclasses like ``JSLink``, ``CSSLink`` and so on will already
+serve the resource using the application mount point.
+
 Automatic Form Generation
 ===========================
 
