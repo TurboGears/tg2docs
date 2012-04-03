@@ -67,3 +67,16 @@ using plain css:
         background:#EEEEFF url(../images/info.png) no-repeat scroll 10px center;
     }
 
+
+Caching with Flash Messages
+=============================
+
+When using ``tg_cache`` variable in rendered templates (:ref:`prerendered-templates-cache`)
+the flash will get into the cached template causing unwanted messages to be displayed.
+
+To solve this issue the ``tg.flash_obj.render`` method provides the ``use_js`` option.
+By default this option is set at False inside the template, changing it to True
+will make the flash message to be rendered using javascript. This makes so that the same
+template is always rendered with a javascript to fetch the flash message and display it
+due to the fact that the template won't change anymore it will now be possible to
+correctly cache it.
