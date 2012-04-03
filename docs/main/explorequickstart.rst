@@ -710,6 +710,13 @@ every single request that reaches your app.   So you can easily use it to
 do app wide things (it arleady sets up the identity attribute on the
 request with information about the user pulled from the WSGI environ.)
 
+This provides also a valid example of the ``tmpl_context`` object which
+can be used to keep around variables that need to be passed to the view
+from somewhere that doesn't have direct access to the view itself.
+
+The ``tmpl_context`` object is always available inside the view itself
+with the same name.
+
 helpers.py
 ~~~~~~~~~~~~
 
@@ -734,7 +741,8 @@ template helpers and stick them here.
 globals.py
 ~~~~~~~~~~~~
 
-Every app may have some global settings or information that's shared across all requests, but it's very possible that you may want to run two TG2 apps in the same process, or even two instances of the same app in a single process.  If so, ``app_globals.py`` provides a simple mechanism for storing application specific globals which don't clober on other instances of the same app.
+Every app may have some global settings or information that's shared across all requests, but it's very possible that you may want to run two TG2 apps in the same process, or even two instances of the same app in a single process.
+If so, ``app_globals.py`` provides a simple mechanism for storing application specific globals which don't clober on other instances of the same app.
 
 .. code-block:: python
 
@@ -753,6 +761,18 @@ Every app may have some global settings or information that's shared across all 
 The ``app_globals`` and ``helpers`` stuff is pre-loaded up into the tg
 environment for you by the config system.   Which is what we will
 look into next.
+
+The globals will then by available using ``tg.app_globals`` anywhere inside
+your application:
+
+.. code-block:: python
+
+    from tg import app_globals
+
+    class RootController(BaseController):
+        @expose()
+        def somewhere(self):
+            return str(app_globals.somevalue)
 
 Config
 ------------
