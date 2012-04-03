@@ -113,7 +113,6 @@ Note: most new users do not need to choose an alternate templating language.
     :maxdepth: 1
 
     main/Templates/Genshi
-    main/master_html
     main/Templates/index
     main/Templates/Mako
     main/Templates/Jinja
@@ -142,6 +141,7 @@ Old Recipes
 ..  toctree::
     :maxdepth: 1
 
+    deprecated/master_html
     deprecated/ToscaWidgets/ToscaWidgets
     deprecated/ToscaWidgets/forms
     deprecated/ToscaWidgets/Cookbook
