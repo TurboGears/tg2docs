@@ -6,12 +6,10 @@ Handling Internationalization And Localization
 .. contents:: Table of Contents
     :depth: 2
 
-Turbogears2 relies on Pylons and Babel for i18n and l10n support. So
+Turbogears2 relies on Babel for i18n and l10n support. So
 if this document is not enough you will want to check their respective
 documentation:
 
- * Pylons' `Internationalization and Localization`_ doc (which also
-   contains "Using Babel" section)
  * Babel's UserGuide_
 
 A quickstarted project comes fully i18n enabled so you should get
@@ -31,6 +29,58 @@ preferences(*).
 request which tells the server which language it would prefer to see
 in a response.
 
+Making your code international
+-------------------------------
+
+Whenever you write a message that has to displayed you must let
+TurboGears know that it has to be translated.
+
+Even though TurboGears is able to automatically detect content
+inside tags and mark them for translation all the strings inside
+controllers must be explicitly marked as translated.
+
+This can be achieved with the ``tg.i18n.ugettext`` and ``tg.i18n.lazy_ugettext``
+calls which are usually imported with ``_`` and ``l_`` names:
+
+.. code-block:: python
+
+    from tg.i18n import ugettext as _
+
+    class RootController(BaseController):
+        @expose('myproj.templates.index')
+        def index(self):
+            return dict(msg=_('Hello World'))
+
+In the previous example the 'Hello World' string will be detect by
+TurboGears when collecting translatable text and will display in the
+browser language if a translation for that language is available.
+
+While ``ugettext`` works perfectly to translate strings inside a request
+it does not allow translating strings outside a request. This is
+due to the fact that TurboGears won't know the browser language when
+there isn't a running request. To translate global variables, parameters
+default values or any other string which is created outside a controller
+method the ``lazy_ugettext`` method must be used:
+
+.. code-block:: python
+
+    from tg.i18n import lazy_ugettext as l_
+
+    class RootController(BaseController):
+        @expose('myproj.templates.index')
+        def index(self, msg=l_('Hello World')):
+            return dict(msg=msg)
+
+In this case the `msg` parameter is translated using ``lazy_ugettext``
+as it is constructed at controller import time when no request is available.
+This will create an object that will translate the given string only when
+the string itself is displayed or evaluated.
+
+Keep in mind that as the lazy string object built by ``lazy_ugetted`` is
+translated whenever the string is evaluated joining strings or editing it
+will force the translation. So the resulting object must still be evaluated
+only inside a request or it will always be translated to the default project
+language only.
 
 An i18n Quick Start
 -------------------
@@ -96,7 +146,6 @@ And see the local message show on the screen.
 Commands
 --------
 
-
 To fresh start a translation, you could use the following command to
 handle your locales:
 
@@ -126,5 +175,4 @@ You can update the catalog with the following command::
   python setup.py update_catalog
 
 
-.. _`Internationalization and Localization`: http://wiki.pylonshq.com/display/pylonsdocs/Internationalization+and+Localization
 .. _UserGuide: http://babel.edgewall.org/wiki/Documentation/index.html
