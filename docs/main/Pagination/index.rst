@@ -8,11 +8,25 @@ Pagination Quickstart For Turbogears2
 Prerequisites
 -------------
 
-We start where the MovieDemo left off. See the `ToscaSample`_ tutorial
-or download the zipped ToscaWidgetsFormsExample (TODO: must be
-recreated, not currently available).
+We start from an existing projects name *paginatesample* supposing a model that looks like:
 
-.. _ToscaSample: http://www.turbogears.org/2.1/docs/main/ToscaWidgets/forms.html
+.. code-block:: python
+
+    class Movie(DeclarativeBase):
+        __tablename__ = 'movie'
+
+        id = Column(Integer, primary_key=True)
+        title = Column(String(100), nullable=False)
+        description = Column(Text, nullable=True)
+        year = Column(Integer, nullable=True)
+        genre = Column(Integer, nullable=True)
+        release_date = Column(Date, nullable=True)
+
+        def __str__(self):
+            if self.year:
+                return '"%s" (%d)' % (self.title, self.year)
+            else:
+                return '"%s"' % self.title
 
 Populating The Database
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -59,12 +73,12 @@ Import paginate in your ``controllers/root.py`` and modify the
 
 	    from webhelpers import paginate
 
-	    @expose("toscasample.templates.movie_list")
+	    @expose("paginatesample.templates.movie_list")
 	    def list(self, page=1):
 	        """List and paginate all movies in the database"""
 	        movies = DBSession.query(Movie)
 	        currentPage = paginate.Page(movies, page, items_per_page=5)
-	        return dict(movies=currentPage.items, page='ToscaSample Movie list', currentPage=currentPage)
+	        return dict(movies=currentPage.items, page='paginatesample Movie list', currentPage=currentPage)
 
 This creates and passes a ``paginate.Page`` object to our template, so
 we can use it there to access a ``pager()``.
@@ -120,13 +134,13 @@ combine with `expose()`.  To use it, you simply have to pass it the
 name of a collection to paginate.  In ``controller/root.py``::
 
     from tg.decorators import paginate as paginatedeco
-    @expose("toscasample.templates.movie_list_deco")
+    @expose("paginatesample.templates.movie_list_deco")
     @paginatedeco("movies", items_per_page=5)
     def decolist(self):
         """List and paginate all movies in the database using the
         paginate() decorator."""
         movies = DBSession.query(Movie)
-        return dict(movies=movies, page='ToscaSample Movie list')
+        return dict(movies=movies, page='paginatesample Movie list')
 
 .. highlight:: python
 

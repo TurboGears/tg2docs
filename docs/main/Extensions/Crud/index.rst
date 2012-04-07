@@ -1,8 +1,8 @@
 .. _tgext.crud.controller:
 
 
-:obj:`tgext.crud.controller`
-============================
+TurboGears Automatic CRUD Generation
+=====================================
 
 Overview
 --------
@@ -227,49 +227,6 @@ database using :class:`sprox.formbase.AddRecordForm`::
         __omit_fields__ = ['genre_id', 'movie_id']
     movie_add_form = MovieAddForm(DBSession)
 
-ToscaWidgets
-~~~~~~~~~~~~
-
-You might be wondering about what is behind-the-scenes of Sprox that
-allows it to generate widgets.  The package responsible for building
-the widgets is called `ToscaWidgets
-<http://toscawidgets.org/documentation/ToscaWidgets/>`_.  It makes no
-decisions about how the widgets should be created, it only does what
-you tell it.  Since both TW and Sprox produce widgets, you may use
-them interchangeably within CrudRestController.  Therefore, if Sprox
-is not providing the behavior for your widgets that you desire, you
-can drop-down to the lower-level TW library and still accomplish your
-goals.  The same form definition in TW might look something like
-this::
-
-    from tw.core import WidgetsList
-    from tw.forms import TableForm, TextField, CalendarDatePicker, SingleSelectField, TextArea
-    from formencode.validators import Int, NotEmpty, DateConverter, DateValidator
-    
-    class MovieForm(TableForm):
-        # This WidgetsList is just a container
-        class fields(WidgetsList):
-            title = TextField(validator=NotEmpty)
-            description = TextArea(attrs=dict(rows=3, cols=25))
-            release_date = CalendarDatePicker(validator=DateConverter())
-            genrechoices = ((1,"action"),
-                             (2,"animation"),
-                             (3,"comedy"),
-                             (4,"documentary"),
-                             (5,"drama"),
-                             (6,"sci-fi"))
-            genre = SingleSelectField(options=genrechoices)
-    
-    #then, we create an instance of this form
-    movie_add_form = MovieForm("create_movie_form")
-
-Notice that the TW version of the form has the genre's options
-hard-coded, where the Sprox version these are plucked from the DB.
-This could be fixed with the TW version by setting the options in the
-widget's :meth:`tw.api.Widget.update_params` function, but that topic
-is outside the scope of this tutorial.  Also notice the care that must
-be taken adding validation for each field.
-
 Adding this to your movie controller would look make it now look
 something like this::
 
@@ -484,66 +441,6 @@ Which results in a new listing page like this.
 .. image:: images/menu_items.png
 
 
-Using Dojo
-----------
-
-Dojo_ is a JavaScript library that
-provides AJAX_ functionality, DHTML manipulation, and other
-functionality that works across browsers.
-
-CrudRestController has built-in JSON_ functionality for the get_all
-function.  This makes it relatively easy to integrate Dojo_ tables into
-your application.  Since `Sprox supports Dojo
-<http://sprox.org/dojo.html>`_ out of the box, it is simple enough to
-provide new imports for your custom tables and achieve infinitely
-scrollable tables.  First, we need to install the ToscaWidgets Dojo
-library::
-
-    easy_install tw.dojo
-
-
-Then, we create our form using Sprox's Dojo support::
-
-
-    from sprox.dojo.tablebase import DojoTableBase
-    
-    class MovieTable(DojoTableBase):
-        __model__ = Movie
-        __omit_fields__ = ['genre_id']
-    movie_table = MovieTable(DBSession)
-
-Then, Since Dojo has a different format to fill it's table, we must
-also provide a :class:`sprox.dojo.fillerbase.TableFiller`::
-
-    from sprox.dojo.fillerbase import DojoTableFiller
-
-    class MovieTableFiller(DojoTableFiller):
-        __model__ = Movie
-    movie_table_filler = MovieTableFiller(DBSession)
-
-The resulting table looks like this.
-
-.. image:: images/dojo_table.png
-
-Support for more sophisticated forms has also been added to Sprox.
-This is especially useful when you have a many to many relationship in
-your Models.  For these kinds of relationships, Dojo provides Sprox
-with a ``SelectShuttle`` widget.  Here is a code snippet showing how
-to use the Dojo forms in your application.::
-
-    from sprox.dojo.formbase import DojoEditableForm
-
-    class MovieTableFiller(DojoEditableForm):
-        __model__ = Movie
-    movie_table_filler = MovieTableFiller(DBSession)
-
-
-Since there are no many-to-many relationship objects in our example
-model, here is an image of the Dojo-enabled form as it appears using
-:mod:`tgext.admin`.
-
-.. image:: images/dojo_form.png
-
 CRC: The Sweet Spot
 -------------------
 
@@ -556,12 +453,5 @@ really looking for something that makes all of the forms for you, but
 can be configured, take a look at the `Turbogears Admin System
 <http://pypi.python.org/pypi/tgext.admin>`_.
 
-
-Example Project
------------------
-
-`Moviedemo <http://pythontutorials.googlecode.com/files/moviedemo.tar.gz>`_ was created while developing these documents.
-
 .. _JSON: http://www.json.org/
-.. _Dojo: http://www.dojotoolkit.org/
 .. _AJAX: http://en.wikipedia.org/wiki/Ajax_%28programming%29

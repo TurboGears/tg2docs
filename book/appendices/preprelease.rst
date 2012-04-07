@@ -164,7 +164,8 @@ Installing Packages
 -------------------
 
 For both Python 2.4 and Python 2.6, create a new virtualenv and run
-``python setup.py develop`` for each of the repositories.
+``python setup.py tgdevelop`` and ``python setup.py tgdeps`` for each
+of the repositories.
 
 Finding the Packages to Upgrade
 -------------------------------

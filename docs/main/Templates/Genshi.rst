@@ -5,7 +5,7 @@ Genshi How-To
 
 Genshi was chosen as the default for two reasons.
  * Genshi's syntax is a mere augmentation of the kid_ templating language which was the default for
-   TurboGears from 0.8-1.0.  Genshi is the new default in TurboGears 1.1
+   TurboGears from 0.8-1.0.  Genshi is the new default since TurboGears 1.1
    Genshi improves on Kid's error reporting by providing better debug messages.
  * By default, Genshi is forces (x)html compliance, and error if your template
    does not provide valid (x)html.

@@ -17,7 +17,6 @@ We currently support the following template engines out of the box.
     Genshi
     Mako
     Jinja
-    ChameleonGenshi
 
 All you need to do to use any one of these template engines is to add it to the list of renderers to prepare in app_cfg.py::
 

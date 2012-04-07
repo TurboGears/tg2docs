@@ -66,7 +66,7 @@ in the same `pythonenv` directory).
    $ sudo -u www-data bash
    $ cd myapp
    $ source bin/activate
-   (myapp)$ easy_install -i http://tg.gy/current/index/ tg.devtools
+   (myapp)$ easy_install -i http://tg.gy/current tg.devtools
    (myapp)$ mkdir python-eggs
    (myapp)$ exit
 

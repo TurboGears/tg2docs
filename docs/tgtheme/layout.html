@@ -1,7 +1,7 @@
 {% extends "!basic/layout.html" %}
 
 {%- set render_sidebar = (not embedded) and (not theme_nosidebar|tobool)
-    and (sidebars != []) and (pagename != 'index') %}
+    and (sidebars != []) %}
 
 {% macro tgsidebar() %}
    {%- if render_sidebar %}{{ sidebar() }}{%- endif %}

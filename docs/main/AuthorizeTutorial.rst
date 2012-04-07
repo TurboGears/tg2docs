@@ -27,11 +27,11 @@ Defining The Validator
 First we will need to define our ProcessCard() class which will be the
 chained FancyValidator for processing the card::
 
-    import tw.forms as twf
+    from formencode import FancyValidator, Invalid
     from authorize import aim as aim_api
 
     # FancyValidator to process the Credit Card using the authorize package
-    class ProcessCard(twf.validators.FancyValidator):
+    class ProcessCard(FancyValidator):
         def _to_python(self, value, state):
             # Setup the aim Api object.
             aim = aim_api.Api(AUTHNET_LOGIN, AUTHNET_KEY, is_test=False)
@@ -49,13 +49,14 @@ chained FancyValidator for processing the card::
                 return value
             else:
                 # failure
-                raise twf.validators.Invalid(result_dict['reason_text'], value, state)
+                raise Invalid(result_dict['reason_text'], value, state)
 
 Defining The Form
 -----------------
 
 Next we'll define our form class that will end up being passed to the
-view::
+view. This example defines the form using ToscaWidgets1, but it should
+be fairly simple to adapt it to ToscaWidgets2 which is now the default::
 
     from tw.api import WidgetsList
 

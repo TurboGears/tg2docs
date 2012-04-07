@@ -111,6 +111,7 @@ For example, in myapp/model/spam.py (uses engine1)::
     class Spam(DeclarativeBase):
         __tablename__ = 'spam'
 
+        def __init__(self, id, variety):
             self.id = id
             self.variety = variety
 

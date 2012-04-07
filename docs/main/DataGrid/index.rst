@@ -6,7 +6,7 @@ DataGrid Tutorial
 DataGrid is a quick way to present data in tabular form.
 
 The columns to put inside the table are specified with the *fields* constructor argument in a list.
-Each entry of the list can be an accessor (attribute name or function), a tuple (title, accessor) or a ``tw.forms.datagrid.Column`` instance.
+Each entry of the list can be an accessor (attribute name or function), a tuple (title, accessor) or a ``tw2.forms.datagrid.Column`` instance.
 
 Preparing Application
 -----------------------
@@ -42,7 +42,7 @@ Basic DataGrid
 
 With a model and some data set up, we can now start declaring our DataGrid and the fields it has to show::
 
-	from tw.forms import DataGrid
+	from tw2.forms import DataGrid
 
 	addressbook_grid = DataGrid(fields=[
 	    ('Name', 'name'),
@@ -64,7 +64,7 @@ Now the grid can be displayed in the template like this:
 
 Template code necessary to show the grid in ``templates/index.html``::
 
-	<div>${grid(data)}</div>
+	<div>${grid(value=data)}</div>
 
 
 Paginating DataGrid
@@ -95,7 +95,7 @@ a working pagination for our datagrid.
 
 Template in ``templates/index.html`` would become::
 
-	<div>${grid(data)}</div>
+	<div>${grid(value=data)}</div>
 	<div>${tmpl_context.paginators.data.pager()}</div>
 
 Now the page should render with both the datagrid and the pages under the grid itself, making possible to switch between the pages.
@@ -104,14 +104,14 @@ Sorting Columns
 --------------------
 
 DataGrid itself does not provide a way to implement columns sorting, but it can be easilly achieved by inheriting
-from ``tw.forms.datagrid.Colun`` to add a link that can provide sorting.
+from ``tw2.forms.datagrid.Column`` to add a link that can provide sorting.
 
 .. highlight:: python
 
 First of all we need to declare or SortableColumn class that will return the link with the sorting request as the title for our DataGrid::
 
 	from sqlalchemy import asc, desc
-	from tw.forms.datagrid import Column
+	from tw2.forms.datagrid import Column
 	import genshi
 
 	class SortableColumn(Column):

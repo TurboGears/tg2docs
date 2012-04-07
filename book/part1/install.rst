@@ -142,7 +142,7 @@ tg.devtools
 
 After activating your virtualenv, you only need to run one command::
 
-    $ easy_install -i http://tg.gy/current/index/ tg.devtools
+    $ easy_install -i http://tg.gy/current tg.devtools
 
 That's it. Once it completes, you now have the TurboGears2 framework
 and development tools installed.
@@ -161,7 +161,8 @@ for an application named "Tester". It is assumed to be created at *${HOME}/Teste
     Would you prefer mako templates? (yes/[no]): no
     Do you need authentication and authorization in this project? ([yes]/no): yes
     $ cd Tester
-    $ python setup.py develop
+    $ python setup.py testerdevelop
+    $ python setup.py testerdeps
     $ paster setup-app development.ini
     $ paster serve development.ini
 
@@ -185,13 +186,16 @@ authorization. This is required for proper SQLAlchemy support (and is
 done this way so that Mongo/Cassandra/etc can be better supported
 later).::
 
-    $ python setup.py develop
+    $ python setup.py testerdevelop
+    $ python setup.py testerdeps
 
 This installs the "tester" application into your virtualenv in a
-development mode. This means that you do not have to do a reinstall
-every time you make a change. Any changes in the current directory
-will be automatically reflected in your virtualenv without you doing
-any special steps.::
+development mode. It also restricts itself to using the TurboGears
+private index, ensuring you get the right versions of the
+packages. This means that you do not have to do a reinstall every time
+you make a change. Any changes in the current directory will be
+automatically reflected in your virtualenv without you doing any
+special steps.::
 
     $ paster setup-app development.ini
 
@@ -218,10 +222,11 @@ To summarize the entire process::
 
    $ virtualenv --no-site-packages ${HOME}/tg2env
    $ source ${HOME}/tg2env/bin/activate
-   $ easy_install -i http://tg.gy/current/index/ tg.devtools
+   $ easy_install -i http://tg.gy/current tg.devtools
    $ paster quickstart
    $ cd appname
-   $ python setup.py develop
+   $ python setup.py tgdevelop
+   $ python setup.py testerdeps
    $ paster setup-app development.ini
    $ paster serve development.ini
    Control-C

@@ -156,6 +156,7 @@ Another speed boost can be achieved by disabling template automatic reloading.
     [app:main]
     auto_reload_templates = false
 
+.. _prerendered-templates-cache:
 
 Prerendered Templates Caches
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

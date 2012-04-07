@@ -284,11 +284,12 @@ p.admonition-title:after {
 }
 
 pre {
-  padding: 5px;
+  padding: 10px;
   background-color: {{ theme_codebgcolor }};
   color: {{ theme_codetextcolor }};
   line-height: 120%;
-  border: 1px solid #ac9;
+  font-size: 110%;
+  border: 2px solid #C6C9CB;
   border-left: none;
   border-right: none;
 }
@@ -340,16 +341,15 @@ div#the-turbogears-documentation table.docutils {
 
 div#the-turbogears-documentation table.docutils td {
   border: none !important;
-  width: 33%;
 }
 
 div.part-beginner a, div.part-tutorials a, div.part-extending a,
 div.part-gears a, div.part-recipes a, div.part-reference a {
   display: block;
-  font-size: 125%;
-  width: 112px;
-  height: 128px;
-  padding: 20px 4px 4px 140px;
+  font-size: 80%;
+  width: 64px;
+  height: 80px;
+  padding: 10px 4px 4px 66px;
   margin: 4px auto;
   background-repeat: no-repeat;
 }

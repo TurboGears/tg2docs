@@ -7,6 +7,13 @@
 TurboGears Administration System
 =======================================
 
+The TurboGears Admin System is a great way to get started with your
+database.  Once your model is defined, this extension provides a set
+of pages to help you create, view, delete, and edit your database
+objects.
+
+.. image:: images/index_ss.png
+
 Overview
 -----------------
 The TurboGears Admin is a powerful system to create automated CRUD for your application.  
@@ -32,12 +39,6 @@ the root controller::
     
     class RootController(BaseController):
         admin = AdminController(model, DBSession)
-
-To provide an even nicer (AJAX based) interface for tgext.admin, make sure to
-
-.. code-block:: bash
-
-    easy_install tw.dojo
 
 
 Using Multiple Databases
@@ -192,12 +193,11 @@ complete with password verification:
     from sprox.formbase import AddRecordForm
     from formencode import Schema
     from formencode.validators import FieldsMatch
-    from tw.forms import PasswordField, TextField
+    from tw2.forms import PasswordField, TextField
     
-    form_validator =  Schema(chained_validators=(FieldsMatch('password',
-                                                             'verify_password',
-                                                             messages={'invalidNoMatch':
-                                                             'Passwords do not match'}),))
+    form_validator =  FieldsMatch('password', 'verify_password',
+                                    messages={'invalidNoMatch': 'Passwords do not match'})
+
     class RegistrationForm(AddRecordForm):
         __model__ = User
         __require_fields__     = ['password', 'user_name', 'email_address']

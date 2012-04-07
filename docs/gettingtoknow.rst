@@ -1,8 +1,8 @@
 .. _getting-to-know:
 
-===================
-The Gears in Detail
-===================
+=============================
+About the TurboGears Project
+=============================
 
 This document describes the internal workings of TurboGears, how 
 the system is constructed, how the pieces fit together, and how 
@@ -36,7 +36,6 @@ General Project Information
     main/Contributing
     main/bitbucket_tutorial
     main/License
-    main/TGandPylons
     building_docs
     main/testing_core
      
