@@ -68,7 +68,7 @@ Handling HTTP Requests (Controllers)
     main/Auth/index
     main/Auth/OpenID
     modules/thirdparty/webob
-    modules/tgflash
+    main/WebFlash
     modules/tgdecorators
 
     main/ResponseTypes
@@ -77,6 +77,7 @@ Handling HTTP Requests (Controllers)
     main/Caching
     main/RoutesIntegration
 
+    main/Streaming
     modules/thirdparty/webhelpers_feedgenerator
 
 .. todo:: Document "community" sites; user-signup mechanisms (e.g. tgext.registration2), OpenID,
