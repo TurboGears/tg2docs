@@ -207,7 +207,9 @@ Template Example
 ~~~~~~~~~~~~~~~~
 
 A simple template file called ``sample`` could be made like
-this::
+this:
+
+.. code-block:: html+genshi
 
     <html>
       <head>
@@ -243,10 +245,12 @@ We provide them by adding a method to the controller like this ...
 Quickstarted Project Templates
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Each projects gets quickstarted with a Master template and a bunch of templates for
+the pages provided by the RootController. Taking a look at the `index` template it should
+look something like this:
+
 .. code-block:: html+genshi
 
-    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-                          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     <html xmlns="http://www.w3.org/1999/xhtml"
           xmlns:py="http://genshi.edgewall.org/"
           xmlns:xi="http://www.w3.org/2001/XInclude">
@@ -254,37 +258,27 @@ Quickstarted Project Templates
       <xi:include href="master.html" />
 
     <head>
-      <meta content="text/html; charset=UTF-8" http-equiv="content-type" py:replace="''"/>
-      <title>Welcome to TurboGears 2.1, standing on the
-      shoulders of giants, since 2007</title>
+      <title>Welcome to TurboGears 2.2, standing on the shoulders of giants, since 2007</title>
     </head>
 
     <body>
-        ${sidebar_top()}
-      <div id="getting_started">
-        <h2>Presentation</h2>
-        <p>TurboGears 2 is rapid web application development toolkit designed
-        to make your life easier.</p>
-        <ol id="getting_started_steps">
-          <li class="getting_started">
-            <h3>Code your data model</h3>
-            <p> Design your data model, Create the database, and Add some
-            bootstrap data.</p>
-          </li>
-          <li class="getting_started">
-            <h3>Design your URL architecture</h3>
-            <p> Decide your URLs, Program your controller methods, Design your
-                templates, and place some static files (CSS and/or JavaScript). </p>
-          </li>
-          <li class="getting_started">
-            <h3>Distribute your app</h3>
-            <p> Test your source, Generate project documents, Build a distribution.</p>
-          </li>
-        </ol>
+      <div class="row">
+        <div class="span8 hidden-phone hidden-tablet">
+          <div class="hero-unit">
+            <h1>Welcome to TurboGears 2.2</h1>
+            <p>If you see this page it means your installation was successful!</p>
+            <p>TurboGears 2 is rapid web application development toolkit designed to make your life easier.</p>
+            <p>
+              <a class="btn btn-primary btn-large" href="http://www.turbogears.org" target="_blank">
+                ${h.icon('book', True)} Learn more
+              </a>
+            </p>
+          </div>
+        </div>
       </div>
-      <div class="clearingdiv" />
-      <div class="notice"> Thank you for choosing TurboGears.
-      </div>
+
+      [ ... ]
+
     </body>
     </html>
 
@@ -293,61 +287,26 @@ Let's pay attention to a couple of important lines:
 .. code-block:: html+genshi
 
   <xi:include href="master.html" />
-  ${sidebar_top()}
 
-the xi:include statement pulls in master.html, and includes it in this template's namespace.   Which is how the next thing gets pulled in since sidebar.html is included in master.html.
-
-This allows you to break your template files into reusable components.
-
-Perhaps the most used feature of genshi is the ``${}`` syntax, which means that genshi should insert the value of the python expression inside into the template at that point in the page.   In this case it's calling a genshi template function that renders the sidebar.
-
-This template function is defined in sidebars.html:
+the `xi:include` statement pulls in master.html, and includes it in this template's namespace.
+This makes possible to have a template where the global layout and look of the site is defined
+while the other templates can just implement the different content
+allowing you to break your template files into reusable components.
 
 .. code-block:: html+genshi
 
-    <py:def function="sidebar_top">
-      <div id="sb_top" class="sidebar">
-          <h2>Get Started with TG2</h2>
-          <ul class="links">
-            <li py:choose="">
-              <span py:when="page=='index'"><a href="${tg.url('/about')}">
-                About this page</a> A quick guide to this TG2 site </span>
-              <span py:otherwise=""><a href="${tg.url('/')}">Home</a> Back to
-                your Quickstart Home page </span>
-            </li>
-            <li><a href="http://www.turbogears.org/2.0/docs/">TG2 Documents</a> -
-              Read everything in the Getting Started section</li>
-            <li><a href="http://docs.turbogears.org/1.0">TG1 docs</a>
-              (still useful, although a lot has changed for TG2) </li>
-            <li><a href="http://groups.google.com/group/turbogears">
-              Join the TG Mail List</a> for general TG use/topics  </li>
-          </ul>
-      </div>
-    </py:def>
+    <a class="btn btn-primary btn-large" href="http://www.turbogears.org" target="_blank">
+        ${h.icon('book', True)} Learn more
+    </a>
 
-``py:def`` is a special genshi tag that allows you to create a reusable
-template function.  You'll notice that we use ``${tg.url('/about')}`` in
-this template function, to generate the link to about.   The tg.url function
-creates a URL for you, but it takes into acount where the tg2 app has been
-mounted in our URL tree.   So if you're app is mounted via apache and mod-wsgi
-at /mywebsite/dynamic/tg2/my-intranet ``/about`` will be turned into the proper
-``mywebsite/dynamic/tg2/my-intranet``.   tg.url actually does quite a bit
-more than that, but we'll get into that later.
+Perhaps the most used feature of genshi is the ``${}`` syntax,
+which means that genshi should insert the value of the python expression inside into the template
+at that point in the page.
+In this case it renders the icon of a book using the ``icon`` helper.
 
-You'll also notice a couple of other interesting attributes here:
-
-.. code-block:: html+genshi
-
-      <li py:choose="">
-        <span py:when="page=='index'">...</span
-        <span py:otherwise="">...</span>
-      </li>
-
-Genshi provides a number of special processing attributes that allow you to
- conditionally display something the most standard of which is py:if that
- just displays the tag if the reqult is true.   Here we have py:choose which,
- with py:when and py:otherwise allows you to choose between one of many
- possible things to render in the <li>.
+Genshi also provides a number of special processing attributes that allow you to
+conditionally display something the most standard of which is ``py:if`` that
+just displays the tag if the result is true.
 
 You can find a full list and explanation of the genshi tags here:
 
