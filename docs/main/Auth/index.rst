@@ -98,10 +98,9 @@ command from your project's root directory::
 .. note::
   This module is :mod:`repoze.what.plugins.quickstart` and only works if your
   users' credentials, groups and permissions are stored in a `SQLAlchemy
-  <http://www.sqlalchemy.org/>`_ -managed
-  database. To implement it on an existing project, or customize the model
-  structure assumed by it, you have to read the documentation for
-  :mod:`repoze.what.plugins.quickstart`.
+  <http://www.sqlalchemy.org/>`_ -managed database. To implement it on
+  an existing project, or customize the model structure assumed by it,
+  you have to read the documentation for :mod:`repoze.what.plugins.quickstart`.
 
 
 Beyond the quickstart
