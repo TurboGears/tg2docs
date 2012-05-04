@@ -6,9 +6,7 @@ Authentication and Authorization in TurboGears 2
 :Status: Official
 
 This documents describes how to implement authentication and authorization in
-TG 2 applications. Although there are other ways to implement it (e.g., using
-the `AuthKit <http://authkit.org/>`_ package or a project-specific solution),
-this document only describes the officially supported and recommended way.
+TG 2 applications.
 
 .. contents:: Table of Contents
     :depth: 2
@@ -32,18 +30,13 @@ TurboGears 2 applications may take advantage of a robust, extendable, pluggable
 and easy-to-use system for authentication and authorization suitable for nearly
 all situations in fact, you may extend it to suit your needs if it doesn't,
 which should be really simple in most situations. Such a system is made up of
-two independent components, well integrated into TurboGears:
+independent components, well integrated into TurboGears:
 
   * :mod:`repoze.who`, a framework for ``authentication`` in WSGI applications.
     You normally don't have to care about it because by default TurboGears |version|
     applications ship all the code to set it up (as long as you had selected
     such an option when you created the project), but if you need something
     more advanced you are at the right place.
-  * :mod:`repoze.what`, the successor of :mod:`tg.ext.repoze.who` and
-    :mod:`tgext.authorization` (used in unstable TurboGears |version| releases),
-    is a framework for ``authorization`` that is mostly compatible with the
-    TurboGears 1.x `Identity` authentication, identification and authorization
-    system.
 
 You may store your users' credentials where you want (e.g., in a database, an
 LDAP server, an .htaccess file) and also store your authorization settings
@@ -57,29 +50,24 @@ data may be found.
 The three pillars: Users, groups and permissions
 ------------------------------------------------
 
-:mod:`repoze.what` uses a common pattern based on the ``users`` (authenticated
+TurboGears uses a common pattern based on the ``users`` (authenticated
 or anonymous) of your web application, the ``groups`` they belong to and the
 ``permissions`` granted to such groups. But you can extend it to check for many
 other conditions (such as checking that the user comes from a given country,
 based on her IP address, for example).
 
-The authentication framework (:mod:`repoze.who`) only deals with the
-source(s) that handle your users' credentials, while the
-authorization framework (:mod:`repoze.what`) deals with both the
-source(s) that handle your groups and those that handle your permissions.
-
+The authentication framework (:mod:`repoze.who`) only deals with the source(s)
+that handle your users' credentials. It will look for a way to match
+your username and password to some user on your database and check if he can
+login. While the TurboGears authorization layer fetches the actual user
+that logged in, its groups and permissions and permits to check for them.
 
 Getting started, quickly
 ------------------------
 
-While :mod:`repoze.what` only deals with authorization, its SQL plugin
-provides a module to setup authentication via :mod:`repoze.who` so that you can
-get started with authentication and authorization very quickly. It may be
-enabled while creating the TurboGears |version| project or afterwards, and it
-may be easily replaced by a custom solution.
-
-To use it on a new project, just answer "yes" during the `paster quickstart`
-process when it asks you if you want authorization::
+To use authentication and authorization in a new project,
+just answer "yes" during the `paster quickstart` process when it
+asks you if you want authorization::
 
   Do you need authentication and authorization in this project? [yes]
 
@@ -94,14 +82,6 @@ Before trying to login and try authorization with the rows defined in
 command from your project's root directory::
 
     paster setup-app development.ini
-
-.. note::
-  This module is :mod:`repoze.what.plugins.quickstart` and only works if your
-  users' credentials, groups and permissions are stored in a `SQLAlchemy
-  <http://www.sqlalchemy.org/>`_ -managed database. To implement it on
-  an existing project, or customize the model structure assumed by it,
-  you have to read the documentation for :mod:`repoze.what.plugins.quickstart`.
-
 
 Beyond the quickstart
 ---------------------

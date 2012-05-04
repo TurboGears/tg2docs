@@ -15,8 +15,10 @@
     to check :mod:`repoze.who`'s website.
 
 :mod:`repoze.who` is a powerful and extensible ``authentication`` package for
-arbitrary WSGI applications. Within TurboGears, it's configured through
-:mod:`repoze.what`.
+arbitrary WSGI applications. By default TurboGears2 configures it to log using
+a form and retrieving the user informations through the user_name field of the
+User class. This is made possible by the ``authenticator plugin`` that TurboGears2
+uses by default which is ``repoze.who.plugins.sa.SQLAlchemyAuthenticatorPlugin``.
 
 
 How it works
@@ -92,23 +94,22 @@ select).
 How it works in TurboGears applications
 =======================================
 
-TurboGears itself doesn't deal directly with :mod:`repoze.who`. It's configured
-through :mod:`repoze.what` because it has to configure :mod:`repoze.who` in a
-special way so that authorization can work.
-
-By default, :mod:`repoze.what` in TurboGears |version| configures :mod:`repoze.who`
-to use its :class:`repoze.who.plugins.form.RedirectingFormPlugin` as the first
+By default, TurboGears |version| configures :mod:`repoze.who` to use
+:class:`repoze.who.plugins.friendlyform.FriendlyFormPlugin` as the first
 identifier and challenger -- using ``/login`` as the relative URL that will
 display the login form, ``/login_handler`` as the relative URL where the
 form will be sent and ``/logout_handler`` as the relative URL where the
 user will be logged out. The so-called rememberer of such identifier will
 be an instance of :class:`repoze.who.plugins.cookie.AuthTktCookiePlugin`.
-All these settings can be customized through
-:mod:`repoze.what.plugins.quickstart`.
+
+All these settings can be customized through the ``config.app_cfg.base_config.sa_auth``
+options in your project. Identifiers, Authenticators and Challengers can be overridden
+providing a different list for each of them as::
+
+    base_config.sa_auth['identifiers'] = [('myidentifier', myidentifier)]
 
 You don't have to use :mod:`repoze.who` directly either, unless you decide not
-to use it the way TurboGears configures it through :mod:`repoze.what`.
-
+to use it the way TurboGears configures it.
 
 Advanced topics
 ===============
@@ -116,5 +117,6 @@ Advanced topics
 If you're looking for different authentication methods, you may want to visit
 `the repoze.who website <http://static.repoze.org/whodocs/>`_ to check if the
 plugin you're looking for is already available or how to create your own plugins.
-Then you should also check the :mod:`repoze.what` documentation to learn how to
-setup the new settings.
+
+To learn how to customize Authentication and Authorization in TurboGears you
+can give a look at `Customizing Authentication <Customization.html>`_.
