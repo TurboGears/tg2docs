@@ -380,7 +380,7 @@ These configuration options have been broken into sub pages for easier digestion
    :maxdepth: 1
 
    Config/Rendering
-   Config/Authorization
+   Auth/Customization
    Config/Routes
    Config/ToscaWidgets
    Config/SQLAlchemy
