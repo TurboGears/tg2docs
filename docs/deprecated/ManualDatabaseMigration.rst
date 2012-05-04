@@ -78,7 +78,7 @@ Place the Database under Version Control
 
 Our repository is ready.  Now we must create a table
 for maintaining revision state in our managed database. The ``migrate``
-script provides for this step as well:
+script provides for this step as well::
 
     $ migrate version_control sqlite:///devdata.db migration
 
