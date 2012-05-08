@@ -103,7 +103,7 @@ to do is pass the predicate to that decorator. For example::
 
     # ...
     from tg import require
-    from repoze.what.predicates import Any, is_user, has_permission
+    from tg.predicates import Any, is_user, has_permission
     # ...
     class MyCoolController(BaseController):
         # ...
@@ -237,7 +237,7 @@ class. For example, if your predicate is "Check that the current month is the
 specified one", your predicate checker may look like this::
 
     from datetime import date
-    from repoze.what.predicates import Predicate
+    from tg.predicates import Predicate
     
     class is_month(Predicate):
         message = 'The current month must be %(right_month)s'

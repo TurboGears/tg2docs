@@ -44,7 +44,7 @@ easy to use forms creation & validation framework:
 +-------------------------+-----------------------------+-------------------------------------------+
 | Testing Framework:      | Based on SimpleTest         | ``nose``                                  |
 +-------------------------+-----------------------------+-------------------------------------------+
-| Security Framework:     | Security component          | ``repoze.who`` & ``repoze.what``          |
+| Security Framework:     | Security component          | ``repoze.who`` & ``Authentication``       |
 +-------------------------+-----------------------------+-------------------------------------------+
 | Forms Framework:        | Form helper                 | ``tw2.forms`` & ``formencode``            |
 +-------------------------+-----------------------------+-------------------------------------------+
@@ -197,7 +197,7 @@ A Comparison of Components
 +------------------------+--------------------------------------------------------+
 | CakePHP [#]_           | TurboGears                                             |
 +========================+========================================================+
-| ACL, Auth  & Security  | ``repoze.who`` and ``repoze.what``                     |
+| ACL, Auth  & Security  | ``repoze.who`` and ``tg.predicates``                   |
 +------------------------+--------------------------------------------------------+
 | Cookie                 | ``from tg import response``, ``response.set_cookie()`` |
 |                        | & ``from tg import request``, ``request.cookies``      |

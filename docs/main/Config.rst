@@ -279,6 +279,8 @@ Available Hooks
 * ``before_render(remainder, params, output)`` - Called before rendering a controller template, ``output`` is the controller return value
 * ``after_render(response)`` - Called after finishing rendering a controller template
 
+
+
 Static Files
 ++++++++++++++++
 
