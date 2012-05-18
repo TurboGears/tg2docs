@@ -89,8 +89,8 @@ template now.
 Overriding AppConfig Rendering Methods
 ---------------------------------------
 
-.. automethod:: tg.configuration.AppConfig.setup_default_renderer
 .. automethod:: tg.configuration.AppConfig.setup_mako_renderer
 .. automethod:: tg.configuration.AppConfig.setup_genshi_renderer
 .. automethod:: tg.configuration.AppConfig.setup_jinja_renderer
+.. automethod:: tg.configuration.AppConfig.setup_kajiki_renderer
 .. automethod:: tg.configuration.AppConfig.setup_json_renderer
