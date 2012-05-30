@@ -1,0 +1,2 @@
+-e git://git.code.sf.net/p/turbogears2/tg2@development#egg=TurboGears2
+
