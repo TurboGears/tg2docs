@@ -117,7 +117,6 @@ argument.
 In the previous example calling http://localhost:8080/tickets/5/done will set the
 ticket 5 status to done.
 
-
 Creating our own CrudRestController
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -366,7 +365,7 @@ Here is what your new controller code would look like::
 
         # (...)
 
-        @expose()
+        @expose(inherit=True)
         def post(self, **kw):
             email_info()
             return super(MovieController, self).post(**kw)
@@ -374,10 +373,11 @@ Here is what your new controller code would look like::
 You might notice that the function has the @expose decorator.  This is
 required because the expose decoration occurs at the class-level, so
 that means that when you override the class method, the expose is
-eliminated.  We add it back to the method by adding @expose.  To
-change the functionality of a "GET" method, you would add
-@expose('genshi:tgext.crud.templates.get_all') if you desired to use
-the existing exposed template.
+eliminated.  We add it back to the method by adding @expose with the
+``inherit`` parameter to inherit the behavior from the parent method.
+
+For more details you can refer to the
+:ref:`TGController Subclassing <tgcontrollers-subclassing>` documentation.
 
 Overriding Templates
 ~~~~~~~~~~~~~~~~~~~~
@@ -390,7 +390,7 @@ simply returning the value of the super class's method.::
 
         # (...)
 
-        @expose(movie_demo.templetes.my_get_all_template)
+        @expose('movie_demo.templates.my_get_all_template', inherit=True)
         def get_all(self, *args, **kw):
             return super(MovieController, self).get_all(*args, **kw)
             

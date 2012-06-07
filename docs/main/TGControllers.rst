@@ -84,6 +84,59 @@ you to use actual objects with data in your controllers.
 
 Plus, it makes RESTful URLs much easier than they were in TurboGears 1.
 
+.. _tgcontrollers-subclassing:
+
+Subclassing Controllers
+---------------------------
+
+When overriding a parent controller method you will usually have to expose it
+again and place any validation or event hook it previously had.
+
+While this is possible, it is not the best way to add additional behavior to
+existing controllers. If they are implemented in an external
+library or application, you will have to look at the code of the library,
+see any template it exposed, any hook it registered and place them again.
+
+If the library will change in any future release your code will probably
+stop working.
+
+To avoid this behavior and the issues it raises since TurboGears 2.2
+it is possible to subclass controllers inheriting the configuration
+the parent methods had.
+
+The ``inherit`` parameter of the :py:class:`tg.decorators.expose` decorator
+enables this behavior::
+
+    class OriginalController(TGController):
+        @expose('mylib.templates.index')
+        def index(self):
+            return dict()
+
+        @expose('mylib.templates.about')
+        def about(self):
+            return dict()
+
+        @expose('json')
+        def data(self):
+            return {'v':5}
+
+    class MyCustomizedController(OriginalController):
+        @expose(inherit=True)
+        def index(self, *args, **kw):
+            dosomething()
+            return super(MyCustomizedController, self).index(*args, **kw)
+
+        @expose('myapp.templates.newabout', inherit=True)
+        def about(self):
+            return super(MyCustomizedController, self).about(*args, **kw)
+
+        def _before_render_data(remainder, params, output):
+            output['child_value'] = 'CHILDVALUE'
+
+        @expose(inherit=True)
+        @before_render(_before_render_data)
+        def data(self, *args, **kw):
+            return super(MyCustomizedController, self).data(*args, **kw)
 
 Mount Points and Dispatch
 ---------------------------
