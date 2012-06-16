@@ -32,6 +32,7 @@ General Project Information
     :maxdepth: 1
 
     main/TG2Philosophy
+    main/TG2Upgrading
     main/RequestFlow
     main/Contributing
     main/bitbucket_tutorial
