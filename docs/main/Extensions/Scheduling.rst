@@ -24,7 +24,7 @@ with `easy_install`:
 
 .. code-block:: bash
 
-    $ easy_install tgschuduler
+    $ easy_install tgscheduler
 
 
 Setup
