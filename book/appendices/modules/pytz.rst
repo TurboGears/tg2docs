@@ -1,5 +1,0 @@
-====
-pytz
-====
-
-.. automodule:: pytz
