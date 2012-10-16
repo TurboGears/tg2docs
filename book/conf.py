@@ -281,5 +281,5 @@ intersphinx_mapping = {
 }
 
 # Custom code_ext config values
-code_url = 'git://git.code.sf.net/p/turbogears2/tg2tut'
+code_url = 'git://github.com/TurboGears/tg2tut.git'
 todo_include_todos = True
