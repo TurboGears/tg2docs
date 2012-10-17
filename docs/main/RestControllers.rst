@@ -517,13 +517,13 @@ in::
     
         def __before__(self, *args, **kw):
             movie_id = request.url.split('/')[-3]
-            pylons.c.movie = DBSession.query(Movie).get(movie_id)
+            tg.tmpl_context.movie = DBSession.query(Movie).get(movie_id)
     
         
         @with_trailing_slash
         @expose('moviedemo.templates.rest.movie_directors.get_all')
         def get_all(self):
-            return dict(movie=pylons.c.movie, directors=pylons.c.movie.directors)
+            return dict(movie=tg.tmpl_context.movie, directors=tg.tmpl_context.movie.directors)
 
 The CRC, CrudRestController
 ---------------------------
