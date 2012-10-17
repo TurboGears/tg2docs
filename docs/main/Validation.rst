@@ -43,8 +43,8 @@ you need to specify which validator goes with which argument using the
     @expose('json')
     @validate(validators={"a":validators.Int(), "b":validators.Email})
     def two_validators(self, a=None, b=None, *args):
-        errors = [{key, value} in pylons.c.form_errors.iteritems()]
-        values =  pylons.c.form_values
+        errors = [{key, value} in tg.tmpl_context.form_errors.iteritems()]
+        values =  tg.tmpl_context.form_values
         return dict(a=a, b=b, errors=str(errors), values=str(values))
 
 The dictionary passed to validators maps the incoming field names to
@@ -230,7 +230,7 @@ validators::
     @expose()    
     @validate(validators=PwdSchema())
     def password(self, pwd1, pwd2):
-        if pylons.c.form_errors:
+        if tg.tmpl_context.form_errors:
             return "There was an error"
         else:
             return "Password ok!"
