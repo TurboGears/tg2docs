@@ -1,5 +1,0 @@
-==========
-WebHelpers
-==========
-
-.. automodule:: webhelpers

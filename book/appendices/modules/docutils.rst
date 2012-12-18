@@ -1,5 +1,0 @@
-========
-docutils
-========
-
-.. automodule:: docutils

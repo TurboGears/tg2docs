@@ -16,11 +16,19 @@
 
 body {
   font-family: {{ theme_bodyfont }};
-  font-size: 100%;
+  font-size: 16px;
   color: {{ theme_textcolor }};
   background-color: {{ theme_bgcolor }};
   margin: 0;
   padding: 0;
+}
+
+div.body p, div.body dd, div.body dt, div.body li {
+    line-height: 1.5em;
+}
+
+li.toctree-l2:last-child {
+    margin-bottom: 10px;
 }
 
 div.related {
@@ -237,7 +245,6 @@ a.headerlink:hover {
 
 div.body p, div.body dd, div.body li {
   text-align: justify;
-  line-height: 130%;
 }
 
 div.admonition p.admonition-title + p {
@@ -287,8 +294,8 @@ pre {
   padding: 10px;
   background-color: {{ theme_codebgcolor }};
   color: {{ theme_codetextcolor }};
-  line-height: 120%;
-  font-size: 110%;
+  line-height: 17px;
+  font-size: 14px;
   border: 2px solid #C6C9CB;
   border-left: none;
   border-right: none;

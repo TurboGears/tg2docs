@@ -1,5 +1,0 @@
-==========
-SQLAlchemy
-==========
-
-.. automodule:: sqlalchemy

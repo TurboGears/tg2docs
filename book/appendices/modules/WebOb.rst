@@ -1,5 +1,0 @@
-=====
-WebOb
-=====
-
-.. automodule:: webob

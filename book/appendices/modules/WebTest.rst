@@ -1,5 +1,0 @@
-=======
-WebTest
-=======
-
-.. automodule:: webtest

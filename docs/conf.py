@@ -38,7 +38,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'TurboGears'
-copyright_year = '2010'
+copyright_year = '2013'
 copyright = copyright_year + u' by the TurboGears Doc Team'
 project_url = 'http://www.turbogears.org'
 
@@ -47,7 +47,7 @@ project_url = 'http://www.turbogears.org'
 # built documents.
 #
 # The short X.Y version.
-version = '2.2.0'
+version = '2.3.0'
 # The full version, including alpha/beta/rc tags.
 release = max(tg_release_version, version)
 
@@ -256,18 +256,11 @@ todo_include_todos = True
 
 # Add Intersphinx crosslinks here
 intersphinx_mapping = {
-    'paste': ('http://pythonpaste.org', None),
     'python': ('http://docs.python.org', None),
-    'sprox': ('http://sprox.org', None),
     'sqlalchemy': ('http://www.sqlalchemy.org/docs', None),
-    'rum': ('http://docs.python-rum.org', None),
-    'tw': ('http://toscawidgets.org/documentation/ToscaWidgets/', None),
-    'twdynforms': ('http://toscawidgets.org/documentation/tw.dynforms/', None),
     'tw2' : ('http://tw2core.readthedocs.org/en/latest/', None),
-    'twforms': ('http://toscawidgets.org/documentation/tw.forms/', None),
-    'twjquery': ('http://toscawidgets.org/documentation/tw.jquery/', None),
-    'webob': ('http://pythonpaste.org/webob/', None),
-    'webtest': ('http://pythonpaste.org/webtest/', None)
+    'webob': ('http://docs.webob.org/en/latest/', None),
+    'webtest': ('http://docs.webob.org/en/latest/', None)
 }
 
 # The maximum number of days to cache remote inventories.

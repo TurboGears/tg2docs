@@ -1,5 +1,0 @@
-====
-nose
-====
-
-.. automodule:: nose
