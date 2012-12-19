@@ -17,6 +17,7 @@ Basic Recipes
     Crud/index
     Pluggable/index
     master-slave
+    upgrading
 
 Advanced Recipes
 ===================

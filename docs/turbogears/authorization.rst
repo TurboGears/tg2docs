@@ -155,10 +155,12 @@ Single predicate checkers
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. class:: not_anonymous()
+    :noindex:
 
     Check that the current user has been authenticated.
 
 .. class:: is_user(user_name)
+    :noindex:
     
     Check that the authenticated user's user name is the specified one.
     
@@ -166,6 +168,7 @@ Single predicate checkers
     :type user_name: str
 
 .. class:: in_group(group_name)
+    :noindex:
 
     Check that the user belongs to the specified group.
     
@@ -173,6 +176,7 @@ Single predicate checkers
     :type group_name: str
 
 .. class:: in_all_groups(group1_name, group2_name[, group3_name ...])
+    :noindex:
 
     Check that the user belongs to all of the specified groups.
     
@@ -181,6 +185,7 @@ Single predicate checkers
     :param group3_name ...: The name of the other groups the user must belong to.
 
 .. class:: in_any_group(group1_name, [group2_name ...])
+    :noindex:
 
     Check that the user belongs to at least one of the specified groups.
     
@@ -188,6 +193,7 @@ Single predicate checkers
     :param group2_name ...: The name of other groups the user may belong to.
 
 .. class:: has_permission(permission_name)
+    :noindex:
 
     Check that the current user has the specified permission.
     
@@ -195,6 +201,7 @@ Single predicate checkers
         the user.
 
 .. class:: has_all_permissions(permission1_name, permission2_name[, permission3_name...])
+    :noindex:
 
     Check that the current user has been granted all of the specified 
     permissions.
@@ -207,6 +214,7 @@ Single predicate checkers
         granted to the user.
 
 .. class:: has_any_permission(permission1_name[, permission2_name ...])
+    :noindex:
 
     Check that the user has at least one of the specified permissions.
     
@@ -216,6 +224,7 @@ Single predicate checkers
         granted to the user.
 
 .. class:: Not(predicate)
+    :noindex:
 
     Negate the specified predicate.
     
@@ -278,6 +287,7 @@ You may create a `compound predicate` by aggregating single (or even compound)
 predicate checkers with the functions below:
 
 .. class:: All(predicate1, predicate2[, predicate3 ...])
+    :noindex:
 
     Check that all of the specified predicates are met.
     
@@ -286,6 +296,7 @@ predicate checkers with the functions below:
     :param predicate3 ...: The other predicates that must be met.
 
 .. class:: Any(predicate1[, predicate2 ...])
+    :noindex:
 
     Check that at least one of the specified predicates is met.
     

@@ -48,4 +48,3 @@ Advanced Documentation
     migrations
     configuration/index
     authentication
-    upgrading
