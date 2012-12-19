@@ -5,8 +5,8 @@ Getting Started with TurboGears2
 ==================================
 
 This section covers a bunch of tutorials and documentation about getting started with TurboGears2,
-the `Foundations & Tutorials` section will cover tutorials and documentation for people that are approaching
-TurboGears for the first time, while the `In Depth Documentation` chapter will provide documentation for
+the `Basic Documentation` section will cover documentation for people that are approaching
+TurboGears for the first time, while the `Advanced Documentation` chapter will provide documentation for
 people that want to go down into the framework or are having more complex needs.
 
 Tutorials
@@ -18,22 +18,34 @@ Tutorials
     wiki20
     wikier/index
 
-TurboGears Foundations
+Basic Documentation
 ==========================
 
 .. toctree::
-    :maxdepth: 1
+    :maxdepth: 2
 
-    gearbox
     controllers
-    restdispatch
     validation
+    webflash
+    authorization
+    mongodb
+    session
+    caching
+    pagination
+    i18n
 
-In Depth Documentation
+
+Advanced Documentation
 =========================
 
 .. toctree::
-    :maxdepth: 1
+    :maxdepth: 2
 
     install
+    gearbox
+    restdispatch
     objectdispatch
+    migrations
+    configuration/index
+    authentication
+    upgrading

@@ -1,14 +1,17 @@
 .. _writing_controllers:
 
-=============================
-URL Dispatch and Controllers
-=============================
+===================================
+Writing Controllers
+===================================
 
 The nerve center of your TurboGears application is **the
 controller**. It ultimately handles all user actions, because every
 HTTP request arrives here first. The controller acts on the request
 and can call upon other TurboGears components (the template engines,
 database layers, etc.) as its logic directs.
+
+Basic Dispatch
+-----------------------
 
 When the TurboGears server receives an HTTP request, the requested URL
 is mapped as a call to your controller code located in
@@ -24,9 +27,8 @@ URL                                Maps to
 ``http://localhost:8080/mypage``   ``Root.mypage()``
 ================================== ======================
 
-
-Quick Example
--------------
+Index and Catch-All pages
+----------------------------
 
 Suppose using ``gearbox quickstart`` you generate a TurboGears project
 named "HelloWorld". Your default controller code would be created in
@@ -56,7 +58,6 @@ When you load the root URL ``http://localhost:8080/index`` in your web
 browser, you'll see a page with the message "Hello World" on it. In
 addition, any of `these URLs`_ will return the same result.
 
-
 Implementing A Catch-All Url Via The ``_default()`` Method
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -65,7 +66,6 @@ generally be directed to the method named ``_default()``. With the
 above example, requesting any URL besides ``/index``, for example
 ``http://localhost:8080/hello``, will return the message "This page is
 not ready".
-
 
 Adding More Pages
 ~~~~~~~~~~~~~~~~~
@@ -180,8 +180,8 @@ not be called directly by requesting a URL from the server.
 There is much more to @expose(). It will be our access to TurboGears
 sophisticated rendering features that we will explore shortly.
 
-Are You Sure You Wanted To ``expose`` Strings All The Time?
-------------------------------------------------------------
+Exposing Templates
+-------------------------
 
 As shown above, controller methods return the data of your website. So far, we
 have returned this data as literal strings. You could produce a whole site by

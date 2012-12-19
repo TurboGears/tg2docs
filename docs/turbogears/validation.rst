@@ -30,7 +30,7 @@ valid data.
 If you don't put a ``@validate()`` decorator on your method, you'll
 simply have to do the string conversion in your controller.
 
-Validating arguments (without form widgets)
+Validating Arguments
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 When not using forms, the story gets a bit more complex. Basically,
@@ -44,8 +44,8 @@ you need to specify which validator goes with which argument using the
     @expose('json')
     @validate(validators={"a":validators.Int(), "b":validators.Email})
     def two_validators(self, a=None, b=None, *args):
-        errors = [{key, value} in pylons.c.form_errors.iteritems()]
-        values =  pylons.c.form_values
+        errors = [{key, value} in tg.tmpl_context.form_errors.iteritems()]
+        values =  tg.tmpl_context.form_values
         return dict(a=a, b=b, errors=str(errors), values=str(values))
 
 The dictionary passed to validators maps the incoming field names to
@@ -64,8 +64,8 @@ use: they are available in the ``formencode.validators`` module.
 For most validators, you can pass keyword arguments for more specific
 constraints.
 
-Available Validators
-~~~~~~~~~~~~~~~~~~~~
+FormEncode Validators
+------------------------
 
 * Attribute
 * Bool
@@ -130,7 +130,7 @@ the defaults.
 
 See the FormEncode documentation for how this is done.
 
-.. _`FormEncode validators`: http://formencode.org/module-formencode.validators.html#classes
+.. _`FormEncode validators`: https://formencode.readthedocs.org/en/latest/modules/validators.html
 
 You can also compose ``compound`` validators with logical operations,
 the FormEncode compound module provides `All` (all must pass), 
@@ -145,8 +145,33 @@ like so::
         validators.UnicodeString(),
     )
 
-Validating widget-based forms
------------------------------
+Writing Custom Validators
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you can't or don't want to rely on the FormEncode library you can write
+your own validators.
+
+Validators are simply objects that provide a ``to_python`` method
+which returns the converted value or raise :py:class:`tg.validation.TGValidationError`
+
+For example a validator that converts a paramter to an integer would look like:
+
+.. code-block:: python
+
+    from tg.validation import TGValidationError
+
+    class IntValidator(object):
+        def to_python(self, value, state=None):
+            try:
+                return int(value)
+            except:
+                raise TGValidationError('Integer expected')
+
+Then it is possible to pass an instance of IntValidator to the TurboGears ``@validate``
+decorator.
+
+Validating Widget Based Forms
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The simplest way to use ``@validate()`` is to pass in a reference to a
 widgets-based form:
@@ -179,7 +204,7 @@ you want called to @validate via the error_handler param:
 
 The method in question will be called, with the unvalidated data as
 its parameters.  And error validation messages will be stored in
-pylons.tmpl_context.
+tg.tmpl_context.
 
 Here's a quick example of how this all works:
 
@@ -189,7 +214,7 @@ Here's a quick example of how this all works:
     @validate(form=myform)
     def process_form_errors(self, **kwargs):
         #add error messages to the kwargs dictionary and return it
-        kwargs['errors'] = pylons.tmpl_context.form_errors
+        kwargs['errors'] = tg.tmpl_context.form_errors
         return dict(kwargs)
     
     @expose('json')
@@ -201,10 +226,10 @@ If there's a validation error in myform, the send_to_error_handler
 method will never get called.  Instead process_form_errors will get
 called, and the validation error messages can be picked up from the
 form_errors value of the template context object
-(pylons.tmpl_context).
+(tg.tmpl_context).
 
-Schema validation
------------------
+Schema Validation
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Sometimes you need more power and flexibility than you can get from
 validating individual form fields.  Fortunately FormEncode provides
@@ -231,7 +256,7 @@ validators::
     @expose()    
     @validate(validators=PwdSchema())
     def password(self, pwd1, pwd2):
-        if pylons.c.form_errors:
+        if tg.tmpl_context.form_errors:
             return "There was an error"
         else:
             return "Password ok!"
@@ -256,32 +281,6 @@ or you will get validation errors.  To avoid this, add::
 to your schema declaration.
 
 .. _`FormEncode Validator`: http://formencode.org/docs/Validator.html
-
-Converting URL strings to Python types manually
------------------------------------------------
-
-You can always use e.g. Python's ``int()`` method to convert a string
-to an integer and use a try/except block to catch errors in the
-conversion process:
-
-.. code-block:: python
-
-  from tg import controllers, expose
-  class Root(controllers.RootController):
-
-  #...
-      # return the result of x+y
-      @expose()
-      def addnum(self, x, y)
-          try:
-             return str(int(x)+int(y))
-          except:
-             return 'value is not valid'
-    
-This isn't that hard, but it quickly becomes unwieldy when you start
-converting large numbers of arguments. Moreover, you still have the
-problem of propagating the errors back to your users. In the end, it's
-usually far simpler to use the validation framework.
 
 .. _FormEncode: http://formencode.org/
 

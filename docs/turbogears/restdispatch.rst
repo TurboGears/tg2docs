@@ -246,7 +246,7 @@ back to the listing page:
         DBSession.delete(movie)
         return dict(movie=movie.movie_id)
 
-Non-RESTful Methods?
+Non-RESTful Methods
 --------------------
 
 Let's face it, REST is cool, but sometimes it doesn't meet our needs
@@ -329,15 +329,3 @@ Here is what the Controller looks like with __before__ added in:
         @expose('moviedemo.templates.rest.movie_directors.get_all')
         def get_all(self):
             return dict(movie=tmpl_context.movie, directors=tmpl_context.movie.directors)
-
-The CRC, CrudRestController
----------------------------
-
-If you think this seems like a lot of work just to create some simple
-CRUD for your database, well, I have to agree.  Luckily we have
-ToscaWidgets, FormEncode, and Sprox to help generate the forms for our
-templates.  We also have :ref:`CrudRestController <crudrestcontroller>`
-which provides all of the create, update, and delete functionality
-automatically for our model in question.
-
-It might be worth taking a look!

@@ -7,7 +7,8 @@
    :hidden:
 
    turbogears/starting
-   turbogears/cookbook/cookbook
+   cookbook/cookbook
+   reference/reference
 
 The TurboGears documentation
 ============================
@@ -15,7 +16,7 @@ The TurboGears documentation
 +----------------------------------------------+-------------------------------------------------+-------------------------------------------------+
 | .. container:: part-tutorials                |  .. container:: part-recipes                    |  .. container:: part-reference                  |
 |                                              |                                                 |                                                 |
-|    :ref:`Get Started <tg-starting>`          |    :ref:`The CookBook <tg-cookbook>`            |    :ref:`Reference <genindex>`                  |
+|    :ref:`Get Started <tg-starting>`          |    :ref:`The CookBook <tg-cookbook>`            |    :ref:`TurboGears Reference <tg-reference>`   |
 +----------------------------------------------+-------------------------------------------------+-------------------------------------------------+
 
 Getting Started
@@ -36,7 +37,7 @@ correctly work together.
 
     $ virtualenv --no-site-packages tg2env
     $ source tg2env/bin/activate
-    (tg2env)$ easy_install -i http://tg.gy/current tg.devtools
+    (tg2env)$ pip install -i http://tg.gy/current tg.devtools
 
 Single File Application
 ------------------------------

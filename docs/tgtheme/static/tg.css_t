@@ -343,7 +343,7 @@ div#the-turbogears-documentation table.docutils {
   margin: 30px auto;
   border: none !important;
   border-collapse: separate;
-  width: 720;
+  width: 720px;
 }
 
 div#the-turbogears-documentation table.docutils td {
@@ -353,12 +353,13 @@ div#the-turbogears-documentation table.docutils td {
 div.part-beginner a, div.part-tutorials a, div.part-extending a,
 div.part-gears a, div.part-recipes a, div.part-reference a {
   display: block;
-  font-size: 80%;
+  font-size: 130%;
   width: 64px;
   height: 80px;
   padding: 10px 4px 4px 66px;
   margin: 4px auto;
   background-repeat: no-repeat;
+  vertical-align: middle;
 }
 
 div.part-beginner a {
