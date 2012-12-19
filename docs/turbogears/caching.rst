@@ -65,10 +65,10 @@ used with the same API within your application.
 Using the Cache
 ^^^^^^^^^^^^^^^
 
-The configured `Beaker` cache is provided by the `pylons` module.
-This is more properly thought of as a `CacheManager`, as it provides
-access to multiple independent cache namespaces.  To access the
-cache from within a controller module:
+The configured `Beaker` is more properly thought of as a `CacheManager`, 
+as it provides access to multiple independent cache namespaces.  
+
+To access the cache from within a controller module:
 
 .. code-block:: python
 
@@ -341,9 +341,6 @@ doesn't yet have a copy of the page. Otherwise, a 304 HTTP Exception will be
 thrown that is then caught by Paste middleware and turned into a proper 304
 response to the browser. This will cause the browser to use its own
 locally-cached copy.
-
-:func:`etag_cache` returns `pylons.response` for legacy purposes
-(`tg.response` should be used directly instead).
 
 ETag-based caching requires a single key which is sent in the ETag HTTP header
 back to the browser. The `RFC specification for HTTP headers

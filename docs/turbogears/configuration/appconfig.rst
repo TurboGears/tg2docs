@@ -158,8 +158,7 @@ be editable by those who deploy the app.
 
 As part of the app loading process the ``base_config`` object will be
 merged in with the config values from the .ini file you're using to
-launch your app, and placed in ``tg.config`` (also known as
-``pylons.config``).
+launch your app, and placed in ``tg.config``.
 
 As we mentioned previously, in addition to the attributes on the
 ``base_config`` object there are a number of methods which are used to

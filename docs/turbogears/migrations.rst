@@ -168,7 +168,7 @@ of the ``websetup/bootstrap.py`` script a pool of commands to set the
 schema version to the last one::
 
     from migrate.versioning.schema import ControlledSchema
-    schema = ControlledSchema(config['pylons.app_globals'].sa_engine, 'migration')
+    schema = ControlledSchema(config['tg.app_globals'].sa_engine, 'migration')
     print 'Setting database version to %s' % schema.repository.latest
     schema.update_repository_table(0, schema.repository.latest)
 
