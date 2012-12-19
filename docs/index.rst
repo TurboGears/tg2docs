@@ -35,9 +35,9 @@ correctly work together.
 
 .. code-block:: bash
 
-    $ virtualenv --no-site-packages tg2env
+    $ pip install -E tg2env -i http://tg.gy/current tg.devtools
     $ source tg2env/bin/activate
-    (tg2env)$ pip install -i http://tg.gy/current tg.devtools
+    (tg2env)$ #now you are ready to work with TurboGears
 
 Single File Application
 ------------------------------

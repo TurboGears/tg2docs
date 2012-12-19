@@ -1,7 +1,7 @@
 .. _tg-cookbook:
 
 ======================================
-Recipes and Extensions for TurboGears
+TurboGears2 CookBook
 ======================================
 
 The CookBook is a collection of documentation and patterns common to TurboGears2
@@ -15,8 +15,8 @@ Basic Recipes
     TwForms
     datagrid
     Crud/index
-    Pluggable/index
     master-slave
+    deploy/index
     upgrading
 
 Advanced Recipes

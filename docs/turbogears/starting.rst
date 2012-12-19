@@ -1,7 +1,7 @@
 .. _tg-starting:
 
 ==================================
-Getting Started with TurboGears2
+Tutorials & Documentation
 ==================================
 
 This section covers a bunch of tutorials and documentation about getting started with TurboGears2,
@@ -28,11 +28,12 @@ Basic Documentation
     validation
     webflash
     authorization
-    mongodb
     session
     caching
-    pagination
     i18n
+    Pluggable/index
+    pagination
+    mongodb
 
 
 Advanced Documentation
