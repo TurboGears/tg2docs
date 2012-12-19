@@ -138,7 +138,7 @@ Windows and provides a nice user-interface to edit po files.
 
 6. Start server::
 
-    paster serve --reload development.ini
+    gearbox serve --reload
 
 And see the local message show on the screen.
 

@@ -41,8 +41,7 @@ to create a new pluggable applications:
 
 .. code-block:: bash
 
-    $ paster quickstart-pluggable plugtest
-    Enter package name [plugtest]:
+    $ gearbox quickstart-pluggable plugtest
     ...
 
 The quickstarted application will provide an example on how to use

@@ -49,10 +49,10 @@ Now that our model is recognized by TurboGears we must create the table that it 
 to store its data. By default TurboGears will automatically create tables for each model it is aware of.
 This is performed during the application setup phase.
 
-To setup your application you simply need to run the ``paster setup-app`` command where your application
+To setup your application you simply need to run the ``gearbox setup-app`` command where your application
 configuration file is available (usually the root of the project)::
 
-    (tg22env)$ paster setup-app development.ini
+    (tg22env)$ gearbox setup-app
     Running setup_app() from wikir.websetup
     Creating tables
 
