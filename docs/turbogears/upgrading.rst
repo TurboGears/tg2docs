@@ -1,6 +1,59 @@
 Upgrading Your TurboGears Project
 ====================================
 
+From 2.2 to 2.3
+----------------------
+
+Projects quickstarted on 2.2 should mostly work out of the box.
+
+GearBox replaced PasteScript
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Just by installing gearbox itself your TurboGears project will be able to use gearbox system wide
+commands like ``gearbox serve``, ``gearbox setup-app`` and ``gearbox makepackage`` commands.
+These commands provide a replacement for the paster serve, paster setup-app and paster create commands.
+
+The main difference with the paster command is usually only that gearbox commands explicitly set the
+configuration file using the ``--config`` option instead of accepting it positionally.  By default gearbox
+will always load a configuration file named `development.ini`, this mean you can simply run ``gearbox serve``
+in place of ``paster serve development.ini``
+
+Gearbox HTTP Servers
+++++++++++++++++++++++++++
+
+If you are moving your TurboGears2 project from paster you will probably end serving your
+application with Paste HTTP server even if you are using the ``gearbox serve`` command.
+
+The reason for this behavior is that gearbox is going to use what is specified inside
+the **server:main** section of your *.ini* file to serve your application.
+TurboGears2 projects quickstarted before 2.3 used Paste and so the projects is probably
+configured to use Paste#http as the server. This is not an issue by itself, it will just require
+you to have Paste installed to be able to serve the application, to totally remove the Paste
+dependency simply replace **Paste#http** with **gearbox#wsgiref**.
+
+Enabling GearBox migrate and tgshell commands
++++++++++++++++++++++++++++++++++++++++++++++++++
+
+To enable ``gearbox migrate`` and ``gearbox tgshell`` commands make sure that your *setup.py* `entry_points`
+look like::
+
+    entry_points={
+        'paste.app_factory': [
+            'main = makonoauth.config.middleware:make_app'
+        ],
+        'gearbox.plugins': [
+            'turbogears-devtools = tg.devtools'
+        ]
+    }
+
+The **paste.app_factory** section will let ``gearbox serve`` know how to create the application that
+has to be served. Gearbox relies on PasteDeploy for application setup, so it required a paste.app_factory
+section to be able to correctly load the application.
+
+While the **gearbox.plugins** section will let *gearbox* itself know that inside that directory the tg.devtools
+commands have to be enabled making ``gearbox tgshell`` and ``gearbox migrate`` available when we run gearbox
+from inside our project directory.
+
 From 2.1 to 2.2
 ----------------------
 
