@@ -354,7 +354,7 @@ div.part-beginner a, div.part-tutorials a, div.part-extending a,
 div.part-gears a, div.part-recipes a, div.part-reference a {
   display: block;
   font-size: 130%;
-  width: 64px;
+  width: 160px;
   height: 80px;
   padding: 10px 4px 4px 66px;
   margin: 4px auto;

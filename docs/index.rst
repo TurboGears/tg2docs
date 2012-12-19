@@ -13,11 +13,11 @@
 The TurboGears documentation
 ============================
 
-+----------------------------------------------+-------------------------------------------------+-------------------------------------------------+
-| .. container:: part-tutorials                |  .. container:: part-recipes                    |  .. container:: part-reference                  |
-|                                              |                                                 |                                                 |
-|    :ref:`Get Started <tg-starting>`          |    :ref:`The CookBook <tg-cookbook>`            |    :ref:`TurboGears Reference <tg-reference>`   |
-+----------------------------------------------+-------------------------------------------------+-------------------------------------------------+
++----------------------------------------------------+-------------------------------------------------+-------------------------------------------------+
+| .. container:: part-tutorials                      |  .. container:: part-recipes                    |  .. container:: part-reference                  |
+|                                                    |                                                 |                                                 |
+|    :ref:`Tutorials & Documentation <tg-starting>`  |    :ref:`TurboGears CookBook <tg-cookbook>`     |    :ref:`Modules Reference <tg-reference>`      |
++----------------------------------------------------+-------------------------------------------------+-------------------------------------------------+
 
 Getting Started
 ==============================
