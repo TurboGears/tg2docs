@@ -295,7 +295,7 @@ Often times you will want to provide your own custom field validator. The best w
 do this is to add the validator declaratively to your Form Definition::
 
     from formencode.validators import String
-    class NewMovieForm(DojoAddRecordForm):
+    class NewMovieForm(AddRecordForm):
         __model__ = Movie
         __omit_fields__ = ['movie_id', 'genre_id']
         title = String(min=4)
@@ -314,7 +314,7 @@ your widget and validator together.::
     from sprox.formbase import Field
     from tw.forms.fields import PasswordField
     
-    class NewMovieForm(DojoAddRecordForm):
+    class NewMovieForm(AddRecordForm):
         __model__ = Movie
         __omit_fields__ = ['movie_id', 'genre_id']
         title = Field(PasswordField, String(min=4))
@@ -328,7 +328,7 @@ Required Fields
 You can tell sprox to make a field required even if it is nullable in the database by passing
 the fieldname into a list of the __require_fields__ modifier.::
 
-    class NewMovieForm(DojoAddRecordForm):
+    class NewMovieForm(AddRecordForm):
         __model__ = Movie
         __omit_fields__ = ['movie_id', 'genre_id']
         __require_fields__ = ['description']
@@ -350,5 +350,4 @@ Conclusion
 It provides sensible widgets and validators based on your schema, but can be overridden for your own
 needs.  FormBase provides declarative addition of fields, ways to limit and omit fields to a set that
 is appropriate for your application.  Sprox provides automated drop-down boxes, as well as providing
-a way to override those widgets for your purposes.  sprox.dojo provides a select shuttle widget to allow your
-users to enjoy a more friendly interface.
+a way to override those widgets for your purposes.
