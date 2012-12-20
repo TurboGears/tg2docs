@@ -54,6 +54,16 @@ While the **gearbox.plugins** section will let *gearbox* itself know that inside
 commands have to be enabled making ``gearbox tgshell`` and ``gearbox migrate`` available when we run gearbox
 from inside our project directory.
 
+Migrations moved from sqlalchemy-migrate to Alembic
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Due to sqlalchemy-migrate not supporting SQLAlchemy 0.8 and Python 3, the migrations
+for newly quickstarted projects will now rely on Alembic. The migrations are now handled
+using ``gearbox migrate`` command, which supports the same subcommands as the ``paster migrate`` one.
+
+The ``gearbox sqla-migrate`` command is also provided for backward compatibility for projects that need
+to keep using sqlalchemy-migrate.
+
 From 2.1 to 2.2
 ----------------------
 
