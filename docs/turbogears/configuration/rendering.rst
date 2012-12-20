@@ -89,8 +89,5 @@ template now.
 Overriding AppConfig Rendering Methods
 ---------------------------------------
 
-.. automethod:: tg.configuration.AppConfig.setup_mako_renderer
-.. automethod:: tg.configuration.AppConfig.setup_genshi_renderer
-.. automethod:: tg.configuration.AppConfig.setup_jinja_renderer
-.. automethod:: tg.configuration.AppConfig.setup_kajiki_renderer
-.. automethod:: tg.configuration.AppConfig.setup_json_renderer
+Look for the ``setup_*_renderer`` methods inside the :py:class:`AppConfig`
+class to override renderers behavior or add more.

@@ -33,4 +33,7 @@ Transaction Manager and handle transactions yourself.
 -------------------------------
 
 .. automethod:: tg.configuration.AppConfig.setup_sqlalchemy
+    :noindex:
+
 .. automethod:: tg.configuration.AppConfig.add_tm_middleware
+    :noindex:

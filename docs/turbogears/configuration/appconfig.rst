@@ -332,16 +332,5 @@ like this::
     # modify base_config parameters below
 
 The above example shows how one would go about overridding the toscawidgets2
-middleware.  See the class definition below for more ideas on how you
+middleware.  See the :py:class:`AppConfig` for more ideas on how you
 could modify your own custom config
-
-AppConfig General Options
----------------------------
-
-.. autoclass:: AppConfig
-   :members: init_config,
-             add_core_middleware,
-             add_error_middleware,
-             setup_tg_wsgi_app,
-             setup_helpers_and_globals,
-             make_load_environment
