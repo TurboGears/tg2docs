@@ -1,2 +1,2 @@
 -e git://github.com/TurboGears/tg2.git@workshop#egg=TurboGears2
-
+nose
