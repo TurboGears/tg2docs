@@ -13,10 +13,29 @@ user's browser. This is generally used to store simple data that does
 not need to be persisted in a database.
 
 Sessions in TurboGears can be backed by the filesystem, memcache, the
-database, or by hashed cookie values.  By default the filesystem is
-used, but in high traffic websites hashed cookies provide a great
-system for small bits of session data.  If you are storing lots of
-data in the session, :ref:`Memcache <memcache>` is recommended.
+database, or by hashed cookie values.  By default, cookies are used
+for storing the session data, which is only good for storing very
+little amounts of data in the session since all data will be sent
+back and forth within the cookie. If you are storing lots of data in
+the session, :ref:`Memcache <memcache>` is recommended.
+
+.. warning::
+
+    Using cookies for storing the whole session's content exposes
+    your application to possible exploits if the attacker gets to
+    know the secret key which is used for the encryption of the
+    cookies. Considering this, it is probably better to use the
+    filesystem storage if you don't want to set up memcache.
+
+.. note::
+
+    When using the filesystem backed storage, you must be aware of
+    the fact, that beaker does **not** clean up the session files
+    at all. You have to make sure to clean up the data directory on
+    a regular basis yourself.
+    Refer to the `Beaker documentation`_ for more details.
+
+.. _Beaker documentation: http://beaker.readthedocs.org/en/latest/sessions.html#removing-expired-old-sessions
 
 How To Use Sessions?
 --------------------
@@ -25,7 +44,7 @@ If you just quickstarted a TurboGears 2 application, the session
 system is pre-configured and ready to be used.
 
 By default we are using the Beaker session system. This system is
-configured to use file system based storage.
+configured to use hashed cookies for session storage.
 
 Each time a client connects, the session middleware (Beaker) will
 inspect the cookie using the cookie name we have defined in the
@@ -35,11 +54,15 @@ If the cookie is not found it will be set in the browser. On all
 subsequent visits, the middleware will find the cookie and make use of
 it.
 
-In the cookie beaker stores, a large random key was set at the first
-visit and was been associated behind the scenes to a file in the file
-system cache.  In all but the cookie based backends, this key is then
-used to lookup and retrieve the session data from the proper
-datastore.
+When using the cookie based backend, all data that you put into the
+session will be pickled, hashed and encrypted by the middleware 
+when sending the response to the browser and vice-versa when
+reading the request.
+
+In the other backends, the cookie only contains a large random key
+that was set at the first visit and has been associated behind the
+scenes to a file in the file system cache. This key is then used to
+lookup and retrieve the session data from the proper datastore.
 
 OK, enough with theory! Let's get to some real life (sort of)
 examples.  Open up your root controller and add the following import
