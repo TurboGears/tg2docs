@@ -5,6 +5,8 @@
 *.pyo
 *.egg-info
 .project
+.idea
+.coverage
 .pydevproject
 sphinxlog.txt
 devdata.db

@@ -1,5 +1,0 @@
-==========
-MarkupSafe
-==========
-
-.. automodule:: markupsafe

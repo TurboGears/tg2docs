@@ -16,11 +16,19 @@
 
 body {
   font-family: {{ theme_bodyfont }};
-  font-size: 100%;
+  font-size: 16px;
   color: {{ theme_textcolor }};
   background-color: {{ theme_bgcolor }};
   margin: 0;
   padding: 0;
+}
+
+div.body p, div.body dd, div.body dt, div.body li {
+    line-height: 1.5em;
+}
+
+li.toctree-l2:last-child {
+    margin-bottom: 10px;
 }
 
 div.related {
@@ -237,7 +245,6 @@ a.headerlink:hover {
 
 div.body p, div.body dd, div.body li {
   text-align: justify;
-  line-height: 130%;
 }
 
 div.admonition p.admonition-title + p {
@@ -287,8 +294,8 @@ pre {
   padding: 10px;
   background-color: {{ theme_codebgcolor }};
   color: {{ theme_codetextcolor }};
-  line-height: 120%;
-  font-size: 110%;
+  line-height: 17px;
+  font-size: 14px;
   border: 2px solid #C6C9CB;
   border-left: none;
   border-right: none;
@@ -336,7 +343,7 @@ div#the-turbogears-documentation table.docutils {
   margin: 30px auto;
   border: none !important;
   border-collapse: separate;
-  width: 720;
+  width: 720px;
 }
 
 div#the-turbogears-documentation table.docutils td {
@@ -346,12 +353,13 @@ div#the-turbogears-documentation table.docutils td {
 div.part-beginner a, div.part-tutorials a, div.part-extending a,
 div.part-gears a, div.part-recipes a, div.part-reference a {
   display: block;
-  font-size: 80%;
-  width: 64px;
+  font-size: 130%;
+  width: 160px;
   height: 80px;
   padding: 10px 4px 4px 66px;
   margin: 4px auto;
   background-repeat: no-repeat;
+  vertical-align: middle;
 }
 
 div.part-beginner a {

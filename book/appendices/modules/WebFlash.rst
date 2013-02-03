@@ -1,5 +1,0 @@
-========
-WebFlash
-========
-
-.. automodule:: webflash

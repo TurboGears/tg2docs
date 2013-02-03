@@ -1,5 +1,0 @@
-========
-Pygments
-========
-
-.. automodule:: pygments

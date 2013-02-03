@@ -1,5 +1,0 @@
-==========
-simplejson
-==========
-
-.. automodule:: simplejson

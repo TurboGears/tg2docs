@@ -1,5 +1,0 @@
-======
-Genshi
-======
-
-.. automodule:: genshi

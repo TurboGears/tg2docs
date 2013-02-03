@@ -1,5 +1,0 @@
-=====
-Babel
-=====
-
-.. automodule:: babel
