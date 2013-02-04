@@ -29,3 +29,13 @@ Advanced Recipes
     scheduling
     multiple-databases
     sprox
+
+Contributing to TurboGears
+=============================
+
+.. toctree::
+    :maxdepth: 2
+
+    contributing/prepenv
+    contributing/testingchanges
+    contributing/preprelease
