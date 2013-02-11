@@ -88,6 +88,8 @@ add utility methods on the fly::
     class TicketCrudController(EasyCrudRestController):
         model = Ticket
 
+        title = "My admin title"
+
         __form_options__ = {
             '__hide_fields__':['_id', 'status', 'sprint'],
             '__field_order__':['title', 'description'],
@@ -100,6 +102,9 @@ add utility methods on the fly::
                 'revert':('sprint', lambda ticket:ticket.sprint.project.backlog),
                 'sprint':('sprint', lambda ticket:ticket.sprint.project.last_sprint),
         }
+
+The ``title`` option provides a way to customize the title displayed in the titlebar
+of your browser.
 
 The ``__form_options__`` dictionary will permit to tune the forms configuration.
 The specified options will be applied to both the form used to create new entities
