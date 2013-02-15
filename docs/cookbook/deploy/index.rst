@@ -8,3 +8,4 @@ This section describes standard deployment technics for TurboGears2.
    :maxdepth: 2
 
    mod_wsgi
+   circus
