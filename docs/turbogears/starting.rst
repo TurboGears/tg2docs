@@ -15,6 +15,7 @@ Tutorials
 .. toctree::
     :maxdepth: 2
 
+    minimal/index
     wiki20
     wikier/index
 
