@@ -1,8 +1,8 @@
 .. _wiki20:
 
-=========================================================
-You first TurboGears2 Application: A Wiki in 20 Minutes
-=========================================================
+==================================================
+Full Featured TurboGears: A Wiki in 20 Minutes
+==================================================
 
 How does TurboGears2 help you get development done quickly? We'll show
 you by developing a simple wiki application that should take you no
@@ -61,14 +61,14 @@ To do so we need to install the ``virtualenv`` package::
 Now the virtualenv command should be available and we can create and activate
 a virtual environment for our TurboGears2 project::
 
-    $ virtualenv tg22env
-    $ . tg22env/bin/activate
+    $ virtualenv tgenv
+    $ . tgenv/bin/activate
 
 
 If our environment got successfully created and activated we should end up with
 a prompt that looks like::
 
-    (tg22env)$
+    (tgenv)$
 
 Installing TurboGears2
 --------------------------------
@@ -77,7 +77,7 @@ TurboGears2 can be quickly installed by installing the TurboGears2 development t
 those will install TurboGears2 itself and a bunch of commands useful when developing
 TurboGears applications::
 
-    (tg22env)$ pip install -i http://tg.gy/current tg.devtools
+    (tgenv)$ pip install -i http://tg.gy/current tg.devtools
 
 .. note::
     The `-i http://tg.gy/current` option is used to make sure that we install
@@ -98,7 +98,7 @@ few will be touched upon in this tutorial. (Check the
 you'll need is ``quickstart``, which initializes a TurboGears project.
 Go to a command line window and run the following command::
 
-    (tg22env)$ gearbox quickstart wiki20
+    (tgenv)$ gearbox quickstart wiki20
 
 This will create a project called wiki20 with the default template engine and with authentication.
 TurboGears2 projects usually share a common structure, which should look like::
@@ -159,7 +159,7 @@ inside the ``wiki20`` directory::
 
 You should now be able to start the newly create project with the ``gearbox serve`` command::
 
-    (tg22env)$ gearbox serve --reload
+    (tgenv)$ gearbox serve --reload
     Starting subprocess with file monitor
     Starting server in PID 32797.
     serving on http://127.0.0.1:8080
@@ -423,7 +423,7 @@ the ``gearbox setup-app`` command where your application configuration file is a
 
 .. code-block:: bash
 
-    (tg22env)$ gearbox setup-app
+    (tgenv)$ gearbox setup-app
     Running setup_app() from wiki20.websetup
     Creating tables
 

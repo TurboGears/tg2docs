@@ -24,14 +24,14 @@ To do so we need to install the ``virtualenv`` package::
 Now the virtualenv command should be available and we can create and activate
 a virtual environment for our TurboGears2 project::
 
-    $ virtualenv tg22env
-    $ . tg22env/bin/activate
+    $ virtualenv tgenv
+    $ . tgenv/bin/activate
 
 
 If our environment got successfully created and activated we should end up with
 a prompt that looks like::
 
-    (tg22env)$
+    (tgenv)$
 
 Installing TurboGears2
 --------------------------------
@@ -40,7 +40,7 @@ TurboGears2 can be quickly installed by installing the TurboGears2 development t
 This will install TurboGears2 itself and a bunch of commands useful when developing
 TurboGears applications::
 
-    (tg22env)$ pip install -i http://tg.gy/230 tg.devtools
+    (tgenv)$ pip install -i http://tg.gy/230 tg.devtools
 
 .. note::
     The `-i http://tg.gy/230` option is used to make sure that we install
@@ -56,7 +56,7 @@ Creating the Project
 If the install correctly completed the ``gearbox quickstart`` command should be available
 in your virtual environment::
 
-    (tg22env)$ gearbox quickstart wikir
+    (tgenv)$ gearbox quickstart wikir
 
 This will create a project called wikir with the default template engine and with authentication.
 TurboGears2 projects usually share a common structure, which should look like::
@@ -81,8 +81,8 @@ Before we can start our project and open it into a browser we must install any d
 that is not strictly related to TurboGears itself. This can easily be achieved running the develop
 command which will install into our environment the project itself and all its dependencies::
 
-    (tg22env)$ cd wikir
-    (tg22env)$ pip install -e .
+    (tgenv)$ cd wikir
+    (tgenv)$ pip install -e .
 
 Project depndencies are specified inside the ``setup.py`` file in the ``install_requires`` list.
 Default project dependencies should look like::
@@ -117,7 +117,7 @@ Serving our Project
 
 You should now be able to start the newly create project with the ``gearbox serve`` command::
 
-    (tg22env)$ gearbox serve --reload
+    (tgenv)$ gearbox serve --reload
     Starting subprocess with file monitor
     Starting server in PID 32797.
     serving on http://127.0.0.1:8080
