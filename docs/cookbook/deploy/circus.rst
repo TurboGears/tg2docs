@@ -30,7 +30,8 @@ application running under ``Chaussette`` through ``Circus``.
 
     .. code-block:: bash
 
-        $ pip install -E /var/tg2env -i http://tg.gy/current tg.devtools
+        $ virtualenv /var/tg2env
+        $ /var/tg2env/bin/pip install -i http://tg.gy/current tg.devtools
 
 #.  Activate the virtual environment
 
