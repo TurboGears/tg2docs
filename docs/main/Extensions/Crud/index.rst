@@ -94,6 +94,12 @@ add utility methods on the fly::
             '__field_widget_types__':{'description':TextArea}
         }
 
+        __table_options__ = { # see Sprox TableBase and Sprox TableFiller
+            '__limit_fields__': ['title', 'desc'],
+            '__add_fields__': {'computed': None},
+            'computed': lambda filler, row: row.some_field * 2
+        }
+
         __setters__ = {
                 'done':('status', 'done'),
                 'todo':('status', 'new'),
@@ -106,6 +112,12 @@ The specified options will be applied to both the form used to create new entiti
 and to edit the existing ones.
 To have a look at the available options refer to
 `Sprox FormBase <http://sprox.org/modules/sprox.formbase.html#module-sprox.formbase>`_
+
+The ``__table_options__`` dictionary will permit to tune the forms configuration.
+To have a look at the available options refer to
+`Sprox TableBase <http://sprox.org/modules/sprox.tablebase.html#sprox.tablebase.TableBase>`_,
+`Sprox TableFiller <http://sprox.org/modules/sprox.fillerbase.html?highlight=tablefiller#sprox.fillerbase.TableFiller>`_,
+and their parents as well.
 
 The ``__setters__`` option provides a way to add new simple methods on the fly
 to the controller. The key of the provided dictionary is the name of the method, while
