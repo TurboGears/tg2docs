@@ -279,5 +279,5 @@ What's Next?
 .. _`STOMP`: http://stomp.codehaus.org/
 .. _`XMPP`: http://xmpp.org/
 .. _`IRC`: http://en.wikipedia.org/wiki/Internet_Relay_Chat
-.. _`Twisted`: http://www.twistedmatrix.com/
+.. _`Twisted`: http://twistedmatrix.com/
 .. _`Django, Orbited, Stomp and Co.`: http://mischneider.net/?p=125

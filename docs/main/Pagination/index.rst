@@ -172,7 +172,7 @@ Demonstrating some more formating arguments::
 
 
 See
-http://www.pylonshq.com/docs/en/0.9.7/thirdparty/webhelpers/paginate/
+:mod:`webhelpers.paginate`
 for more details.
 
 Adding Parameters to Links
