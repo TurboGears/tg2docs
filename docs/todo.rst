@@ -20,9 +20,7 @@ Useful Links:
 -------------
 
 * http://groups.google.com/group/turbogears/browse_thread/thread/70c14ac308563af5
-* http://www.imagebin.ca/view/65iqpnZ.html
 * http://www.blog.pythonlibrary.org/?p=210
-* http://wiki.github.com/GothAlice/YAPWF/how-to-multiple-database-connections
 * http://www.blog.pythonlibrary.org/?p=230
 
 Testing Notes and Links
@@ -42,7 +40,6 @@ From Admin Through Creating Your Own Widgets
 * http://turbogears.org/2.1/docs/main/ToscaWidgets/forms.html
 * http://www.sprox.org/tutorials/table.html
 * http://www.sprox.org/tutorials/form.html
-* http://code.google.com/p/pythontutorials/source/browse/docs/twtut/ajax_tutorial.rst
 
 Repoze Docs
 -----------

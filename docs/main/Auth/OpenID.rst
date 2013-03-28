@@ -309,7 +309,7 @@ References
  * `Get an OpenID`_ -- describes how to get an OpenID URI via various services,
    you may already have an OpenID provider.  If not `myopenid.com` can be used 
    to set up a new ID
- * `Repoze.who.plugins.openid`_ -- documentation for the plugin
+ * `repoze.who.plugins.openid`_ -- PyPI entry for the plugin
 
-.. _`Repoze.who.plugins.openid` : http://quantumcore.org/docs/repoze.who.plugins.openid/
+.. _`repoze.who.plugins.openid` : https://pypi.python.org/pypi/repoze.who.plugins.openid/
 .. _`Get an OpenID` : http://openid.net/get-an-openid/

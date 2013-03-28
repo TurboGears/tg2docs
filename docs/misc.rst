@@ -202,7 +202,7 @@ General
 
 .. todo:: Difficulty: Medium. make sure that override_template is more visible, and provide a tutorial on how to use it
 
-.. todo:: Difficulty: Medium. http://code.google.com/p/tgtools/source/browse/projects/tgext.admin/trunk/tgext/admin/tgadminconfig.py#114 << how to override tgext.admin controllers properly
+.. todo:: Difficulty: Medium. https://github.com/TurboGears/tgext.admin/blob/master/tgext/admin/tgadminconfig.py << how to override tgext.admin controllers properly
 
 .. todo:: Difficulty: Medium. Include these docs: http://groups.google.com/group/turbogears/browse_frm/thread/9b07a8d34611f5d7?hl=en
           TG2 virtualenv MySQLdb ImportError.

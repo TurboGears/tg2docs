@@ -57,4 +57,4 @@ Some distros package the profiler separately. Make sure to install  the python-p
 
 Reference:
 
-http://blog.repoze.org/repozeprofile-0_2-released.html
+http://docs.repoze.org/profile/
