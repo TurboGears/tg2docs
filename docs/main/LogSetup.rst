@@ -5,7 +5,7 @@ Configuring and using the Logging System
 
 :Status: Unofficial
 
-The `Pylons logging wiki`_ has a well written and clearly documented logging HOWTO which this document will refer to. Each of the sections documented there have been tested under TG2 and they all are functional.
+The `Pylons Book`_ has a well written and clearly documented logging HOWTO which this document will refer to. Each of the sections documented there have been tested under TG2 and they all are functional.
 
 The logging system can be setup through the application ini file using the `standard python logging`_ configuration layout.
 
@@ -68,5 +68,5 @@ In this example 4 backup files are being kept and the log is rotated when the fi
 .. _RotatingFileHandler: http://docs.python.org/lib/node413.html
 .. _logging: http://docs.python.org/lib/module-logging.html
 .. _logging.handlers: http://docs.python.org/lib/node410.html
-.. _Pylons logging wiki: http://wiki.pylonshq.com/display/pylonsdocs/Logging
+.. _Pylons Book: http://pylonsbook.com/en/1.0/logging.html
 
