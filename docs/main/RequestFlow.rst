@@ -34,9 +34,9 @@ your function returns, you have to pass a status, and a set of headers
 to the start_response method, and then you're free to return a list
 (or any itterable) of strings as the response body.
 
-The environ dictionary, is a copy of the CGI spec's ENVIRON
-(http://hoohoo.ncsa.uiuc.edu/cgi/env.html). And it has everything you
-need to know about the incoming request.
+The environ dictionary, is a copy of the CGI spec's environment
+(https://en.wikipedia.org/wiki/Common_Gateway_Interface).
+And it has everything you need to know about the incoming request.
 
 One more thing to know about WSGI is that it's easy for a python
 function or method to take and environ and start_response to do some
