@@ -18,10 +18,6 @@ Because TurboGears implements the WSGIServer interface, we can use
 `flup`_ to interface between FastCGI and Pylons.  We'll also show you
 how to use :ref:`virtualenv` in this setup.
 
-This document is closely analogous to _Pylon's instructions for CGI:
-http://wiki.pylonshq.com/display/pylonscookbook/Production+Deployment+Using+Apache,+FastCGI+and+mod_rewrite
-but have a number of key differences.
-
 Apache Configuration
 --------------------
 

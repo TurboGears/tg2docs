@@ -153,11 +153,3 @@ Next Steps
 
 * :ref:`openid` -- describes how to use a repoze.who plugin to authenticate
   users via the OpenID mechanism
-
-References
-----------
-
-* `Pylons Repoze.who Cookbook`_ -- describes how the `repoze.who` middleware
-  fitted into a Pylons application (TurboGears |version| is a Pylons application)
-
-.. _`Pylons Repoze.who Cookbook`: http://wiki.pylonshq.com/display/pylonscookbook/Authentication+and+Authorization+with+%60repoze.who%60
