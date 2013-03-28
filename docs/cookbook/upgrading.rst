@@ -64,6 +64,17 @@ using ``gearbox migrate`` command, which supports the same subcommands as the ``
 The ``gearbox sqla-migrate`` command is also provided for backward compatibility for projects that need
 to keep using sqlalchemy-migrate.
 
+Pagination module moved from tg.paginate to tg.support.paginate
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The pagination code, which was previously imported from webhelpers, is now embedded in the
+TurboGears distribution, but it changed its exact location.
+If you are using ``tg.paginate.Page`` manually at the moment, you will have to fix your imports to
+be ``tg.support.paginate.Page``.
+
+Anyway, you should preferrably use the decorator approach with ``tg.decorators.paginate`` -
+then your code will be independent of the TurboGears internals.
+
 From 2.1 to 2.2
 ----------------------
 
