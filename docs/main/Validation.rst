@@ -129,7 +129,7 @@ the defaults.
 
 See the FormEncode documentation for how this is done.
 
-.. _`FormEncode validators`: http://formencode.org/module-formencode.validators.html#classes
+.. _`FormEncode validators`: http://www.formencode.org/en/latest/modules/validators.html#module-formencode.validators
 
 You can also compose ``compound`` validators with logical operations,
 the FormEncode compound module provides `All` (all must pass), 
@@ -254,7 +254,7 @@ or you will get validation errors.  To avoid this, add::
 
 to your schema declaration.
 
-.. _`FormEncode Validator`: http://formencode.org/docs/Validator.html
+.. _`FormEncode Validator`: http://www.formencode.org/en/latest/Validator.html
 
 Converting URL strings to Python types manually
 -----------------------------------------------

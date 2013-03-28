@@ -57,7 +57,7 @@ automatically.  Both TW 0.9.x and TW 2.x support this usage.  There is more info
 on [tw_middleware_] and [tw2_middleware_].
 
 .. _tw_middleware: http://toscawidgets.org/documentation/ToscaWidgets/modules/resource_injector.html
-.. _tw2_middleware: http://toscawidgets.org/documentation/tw2.core/core.html#middleware
+.. _tw2_middleware: http://tw2core.readthedocs.org/en/latest/design/#id1
 
 ``AppConfig`` Method Overrides
 -----------------------------------

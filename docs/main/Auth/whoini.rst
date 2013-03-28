@@ -151,7 +151,7 @@ the parameters).
 Next Steps
 ----------
 
-* :ref:`openid` -- describes how to use a Repoze.who plugin to authenticate
+* :ref:`openid` -- describes how to use a repoze.who plugin to authenticate
   users via the OpenID mechanism
 
 References
