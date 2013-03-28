@@ -18,9 +18,9 @@ to get start with your first real web application.
    main/DownloadInstall
    main/QuickStart
    main/BasicMoves
-   TurboGears Book: 20 Minutes Wiki Tutorial <http://www.turbogears.org/book/part1/wiki20.html>
    main/TwForms
    main/WebFlash
+   deprecated/Wiki20/wiki20
 
 ==================
 Advanced Tutorials
