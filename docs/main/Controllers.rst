@@ -10,18 +10,18 @@ and can call upon other TurboGears components (the template engines,
 database layers, etc.) as its logic directs.
 
 When the TurboGears server receives an HTTP request, the requested URL
-is mapped as a call to your controller code located in
-``controllers.py``. Page names map to functions within the controller
-class.
+is mapped as a call to your controller code located in the
+``controllers`` package. Page names map to other controllers or
+methods within the controller class.
 
 For example:
 
-================================== ======================
+================================== ============================
 URL                                Maps to
-================================== ======================
-``http://localhost:8080/index``    ``Root.index()``
-``http://localhost:8080/mypage``   ``Root.mypage()``
-================================== ======================
+================================== ============================
+``http://localhost:8080/index``    ``RootController.index()``
+``http://localhost:8080/mypage``   ``RootController.mypage()``
+================================== ============================
 
 
 Quick Example
@@ -31,7 +31,7 @@ Suppose using ``paster quickstart`` you generate a TurboGears project
 named "HelloWorld". Your default controller code would be created in
 the file ``HelloWorld/helloworld/controllers/root.py``.
 
-Modify the default ``controllers.py`` to read as follows:
+Modify the default ``root.py`` to read as follows:
 
 .. code-block:: python
 
