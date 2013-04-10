@@ -8,7 +8,7 @@ language often used to document python projects.
 We use Sphinx_ to generate html from the rst files.
 
 Since this documentation is for the 2.3 development branch of Turbogears,
-we also need to download the source in order to generate documentation from 
+We also need to download the source in order to generate documentation from 
 the modules.
 
 If you are interested in helping with the new turbogears docs, we recommend 

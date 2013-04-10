@@ -28,10 +28,11 @@ application running under ``Chaussette`` through ``Circus``.
 #.  Create a virtual environment with the specific TurboGears version
     your application depends on installed.
 
-    .. code-block:: bash
+    .. highlight:: bash
+    .. parsed-literal::
 
         $ virtualenv /var/tg2env
-        $ /var/tg2env/bin/pip install -i http://tg.gy/current tg.devtools
+        $ /var/tg2env/bin/pip install -i |private_index_path| tg.devtools
 
 #.  Activate the virtual environment
 

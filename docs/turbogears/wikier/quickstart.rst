@@ -38,13 +38,15 @@ Installing TurboGears2
 
 TurboGears2 can be quickly installed by installing the TurboGears2 development tools.
 This will install TurboGears2 itself and a bunch of commands useful when developing
-TurboGears applications::
+TurboGears applications:
 
-    (tgenv)$ pip install -i http://tg.gy/230 tg.devtools
+.. parsed-literal::
+
+    (tgenv)$ pip install -i |private_index_path| tg.devtools
 
 .. note::
-    The `-i http://tg.gy/230` option is used to make sure that we install
-    TurboGears2 version 2.2 and its dependencies at the right version. TurboGears2 
+    The `-i http://tg.gy/VERSION` option is used to make sure that we install
+    TurboGears2 version and its dependencies at the right version. TurboGears2 
     doesn't usually enforce version dependencies to make it possible for developers
     to upgrade them if they need a bugfix or new features.
     It is suggested to always use the `-i` option to avoid installing incompatible packages.

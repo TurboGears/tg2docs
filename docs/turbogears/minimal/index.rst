@@ -38,9 +38,11 @@ a prompt that looks like::
 
 .. _TurboGears2_install:
 
-Now we are ready to install TurboGears itself::
+Now we are ready to install TurboGears itself:
 
-    (tgenv)$ pip install -i http://tg.gy/current TurboGears2
+.. parsed-literal::
+
+    (tgenv)$ pip install -i |private_index_path| TurboGears2
 
 Hello World
 ======================

@@ -113,7 +113,7 @@ On Windows systems, from the command line, you do the following::
 
    C:\> \path\to\virtualenv\Script\activate.bat
 
-That's it. From this point onward, any ``easy_install`` commands will
+That's it. From this point onward, any ``pip`` commands will
 automatically use your virtualenv, as will your setup.py scripts that
 will be developed in later chapters.
 
@@ -140,9 +140,11 @@ tg.devtools
     have reason to do so. The application we will be developing for
     this book does not rely on it, and will not list it.
 
-After activating your virtualenv, you only need to run one command::
+After activating your virtualenv, you only need to run one command:
 
-    $ easy_install -i http://tg.gy/current tg.devtools
+.. parsed-literal::
+
+    $ pip install -i |private_index_path| tg.devtools
 
 That's it. Once it completes, you now have the TurboGears2 framework
 and development tools installed.
