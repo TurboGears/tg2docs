@@ -287,7 +287,7 @@ Cookie Secret
 +++++++++++++++
 
 The ``beaker.session.secret`` key of the ``base_config`` object
-contains the secret used to store user sessions.  Pylons automatically
+contains the secret used to store user sessions.  TurboGears automatically
 generates a random secret for you when you create a project.  If an
 attacker gets his hands on this key, he will be able to forge a valid
 session an use your application at though he was logged in.  In the

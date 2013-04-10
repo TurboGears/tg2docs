@@ -43,8 +43,7 @@ TurboGears comes with application-level caching
 middleware enabled by default in QuickStarted projects.  The
 middleware, `Beaker <http://beaker.groovie.org>`_ is the same
 package which provides Session storage for QuickStarted
-projects.  Beaker is the standard cache framework of the
-Pylons web framework, on which TurboGears |version| is based.
+projects.  Beaker is the cache framework used by TurboGears |version|.
 
 Beaker supports a variety of backends which can be used for
 cache or session storage:
