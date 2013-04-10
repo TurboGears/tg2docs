@@ -1,13 +1,13 @@
-TurboGears 2.1 Documentation Source
+TurboGears 2.2 Documentation Source
 ===================================
 
-This is the source of the latest Turbogears 2.1 documentation effort.
+This is the source of the latest Turbogears 2.2 documentation effort.
 
 The docs are written in reStructuredText_ (.rst files), a simple markup 
 language often used to document python projects.   
 We use Sphinx_ to generate html from the rst files.
 
-Since this documentation is for the 2.1 development branch of Turbogears,
+Since this documentation is for the 2.2 development branch of Turbogears,
 we also need to download the source in order to generate documentation from 
 the modules.
 
