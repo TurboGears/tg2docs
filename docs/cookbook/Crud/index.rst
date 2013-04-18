@@ -114,6 +114,95 @@ argument.
 In the previous example calling http://localhost:8080/tickets/5/done will set the
 ticket 5 status to done.
 
+Enabling SubString Searches
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The ``CrudRestController`` provides ready to use search function, when opening
+the controller index you will see a list of entries and a search box.
+
+By default the search box looks for perfect matches, this is often not the case
+especially if you are looking in long text entries that the user might not remember,
+this behavior can be changed by using the ``substring_filters`` option.
+
+You can enable substring searches for all the text fields by setting it to ``True``::
+
+    class MovieController(EasyCrudRestController):
+        model = Movie
+        substring_filters = True
+
+        __table_options__ = {
+            '__omit_fields__':['movie_id'],
+        }
+
+This will permit to search for text inside our movies title and descriptions.
+If you want to restrict substring searches to only some fields you can specify them
+explicitly::
+
+    class MovieController(EasyCrudRestController):
+        model = Movie
+        substring_filters = ['description']
+
+        __table_options__ = {
+            '__omit_fields__':['movie_id'],
+        }
+
+Remembering Previous Values
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The default behavior of the ``CrudRestController`` is to set fields to the submitted
+value, if the user submits an empty value the object property gets emptied,
+there are cases where you might prefer it to keep the previous value when an empty one
+is provided. This behavior can be enabled using the ``remember_values`` option.
+
+This is specially the case with images, you usually prefer to keep the previous image
+if a new one is not provided instead of deleting it at all.
+
+Suppose we have a ``Photo`` model which has an ``image`` field using ``tgext.datahelpers``
+``AttachedImage`` to provide an image field (pease refer to
+`tgext.datahelpers documentation <https://pypi.python.org/pypi/tgext.datahelpers#image-attachments-with-thumbnail>`_
+for more details). By default each time the user submits the edit form without specifying a
+new image we would lose our previous image, to avoid this behavior and just keep our previous
+image when none is specified we can use the ``remember_values`` option::
+
+    class PhotoManageController(EasyCrudRestController):
+        model = Photo
+        remember_values = ['image']
+
+        __table_options__ = {
+            '__omit_fields__':['uid'],
+            '__xml_fields__' : ['image'],
+
+            'image': lambda filler,row: Markup('<img src="%s"/>' % row.image.thumb_url) if row.image else ''
+        }
+
+        __form_options__ = {
+            '__field_widget_types__':{'image':FileField},
+            '__field_validator_types__' : {'image':FieldStorageUploadConverter},
+            '__field_widget_args__': {'image':{'label':'Photo PNG (640x280)'}},
+            '__hide_fields__':['uid']
+        }
+
+Customizing Pagination
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The ``CrudRestController`` provides pagination support, by default this is enabled
+and provides 7 entries per page.
+
+To tune pagination you can set the ``pagination`` set of options. To change
+the number of entries displayed you can set ``pagination['items_per_page']``.
+
+To display 20 items per page you can for example use::
+
+    class MovieController(EasyCrudRestController):
+        model = Movie
+        pagination = {'items_per_page': 20}
+
+To totally disable pagination just set the ``pagination`` option to ``False``::
+
+    class MovieController(EasyCrudRestController):
+        model = Movie
+        pagination = False
+
 Custom CrudRestController
 -------------------------------------
 
