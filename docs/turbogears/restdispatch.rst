@@ -246,6 +246,77 @@ back to the listing page:
         DBSession.delete(movie)
         return dict(movie=movie.movie_id)
 
+
+Nesting Resources With RestControllers
+----------------------------------------------------
+
+RestControllers expect nesting as any TG controller would, but it uses
+a different method of dispatch than regular TG Controllers.  This is
+necessary when you need resources that are related to other resources.
+This can be a matter of perspective, or a hard-link which filters the
+results of the sub controller.  For our example, we will use a nested
+controller to display all of the directors associated with a Movie.
+
+The challenge for design of your RESTful interface is determining how
+to associate parts of the URL to the resource definition, and defining
+which parts of the URL are part of the dispatch.  
+
+To do this, RestController introspects the get_one method to determine 
+how many bits of the URL to nip off and makes them available inside the 
+``request.controller_state.routing_args`` dictionary.
+
+This is because you may have one or more identifiers to determine an object; 
+for instance you might use lat/lon to define a location.  
+Since our MovieController defines a get_one which takes a movie_id as
+a parameter, we have no work to do there.
+
+All we have to do now is define our MovieDirectorController, and
+provide linkage into the MovieController to provide this
+functionality:
+
+.. code-block:: python
+
+    from tg import request
+
+    class MovieDirectorController(RestController):
+        @expose('json')
+        def get_all(self):
+            movie_id = request.controller_state.routing_args.get('movie_id')
+            movie = DBSession.query(Movie).get(movie_id)
+            return dict(movie=movie, directors=movie.directors)
+
+    class MovieRestController(RestController):
+        directors = MovieDirectorController()
+
+        @expose('json')
+        def get_one(self, movie_id):
+            movie = DBSession.query(Movie).get(movie_id)
+            return dict(movie=movie)
+
+This example only defines the get_all function, I leave the other
+RESTful verbiage as an exercise for you to do.
+
+One trick that I will explain, is how to use ``_before`` to get
+the related Movie object within all of your MovieDirectorController
+methods with a single define.
+
+Here is what the Controller looks like with ``_before`` added in:
+
+.. code-block:: python
+
+    from tg import tmpl_context, request
+
+    class MovieDirectorController(RestController):
+
+        def _before(self, *args, **kw):
+            movie_id = request.controller_state.routing_args.get('movie_id')
+            tmpl_context.movie = DBSession.query(Movie).get(movie_id)
+
+        @with_trailing_slash
+        @expose('json')
+        def get_all(self):
+            return dict(movie=tmpl_context.movie, directors=tmpl_context.movie.directors)
+
 Non-RESTful Methods
 --------------------
 
@@ -268,64 +339,4 @@ a URL which maps to a non-RestController, it switches back to the
 normal TG dispatch.  Simply said, you may include regular classes for
 dispatch within your RestController definition.
 
-Nesting Resources With RestControllers
-+++++++++++++++++++++++++++++++++++++++++++++++++++
 
-RestControllers expect nesting as any TG controller would, but it uses
-a different method of dispatch than regular TG Controllers.  This is
-necessary when you need resources that are related to other resources.
-This can be a matter of perspective, or a hard-link which filters the
-results of the sub controller.  For our example, we will use a nested
-controller to display all of the directors associated with a Movie.
-
-The challenge for design of your RESTful interface is determining how
-to associate parts of the URL to the resource definition, and defining
-which parts of the URL are part of the dispatch.  To do this,
-RestController introspects the get_one method to determine how many
-bits of the URL to nip off.  This is because you may have one or more
-identifiers to determine an object; for instance you might use lat/lon
-to define a location.  Since our MovieController defines a get_one
-which takes a movie_id as a parameter, we have no work to do there.
-All we have to do now is define our MovieDirectorController, and
-provide linkage into the MovieController to provide this
-functionality:
-
-.. code-block:: python
-
-    class MovieDirectorController(RestController):
-        @expose('moviedemo.templates.rest.movie_directors.get_all')
-        def get_all(self):
-            movie = DBSession.query(Movie).get(movie_id)
-            return dict(movie=movie, directors=movie.directors)
-
-    class MovieRestController(RestController):
-        directors = MovieDirectorController()
-
-        @expose('json')
-        def get_one(self, movie_id):
-            movies = DBSession.query(Movie).get(movie_id)
-            return dict(movie=movie)
-
-This example only defines the get_all function, I leave the other
-RESTful verbiage as an exercise for you to do.
-
-One trick that I will explain, is how to use __before__ to get
-the related Movie object within all of your MovieDirectorController
-methods with a single define.
-
-Here is what the Controller looks like with __before__ added in:
-
-.. code-block:: python
-
-    from tg import tmpl_context
-
-    class MovieDirectorController(RestController):
-
-        def __before__(self, *args, **kw):
-            movie_id = request.url.split('/')[-3]
-            tmpl_context.movie = DBSession.query(Movie).get(movie_id)
-
-        @with_trailing_slash
-        @expose('moviedemo.templates.rest.movie_directors.get_all')
-        def get_all(self):
-            return dict(movie=tmpl_context.movie, directors=tmpl_context.movie.directors)
