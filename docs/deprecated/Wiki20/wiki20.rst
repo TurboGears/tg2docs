@@ -2,7 +2,7 @@
 
 .. archive:: wiki_root/trunk
 
-.. _wiki20:
+.. _wiki20_deprecated:
 
 The TurboGears 2 Wiki Tutorial
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

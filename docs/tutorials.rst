@@ -20,7 +20,7 @@ to get start with your first real web application.
    main/BasicMoves
    main/TwForms
    main/WebFlash
-   deprecated/Wiki20/wiki20
+   main/wiki20
 
 ==================
 Advanced Tutorials
