@@ -463,7 +463,6 @@ Now our ``index()`` method fetches a record from the database
 (creating an instance of our mapped ``Page`` class along the way), and
 returns it to the template within a dictionary.
 
-.. _adding_views:
 
 Adding Views (Templates)
 ========================
@@ -530,7 +529,6 @@ displayed on the page.
    documentation (you're soaking in it!) isolate certain lines of code
    to display, like above.
 
-.. _editing_pages:
 
 Editing pages
 =============
