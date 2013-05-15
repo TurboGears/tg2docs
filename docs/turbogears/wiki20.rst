@@ -136,7 +136,6 @@ Your ``install_requires`` should end up looking like:
         "TurboGears2 >= 2.3.0",
         "Genshi",
         "zope.sqlalchemy >= 0.4",
-        "repoze.tm2 >= 1.0a5",
         "sqlalchemy",
         "sqlalchemy-migrate",
         "repoze.who",
