@@ -14,17 +14,9 @@ In TurboGears2 streaming can be achieved returning a generator from your control
 Making your application streaming compliant
 ---------------------------------------------
 
-First of all you have to make sure that your application isn't running in debug mode
-or it will try to read your response making streaming useless. If your response never
-ends it will hung the application forever.
-
-So the first thing you want to do when using streaming is disabling debug mode
-in your ``development.ini`` and any middleware that edits the content of your response.
-
-.. code-block:: ini
-
-    [DEFAULT]
-    debug = false
+So the first thing you want to do when using streaming is disabling any middleware
+that edits the content of your response. Since version 2.3 disabling debug mode
+is not required anymore.
 
 Most middlewares like debugbar, ToscaWidgets and so on will avoid touching your
 response if it is not of **text/html** content type.
@@ -62,9 +54,11 @@ behaves.
 Accessing Request
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-All the global turbogears objects get unregistered before running the generator
-so if you need to have access to them, you will need to pass the current
-object instance to the generator itself.
+Since version 2.3 all the global turbogears objects are accessible
+while running the generator. So if you need to have access to them,
+you can freely read and write to them. Just keep in mind that your
+response has already been started, so it is not possible to change
+your outgoing response while running the generator.
 
 .. code-block:: python
 
@@ -74,9 +68,9 @@ object instance to the generator itself.
             num = 0
             while num < 10:
                 num += 1
-                yield '%s/%s\n' % (req.path_info, num)
+                yield '%s/%s\n' % (tg.request.path_info, num)
                 time.sleep(1)
-        return output_pause(request._current_obj())
+        return output_pause()
 
 This example, while not returning any real css, shows how it is possible
 to access the turbogears request inside the generator.
@@ -84,10 +78,7 @@ to access the turbogears request inside the generator.
 Reading from Database
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When reading from the database the only required action is to remove
-the session at the end of your generator when you don't need it anymore.
-
-Apart from that the database will be available as usual:
+Since version 2.3 is is possible to read from the database as usual:
 
 .. code-block:: python
 
@@ -99,9 +90,8 @@ Apart from that the database will be available as usual:
             while num < 9:
                 u = DBSession.query(model.User).filter_by(user_id=num).first()
                 num += 1
-                yield u and '"%s", ' % u.user_name or 'null, '
+                yield u and '%d, ' % u.user_id or 'null, '
                 time.sleep(1)
-            DBSession.remove()
             yield 'null]'
         return output_pause()
 
@@ -121,10 +111,10 @@ won't be able to do it for you as the request flow already ended.
             num = 0
             while num < 9:
                 DBSession.add(model.Permission(permission_name='perm_%s'%num))
+                yield 'Added Permission\n'
                 num += 1
                 time.sleep(1)
             DBSession.flush()
             transaction.commit()
-            DBSession.remove()
         return output_pause()
 
