@@ -92,7 +92,7 @@ add utility methods on the fly::
         }
 
         __setters__ = {
-                'release':('sprint', datetime.datetime.utcnow),
+            'release':('sprint', datetime.datetime.utcnow)
         }
 
 The ``__form_options__`` dictionary will permit to tune the forms configuration.
