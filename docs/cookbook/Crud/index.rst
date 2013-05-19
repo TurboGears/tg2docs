@@ -82,20 +82,17 @@ Having been thought to quickly prototype parts of your web applications
 the EasyCrudRestController permits both to tune forms options and to
 add utility methods on the fly::
 
-    class TicketCrudController(EasyCrudRestController):
-        model = Ticket
+    class MovieController(EasyCrudRestController):
+        model = Movie
 
         __form_options__ = {
-            '__hide_fields__':['_id', 'status', 'sprint'],
+            '__hide_fields__':['movie_id'],
             '__field_order__':['title', 'description'],
             '__field_widget_types__':{'description':TextArea}
         }
 
         __setters__ = {
-                'done':('status', 'done'),
-                'todo':('status', 'new'),
-                'revert':('sprint', lambda ticket:ticket.sprint.project.backlog),
-                'sprint':('sprint', lambda ticket:ticket.sprint.project.last_sprint),
+                'release':('sprint', datetime.datetime.utcnow),
         }
 
 The ``__form_options__`` dictionary will permit to tune the forms configuration.
@@ -111,8 +108,8 @@ that has to be changed. The second argument is the value that has to be set, if 
 second argument is a callable it will be called passing the object to edit as the
 argument.
 
-In the previous example calling http://localhost:8080/tickets/5/done will set the
-ticket 5 status to done.
+In the previous example calling http://localhost:8080/movies/5/release will mark
+the movie 5 as released today.
 
 Enabling SubString Searches
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
