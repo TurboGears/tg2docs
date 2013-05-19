@@ -54,6 +54,22 @@ While the **gearbox.plugins** section will let *gearbox* itself know that inside
 commands have to be enabled making ``gearbox tgshell`` and ``gearbox migrate`` available when we run gearbox
 from inside our project directory.
 
+Removing Paste dependency
++++++++++++++++++++++++++++++++++++++++++++++++
+
+When performing ``python setup.py develop`` you will notice that Paste will be installed.
+To remove such dependency you should remove the ``setup_requires`` and ``paster_plugins``
+entries from your setup.py::
+
+    setup_requires=["PasteScript >= 1.7"],
+    paster_plugins=['PasteScript', 'Pylons', 'TurboGears2', 'tg.devtools']
+
+WebHelpers Dependency
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If your project used WebHelpers, the package is not a turbogears dependency anymore,
+you should remember to add it to your ``setup.py`` dependencies.
+
 Migrations moved from sqlalchemy-migrate to Alembic
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
