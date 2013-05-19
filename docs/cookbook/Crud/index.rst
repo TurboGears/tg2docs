@@ -259,8 +259,6 @@ instantiated.::
         __model__ = Movie
     movie_table_filler = MovieTableFiller(DBSession)
 
-We add movie_id to the limited fields so that the "__actions__" field
-can provide proper links to this primary key.
 
 Putting It All Together
 ~~~~~~~~~~~~~~~~~~~~~~~
