@@ -280,7 +280,7 @@ or you will get validation errors.  To avoid this, add::
 
 to your schema declaration.
 
-.. _`FormEncode Validator`: http://formencode.org/docs/Validator.html
+.. _`FormEncode Validator`: http://www.formencode.org/en/latest/Validator.html
 
 .. _FormEncode: http://formencode.org/
 
