@@ -32,7 +32,7 @@ application running under ``Chaussette`` through ``Circus``.
     .. parsed-literal::
 
         $ virtualenv /var/tg2env
-        $ /var/tg2env/bin/pip install -i |private_index_path| tg.devtools
+        $ /var/tg2env/bin/pip install |private_index_path| tg.devtools
 
 #.  Activate the virtual environment
 

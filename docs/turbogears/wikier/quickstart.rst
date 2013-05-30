@@ -42,7 +42,7 @@ TurboGears applications:
 
 .. parsed-literal::
 
-    (tgenv)$ pip install -i |private_index_path| tg.devtools
+    (tgenv)$ pip install |private_index_path| tg.devtools
 
 .. note::
     The `-i http://tg.gy/VERSION` option is used to make sure that we install

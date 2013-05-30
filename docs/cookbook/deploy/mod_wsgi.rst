@@ -26,7 +26,7 @@ application running under Apache via ``mod_wsgi``.
     .. parsed-literal::
 
         $ virtualenv /var/tg2env
-        $ /var/tg2env/bin/pip install -i |private_index_path| tg.devtools
+        $ /var/tg2env/bin/pip install |private_index_path| tg.devtools
 
 #.  Activate the virtualenvironment
 

@@ -36,7 +36,7 @@ correctly work together.
 .. code-block:: bash
 
     $ virtualenv tg2env
-    $ tg2env/bin/pip install -i http://tg.gy/230 tg.devtools
+    $ tg2env/bin/pip install -f http://tg.gy/230 tg.devtools
     $ source tg2env/bin/activate
     (tg2env)$ #now you are ready to work with TurboGears
 

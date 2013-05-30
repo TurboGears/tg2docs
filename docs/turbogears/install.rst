@@ -144,7 +144,7 @@ After activating your virtualenv, you only need to run one command:
 
 .. parsed-literal::
 
-    $ pip install -i |private_index_path| tg.devtools
+    $ pip install |private_index_path| tg.devtools
 
 That's it. Once it completes, you now have the TurboGears2 framework
 and development tools installed.
