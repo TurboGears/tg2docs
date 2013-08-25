@@ -197,6 +197,8 @@ adding the following code your your app_cfg.py file::
     base_config.mimetype_lookup = {'.ext':'my-mimetype'}
 
 
+.. _hooks_and_events:
+
 Hooks and Events
 +++++++++++++++++++++
 
