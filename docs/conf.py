@@ -51,7 +51,7 @@ version = '2.3.0'
 # The full version, including alpha/beta/rc tags.
 release = max(tg_release_version, version)
 # The private index, something like http://tg.gy/230
-private_index = '-f http://tg.gy/' + version.replace('.', '')
+private_index = '' #'-f http://tg.gy/' + version.replace('.', '')
 
 # replace references to the private index with the actual value
 rst_epilog = '''
