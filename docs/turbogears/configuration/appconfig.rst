@@ -196,67 +196,6 @@ adding the following code your your app_cfg.py file::
 
     base_config.mimetype_lookup = {'.ext':'my-mimetype'}
 
-
-.. _hooks_and_events:
-
-Hooks and Events
-+++++++++++++++++++++
-
-TurboGears allows you to attach callables to a wide set of events.
-Most of those are available as both controller events and system
-wide events.
-
-To register a system wide even you can use the ``register_hook`` method
-of the ``base_config`` object in your ``app_cfg.py`` file::
-    
-    def on_startup():
-        print 'hello, startup world'
-
-    def on_shutdown():
-        print 'hello, shutdown world'
-
-    def before_render(remainder, params, output):
-        print 'system wide before render'
-
-    # ... (base_config init code)
-
-    base_config.register_hook('startup', on_startup) 
-    base_config.register_hook('shutdown', on_shutdown)
-    base_config.register_hook('before_render', before_render)
-
-To register controller based hooks you can use the event decorators::
-
-    from tg.decorators import before_render
-
-    def before_render_cb(remainder, params, output):
-        print 'Going to render', output
-
-    class MyController(TGController):
-        @expose()
-        @before_render(before_render_cb)
-        def index(self, *args, **kw):
-            return dict(page='index')
-
-Available Hooks
-####################
-
-* ``startup()`` - application wide only, called when the application starts
-* ``shutdown()`` - application wide only, called when the application exits
-* ``before_config(app) -> app`` - application wide only, called after constructing the application,
-    but before setting up most of the options and middleware.
-    Must return the application itself.
-    Can be used to wrap the application into middlewares that have to be executed having the full TG stack available.
-* ``after_config(app) -> app`` - application wide only, called after finishing setting everything up.
-    Must return the application iself.
-    Can be used to wrap the application into middleware that have to be executed before the TG ones.
-    Can also be used to modify the Application by mounting additional subcontrollers inside the RootController.
-* ``before_validate(remainder, params)`` - Called before performing validation
-* ``before_call(remainder, params)`` - Called after valdation, before calling the actual controller method
-* ``before_render(remainder, params, output)`` - Called before rendering a controller template, ``output`` is the controller return value
-* ``after_render(response)`` - Called after finishing rendering a controller template
-
-
-
 Static Files
 ++++++++++++++++
 

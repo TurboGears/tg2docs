@@ -50,3 +50,4 @@ Advanced Documentation
     migrations
     configuration/index
     authentication
+    hooks

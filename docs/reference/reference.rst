@@ -68,3 +68,9 @@ Request & Response
 
 .. autoclass:: tg.request_local.Response
     :members:
+
+Hooks
+====================
+
+.. autoclass:: tg.configuration.hooks._TGHooks
+    :members:
