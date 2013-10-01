@@ -1,2 +1,3 @@
 -e git://github.com/TurboGears/tg2.git@master#egg=TurboGears2
+-e git://github.com/TurboGears/tgext.crud.git@master#egg=tgext.crud
 nose

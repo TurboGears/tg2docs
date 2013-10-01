@@ -218,7 +218,7 @@ latex_documents = [
 
 # -- Options for ePub output ---------------------------------------------------
 
-epub_basename = 'TurboGears_2.1'
+epub_basename = 'TurboGears'
 epub_title = 'TurboGears Documentation for Version ' + release
 epub_author = 'TurboGears Documentation Team'
 epub_language = 'en'

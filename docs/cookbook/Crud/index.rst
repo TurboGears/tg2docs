@@ -395,6 +395,16 @@ in a more declarative manner like this::
         class table_filler_type(TableFiller):
             __model__ = Movie
 
+Options reference
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The ``tgext.crud.CrudRestController`` and ``tgext.crud.EasyCrudRestController``
+provide a bunch of configuration options that can be changed by subclassing
+the controller and providing them in a declarative way:
+
+.. autoclass:: tgext.crud.CrudRestController
+
+
 Customizing Crud Operations
 -----------------------------
 
@@ -573,3 +583,4 @@ Admin to use them for the administration of matches and settings:
 
 This will create an administration controller which uses our custom CrudRestControllers
 to manage Match and Settings instances.
+
