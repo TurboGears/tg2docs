@@ -44,16 +44,17 @@ you need to specify which validator goes with which argument using the
     @expose('json')
     @validate(validators={"a":validators.Int(), "b":validators.Email})
     def two_validators(self, a=None, b=None, *args):
-        errors = [{key, value} in tg.tmpl_context.form_errors.iteritems()]
-        values =  tg.tmpl_context.form_values
+        validation_status = tg.request.validation
+        errors = [{key, value} in validation_status['errors'].iteritems()]
+        values =  validation_status['values']
         return dict(a=a, b=b, errors=str(errors), values=str(values))
 
 The dictionary passed to validators maps the incoming field names to
 the appropriate FormEncode validators, ``Int`` in this example.
 
 If there's a validation error, TurboGears calls the error_handler if
-it exists, but it always adds form_errors and form_values to the
-tmpl_context, so they will be available there for the rest of the
+it exists, but it always adds ``errors`` and ``values`` to
+``request.validation``, so they will be available there for the rest of the
 request.  In this case if there are validation errors, we grab both
 the error messages and the original `unvalidated` values and return
 them in the error message.
@@ -63,6 +64,23 @@ use: they are available in the ``formencode.validators`` module.
 
 For most validators, you can pass keyword arguments for more specific
 constraints.
+
+Validation Process Information
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+TurboGears provides some information on the currently running validation
+process while it is handling the validation error.
+
+Whenever an error handling is in process some properties are available in
+the ``tg.request.validation`` to provide overview of the validation error:
+
+    - ``tg.request.validation['values']`` The submitted values before validation
+    - ``tg.request.validation['errors']`` The errors that triggered the error handling
+    - ``tg.request.validation['exception']`` The validation exception that triggered the error handling
+    - ``tg.request.validation['error_handler']`` The error handler that is being executed
+
+
+
 
 FormEncode Validators
 ------------------------
@@ -204,7 +222,7 @@ you want called to @validate via the error_handler param:
 
 The method in question will be called, with the unvalidated data as
 its parameters.  And error validation messages will be stored in
-tg.tmpl_context.
+``tg.request.validation``.
 
 Here's a quick example of how this all works:
 
@@ -214,7 +232,7 @@ Here's a quick example of how this all works:
     @validate(form=myform)
     def process_form_errors(self, **kwargs):
         #add error messages to the kwargs dictionary and return it
-        kwargs['errors'] = tg.tmpl_context.form_errors
+        kwargs['errors'] = tg.request.validation['errors']
         return dict(kwargs)
     
     @expose('json')
@@ -225,8 +243,7 @@ Here's a quick example of how this all works:
 If there's a validation error in myform, the send_to_error_handler
 method will never get called.  Instead process_form_errors will get
 called, and the validation error messages can be picked up from the
-form_errors value of the template context object
-(tg.tmpl_context).
+errors value of the request validation context.
 
 Schema Validation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -256,7 +273,7 @@ validators::
     @expose()    
     @validate(validators=PwdSchema())
     def password(self, pwd1, pwd2):
-        if tg.tmpl_context.form_errors:
+        if tg.request.validation['errors']:
             return "There was an error"
         else:
             return "Password ok!"

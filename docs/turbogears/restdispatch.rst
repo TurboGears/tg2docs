@@ -164,7 +164,7 @@ not empty, and that the release_date has correct formatting:
 
 .. code-block:: python
 
-    from tg import tmpl_context, validate
+    from tg import request, validate
     from formencode.validators import NotEmpty, Int, DateConverter
 
     @validate({'title':NotEmpty,
@@ -173,12 +173,12 @@ not empty, and that the release_date has correct formatting:
                'release_date':DateConverter(not_empty=True)})
     @expose('json')
     def post(self, **kw):
-        if tmpl_context.form_errors:
-            return dict(errors=dict([(field, str(e)) for field, e in tmpl_context.form_errors.items()]))
+        if request.validation['errors']:
+            return dict(errors=dict([(field, str(e)) for field, e in request.validation['errors'].items()]))
 
         #...proceed like before...
 
-Note that the form_errors are stored in tmpl_context.
+Note that the validation errors are stored in request.validation.
 This is done by the TG dispatch on a failed validation.
 
 Getting one Item
@@ -208,8 +208,8 @@ can validate in the same manner as before:
                'release_date':DateConverter(not_empty=True)})
     @expose('json')
     def put(self, movie_id, title, description, directors, genre_id, release_date, **kw):
-        if tmpl_context.form_errors:
-            return dict(errors=dict([(field, str(e)) for field, e in tmpl_context.form_errors.items()]))
+        if request.validation['errors']:
+            return dict(errors=dict([(field, str(e)) for field, e in request.validation['errors'].items()]))
 
         movie = DBSession.query(Movie).get(movie_id)
         if not movie:
