@@ -172,10 +172,18 @@ and permissions::
     class ApplicationAuthMetadata(TGAuthMetadata):
         def __init__(self, sa_auth):
             self.sa_auth = sa_auth
+
+        def authenticate(self, environ, identity):
+            user = self.sa_auth.dbsession.query(self.sa_auth.user_class).filter_by(user_name=identity['login']).first()
+            if user and user.validate_password(identity['password']):
+                return identity['login']
+
         def get_user(self, identity, userid):
             return self.sa_auth.user_class.query.get(user_name=userid)
+
         def get_groups(self, identity, userid):
             return [team.team_name for team in identity['user'].teams]
+
         def get_permissions(self, identity, userid):
             return [p.permission_name for p in identity['user'].permissions]
 
