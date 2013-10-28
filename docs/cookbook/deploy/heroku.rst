@@ -72,6 +72,12 @@ So your ``[server:main]`` section should look like:
 
 Then probably want to disable the ``debug`` inside the ``[DEFAULT]`` section.
 
+.. note::
+
+    If you want to use a different server instead of waitress, as gevent,
+    CherryPy or something else, as far as it is compatible with ``PasteDeploy``
+    changing the ``use = egg:waitress#main`` to whatever you want usually is enough.
+
 Step 3: Starting the application
 ====================================
 
@@ -99,11 +105,6 @@ Create ``run`` with the following:
     The 'develop' step is necessary because the current package must be
     installed before paste can load it from the INI file.
 
-.. note::
-
-    This assumes the INI file to use is ``production.ini``, change as
-    necessary. The server section of the INI will be ignored as the server
-    needs to listen on the port supplied in the OS environ.
 
 Step 4: Setup git repo and heroku app
 =====================================
