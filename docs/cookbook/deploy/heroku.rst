@@ -1,5 +1,6 @@
-heroku
-++++++
+==========================================================
+Running a TurboGears under Heroku
+==========================================================
 
 This recipe assumes that you have a TurboGears app setup using a Paste INI file,
 inside a package called 'myapp'. If you are deploying a custom TurboGears application
