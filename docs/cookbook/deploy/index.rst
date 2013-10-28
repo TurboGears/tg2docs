@@ -9,3 +9,4 @@ This section describes standard deployment technics for TurboGears2.
 
    mod_wsgi
    circus
+   heroku
