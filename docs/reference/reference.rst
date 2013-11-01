@@ -74,3 +74,9 @@ Hooks
 
 .. autoclass:: tg.configuration.hooks._TGHooks
     :members:
+
+Milestones
+====================
+
+.. autoclass:: tg.configuration.milestones._ConfigMilestoneTracker
+    :members:

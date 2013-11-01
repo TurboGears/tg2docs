@@ -74,13 +74,6 @@ If the person who deployed your application forgot to add the variable
 to his config file he would get the default value provided as the
 second argument of the get() call.
 
-.. note::
-    The ``tg.config`` object is available at import time but until the
-    configuration file is parsed, it only contains the system
-    defaults.  If you need to perform startup time setup based on
-    supplied configuration, you should do so in
-    ``middleware.make_app()`` or in `lib/app_globals.py`.
-
 .. warning::
     If you set a value like enable_subsystem = false, it will be
     loaded into python as the string 'false' which if used in a
@@ -93,6 +86,57 @@ The correct way of loading boolean values for your use is
    from paste.deploy.converters import asbool
    if asbool(config['enable_subsystem']):
       ... sub systems is enabled...
+
+
+.. _config_milestones:
+
+Configuration Milestones
+----------------------------
+
+Since TurboGears 2.3 the configuration process git divided in various
+milestones, each of those milestones is bound to an advancement in the
+framework setup process.
+
+Whenever a milestone is reached all the registered callbacks are fired
+and the configuration process can continue. If the milestone is already
+passed when a callback is registered, the callback gets instantly fired.
+
+.. note::
+    The ``tg.config`` object is available at import time but until the
+    configuration file is parsed, it only contains the system
+    defaults.  If you need to perform startup time setup based on
+    supplied configuration, you should do so in a milestone.
+
+Milestones are available through the ``tg.configuration.milestones``
+module, the currently provided milestones are:
+
+* ``milestones.config_ready`` - Configuration file has been loaded and is
+    available in ``tg.config``
+* ``milestones.renderers_ready`` - Renderers have been registered and all
+    of them are available
+* ``milestones.environment_loaded`` - Full environment have been loaded
+    but application has not been created yet.
+
+Registering an action to be executed whenever a milestone is reach
+can be done using :func:`tg.configuration.milestones._ConfigMilestoneTracker.register`
+method of each milestone. The registered action takes no parameters.
+
+Milestones are much like :ref:`Hooks<hooks_and_events>` but they are
+only related to the configuration process. The major difference is that
+*while an hook can fire multiple times a milestone can be reached only once*.
+
+Milestones and Hooks order of execution
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The order of execution of the milestones and hooks provided during the
+application startup process is:
+
+* ``milestones.config_ready``
+* *startup Hook*
+* ``milestones.renderers_ready``
+* ``milestones.environment_loaded``
+* *before_config Hook*
+* *after_config Hook*
 
 The config module
 -----------------

@@ -66,6 +66,11 @@ on third party controllers)::
 See :func:`tg.configuration.hooks._TGHooks.register` for more details on registering
 hooks.
 
+Apart from Hooks TurboGears also provide some
+:ref:`Configuration Milestones<config_milestones>` you might want to have a look at
+to check whenever it is more proper to register an action for a configuration milestone
+or for an hook.
+
 Available Hooks
 ####################
 

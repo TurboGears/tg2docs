@@ -1,6 +1,53 @@
 Upgrading Your TurboGears Project
 ====================================
 
+From 2.3 to 2.3.1
+----------------------
+
+Projects quickstarted on 2.3 should work out of the box.
+
+``AppConfig.register_hook`` Deprecation
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+``register_hook`` function in application configuration got deprecated
+and replaced by ``tg.hooks.register`` and ``tg.hooks.wrap_controller``.
+
+``register_hook`` will continue to work like before, but will be removed in
+future versions. Check :ref:`Hooks<hooks_and_events>` Guide and upgrade
+to tg.hooks based hooks to avoid issues on register_hook removal.
+
+Exposition and Wrappers now resolved lazily
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Due to :ref:`Configuration Milestones<config_milestones>` support
+controller exposition is now resolved lazily when the configuration
+process has setup the renderers.
+This enables a smarter exposition able to correctly behave even when controllers
+are declared before the application configuration.
+
+Application wrappers dependencies are now solved lazily too, this makes possible
+to reorder them before applying the actual wrappers so that the order of
+registration doesn't mapper when a wrapper ordering is specified.
+
+Some methods in AppConfig got renamed
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To provide a cleaner distinction between methods users are expected to
+subclass to customize the configuration process and methods which
+are part of TurboGears setup itself.
+
+Validation error reporting cleanup
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+TurboGears always provided information on failed validations in a
+unorganized manner inside ``tmpl_context.form_errors`` and other
+locations.
+
+Validation information are now reported in ``request.validation``
+dictionary all together. ``tmpl_context.form_errors`` and
+``tmpl_context.form_values`` are still available but deprecated.
+
+
 From 2.2 to 2.3
 ----------------------
 
