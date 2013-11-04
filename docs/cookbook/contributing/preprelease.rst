@@ -299,7 +299,10 @@ instead of recording individual file changes, record only the
 summaries. We don't need the file changes since Git records those
 changes for us.
 
-Review the `SourceForge`_ tickets for this milestone, and record any
+Chagelog can be easily generate using: ``git log --pretty="* %s"`` 
+command.
+
+Review the `GitHub`_ tickets for this milestone, and record any
 tickets that were closed for this repository but were not referenced
 in the summaries you've already recorded.
 
