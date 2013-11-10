@@ -152,9 +152,9 @@ instance::
         def __init__(self, handler, config):
             self.handler = handler
 
-        def __call__(self, environ, context):
+        def __call__(self, controller, environ, context):
             print 'Going to run %s' % context.request.path
-            return self.handler(environ, context)
+            return self.handler(controller, environ, context)
 
 Application wrappers can be registered from you application
 configuration object in ``app_cfg.py``::
