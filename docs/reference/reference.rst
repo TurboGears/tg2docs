@@ -80,3 +80,10 @@ Milestones
 
 .. autoclass:: tg.configuration.milestones._ConfigMilestoneTracker
     :members:
+
+Internationalization
+========================
+
+.. automodule:: tg.i18n
+    :members:
+    :exclude-members: setup_i18n

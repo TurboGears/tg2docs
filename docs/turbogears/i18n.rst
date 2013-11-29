@@ -21,13 +21,30 @@ running" message in your language.
 Language Auto-Select
 --------------------
 
-Turbogears2 contains the logic (hardwired in the TurboGearsController
-class at the moment) to setup request's language based on browser's
-preferences(*).
+Turbogears2 contains the logic to setup request's language 
+based on browser's preferences(*).
 
 [*] - Every modern browser sends a special header along with every web
 request which tells the server which language it would prefer to see
 in a response.
+
+The language in use during the request is available through the 
+:func:`tg.i18n.get_lang` function. This will report the currently
+selected languages both in case of an auto-detected language preference
+or in case of languages forced by the developer.
+
+Forcing a Language
+------------------------------
+
+Developer can force the currently used language for each request
+using the :func:`tg.i18n.set_temporary_lang` function. This
+will change the language only for the current request.
+
+If you need to permanently change the language for the user
+session duration, :func:`tg.i18n.set_lang` can be used.
+If TurboGears session support is enabled it will store the
+choosen language inside the session and recover it whenever
+the user comes back on next request.
 
 Making your code international
 -------------------------------
@@ -39,8 +56,9 @@ Even though TurboGears is able to automatically detect content
 inside tags and mark them for translation all the strings inside
 controllers must be explicitly marked as translated.
 
-This can be achieved with the ``tg.i18n.ugettext`` and ``tg.i18n.lazy_ugettext``
-calls which are usually imported with ``_`` and ``l_`` names:
+This can be achieved with the :func:`tg.i18n.ugettext` and 
+:func:`tg.i18n.lazy_ugettext` calls which are usually imported 
+with ``_`` and ``l_`` names:
 
 .. code-block:: python
 
