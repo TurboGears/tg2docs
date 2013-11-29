@@ -73,12 +73,12 @@ In the previous example the 'Hello World' string will be detect by
 TurboGears when collecting translatable text and will display in the
 browser language if a translation for that language is available.
 
-While ``ugettext`` works perfectly to translate strings inside a request
-it does not allow translating strings outside a request. This is
-due to the fact that TurboGears won't know the browser language when
+While :func:`ugettext() <tg.i18n.ugettext>` works perfectly to translate 
+strings inside a request it does not allow translating strings outside a request. 
+This is due to the fact that TurboGears won't know the browser language when
 there isn't a running request. To translate global variables, parameters
 default values or any other string which is created outside a controller
-method the ``lazy_ugettext`` method must be used:
+method the :func:`lazy_ugettext <tg.i18n.lazy_ugettext>` method must be used:
 
 .. code-block:: python
 
@@ -89,12 +89,12 @@ method the ``lazy_ugettext`` method must be used:
         def index(self, msg=l_('Hello World')):
             return dict(msg=msg)
 
-In this case the `msg` parameter is translated using ``lazy_ugettext``
+In this case the `msg` parameter is translated using :func:`lazy_ugettext() <tg.i18n.lazy_ugettext>`
 as it is constructed at controller import time when no request is available.
 This will create an object that will translate the given string only when
 the string itself is displayed or evaluated.
 
-Keep in mind that as the lazy string object built by ``lazy_ugetted`` is
+Keep in mind that as the lazy string object built by :func:`lazy_ugettext() <tg.i18n.lazy_ugettext>` is
 translated whenever the string is evaluated joining strings or editing it
 will force the translation. So the resulting object must still be evaluated
 only inside a request or it will always be translated to the default project
