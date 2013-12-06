@@ -64,7 +64,7 @@ Now the grid can be displayed in the template like this:
 
 Template code necessary to show the grid in ``templates/index.html``::
 
-	<div>${grid(value=data)}</div>
+	<div>${grid.display(value=data)}</div>
 
 
 Paginating DataGrid
@@ -95,7 +95,7 @@ a working pagination for our datagrid.
 
 Template in ``templates/index.html`` would become::
 
-	<div>${grid(value=data)}</div>
+	<div>${grid.display(value=data)}</div>
 	<div>${tmpl_context.paginators.data.pager()}</div>
 
 Now the page should render with both the datagrid and the pages under the grid itself, making possible to switch between the pages.
