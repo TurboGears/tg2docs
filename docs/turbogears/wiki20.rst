@@ -130,7 +130,7 @@ but the wiki we are building does.
 Your ``install_requires`` should end up looking like:
 
 .. code-block:: python
-    :emphasize-lines: 13
+    :emphasize-lines: 12
 
     install_requires=[
         "TurboGears2 >= 2.3.0",
