@@ -67,7 +67,7 @@ application running under ``Chaussette`` through ``Circus``.
        (tg2env)$ cd /var/www/myapp
        (tg2env)$ python setup.py develop
 
-#.  We now create a circus configuration file with the informations required to load
+#.  We now create a circus configuration file (named ``circus.ini``) with the informations required to load
     and start your application. This can be performed using the ``gearbox deploy-circus``
     command from `gearbox-tools <http://pypi.python.org/pypi/gearbox-tools>`_ package or by manually writing it:
 
