@@ -50,7 +50,7 @@ application running under Apache via ``mod_wsgi``.
         APP_CONFIG = "/var/www/myapp/myapp/production.ini"
 
         #Setup logging
-        import logging
+        import logging.config
         logging.config.fileConfig(APP_CONFIG)
 
         #Load the application
