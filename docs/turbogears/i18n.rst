@@ -33,6 +33,13 @@ The language in use during the request is available through the
 selected languages both in case of an auto-detected language preference
 or in case of languages forced by the developer.
 
+Languages returned by :func:`tg.i18n.get_lang` are ordered by
+user preference. By default all the requested languages are returned,
+if you want to get only the ones your application supports call
+``get_lang(all=False)``.
+
+The current language in use is usually ``get_lang(all=False)[0]``.
+
 Forcing a Language
 ------------------------------
 
