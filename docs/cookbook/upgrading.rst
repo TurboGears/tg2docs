@@ -1,6 +1,44 @@
 Upgrading Your TurboGears Project
 ====================================
 
+From 2.3.1 to 2.3.2
+----------------------
+
+Projects quickstarted on 2.3 should work out of the box.
+
+Kajiki support for TW2 removed
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If your application is using Kajiki as its primary rendering
+engine, TW2 widget will now use Genshi instead of Kajiki.
+
+This is due to the fact that recent TW2 version removed support
+for Kajiki.
+
+AppConfig.add_dbsession_remover_middleware renamed
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you were providing a custom ``add_dbsession_remover_middleware`` method
+you should now rename it to ``add_sqlalchemy_middleware``.
+
+Error Reporting options grouped in .ini file
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Error reporting options have been grouped in ``trace_errors`` options.
+
+While previous option names continue to work for backward compatibility,
+they will be removed in future versions. 
+Email error sending options became::
+
+    trace_errors.error_email = you@yourdomain.com
+    trace_errors.from_address = turbogears@localhost
+    trace_errors.smtp_server = localhost
+
+    trace_errors.smtp_use_tls = true
+    trace_errors.smtp_username = unknown
+    trace_errors.smtp_password = unknown
+
+
 From 2.3 to 2.3.1
 ----------------------
 
