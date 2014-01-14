@@ -9,14 +9,23 @@ minimal mode a default setup that minimizes dependencies and complexity is provi
 
 .. note::
 
-    While minimal mode is well suited for small simple web applications or web services for more complex
+    While minimal mode is well suited for small simple web applications or web services, for more complex
     projects moving to a package based configuration is suggested. To start with a package based application
     the :ref:`20 Minutes Wiki Tutorial <wiki20>` tutorial is provided.
 
+Play with TurboGears
+========================
+
+If you want to experiment with this tutorial without installing TurboGears on your local machine, feel free
+to edit the `Basic TurboGears Example <http://runnable.com/Unq2c2CaTc52AAAm/basic-turbogears-example-for-python>`_ 
+on Runnable and skip the :ref:`Setup <minimal-setup>` section.
+
+This will provide a working TurboGears application in your browser you can freely edit and run.
+
+.. _minimal-setup:
 
 Setup
 ============================
-
 
 First we are going to create a virtual environment where to install the framework, if you want to
 proceed without using a virtual environment simply skip to :ref:`Install TurboGears <TurboGears2_install>`.
