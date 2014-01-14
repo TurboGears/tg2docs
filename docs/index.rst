@@ -65,6 +65,9 @@ of dependencies.
     httpd = make_server('', 8080, config.make_wsgi_app())
     httpd.serve_forever()
 
+Play with it on `Runnable <http://runnable.com/Unq2c2CaTc52AAAm/basic-turbogears-example-for-python>`_
+or follow the :ref:`Minimal Mode Tutorial <minimal-tutorial>` to setup your own *Single File Applications*.
+
 Full Stack Projects
 --------------------------------
 
