@@ -178,3 +178,71 @@ Please pay attention that usually when registering resources on ToscaWidgets (bo
 tw1 and tw2) it won't be necessary to call neither ``tg.url`` or ``tg.lurl`` as
 all the ``Link`` subclasses like ``JSLink``, ``CSSLink`` and so on will already
 serve the resource using the application mount point.
+
+Custom Layouts
+===========================
+
+While using ``tw2.forms.TableLayout`` and ``tw2.forms.ListLayout`` it's easy to perform
+most simple styling and customization of your forms, for more complex widgets
+a custom template is usually the way to go.
+
+You can easily provide your custom layout by subclassing ``tw2.forms.widgets.BaseLayout``
+and declaring a template for it inside your forms.
+
+For example it is possible to create a name/surname form with a side field for notes
+using the boostrap CSS framework:
+
+.. code-block:: python
+
+    from tw2.core import Validator
+    from tw2.forms.widgets import Form, BaseLayout, TextField, TextArea, SubmitButton
+
+    class SubscribeForm(Form):
+        action = '/submit'
+
+        class child(BaseLayout):
+            inline_engine_name = 'genshi'
+            template = '''
+    <div xmlns:py="http://genshi.edgewall.org/"
+         py:strip="">
+        <py:for each="c in w.children_hidden">
+            ${c.display()}
+        </py:for>
+
+        <div class="form form-horizontal">
+            <div class="form-group">
+                <div class="col-md-7">
+                    <div py:with="c=w.children.name"
+                         class="form-group ${c.error_msg and 'has-error' or ''}">
+                        <label for="${c.compound_id}" class="col-md-3 control-label">${c.label}</label>
+                        <div class="col-md-9">
+                            ${c.display()}
+                            <span class="help-block" py:content="c.error_msg"/>
+                        </div>
+                    </div>
+                    <div py:with="c=w.children.surname"
+                         class="form-group ${c.error_msg and 'has-error' or ''}">
+                        <label for="${c.compound_id}" class="col-md-3 control-label">${c.label}</label>
+                        <div class="col-md-9">
+                            ${c.display()}
+                            <span class="help-block" py:content="c.error_msg"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-md-offset-1">
+                    ${w.children.notes.display()}
+                </div>
+            </div>
+        </div>
+    </div>
+    '''
+
+        name = TextField(label=l_('Name'), validator=Validator(required=True),
+                         css_class="form-control")
+        surname = TextField(label=l_('Surname'), validator=Validator(required=True),
+                            css_class="form-control")
+        notes = TextArea(label=None, placeholder=l_("Notes"),
+                         css_class="form-control", rows=8)
+
+        submit = SubmitButton(css_class='btn btn-primary', value=l_('Create'))
+

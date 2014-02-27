@@ -44,9 +44,6 @@ have a basic page navigation with ``${tmpl_context.paginators.movies.pager()}``:
 Advanced Pagination
 -------------------
 
-More Formatting
-^^^^^^^^^^^^^^^
-
 The pager method of the paginator supports various customization options to tune
 the look and feel of the paginator, make sure you take a look at
 :py:class:`tg.support.paginate.Page` for more details:
