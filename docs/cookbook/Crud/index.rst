@@ -398,6 +398,8 @@ in a more declarative manner like this::
 Options reference
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. _tgext.crud.reference:
+
 The ``tgext.crud.CrudRestController`` and ``tgext.crud.EasyCrudRestController``
 provide a bunch of configuration options that can be changed by subclassing
 the controller and providing them in a declarative way:

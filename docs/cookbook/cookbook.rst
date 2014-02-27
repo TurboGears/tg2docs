@@ -15,6 +15,7 @@ Basic Recipes
     TwForms
     datagrid
     Crud/index
+    Crud/restapi
     master-slave
     deploy/index
     upgrading
