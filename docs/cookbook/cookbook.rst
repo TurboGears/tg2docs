@@ -13,6 +13,7 @@ Basic Recipes
     :maxdepth: 2
 
     TwForms
+    jsonp
     datagrid
     Crud/index
     Crud/restapi

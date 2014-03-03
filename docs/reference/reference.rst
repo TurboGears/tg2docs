@@ -60,6 +60,9 @@ Rendering
 .. automodule:: tg.render
     :members:
 
+.. autoclass:: tg.renderers.base.RendererFactory
+    :members:
+
 Request & Response
 ====================
 

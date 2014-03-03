@@ -32,21 +32,18 @@ Configuration Attributes
 ``base_config.default_renderer`` -- set to the name of the default
 render function you want to use.
 
-``base_config.renderers`` -- This is a list of render functions that
-ought to be prepared for use in the app.  This is a shortcut for the
-four renderers that TurboGears |version| provides out of the box.
-TG provides renderers for: `'genshi'`, `'mako'`, `'jinja'`, and `'json'`.
+``base_config.renderers`` -- This is a list of rendering engines that
+ought to be prepared for use in the app. To make it available in
+your application you must specify here the name of the engine you
+want to use.
 
-In 2.1, If you would like to add additional renderers, you can
-add it to the renderers list, and then provide a setup_mytl_renderer
-method in your custom AppConfig, where mytl is the name of your
-template language.
+TG provides built-in renderers for:
+`'genshi'`, `'mako'`, `'jinja'`, `'json'` and `'jsonp'`.
 
-
-``base_config.use_legacy_renderer`` -- If ``True`` old style buffet
-renderers will be used.  Don't set this unless you need buffet
-renderers for some specific reason, buffet renderers are deprecated
-and will probably be removed in 2.1.
+In 2.3.2 and newer versions, If you would like to add additional renderers, you can
+add it to the renderers list, and then register a rendering engine factory
+through the :func:`tg.configuration.AppConfig.register_rendering_engine`
+method.
 
 ``base_config.use_dotted_templatenames`` -- Generally you will not
 want to change this.  But if you want to use the standard
@@ -55,12 +52,6 @@ genshi/mako/jinja file system based template search paths, set this to
 very easy to store template files in zipped eggs, but if you're not
 using packaged TurboGears |version| app components there are some
 advantages to the search path syntax.
-
-``base_config.renderers`` -- a dictionary with the render function
-name as the key, and the actual configured render function as the
-value.  For the four standard renderers it's enough to just add the
-name to ``base_config.renderers`` but for custom renderers you want to
-set the renderer up, and set it in this dictionary directly.
 
 
 Making a module available to all Genshi templates
@@ -89,5 +80,5 @@ template now.
 Overriding AppConfig Rendering Methods
 ---------------------------------------
 
-Look for the ``setup_*_renderer`` methods inside the :py:class:`AppConfig`
-class to override renderers behavior or add more.
+Please have a look at :func:`tg.configuration.AppConfig.register_rendering_engine`
+for informations on how to setup custom rendering engines.
