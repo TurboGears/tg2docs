@@ -10,10 +10,33 @@ Kajiki support for TW2 removed
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If your application is using Kajiki as its primary rendering
-engine, TW2 widget will now use Genshi instead of Kajiki.
+engine, TW2 widget will now pick the first supported engine instead of Kajiki.
 
 This is due to the fact that recent TW2 version removed support
 for Kajiki.
+
+Custom rendering engines support refactoring
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you were providing a custom rendering engine through ``AppConfig.setup_NAME_renderer``
+methods, those are now deprecated. While they should continue to work it is preferred
+to update your rendering engine to the new factory based
+ :func:`tg.configuration.AppConfig.register_rendering_engine`
+
+Chameleon Genshi support is now provided by an extension
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Chameleon Genshi rendering support is now provided by ``tgext.chameleon_genshi``
+instead of being bult-in inside TurboGears itself.
+
+Validation error_handlers now call their hooks and wrappers
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Previous to 2.3.2 controller methods when used as error_handlers didn't
+call their registered hooks and controller wrappers, not if an hook
+or controller wrapper is attached to an error handler it will correctly
+be called. Only exception is ``before_validate`` hook as error_handlers
+are not validated.
 
 AppConfig.add_dbsession_remover_middleware renamed
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
