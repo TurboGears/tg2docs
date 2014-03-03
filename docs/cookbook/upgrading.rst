@@ -15,6 +15,13 @@ engine, TW2 widget will now pick the first supported engine instead of Kajiki.
 This is due to the fact that recent TW2 version removed support
 for Kajiki.
 
+AppConfig.setup_mimetypes removed
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you were providing custom mimetypes by overriding the ``setup_mimetypes`` method
+in ``AppConfig`` this is not supported anymore. To register custom mimetypes just
+declare them in ``base_config.mimetype_lookup`` dictionary in your ``config/app_cfg.py``.
+
 Custom rendering engines support refactoring
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
