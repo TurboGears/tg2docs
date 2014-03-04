@@ -78,6 +78,7 @@ Then probably want to disable the ``debug`` inside the ``[DEFAULT]`` section.
     If you want to use a different server instead of waitress, as gevent,
     CherryPy or something else, as far as it is compatible with ``PasteDeploy``
     changing the ``use = egg:waitress#main`` to whatever you want usually is enough.
+    In case you want to use gevent, for you can change it to ``use = egg:gearbox#gevent``.
 
 Step 3: Starting the application
 ====================================
