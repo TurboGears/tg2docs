@@ -1,5 +1,5 @@
 ==========================================================
-Running a TurboGears under Heroku
+Running TurboGears under Heroku
 ==========================================================
 
 This recipe assumes that you have a TurboGears app setup using a Paste INI file,

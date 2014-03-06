@@ -1,7 +1,7 @@
 .. _circus_tutorial:
 
 ==========================================================
-Running a TurboGears under ``Circus`` and ``Chaussette``
+Running TurboGears under ``Circus`` and ``Chaussette``
 ==========================================================
 
 ``Circus`` is a process & socket manager.

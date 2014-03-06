@@ -1,7 +1,7 @@
 .. _modwsgi_tutorial:
 
 ==========================================================
-Running a TurboGears under Apache with ``mod_wsgi``
+Running TurboGears under Apache with ``mod_wsgi``
 ==========================================================
 
 ``mod_wsgi`` is an Apache module developed by Graham Dumpleton.
