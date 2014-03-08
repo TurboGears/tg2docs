@@ -47,7 +47,7 @@ project_url = 'http://www.turbogears.org'
 # built documents.
 #
 # The short X.Y version.
-version = '2.3.1'
+version = '2.3.2'
 # The full version, including alpha/beta/rc tags.
 release = max(tg_release_version, version)
 # The private index, something like http://tg.gy/230

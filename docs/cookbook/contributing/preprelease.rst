@@ -255,8 +255,6 @@ simply to get the new version numbers into the distributed files.
  * In `TG2`_:
  
    * Update tg/release.py to have the new version number.
-   * Update the dependency_links in setup.py to reference the
-     "current" URL instead of "next" URL.
    
  * In `TG2Devtools`_:
  
@@ -265,21 +263,18 @@ simply to get the new version numbers into the distributed files.
      * Update the version number
      * Update the install requirements so that it requires TurboGears2
        >= the new version number
-     * Update the dependency_links to reference the "current" URL
-       instead of "next" URL.
        
    * Update devtools/templates/turbogears/setup.py_tmpl:
    
-     * Update the dependency_links to reference the "current" URL
-       instead of "next" URL.
      * Update the install requirements so that it requires TurboGears2
        >= the new version number
 
  * In `TG2Docs`_:
 
-   * Update book/conf.py and docs/conf.py:
+   * Update requirements.txt:
 
-     * Update version and release to be the new version
+     * Change TurboGears dependency line from ``@development`` to
+       current release (EX: ``@tg2.3.2``).
      
    * Update book/setup.py:
 
