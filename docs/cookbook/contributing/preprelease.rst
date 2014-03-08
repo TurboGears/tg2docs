@@ -269,6 +269,13 @@ simply to get the new version numbers into the distributed files.
      * Update the install requirements so that it requires TurboGears2
        >= the new version number
 
+   * Update CHANGES.txt:
+
+     * Add new release with changelog generate with:
+       ``git log --no-merges --format="* %s" LAS_RELEASE_TAG..HEAD``
+       (LAST_RELEASE_TAG is the tag of the previous release, like tg2.3.2). 
+       Please take only meaningful changes.
+
  * In `TG2Docs`_:
 
    * Update requirements.txt:
