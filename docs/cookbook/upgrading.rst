@@ -1,6 +1,25 @@
 Upgrading Your TurboGears Project
 ====================================
 
+From 2.3.2 to 2.3.3
+----------------------
+
+get_lang always returns a list
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Since 2.3.2 ``get_lang`` supports the ``all`` option, which made possible
+to ask TurboGears for all the languages requested by the user to return only
+those for which the application supports translation (``all=False``).
+
+When ``get_lang(all=True)`` was called, two different behaviors where
+possible: Usually the whole list of languages requested by the user was
+returned, unless the application supported no translations. In that case
+``None`` was returned.
+
+Now ``get_lang(all=True)`` behaves in a more predictable way and always
+returns the whole list of languages requested by the user. In case i18n
+is not enabled an empty list is returned.
+
 From 2.3.1 to 2.3.2
 ----------------------
 
