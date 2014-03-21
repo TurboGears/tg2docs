@@ -12,6 +12,9 @@ Decorators
 .. automodule:: tg.decorators
     :members:
 
+.. autoclass:: tg.caching.cached_property
+
+
 Validation
 ==================
 

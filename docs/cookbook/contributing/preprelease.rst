@@ -390,6 +390,7 @@ For each of the three repositories, merge the "master" branch to the
 
 You're done. Sit back and enjoy having accomplished a release.
 
+.. _GitHub: https://github.com/TurboGears/tg2/issues
 .. _eggbasket: http://www.turbogears.org/2.1/downloads/current/
 .. _turbogears: http://www.turbogears.org/
 .. _Jenkins: http://jenkins.turbogears.org/

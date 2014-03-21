@@ -47,7 +47,7 @@ Custom rendering engines support refactoring
 If you were providing a custom rendering engine through ``AppConfig.setup_NAME_renderer``
 methods, those are now deprecated. While they should continue to work it is preferred
 to update your rendering engine to the new factory based
- :func:`tg.configuration.AppConfig.register_rendering_engine`
+:func:`tg.configuration.AppConfig.register_rendering_engine`
 
 Chameleon Genshi support is now provided by an extension
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
