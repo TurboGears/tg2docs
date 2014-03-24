@@ -115,11 +115,11 @@ It is possible to register a controller wrapper for a specific controller or
 for the whole application, when registered to the whole application they will be
 applied to every controller of the application or third party libraries::
 
-    def controller_wrapper(app_config, caller):
+    def controller_wrapper(next_caller):
         def call(*args, **kw):
             try:
                 print 'Before handler!'
-                return caller(*args, **kw)
+                return next_caller(*args, **kw)
             finally:
                 print 'After Handler!'
         return call

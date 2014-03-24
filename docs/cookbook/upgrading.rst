@@ -4,6 +4,27 @@ Upgrading Your TurboGears Project
 From 2.3.2 to 2.3.3
 ----------------------
 
+controller_wrappers now get config on call and not on construction
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Whenever a controller wrapper is registered it won't get the
+``app_config`` parameter anymore on construction, instead it will
+receive the configuration as a parameter each time it is called.
+
+The controller wrapper signature has changed as following::
+
+    def controller_wrapper(next_caller):
+        def call(config, controller, remainder, params):
+            return next_caller(config, controller, remainder, params)
+        return call
+
+If you still need to access the application configuration into
+the controller wrapper constructor, use ``tg.config``.
+
+TurboGears will try to setup the controller wrapper with the new
+method signature, if it fails it will fallback to the old controller
+wrappers signature and provide a *DeprecationWarning*.
+
 get_lang always returns a list
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
