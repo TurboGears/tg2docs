@@ -4,6 +4,24 @@ Upgrading Your TurboGears Project
 From 2.3.2 to 2.3.3
 ----------------------
 
+@require is now a TurboGears decoration
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+``@require`` decorator is now a TurboGears decoration, the order
+it is applied won't matter anymore if other decorators are placed
+on the controller.
+
+@beaker_cache is now replaced by @cached
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+``@beaker_cache`` decorator was meant to work on plain function,
+the new ``@cached`` decorator is meant to work explicitly on TurboGears
+controllers. The order is applied won't matter anymore just like
+the other turbogears decorations.
+
+``@beaker_cache`` is still provided, but it's use on controllers
+is discouraged.
+
 controller_wrappers now get config on call and not on construction
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
