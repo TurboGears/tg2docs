@@ -20,6 +20,7 @@ Basic Recipes
     master-slave
     deploy/index
     upgrading
+    logging
 
 Advanced Recipes
 ===================
