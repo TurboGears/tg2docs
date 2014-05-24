@@ -6,6 +6,14 @@ TurboGears2 CookBook
 
 The CookBook is a collection of documentation and patterns common to TurboGears2
 
+Upgrading TurboGears
+======================
+
+.. toctree::
+    :maxdepth: 2
+
+    upgrading
+
 Basic Recipes
 ===================
 
@@ -19,7 +27,6 @@ Basic Recipes
     Crud/restapi
     master-slave
     deploy/index
-    upgrading
     logging
 
 Advanced Recipes
