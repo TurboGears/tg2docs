@@ -6,8 +6,45 @@ ObjectDispatch and TGController
 
 The TGController is the basic controller class that provides an easy
 method for nesting of controller classes to map URL hierarchies.
-There are however a few methods which provide a slightly different
-method for dispatch.  They are described below.
+There are however a few methods which provide ways to implement
+custom dispatching and some entry points that will make easy
+for the developer to track the progress of request dispatch.
+
+Dispatching Entry Points
+---------------------------
+
+Dispatching entry points are methods that get executed while
+the dispatch is moving forward, this permits to run custom
+code which is related to the controller we are dispatching
+and not a specific method itself:
+
+.. code-block:: python
+
+    class Controller(BaseController):
+        def _before(self, *remainder, **params):
+            # Executed before running any method of Controller
+
+        def _after(self, *remainder, **params):
+            # Executed after running any method of Controller
+
+        def _visit(self, *remainder, **params):
+            # Executed when visiting a controller during dispatch.
+
+* ``_before`` gets executed whenever the dispatch process
+    decides that the request has to be served by a method
+    of the controller, before calling the method itself.
+    It is executed before any method *requirement* specified
+    through ``@require`` has been evaluated, but after the
+    controller ``allow_only`` has been evaluated.
+
+* ``_after`` gets executed after the request has been dispatched
+    to one of the controller methods.
+
+* ``_visit`` gets executed whenever the controller is visited
+    during the dispatch process. Actual request target might be
+    a subcontroller and not the controller itself.
+    Might be called multiple times and gets executed before
+    ``allow_only`` has been evaluated.
 
 The Default Method
 ------------------
@@ -15,7 +52,9 @@ The Default Method
 The developer may decide to provied a ``_default`` method within their
 controller which is called when the dispatch mechanism cannot find
 an appropriate method in your controllers to call.  This 
-_default method might look something like this::
+_default method might look something like this:
+
+.. code-block:: python
 
     class WikiController(BaseController):
     
@@ -42,31 +81,32 @@ are different, as they are not actual controllers.
 A lookup method takes as its argument the remaining path elements and
 returns an object (representing the next step in the traversal) and a
 (possibly modified) list of remaining path elements.  So a blog might
-have controllers that look something like this::
+have controllers that look something like this:
 
-  class BlogController(BaseController):
+.. code-block:: python
 
-     @expose()
-     def _lookup(self, year, month, day, id, *remainder):
-        dt = date(int(year), int(month), int(day))
-        blog_entry = BlogEntryController(dt, int(id))
-        return blog_entry, remainder
+    class BlogController(BaseController):
+        @expose()
+        def _lookup(self, year, month, day, id, *remainder):
+            dt = date(int(year), int(month), int(day))
+            blog_entry = BlogEntryController(dt, int(id))
+            return blog_entry, remainder
 
-  class BlogEntryController(object):
+    class BlogEntryController(object):
+        def __init__(self, dt, id):
+            self.entry = model.BlogEntry.get_by(date=dt, id=id)
 
-     def __init__(self, dt, id):
-         self.entry = model.BlogEntry.get_by(date=dt, id=id)
+        @expose(...)
+        def index(self):
+            ...
 
-     @expose(...)
-     def index(self):
-        ...
-     @expose(...)
-     def edit(self):
-         ...
+        @expose(...)
+        def edit(self):
+            ...
 
-     @expose()
-     def update(self):
-        ....
+        @expose()
+        def update(self):
+            ....
 
 So a URL request to .../2007/6/28/0/edit would map first to the
 BlogController's _lookup method, which would lookup the date,

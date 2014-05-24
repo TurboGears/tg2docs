@@ -93,3 +93,10 @@ Internationalization
 .. automodule:: tg.i18n
     :members:
     :exclude-members: setup_i18n
+
+Controller Utilities
+=========================
+
+.. automodule:: tg.controllers.util
+    :members:
+

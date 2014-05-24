@@ -61,8 +61,41 @@ Each of these backends can be configured from your
 application's configuration file, and the resulting caches can be
 used with the same API within your application.
 
-Using the Cache
-^^^^^^^^^^^^^^^
+Controller Caching
+^^^^^^^^^^^^^^^^^^^^^^
+
+TurboGears provides an helper for quick controller caching.
+By using the :func:`tg.decorators.cached` decorator on a
+controller you can specify that the whole controller body
+has to be cached depending on the parameters of the request.
+
+By default also the ``Content-Type`` and ``Content-Length``
+headers will be cached, so that we ensure that the content
+related headers get restored together with the cached content.
+
+Using ``@cached`` is pretty straightforward:
+
+.. code-block:: python
+
+    class SimpleController(TGController):
+
+        @cached(expire=100, type='memory')
+        @expose()
+        def simple(self):
+            return "Hey, this is a cached controller!"
+
+You can specify additional headers to be cached or change the
+cache key by specifying the @cached arguments. Please refer
+to :func:`tg.decorators.cached` reference for details.
+
+.. note::
+
+    Please note that ``@cached`` will only cache the controller
+    body, the template will still be rendered. To cache both
+    the controller and template join it with `template_cache`_
+
+Manually Using the Cache
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The configured `Beaker` is more properly thought of as a `CacheManager`, 
 as it provides access to multiple independent cache namespaces.  
@@ -72,6 +105,7 @@ To access the cache from within a controller module:
 .. code-block:: python
 
     from tg import cache
+
     @expose()
     def some_action(self, day):
         # hypothetical action that uses a 'day' variable as its key
@@ -239,6 +273,8 @@ References
       -- Stephen Pierzchala's general introduction to the concept of
       caching in order to improve web-site performance
 
+
+.. _template_cache:
 
 Template Caching
 --------------------

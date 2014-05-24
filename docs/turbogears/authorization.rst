@@ -112,6 +112,8 @@ to do is pass the predicate to that decorator. For example::
         # ...
 
 
+.. _controller_level_auth:
+
 Controller-level authorization
 ------------------------------
 If you want that all the actions from a given controller meet a common
@@ -136,6 +138,22 @@ your controller class::
 
             """
             return dict()
+
+If you need to specify additional options for the requirement you can
+assign a ``require`` instance instead of a plain predicate to the
+``allow_only`` attribute::
+
+    from yourproject.lib.base import BaseController
+    from tg import require
+
+    class AdminAPI(BaseController):
+        allow_only = require(predicates.has_permission('manage'),
+                             smart_denial=True)
+
+        @expose('json')
+        def create_user(self, user_name):
+            pass
+
 
 
 .. warning::

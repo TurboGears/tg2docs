@@ -4,6 +4,24 @@ Upgrading Your TurboGears Project
 From 2.3.2 to 2.3.3
 ----------------------
 
+abort can now skip error/document and authentication
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+:func:`tg.controllers.util.abort` can now provide a
+pass-through abort which will answer as is instead of
+being intercepted by authentication layer to redirect
+to login page or by Error controller to show a custom
+error page. This can be helpful when writing API
+responses that should just provide output as is.
+
+@require can now be used for allow_only
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+It is now possible to use :func:`tg.decorators.require`
+as value for controllers ``allow_only`` to enable
+``smart_denial`` or provide a custom ``denial_handler``
+for :ref:`controller_level_auth`
+
 @require is now a TurboGears decoration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -16,8 +34,8 @@ on the controller.
 
 ``@beaker_cache`` decorator was meant to work on plain function,
 the new ``@cached`` decorator is meant to work explicitly on TurboGears
-controllers. The order is applied won't matter anymore just like
-the other turbogears decorations.
+controllers. The order the decorator is applied won't matter anymore
+just like the other turbogears decorations.
 
 ``@beaker_cache`` is still provided, but it's use on controllers
 is discouraged.
