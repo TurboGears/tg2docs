@@ -120,7 +120,7 @@ This object provides three methods which have to return respectively the
 user, its groups and its permissions. You can freely change them as you wish
 as they are part of your own application behavior.
 
-Adavanced Customizations
+Advanced Customizations
 ---------------------------
 
 For more advanced customizations or to use repoze plugins to implement
@@ -193,6 +193,125 @@ Now our application is able to fetch the user from the ``Member`` table and
 its groups from the ``Team`` table. Using ``TGAuthMetadata`` makes also possible
 to introduce a caching layer to avoid performing too many queries to fetch
 the authentication data for each request.
+
+BasicAuth Example
+-----------------------------
+
+The following is an example of an advanced authentication stack customization
+to use browser basic authentication instead of form based authentication.
+
+Declaring a Custom Authentication Backend
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+First required step is to declare that we are going to use a custom
+authentication backend::
+
+    base_config.auth_backend = 'htpasswd'
+
+When this is valued to ``ming`` or ``sqlalchemy`` TurboGears will configure
+a default authentication stack based on users stored on the according database,
+if ``auth_backend`` is ``None`` the whole stack will be disabled.
+
+Then we must remove all the simple authentication options, deleting all the
+``basic_config.sa_auth`` from ``app_cfg.py`` is usually enough. Leaving
+unexpected options behind (options our authentication stack doesn't use)
+might lead to a crash on application startup.
+
+Using HTPasswd file for users
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Next step is storing our users inside an ``htpasswd`` file,
+this can be achieved by using the ``HTPasswdPlugin`` authenticator::
+
+    from repoze.who.plugins.htpasswd import HTPasswdPlugin, plain_check
+    base_config.sa_auth.authenticators = [('htpasswd', HTPasswdPlugin('./htpasswd', plain_check))]
+
+This will make TurboGears load users from an htpasswd file inside the directory
+we are starting the application from. The ``plain_check`` function is the
+one used to decode password stored inside the htpasswd file. In this case
+passwords are expected to be in plain text in the form::
+
+    manager:managepass
+
+Challenging and Identifying users with BasicAuth
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Now that we are correctly able to authenticate users from an htpasswd
+file, we need to use BasicAuth for identifying returning users::
+
+    from repoze.who.plugins.basicauth import BasicAuthPlugin
+
+    base_auth = BasicAuthPlugin('MyTGApp')
+    base_config.sa_auth.identifiers = [('basicauth', base_auth)]
+
+This will correctly identify users that are already logged using
+BasicAuth, but we are still sending users to login form to
+perform the actual login.
+
+As BasicAuth requires the login to be performed through the browser
+we must disable the login form and set the basic auth
+plugin as a challenger::
+
+    # Disable the login form, it won't work anyway as the credentials
+    # for basic auth must be provided through the browser itself
+    base_config.sa_auth.form_identifies = False
+
+    # Use BasicAuth plugin to ask user for credentials, this will replace
+    # the whole login form.
+    base_config.sa_auth.challengers = [('basicauth', base_auth)]
+
+Providing User Data
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The previous steps are focused on providing a working authentication layer,
+but we will need to also identify the authenticated user so that
+also ``request.identity`` and the authorization layer can work as
+expected.
+
+This is achieved through the ``authmetadata`` option, which tells
+TurboGears how to retrieve the user and it's informations. In this
+case as we don't have a database of users we will just provide a
+simple user with only ``display_name`` and ``user_name`` so that
+most things can work. For ``manager`` user we will also provide the
+``managers`` group so that user can access the TurboGears admin::
+
+    from tg.configuration.auth import TGAuthMetadata
+
+    class ApplicationAuthMetadata(TGAuthMetadata):
+        def __init__(self, sa_auth):
+            self.sa_auth = sa_auth
+
+        def get_user(self, identity, userid):
+            # As we use htpasswd for authentication
+            # we cannot lookup the user in a database,
+            # so just return a fake user object
+            from tg.util import Bunch
+            return Bunch(display_name=userid, user_name=userid)
+
+        def get_groups(self, identity, userid):
+            # If the user is manager we give him the
+            # managers group, otherwise no groups
+            if userid == 'manager':
+                return ['managers']
+            else:
+                return []
+
+        def get_permissions(self, identity, userid):
+            return []
+
+    base_config.sa_auth.authmetadata = ApplicationAuthMetadata(base_config.sa_auth)
+
+Removing Login Form
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+As the whole authentication is now performed through BasicAuth
+the login form is now unused, so probably want to remove the login form related
+urls which are now unused:
+
+    - /login
+    - /post_login
+    - /post_logout
+
 
 .. _disabling-auth:
 
