@@ -77,7 +77,7 @@ in the ``[handler_console]`` section:
 For example to change it to log to a specific file you can replace the
 ``StreamHandler`` with a ``FileHandler``:
 
-.. code-blonk:: ini
+.. code-block:: ini
 
     [handler_console]
     class = FileHandler
@@ -87,8 +87,8 @@ For example to change it to log to a specific file you can replace the
 
 .. note::
 
-Please not that the best practice is not to change the ``console`` handler
-but creating a new handler and switch the various loggers to it.
+    Please not that the best practice is not to change the ``console`` handler
+    but creating a new handler and switch the various loggers to it.
 
 WSGI Errors Output
 =================================
