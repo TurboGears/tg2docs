@@ -24,8 +24,8 @@ specified into the application configurator unless explicitly set. To explicitly
 the template engine to use just prepend it to the template path in the form **engine:template_path**
 like **genshi:mypackage.templates.template_file**.
 
-Refer to :module:`tg.configuration` documentation for informations on setting up available
-renderers and specifying the default one.
+Refer to :ref:`Rendering Engines Configuration <renderingconfig>` documentation for information
+on setting up available renderers and specifying the default one.
 
 Template Variables
 ------------------

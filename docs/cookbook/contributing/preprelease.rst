@@ -403,4 +403,3 @@ You're done. Sit back and enjoy having accomplished a release.
 .. _TG-Dev ML: http://groups.google.com/group/turbogears-trunk
 .. _virtualenv: http://pypi.python.org/pypi/virtualenv
 .. _GNU Changelog: http://www.gnu.org/prep/standards/html_node/Change-Logs.html
-.. _GitHub: https://github.com/TurboGears/tg2/issues?direction=desc&sort=created&state=open
