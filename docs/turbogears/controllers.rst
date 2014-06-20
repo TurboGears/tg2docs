@@ -225,7 +225,7 @@ We provide them by adding a method to the controller like this ...
 
 .. code-block:: python
 
-    @expose(template="helloworld.templates.sample")
+    @expose("helloworld.templates.sample")
     def example(self):
         mydata = {'person':'Tony Blair','office':'President'}
         return mydata
@@ -244,6 +244,8 @@ We provide them by adding a method to the controller like this ...
 
 Template files can thus house all markup information, maintaining clean
 separation from controller code.
+
+For more on templating have a look at :ref:`Templating <templating>`
 
 SubControllers And The URL Hierarchy
 ------------------------------------

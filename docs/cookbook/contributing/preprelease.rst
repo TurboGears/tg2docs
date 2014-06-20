@@ -396,10 +396,11 @@ You're done. Sit back and enjoy having accomplished a release.
 .. _Jenkins: http://jenkins.turbogears.org/
 .. _PyPI: http://pypi.python.org/
 .. _SourceForge: https://sourceforge.net/p/turbogears2/tickets/
-.. _TG2: https://sourceforge.net/p/turbogears2/tg2/
-.. _TG2Devtools: https://sourceforge.net/p/turbogears2/tg2devtools/
-.. _TG2Docs: https://sourceforge.net/p/turbogears2/tg2docs/
+.. _TG2: https://github.com/TurboGears/tg2
+.. _TG2Devtools: https://github.com/TurboGears/tg2devtools
+.. _TG2Docs: https://github.com/TurboGears/tg2docs
 .. _TG ML: http://groups.google.com/group/turbogears
 .. _TG-Dev ML: http://groups.google.com/group/turbogears-trunk
 .. _virtualenv: http://pypi.python.org/pypi/virtualenv
 .. _GNU Changelog: http://www.gnu.org/prep/standards/html_node/Change-Logs.html
+.. _GitHub: https://github.com/TurboGears/tg2/issues?direction=desc&sort=created&state=open

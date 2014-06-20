@@ -60,6 +60,8 @@ WebFlash
 Rendering
 ==================
 
+.. autofunction:: tg.render_template
+
 .. automodule:: tg.render
     :members:
 

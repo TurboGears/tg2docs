@@ -26,6 +26,7 @@ Basic Documentation
     :maxdepth: 2
 
     controllers
+    templating
     validation
     webflash
     authorization
