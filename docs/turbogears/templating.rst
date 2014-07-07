@@ -9,7 +9,7 @@ link controller methods to template and through the :func:`tg.render_template` f
 
 By default TurboGears references to templates using *dotted notation*, this is the path
 of the template file in terms of python packages. This makes possible to refer to template
-files independently from where the application is installed and started as it referes
+files independently from where the application is installed and started as it refers
 to the python package where the template file is provided.
 
 Typical dotted notation path looks like: **mypackage.templates.template_file** and it doesn't
