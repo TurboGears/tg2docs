@@ -2,7 +2,7 @@
 Setting up logging in your Application
 ==========================================================
 
-TurboGears relies on the standard Python ``loggig`` module,
+TurboGears relies on the standard Python ``logging`` module,
 so to add logging to your application simply add the following
 lines at the begin of your files:
 
@@ -12,7 +12,8 @@ lines at the begin of your files:
     log = logging.getLogger(__name__)
 
 Then you can report logging messages with the standard logger
-methods: ``.warning``, ``.info``, ``.error``, ``.exception`` and so on:
+methods: ``log.warning()``, ``log.info()``, ``log.error()``,
+``log.exception()`` and so on:
 
 .. code-block:: python
 
@@ -29,13 +30,13 @@ By default TurboGears configures the logging module so that all the
 log messages from your application are displayed from ``DEBUG`` level
 on. So even debug messages will be displayed.
 
-This is performed inside the ``development.ini`` file at the and.
+This is specified at the end of the ``development.ini`` file.
 When starting your application with ``gearbox`` it will automatically
 load the logging configuration from your ``development.ini`` or provided
 configuration file.
 
-You are deploying your application on mod_wsgi or other environment
-that don't rely on ``gearbox`` to run the application, remember to load
+When you are deploying your application on ``mod_wsgi`` or any other environment
+that doesn't rely on ``gearbox`` to run the application, remember to load
 the logging configuration before creating the actual WSGI application:
 
 .. code-block:: python
@@ -51,16 +52,16 @@ the logging configuration before creating the actual WSGI application:
         application = loadapp('config:%s' % APP_CONFIG)
 
 Otherwise the logging configuration will be different from the one
-available when starting the application with gearbox and you might
+available when starting the application with ``gearbox`` and you might
 end up not seeing logging messages.
 
 Logging Output
 =================================
 
-On the default configuration all the output of your logging goes to
-``sys.stderr``. What sys.stderr is will depend from your deploy environment.
+In the default configuration all your logging output goes to ``sys.stderr``.
+What exactly that is depends on your deployment environment.
 
-In case of ``mod_wsgi`` this will be redirected to the apache ``ErrorLog``,
+In case of ``mod_wsgi`` it will be redirected to the Apache ``ErrorLog``,
 but in case your environment doesn't provide a convenient way to
 configure output location your can set it up through the ``development.ini``
 in the ``[handler_console]`` section:
@@ -108,20 +109,20 @@ does for you, and will usually point to the same location ``sys.stderr`` points
 to. So your ``wsgi.errors`` and ``logging`` outputs should be available at
 the same destination.
 
-In case your deploy environment isn't setting up wsgi.errors correctly or you
-changed the logging output you might have to change where wsgi.errors points too.
+In case your deploy environment isn't setting up ``wsgi.errors`` correctly or you
+changed the logging output you might have to change where ``wsgi.errors`` points too.
 
 This has to be done by code, replacing the ``environ['wsgi.errors']`` key,
 on every request, with a stream object.
 Being it ``sys.stderr`` or something else.
 
-It is usually best practice to leave both the logging output on sys.stderr and
-wsgi.errors as is, as they will usually end up at the same location on most
+It is usually best practice to leave both the logging output on ``sys.stderr`` and
+``wsgi.errors`` as is, as they will usually end up at the same location on most
 application servers. Then you can tune the output from the application server
 configuration itself.
 
-In case of ``gearbox serve``, wsgi.errors will point to sys.stderr which is then
-redirected to the logfile if a ``--log-file`` option is provided.
+In case of ``gearbox serve``, ``wsgi.errors`` will point to ``sys.stderr`` which is then
+redirected to a logfile, if provided with the ``--log-file`` option.
 
-In case of ``mod_wsgi`` they will both point to the apache ``ErrorLog`` file so you
-can tune your whole logging output configuration from apache itself.
+In case of ``mod_wsgi`` they will both point to the Apache ``ErrorLog`` file so you
+can tune your whole logging output configuration from Apache itself.
