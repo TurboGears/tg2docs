@@ -126,14 +126,7 @@ forms it is going to generate::
 
         class __sprox__(object):
             hide_fields =  ['updated_at']
-            field_widget_types = {'title':TextField}
-            field_widget_args = {'data': {'rows':15, 'cols':50}}
-            field_attrs = {'data': {'style':'width:auto'}}
-
-.. note::
-    To shorten this tutorial the style of the data textarea has been specified using
-    the HTML style attribute. This is something that you usually don't want to do as
-    specifying style in a CSS file is usually preferred.
+            field_widget_args = {'data': {'rows':15}}
 
 Going back to our administration page at http://localhost:8080/admin/wikipages/ and clicking
 on the **New WikiPage** link you will see a form with just a single line entry field for the
