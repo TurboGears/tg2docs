@@ -12,6 +12,12 @@ Setting up our Environment
 If this is your first TurboGears2 project you need to create an environment and install
 the TurboGears2 web framework to make the development commands available.
 
+Completed version of this tutorial is available on 
+http://runnable.com/U8P0CQTKHwNzQoYs/turbogears-wikier-tutorial-for-python.
+
+If you want to play around with this tutorial without installing TurboGears on
+your computer you can freely edit the *Runnable* version.
+
 Creating the Environment
 --------------------------------
 
