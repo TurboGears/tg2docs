@@ -81,9 +81,7 @@ properties to our WikiPage model. Our model should end up looking like::
 
         class __sprox__(object):
             hide_fields =  ['updated_at']
-            field_widget_types = {'title':TextField}
-            field_widget_args = {'data': {'rows':15, 'cols':50}}
-            field_attrs = {'data': {'style':'width:auto'}}
+            field_widget_args = {'data': {'rows':15}}
 
 Index Controller
 ------------------------
