@@ -147,14 +147,14 @@ available inside the file is going to just be removed and replaced with:
 
     <body>
       <div class="row">
-        <div class="span3">
+        <div class="col-md-3">
           <ul>
            <li py:for="url, title in wikipages">
               <a href="${url}">${title}</a>
            </li>
           </ul>
         </div>
-        <div class="span9">
+        <div class="col-md-9">
           <div>
            ${Markup(content)}
           </div>
@@ -190,7 +190,7 @@ First we are going to create a template for our wiki pages and save it as
 
     <body>
       <div class="row">
-        <div class="span12">
+        <div class="col-md-12">
           <h2>${title}</h2>
           ${Markup(content)}
           <a py:if="request.identity and 'managers' in request.identity['groups']"

@@ -71,7 +71,7 @@ too:
 
     <body>
       <div class="row">
-        <div class="span12">
+        <div class="col-md-12">
           <h2>${wikipage.title}</h2>
           ${Markup(wikipage.html_content)}
           <a py:if="request.identity and 'managers' in request.identity['groups']"
