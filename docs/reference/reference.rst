@@ -64,9 +64,17 @@ Rendering
 
 .. automodule:: tg.render
     :members:
+    :exclude-members: render
 
 .. autoclass:: tg.renderers.base.RendererFactory
     :members:
+
+.. autoclass:: tg.jsonify.JSONEncoder
+    :members:
+
+.. autofunction:: tg.jsonify.encode
+
+.. autofunction:: tg.jsonify.encode_iter
 
 Request & Response
 ====================
@@ -100,5 +108,14 @@ Controller Utilities
 =========================
 
 .. automodule:: tg.controllers.util
+    :members:
+
+General Utilities
+=================
+
+.. automodule:: tg.util
+    :members:
+
+.. automodule:: tg.configuration.utils
     :members:
 
