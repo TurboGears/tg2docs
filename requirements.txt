@@ -1,5 +1,5 @@
 -e git://github.com/TurboGears/crank.git@master#egg=crank
--e git://github.com/TurboGears/tg2.git@tg2.3.4#egg=TurboGears2
+-e git://github.com/TurboGears/tg2.git@development#egg=TurboGears2
 tw2.forms
 -e git://github.com/TurboGears/tgext.crud.git@master#egg=tgext.crud
 nose
