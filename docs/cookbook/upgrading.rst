@@ -1,6 +1,32 @@
 Upgrading Your TurboGears Project
 ====================================
 
+From 2.3.3 to 2.3.4
+-------------------
+
+JSON Support no longer supports simplegeneric
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To provide support for customization the ``json.isodates`` and ``json.custom_encoders``
+options are now available during application configuration. Those are also available
+in ``@expose('json')`` ``render_params``, see :ref:`tg-json`.
+
+lang option is now fallback when i18n is enabled
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+TurboGears provided a ``lang`` configuration option which was only meaningful when
+i18n was disabled with ``i18n_enabled = False``. The lang option would force the specified
+language for the whole web app, independently from user session or browser languages.
+
+Now the ``lang`` option when specified is used as the fallback language when i18n is
+actually enabled (which is the default).
+
+tg.util is now officially public
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+As tg.util provided utilities that could be useful to app developers the module has been
+cleaned up keeping only public features and is now documented at :mod:`tg.util`
+
 From 2.3.2 to 2.3.3
 ----------------------
 
