@@ -330,7 +330,7 @@ made available so that parts or all of the original element can be incorporated
 in the output of the match template. See `Using XPath`_ for more information
 about this function.
 
-.. _`Using XPath`: streams.html#using-xpath
+.. _`Using XPath`: http://genshi.edgewall.org/wiki/Documentation/streams.html#using-xpath
 
 Match templates are applied both to the original markup as well to the
 generated markup. The order in which they are applied depends on the order
@@ -664,7 +664,7 @@ new syntax added in Genshi 0.5):
 This example would load the ``myscript.js`` file as a ``NewTextTemplate``. See
 `text templates`_ for details on the syntax of text templates.
 
-.. _`text templates`: text-templates.html
+.. _`text templates`: http://genshi.edgewall.org/wiki/Documentation/text-templates.html
 
 
 .. _comments:
