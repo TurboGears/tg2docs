@@ -27,6 +27,7 @@ Basic Documentation
 
     controllers
     templating
+    genshi-xml-templates
     validation
     webflash
     authorization
