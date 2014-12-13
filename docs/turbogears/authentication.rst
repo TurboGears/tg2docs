@@ -1,6 +1,6 @@
-****************************************************************
+*******************************************
 Authentication in TurboGears 2 applications
-****************************************************************
+*******************************************
 
 This document describes how :mod:`repoze.who` is integrated into TurboGears
 and how you make get started with it. For more information, you may want
@@ -8,12 +8,13 @@ to check :mod:`repoze.who`'s website.
 
 :mod:`repoze.who` is a powerful and extensible ``authentication`` package for
 arbitrary WSGI applications. By default TurboGears2 configures it to log using
-a form and retrieving the user informations through the user_name field of the
+a form and retrieving the user information through the user_name field of the
 User class. This is made possible by the ``authenticator plugin`` that TurboGears2
-uses by default which is ``repoze.who.plugins.sa.SQLAlchemyAuthenticatorPlugin``.
+uses by default which asks ``base_config.sa_auth.authmetadata`` to ``authenticate``
+the user against given login and password.
 
 How it works in TurboGears
-============================
+==========================
 
 The authentication layer it's a WSGI middleware which is able to authenticate
 the user through the method you want (e.g., LDAP or HTTP authentication),
@@ -72,18 +73,18 @@ use:
     if request.identity:
         flash('You are authenticated!')
 
- ``request.identity`` will equal to ``None`` if the user has not been
- authenticated.
+``request.identity`` will equal to ``None`` if the user has not been
+authenticated.
 
- Likewise, this short-cut is also set in the template context as
- ``tg.identity``.
+Likewise, this short-cut is also set in the template context as
+``tg.identity``.
 
 The username will be available in ``identity['repoze.who.userid']``
 (or ``request.identity['repoze.who.userid']``, depending on the method you
 select).
 
 The FastFormPlugin
-----------------------
+------------------
 
 By default, TurboGears |version| configures :mod:`repoze.who` to use
 :class:`tg.configuration.auth.fastform.FastFormPlugin` as the first
@@ -109,7 +110,7 @@ It's very easy for you to customize authentication and identification settings
 in :mod:`repoze.who` from ``{yourproject}.config.app_cfg.base_config.sa_auth``.
 
 Customizing how user informations, groups and permissions are retrieved
---------------------------------------------------------------------------
+-----------------------------------------------------------------------
 
 TurboGears provides an easy shortcut to customize how your authorization
 data is retrieved without having to face the complexity of the underlying
@@ -121,7 +122,7 @@ user, its groups and its permissions. You can freely change them as you wish
 as they are part of your own application behavior.
 
 Advanced Customizations
----------------------------
+-----------------------
 
 For more advanced customizations or to use repoze plugins to implement
 different forms of authentication you can freely customize the whole
@@ -195,13 +196,13 @@ to introduce a caching layer to avoid performing too many queries to fetch
 the authentication data for each request.
 
 BasicAuth Example
------------------------------
+-----------------
 
 The following is an example of an advanced authentication stack customization
 to use browser basic authentication instead of form based authentication.
 
 Declaring a Custom Authentication Backend
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 First required step is to declare that we are going to use a custom
 authentication backend::
@@ -218,7 +219,7 @@ unexpected options behind (options our authentication stack doesn't use)
 might lead to a crash on application startup.
 
 Using HTPasswd file for users
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Next step is storing our users inside an ``htpasswd`` file,
 this can be achieved by using the ``HTPasswdPlugin`` authenticator::
@@ -234,7 +235,7 @@ passwords are expected to be in plain text in the form::
     manager:managepass
 
 Challenging and Identifying users with BasicAuth
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Now that we are correctly able to authenticate users from an htpasswd
 file, we need to use BasicAuth for identifying returning users::
@@ -261,7 +262,7 @@ plugin as a challenger::
     base_config.sa_auth.challengers = [('basicauth', base_auth)]
 
 Providing User Data
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~
 
 The previous steps are focused on providing a working authentication layer,
 but we will need to also identify the authenticated user so that
@@ -302,7 +303,7 @@ most things can work. For ``manager`` user we will also provide the
     base_config.sa_auth.authmetadata = ApplicationAuthMetadata(base_config.sa_auth)
 
 Removing Login Form
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~
 
 As the whole authentication is now performed through BasicAuth
 the login form is now unused, so probably want to remove the login form related
