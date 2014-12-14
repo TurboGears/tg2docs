@@ -31,7 +31,7 @@ which contains the model definition itself::
         __tablename__ = 'wiki_page'
 
         uid = Column(Integer, primary_key=True)
-        updated_at = Column(DateTime, default=datetime.now, nullable=False)
+        updated_at = Column(DateTime, default=datetime.utcnow, nullable=False)
         title = Column(Unicode(255), nullable=False, unique=True)
         data = Column(Unicode(4096), nullable=False, default='')
 

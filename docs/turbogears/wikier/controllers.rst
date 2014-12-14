@@ -28,32 +28,24 @@ the first thing we are going to do is add it to our project ``setup.py``
 file inside the ``install_requires`` list::
 
     install_requires=[
-        "TurboGears2 >= 2.2.0",
+        "TurboGears2 >= 2.3.4",
         "Genshi",
         "zope.sqlalchemy >= 0.4",
         "sqlalchemy",
-        "sqlalchemy-migrate",
+        "alembic",
         "repoze.who",
-        "repoze.who-friendlyform >= 1.0.4",
-        "tgext.admin >= 0.5.1",
-        "repoze.who.plugins.sa",
         "tw2.forms",
+        "tgext.admin >= 0.6.1",
         "webhelpers",
-        "tgext.datahelpers",
-        ]
+        "tgext.datahelpers"
+    ]
 
 Then we need to run again ``pip install -e .`` to install our new
 project dependency::
 
     (tg22env)$ pip install -e .
-    Successfully installed tgext.datahelpers wikir PIL
+    Successfully installed tgext.datahelpers wikir
     Cleaning up...
-
-.. note::
-    As tgext.datahelpers also provides support for attachments and
-    thumbnails generation it is going to bring in the Python Imaging Library (PIL).
-    For now we are just going to ignore it as we don't need it, but it's good
-    to know that it's available.
 
 Now that we installed the datahelpers we can add the **url** and **html_content**
 properties to our WikiPage model. Our model should end up looking like::
@@ -67,7 +59,7 @@ properties to our WikiPage model. Our model should end up looking like::
         __tablename__ = 'page'
 
         uid = Column(Integer, primary_key=True)
-        updated_at = Column(DateTime, default=datetime.now, nullable=False)
+        updated_at = Column(DateTime, default=datetime.utcnow, nullable=False)
         title = Column(Unicode(255), nullable=False, unique=True)
         data = Column(Unicode(4096), nullable=False, default='')
 
@@ -116,7 +108,7 @@ the template itself.
 
 If you are still asking yourself why connecting to http://localhost:8080/ you ended
 up being served by the **RootController.index** method you probably want to take a look
-at TurboGears2 documentation about `how controllers work <http://www.turbogears.org/2.2/docs/main/Controllers.html>`_
+at TurboGears2 documentation about :ref:`_writing_controllers`
 and try to understand how *Object Dispatch* routing works.
 
 Index Template

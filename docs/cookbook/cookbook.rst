@@ -24,6 +24,7 @@ Basic Recipes
     jsonp
     datagrid
     Crud/index
+    admin
     Crud/restapi
     master-slave
     deploy/index

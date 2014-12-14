@@ -2,4 +2,5 @@
 -e git://github.com/TurboGears/tg2.git@development#egg=TurboGears2
 tw2.forms
 -e git://github.com/TurboGears/tgext.crud.git@master#egg=tgext.crud
+-e git://github.com/TurboGears/tgext.admin.git@master#egg=tgext.admin
 nose

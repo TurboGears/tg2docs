@@ -68,3 +68,9 @@ This can be done inside the ``WikiPageAdminController`` that we just declared::
     have a ``url`` field that we want to show. Otherwise it will just know
     how to show it thanks to the ``__xml_fields__`` and ``slug`` properties
     but won't know where it has to be displayed.
+
+Extending the Admin Further
+---------------------------
+
+If you want to further customize the admin behaviour have a look at the
+:ref:`tgadmin`_ documentation.
