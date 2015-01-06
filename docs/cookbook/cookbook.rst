@@ -39,6 +39,7 @@ Advanced Recipes
     streaming
     scheduling
     multiple-databases
+    ldap-auth
     sprox
 
 Contributing to TurboGears
