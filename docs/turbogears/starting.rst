@@ -10,7 +10,7 @@ TurboGears for the first time, while the `Advanced Documentation` chapter will p
 people that want to go down into the framework or are having more complex needs.
 
 Tutorials
-==========================
+=========
 
 .. toctree::
     :maxdepth: 2
@@ -19,8 +19,9 @@ Tutorials
     wiki20
     wikier/index
 
+
 Basic Documentation
-==========================
+===================
 
 .. toctree::
     :maxdepth: 2
@@ -41,7 +42,7 @@ Basic Documentation
 
 
 Advanced Documentation
-=========================
+======================
 
 .. toctree::
     :maxdepth: 2
@@ -51,6 +52,7 @@ Advanced Documentation
     restdispatch
     objectdispatch
     migrations
+    testing
     configuration/index
     authentication
     hooks
