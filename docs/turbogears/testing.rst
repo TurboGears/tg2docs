@@ -230,7 +230,7 @@ Coverage
 ========
 
 Coverage is the process of identifying all the paths of execution that the Test Suite is not
-checking. Aiming at 100% code coverage means that we are sure that out tests passes through all
+checking. Aiming at 100% code coverage means that we are sure that our tests pass through all
 branches in our code and all the code we wrote has been run at least once.
 
 Note that Coverage is able to guarantee that we checked everything we wrote, it is not able
