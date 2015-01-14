@@ -73,4 +73,4 @@ Extending the Admin Further
 ---------------------------
 
 If you want to further customize the admin behaviour have a look at the
-:ref:`tgadmin`_ documentation.
+:ref:`tgadmin` documentation.

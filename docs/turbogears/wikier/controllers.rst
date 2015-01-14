@@ -108,7 +108,7 @@ the template itself.
 
 If you are still asking yourself why connecting to http://localhost:8080/ you ended
 up being served by the **RootController.index** method you probably want to take a look
-at TurboGears2 documentation about :ref:`_writing_controllers`
+at TurboGears2 documentation about :ref:`writing_controllers`
 and try to understand how *Object Dispatch* routing works.
 
 Index Template
