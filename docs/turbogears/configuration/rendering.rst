@@ -15,11 +15,11 @@ by your project.
 By default TurboGears sets up the Genshi engine, but we also provide
 out of the box support for Mako and Jinja. To tell TG to prepare these
 templating engines for you all you need to do is install the package
-and append 'mako' or 'jinja' to the renderer's list here in
+and append ``'mako'`` or ``'jinja'`` to the renderer's list here in
 app_config.
 
 To change the default renderer to something other than Genshi, just
-set the default_renderer to the name of the rendering engine.  So, to
+set the ``default_renderer`` to the name of the rendering engine.  So, to
 add Mako to the list of renderers to prepare, and set it to be the
 default, this is all you'd have to do::
 
@@ -38,7 +38,7 @@ your application you must specify here the name of the engine you
 want to use.
 
 TG provides built-in renderers for:
-`'genshi'`, `'mako'`, `'jinja'`, `'json'` and `'jsonp'`.
+``'genshi'``, ``'mako'``, ``'jinja'``, ``'json'`` and ``'jsonp'``.
 
 In 2.3.2 and newer versions, If you would like to add additional renderers, you can
 add it to the renderers list, and then register a rendering engine factory
