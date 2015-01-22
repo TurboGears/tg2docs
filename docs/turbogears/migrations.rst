@@ -159,7 +159,7 @@ Downgrading your schema
 -----------------------------
 
 There are some cases in which downgrading your schema might be required.
-In those cases you can perform the ``gearbox migrade downgrade`` command::
+In those cases you can perform the ``gearbox migrate downgrade`` command::
 
     $ gearbox migrate downgrade
     Context impl SQLiteImpl.
