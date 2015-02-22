@@ -93,7 +93,7 @@ The correct way of loading boolean values for your use is
 Configuration Milestones
 ----------------------------
 
-Since TurboGears 2.3 the configuration process git divided in various
+Since TurboGears 2.3 the configuration process got divided in various
 milestones, each of those milestones is bound to an advancement in the
 framework setup process.
 
@@ -104,7 +104,7 @@ passed when a callback is registered, the callback gets instantly fired.
 .. note::
     The ``tg.config`` object is available at import time but until the
     configuration file is parsed, it only contains the system
-    defaults.  If you need to perform startup time setup based on
+    defaults.  If you need to perform startup time setup based on the
     supplied configuration, you should do so in a milestone.
 
 Milestones are available through the ``tg.configuration.milestones``
@@ -175,7 +175,7 @@ change is ``app_config.py``:
     base_config.model = wiki20.model
     base_config.DBSession = wiki20.model.DBSession
 
-app_cfg.py exists primarily so that middleware.py and environment.py
+``app_cfg.py`` exists primarily so that ``middleware.py`` and ``environment.py``
 can import and use the ``base_config`` object.
 
 The ``base_config`` object is an ``AppConfig()`` instance which allows
@@ -316,6 +316,6 @@ like this::
 
     # modify base_config parameters below
 
-The above example shows how one would go about overridding the toscawidgets2
+The above example shows how one would go about overridding the ToscaWidgets2
 middleware.  See the :py:class:`AppConfig` for more ideas on how you
 could modify your own custom config
