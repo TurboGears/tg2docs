@@ -1,5 +1,119 @@
 Upgrading Your TurboGears Project
-====================================
+=================================
+
+From 2.3.4 to 2.3.5
+-------------------
+
+Application Wrappers now provide a clearly defined interface
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+:class:`.ApplicationWrapper` abstract base class has been defined
+to provide a clear interface for application wrappers, all TurboGears
+provided application wrappers now adhere this interface.
+
+Genshi Work-Around available for Python3.4
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Genshi 0.7 suffers from a bug that prevents it from working on Python 3.4
+and causes an Abstract Syntax Tree error, to work-around this issue
+TurboGears provides the ``genshi.name_constant_patch`` option that
+can be set to ``True`` to patch Genshi to work on Python 3.4.
+
+Session and Cache Middlewares replaced by Application Wrappers
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The ``SessionMiddleware`` and ``CacheMiddleware`` were specialized
+Beaker middleware for session and caching. To guarantee better
+integration with TurboGears and easier configuration they have been
+switched to Application Wrappers.
+
+The ``use_sessions=True`` option got replaced by ``session.enabled=True``
+and an additional ``cache.enabled=True`` option has been added.
+
+For a full list of options refer to the :class:`.CacheApplicationWrapper`
+and :class:`.SessionApplicationWrapper` references.
+
+To deactivate the application wrappers and switch back to the
+old middlewares, use::
+
+    base_config['session.enabled'] = False
+    base_config['use_session_middleware'] = True
+
+and::
+
+    base_config['cache.enabled'] = False
+    base_config['use_cache_middleware'] = True
+
+StatusCodeRedirect middleware replaced by ErrorPageApplicationWrapper
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The ``StatusCodeRedirect`` middleware was inherited from Paste project,
+and was in charge of intercepting status codes and redirect to an
+error page in case of one of those.
+
+So the ``status_code_redirect=True`` option got replaced by the
+``errorpage.enabled=True`` option. For a full list of options refer
+to the :class:`.ErrorPageApplicationWrapper` reference.
+
+As ``StatusCodeRedirect`` worked at WSGI level it was pretty slow and
+required to read the whole answer just to get the status code.
+Also the TurboGears context (request, response, app_globals and so on)
+were lost during the execution of the ``ErrorController``.
+
+In ``2.3.5`` this got replaced by the :class:`.ErrorPageApplicationWrapper`,
+which provides the same feature using an :ref:`appwrappers`. The behaviour
+should be transparent for most users, in case you want to get back the
+old ``StatusCodeRedirect`` behaviour you use the following option::
+
+    base_config['status_code_redirect'] = True
+
+Keep in mind that the other options from :class:`.ErrorPageApplicationWrapper`
+apply and are converted to options for the ``StatusCodeRedirect``
+middleware.
+
+Transaction Manager is now an application wrapper
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Transaction Manager (the component in charge of committing or rolling back your
+sqlalchemy transaction) is now replaced by :class:`.TransactionApplicationWrapper`
+which is an application wrapper in charge of committing or rolling back the transaction.
+
+So the ``use_transaction_manager=True`` option got replaced by
+the ``tm.enabled=True`` option. For a full list of options refer to the
+:class:`.TransactionApplicationWrapper` reference.
+
+There should be no behavioural changes with this change, the only difference
+is now that the transaction manager applies before the WSGI middlewares as
+it is managed by TurboGears itself. So if your application was successfull
+and there was an error in a middleware that happens after (for example
+ToscaWidgets resource injection) the transaction will be commited anyway
+as the code that created the objects and for which they should be committed
+was successful.
+
+If you want to recover back the *old TGTransactionManager middleware* you
+can use the following option::
+
+    base_config['use_transaction_manager'] = True
+
+
+TurboGears provides its own ming ODMSession manager as an Application Wrapper
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The major change is that :class:`.MingApplicationWrapper` now behaves like SQLAlchemy
+session when streaming responses.
+
+The session is automatically flushed for you at the end of the request, in case of
+stramed responses instead you will have to manually manage the session youself if
+it is used inside the response generator as specified in :ref:`streaming-response`.
+
+To recover the previous behavior set ``ming.autoflush=False`` and replace
+the ``AppConfig.add_ming_middleware`` method with the following::
+
+    def add_ming_middleware(self, app):
+        import ming.odm.middleware
+        return ming.odm.middleware.MingMiddleware(app)
+
+
 
 From 2.3.3 to 2.3.4
 -------------------

@@ -89,6 +89,10 @@ Hooks
 .. autoclass:: tg.configuration.hooks._TGHooks
     :members:
 
+.. autoclass:: tg.appwrappers.base.ApplicationWrapper
+    :members:
+    :special-members:
+
 Milestones
 ==========
 

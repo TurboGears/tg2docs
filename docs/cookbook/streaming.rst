@@ -1,3 +1,5 @@
+.. _streaming-response:
+
 Streaming Response
 ======================
 

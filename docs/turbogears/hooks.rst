@@ -131,9 +131,10 @@ Due to the registration performance cost, controller wrappers
 
 See :func:`tg.configuration.hooks._TGHooks.wrap_controller` for more details.
 
+.. _appwrappers:
 
 Application Wrappers
-------------------------------
+--------------------
 
 Application wrappers are like WSGI middlewares but
 are executed in the context of TurboGears and work
@@ -143,18 +144,23 @@ Application wrappers are callables built by passing
 the next handler in chain and the current TurboGears
 configuration.
 
+They are usually subclasses of :class:`.ApplicationWrapper`
+which provides the expected interface.
+
 Every wrapper, when called, is expected to accept
 the WSGI environment and a TurboGears context as parameters
 and are expected to return a :class:`tg.request_local.Response`
 instance::
 
-    class AppWrapper(object):
+    from tg.appwrappers.base import ApplicationWrapper
+
+    class AppWrapper(ApplicationWrapper):
         def __init__(self, handler, config):
-            self.handler = handler
+            super(AppWrapper, self).__init__(handler, config)
 
         def __call__(self, controller, environ, context):
             print 'Going to run %s' % context.request.path
-            return self.handler(controller, environ, context)
+            return self.next_handler(controller, environ, context)
 
 Application wrappers can be registered from you application
 configuration object in ``app_cfg.py``::
@@ -171,5 +177,5 @@ other available wrapper (in order of registration)::
 
     base_config.register_wrapper(AppWrapper, after=False)
 
-See :func:`tg.configuration.AppConfig.register_wrapper` for more details.
+See :meth:`.AppConfig.register_wrapper` for more details.
 

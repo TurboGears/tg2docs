@@ -24,3 +24,27 @@ Flash Messages
 .. automethod:: tg.flash.TGFlash.configure
     :noindex:
 
+Sessions
+========
+
+.. autoclass:: tg.appwrappers.session.SessionApplicationWrapper
+
+Caching
+=======
+
+.. autoclass:: tg.appwrappers.caching.CacheApplicationWrapper
+
+Transaction Manager
+===================
+
+.. autoclass:: tg.appwrappers.transaction_manager.TransactionApplicationWrapper
+
+Custom Error Pages
+==================
+
+.. autoclass:: tg.appwrappers.errorpage.ErrorPageApplicationWrapper
+
+Ming Session Manager
+====================
+
+.. autoclass:: tg.appwrappers.mingflush.MingApplicationWrapper
