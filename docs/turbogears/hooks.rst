@@ -76,7 +76,10 @@ Available Hooks
 
 * ``startup()`` - application wide only, called when the application starts
 * ``shutdown()`` - application wide only, called when the application exits
-* ``before_config(app) -> app`` - application wide only, called after constructing the application,
+* ``configure_new_app(app)`` - new application got created by the application configurator.
+    This is the only call that can guarantee to receive the TGApp instance before any
+    middleware wrapping.
+* ``before_config(app) -> app`` - application wide only, called right after creating application,
     but before setting up most of the options and middleware.
     Must return the application itself.
     Can be used to wrap the application into middlewares that have to be executed having the full TG stack available.
