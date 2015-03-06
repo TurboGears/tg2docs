@@ -106,8 +106,13 @@ Also the TurboGears context (request, response, app_globals and so on)
 were lost during the execution of the ``ErrorController``.
 
 In ``2.3.5`` this got replaced by the :class:`.ErrorPageApplicationWrapper`,
-which provides the same feature using an :ref:`appwrappers`. The behaviour
-should be transparent for most users, in case you want to get back the
+which provides the same feature using an :ref:`appwrappers`.
+
+If you are still relying on ``pylons.original_response`` key in your
+``ErrorController`` make sure to uprade to the ``tg.original_response`` key,
+otherwise it won't work anymore.
+
+The change should be transparent for most users, in case you want to get back the
 old ``StatusCodeRedirect`` behaviour you use the following option::
 
     base_config['status_code_redirect'] = True
