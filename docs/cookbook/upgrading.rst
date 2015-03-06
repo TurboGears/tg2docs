@@ -4,13 +4,6 @@ Upgrading Your TurboGears Project
 From 2.3.4 to 2.3.5
 -------------------
 
-Application Wrappers now provide a clearly defined interface
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-:class:`.ApplicationWrapper` abstract base class has been defined
-to provide a clear interface for application wrappers, all TurboGears
-provided application wrappers now adhere this interface.
-
 Genshi Work-Around available for Python3.4
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -18,6 +11,58 @@ Genshi 0.7 suffers from a bug that prevents it from working on Python 3.4
 and causes an Abstract Syntax Tree error, to work-around this issue
 TurboGears provides the ``genshi.name_constant_patch`` option that
 can be set to ``True`` to patch Genshi to work on Python 3.4.
+
+Configuration Flow Refactoring
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In previous versions the ``AppConfig`` object won over the
+*.ini file* options for practically everything, now the configurator
+has been modified so that AppConfig options are used as a template
+and for most options the *.ini file* wins over them.
+
+There are still some options that are immutable and can only be
+defined in the ``AppConfig`` itself, but most of them can now
+be changed from the ini files.
+
+Now the ``tg.config`` object will always be reconfigured from scratch
+when an application is created. Previously each time an application
+was created it incrementally modified the same config object leading
+to odd behaviours. This should not impact your app unless you
+called ``AppConfig.setup_tg_wsgi_app`` multiple times.
+
+Another minor change is that ``AppConfig.after_init_config``
+is now expected to accept a parameter with the configuration
+dictionary. So if you implemented a custom ``after_init_config``
+method it is required to acccept the config dictionary and
+make configuration changes in it.
+
+Application Wrappers now provide a clearly defined interface
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+:class:`.ApplicationWrapper` abstract base class has been defined
+to provide a clear interface for application wrappers, all TurboGears
+provided application wrappers now adhere this interface.
+
+I18N Translations now provided through an Application Wrapper
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+:class:`.I18NApplicationWrapper` now provides support for translation
+detection from browser language and user session. This was previously
+builtin into the TurboGears Dispatcher even though it was not related
+to dispatching itself.
+
+The behaviour should remain the same apart from the fact that
+it is now executed before entering the TurboGears application
+and that some options got renamed:
+
+    - ``lang`` option has been renamed to ``i18n.lang``.
+    - ``i18n_enabled`` has been renamed to ``i18n.enabled``
+    - ``beaker.session.tg_avoid_touch`` option has been renamed to
+      ``i18n.no_session_touch`` as it is only related to i18n.
+    - ``lang_session_key`` got renamed to ``i18n.lang_session_key``.
+
+For a full list of option available please refer to
+:class:`.I18NApplicationWrapper` itself.
 
 Session and Cache Middlewares replaced by Application Wrappers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

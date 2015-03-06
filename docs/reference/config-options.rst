@@ -34,6 +34,11 @@ Caching
 
 .. autoclass:: tg.appwrappers.caching.CacheApplicationWrapper
 
+Internationalization
+====================
+
+.. autoclass:: tg.appwrappers.i18n.I18NApplicationWrapper
+
 Transaction Manager
 ===================
 
