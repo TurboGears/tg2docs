@@ -226,6 +226,25 @@ request context which will be used for the whole test lifetime::
             hello = ugettext('hello')
             assert hello == 'hello', hello
 
+Make sure you reset the request context after using ``/_test_vars`` otherwise
+you might end up with a messy environment as you have left behind the globally
+registered objects. It is a good practice to perform another another request to
+properly reset the global object status at the end of the test unit::
+
+    from testapp.tests import TestController
+
+
+    class TestWithContextController(TestController):
+        def tearDown(self):
+            self.app.get('/_del_test_vars', status=404)  # Reset fake request
+            super(TestWithContextController, self).tearDown()
+
+        def test_i18n(self):
+            self.app.get('/_test_vars')  # Initialize a fake request
+
+            hello = ugettext('hello')
+            assert hello == 'hello', hello
+
 Coverage
 ========
 
