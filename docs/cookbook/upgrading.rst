@@ -36,6 +36,19 @@ dictionary. So if you implemented a custom ``after_init_config``
 method it is required to acccept the config dictionary and
 make configuration changes in it.
 
+tg.hooks is not bound to config anymore
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Hooks are not bound to config anymore, but are now managed by an
+``HooksNamespace``. This means that they are now registered per
+*process and namespace* instead of being registered per-config.
+This leads to the same behaviour when only one TGApp is configured
+per process but has a much more reliable behaviour when multiple
+TGApp are configured.
+
+For most users this shouldn't cause any difference, but hooks will
+now be registered independently from the tg.config status.
+
 Application Wrappers now provide a clearly defined interface
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
