@@ -63,7 +63,7 @@ on third party controllers)::
 
     tg.hooks.register('before_render', before_render_cb, controller=MyController.index)
 
-See :func:`tg.configuration.hooks._TGHooks.register` for more details on registering
+See :func:`tg.configuration.hooks.HooksNamespace.register` for more details on registering
 hooks.
 
 Apart from Hooks TurboGears also provide some
@@ -102,7 +102,7 @@ for them::
 
     tg.hooks.notify('custom_global_hook')
 
-See :func:`tg.configuration.hooks._TGHooks.notify` for more details.
+See :func:`tg.configuration.hooks.HooksNamespace.notify` for more details.
 
 
 Controller Wrappers
@@ -113,7 +113,7 @@ code and TurboGears. Whenever turbogears has to call that controller it will pro
 all the registered controller wrappers which are able to forward the request to the
 next in chain or just directly return an alternative value from the controller.
 
-Registering a controller wrapper can be done using ``tg.hooks.wrap_controller``.
+Registering a controller wrapper can be done using ``AppConfig.register_controller_wrapper``.
 It is possible to register a controller wrapper for a specific controller or
 for the whole application, when registered to the whole application they will be
 applied to every controller of the application or third party libraries::
@@ -127,12 +127,12 @@ applied to every controller of the application or third party libraries::
                 print 'After Handler!'
         return call
 
-    tg.hooks.wrap_controller(controller_wrapper)
+    base_config.register_controller_wrapper(controller_wrapper)
 
 Due to the registration performance cost, controller wrappers
 *can only be registered before the application started*.
 
-See :func:`tg.configuration.hooks._TGHooks.wrap_controller` for more details.
+See :meth:`.AppConfig.register_controller_wrapper` for more details.
 
 .. _appwrappers:
 

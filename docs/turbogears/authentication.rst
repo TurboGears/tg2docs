@@ -1,3 +1,5 @@
+.. _authentication:
+
 *******************************************
 Authentication in TurboGears 2 applications
 *******************************************

@@ -9,7 +9,7 @@ Genshi Work-Around available for Python3.4
 
 Genshi 0.7 suffers from a bug that prevents it from working on Python 3.4
 and causes an Abstract Syntax Tree error, to work-around this issue
-TurboGears provides the ``genshi.name_constant_patch`` option that
+TurboGears provides the ``templating.genshi.name_constant_patch`` option that
 can be set to ``True`` to patch Genshi to work on Python 3.4.
 
 Configuration Flow Refactoring

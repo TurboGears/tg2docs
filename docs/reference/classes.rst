@@ -86,7 +86,7 @@ Request & Response
 Hooks
 =====
 
-.. autoclass:: tg.configuration.hooks._TGHooks
+.. autoclass:: tg.configuration.hooks.HooksNamespace
     :members:
 
 .. autoclass:: tg.appwrappers.base.ApplicationWrapper

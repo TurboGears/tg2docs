@@ -38,6 +38,7 @@ Advanced Recipes
 
     streaming
     scheduling
+    advanced_caching
     multiple-databases
     ldap-auth
     sprox
