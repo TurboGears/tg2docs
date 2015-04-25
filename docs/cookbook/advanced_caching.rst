@@ -1,5 +1,33 @@
-Caching Recipes
-===============
+Advanced Caching Recipes
+========================
+
+Caching Template and Controller
+-------------------------------
+
+A simple form of joint controller+template caching can be achieved by using both :class:`.cached` decorator
+and ``tg_cache`` parameter as described in :ref:`caching`.
+
+While it is more common having to perform some kind of minimal computation in controller to decide
+which cache key to use and rely on the template caching only, the caching system can be leveraged to turn
+the whole request in a direct cache hit based on the request parameters.
+
+This can be achieved by relying on the :class:`.cached` decorator and using :func:`.render_template` to
+actually render the template during controller execution and caching it together with the controller itself::
+
+    from tg import cached, render_template
+
+    @cached()
+    @expose(content_type='text/html')
+    def cached_func(self, what='about'):
+        return render_template(dict(page=what, time=time.time()),
+                               'genshi', 'myproj.templates.cached_func')
+
+.. note::
+
+    While ``@cached`` caches the controller itself, any hook or validation associated to the
+    controller will still be executed. This might be what you want (for example when tracking
+    page views through an hook) or it might not, depending on your needs you might want to move
+    hooks and validation inside the controller itself to ensure they are cached.
 
 Caching Authentication
 ----------------------
@@ -85,7 +113,4 @@ cache::
 This is usually enough to cache authentication requests in an environment where user data, permissions
 and groups change rarely. A better cache management, invalidating the user cache whenever the user itself
 or its permission change, is required for more variable scenarios.
-
-Caching Template and Controller
--------------------------------
 
