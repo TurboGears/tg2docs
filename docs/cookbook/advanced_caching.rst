@@ -112,5 +112,5 @@ cache::
 
 This is usually enough to cache authentication requests in an environment where user data, permissions
 and groups change rarely. A better cache management, invalidating the user cache whenever the user itself
-or its permission change, is required for more variable scenarios.
+or its permission change, is required for more volatile scenarios.
 

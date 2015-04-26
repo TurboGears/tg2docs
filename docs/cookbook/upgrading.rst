@@ -24,16 +24,19 @@ There are still some options that are immutable and can only be
 defined in the ``AppConfig`` itself, but most of them can now
 be changed from the ini files.
 
-Now the ``tg.config`` object will always be reconfigured from scratch
+Now the ``tg.config`` **object will always be reconfigured from scratch**
 when an application is created. Previously each time an application
 was created it incrementally modified the same config object leading
-to odd behaviours. This should not impact your app unless you
-called ``AppConfig.setup_tg_wsgi_app`` multiple times.
+to odd behaviours. This means that if you want a value to be available
+to all instances of your application you should store it in ``base_config`
+and not in ``tg.config``. This should not impact your app unless you
+called ``AppConfig.setup_tg_wsgi_app`` multiple times (which is true
+for test suites).
 
 Another minor change is that ``AppConfig.after_init_config``
 is now expected to accept a parameter with the configuration
 dictionary. So if you implemented a custom ``after_init_config``
-method it is required to acccept the config dictionary and
+method it is required to accept the config dictionary and
 make configuration changes in it.
 
 tg.hooks is not bound to config anymore
