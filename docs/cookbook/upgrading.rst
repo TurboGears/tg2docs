@@ -8,7 +8,7 @@ Identity provider
 ~~~~~~~~~~~~~~~~~
 
 TurboGears 2.3.6 introduced the :class:`.IdentityApplicationWrapper` which is now
-in charged of retrieving identity metadata (user, group, permissions) in place of the
+in charge of retrieving identity metadata (user, group, permissions) in place of the
 old `repoze.who` metadata provider. No changes are required to your configuration to
 start using the new application wrapper and it provides some direct benefits like
 being able to rely on ``tg.cache`` and the whole TurboGears context during identity
