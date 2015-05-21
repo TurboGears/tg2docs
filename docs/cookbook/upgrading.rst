@@ -1,6 +1,65 @@
 Upgrading Your TurboGears Project
 =================================
 
+From 2.3.5 to 2.3.6
+-------------------
+
+Identity provider
+~~~~~~~~~~~~~~~~~
+
+TurboGears 2.3.6 introduced the :class:`.IdentityApplicationWrapper` which is now
+in charged of retrieving identity metadata (user, group, permissions) in place of the
+old `repoze.who` metadata provider. No changes are required to your configuration to
+start using the new application wrapper and it provides some direct benefits like
+being able to rely on ``tg.cache`` and the whole TurboGears context during identity
+metadata retrieval (See :ref:`caching_auth` for an example).
+
+In case you face problems you can go back to the previous behaviour by adding the
+following code to your ``app_cfg.py``::
+
+    from zope.interface import implementer
+    from repoze.who.interfaces import IMetadataProvider
+    from repoze.who.api import Identity
+
+    @implementer(IMetadataProvider)
+    class RepozeWhoAuthMetadataProvider(object):
+        """
+        repoze.who metadata provider to load groups and permissions data for
+        the current user. This uses a :class:`TGAuthMetadata` to fetch
+        the groups and permissions.
+        """
+        def __init__(self, tgmdprovider):
+            self.tgmdprovider = tgmdprovider
+
+        # IMetadataProvider
+        def add_metadata(self, environ, identity):
+            # Get the userid retrieved by repoze.who Authenticator
+            userid = identity['repoze.who.userid']
+
+            # Finding the user, groups and permissions:
+            identity['user'] = self.tgmdprovider.get_user(identity, userid)
+            if identity['user']:
+                identity['groups'] = self.tgmdprovider.get_groups(identity, userid)
+                identity['permissions'] = self.tgmdprovider.get_permissions(identity, userid)
+            else:
+                identity['groups'] = identity['permissions'] = []
+
+            # Adding the groups and permissions to the repoze.what
+            # credentials for repoze.what compatibility:
+            if 'repoze.what.credentials' not in environ:
+                environ['repoze.what.credentials'] = Identity()
+            environ['repoze.what.credentials'].update(identity)
+            environ['repoze.what.credentials']['repoze.what.userid'] = userid
+
+    base_config['identity.enabled'] = False
+    base_config.sa_auth.mdproviders = [
+        ('authmd', RepozeWhoAuthMetadataProvider(base_config.sa_auth.authmetadata))
+    ]
+
+Keep in mind that using a repoze.who metadata provider you won't be able to
+rely on TurboGears context and you might face issues with the transaction manager
+as you are actually retrieving the user before the transaction has started.
+
 From 2.3.4 to 2.3.5
 -------------------
 

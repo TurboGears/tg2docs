@@ -29,6 +29,8 @@ actually render the template during controller execution and caching it together
     page views through an hook) or it might not, depending on your needs you might want to move
     hooks and validation inside the controller itself to ensure they are cached.
 
+.. _caching_auth:
+
 Caching Authentication
 ----------------------
 

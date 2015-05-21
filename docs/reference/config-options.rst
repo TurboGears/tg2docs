@@ -39,6 +39,11 @@ Internationalization
 
 .. autoclass:: tg.appwrappers.i18n.I18NApplicationWrapper
 
+User Identity
+=============
+
+.. autoclass:: tg.appwrapper.identity.IdentityApplicationWrapper
+
 Transaction Manager
 ===================
 
