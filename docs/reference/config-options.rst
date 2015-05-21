@@ -42,7 +42,7 @@ Internationalization
 User Identity
 =============
 
-.. autoclass:: tg.appwrapper.identity.IdentityApplicationWrapper
+.. autoclass:: tg.appwrappers.identity.IdentityApplicationWrapper
 
 Transaction Manager
 ===================
