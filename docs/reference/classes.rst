@@ -114,7 +114,22 @@ Controller Utilities
 General Utilities
 =================
 
-.. automodule:: tg.util
+.. automodule:: tg.util.bunch
+    :members:
+
+.. automodule:: tg.util.dates
+    :members:
+
+.. automodule:: tg.util.decorators
+    :members:
+
+.. automodule:: tg.util.files
+    :members:
+
+.. automodule:: tg.util.html
+    :members:
+
+.. automodule:: tg.util.lazystring
     :members:
 
 .. automodule:: tg.configuration.utils
