@@ -206,15 +206,25 @@ Testing Outside Controllers
 There might be cases when you are required to test something outside a controller,
 this is common with validators or utility methods.
 
-In those cases you can inherint from ``tests.TestController`` as usual, and you
+In those cases you can inherit from ``tests.TestController`` as usual, and you
 will probably won't use the ``self.app`` object. Unless you are required to have a
 request in place during your test.
 
 This might be the case if your utility function or class uses TurboGears features that
 depend on a request like ``tg.url``, ``tg.i18n.ugettext`` and so on...
 
-Since version ``2.3.5`` you can call a special URL in tests to initialize a fake
-request context which will be used for the whole test lifetime::
+Since version ``2.3.6`` the :class:`.test_context` context is available, when used
+together with a ``with`` statement, the whole body of the ``with`` will run with
+a fake TurboGears context, much like the one you get when using ``/_test_vars``::
+
+    from tg.util.webtest import test_context
+
+    with test_context(self.app):
+        hello = ugettext('hello')
+        assert hello == 'hello', hello
+
+On ``2.3.5`` the same behaviour could be achieved using the special ``/_test_vars``
+url which initializes a fake TurboGears context which will be used until removed::
 
     from testapp.tests import TestController
 

@@ -132,6 +132,9 @@ General Utilities
 .. automodule:: tg.util.lazystring
     :members:
 
+.. automodule:: tg.util.webtest
+    :members:
+
 .. automodule:: tg.configuration.utils
     :members:
 
