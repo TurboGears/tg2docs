@@ -273,66 +273,69 @@ directives in the sections on :ref:`Editing pages <editing_pages>` and
 
 
 The following is the content of a newly quickstarted TurboGears2 project
-at 2.2 release time:
+at 2.3 release time:
 
 .. code-block:: html+genshi
 
     <html xmlns="http://www.w3.org/1999/xhtml"
-          xmlns:py="http://genshi.edgewall.org/"
-          xmlns:xi="http://www.w3.org/2001/XInclude">
+      xmlns:py="http://genshi.edgewall.org/"
+      xmlns:xi="http://www.w3.org/2001/XInclude">
 
-      <xi:include href="master.html" />
+        <xi:include href="master.html" />
 
-    <head>
-      <title>Welcome to TurboGears 2.2, standing on the shoulders of giants, since 2007</title>
-    </head>
+        <head>
+          <title>Welcome to TurboGears 2.3, standing on the shoulders of giants, since 2007</title>
+        </head>
 
-    <body>
-      <div class="row">
-        <div class="span8 hidden-phone hidden-tablet">
-          <div class="hero-unit">
-            <h1>Welcome to TurboGears 2.2</h1>
-            <p>If you see this page it means your installation was successful!</p>
-            <p>TurboGears 2 is rapid web application development toolkit designed to make your life easier.</p>
-            <p>
-              <a class="btn btn-primary btn-large" href="http://www.turbogears.org" target="_blank">
-                ${h.icon('book', True)} Learn more
-              </a>
-            </p>
+        <body>
+          <div class="row">
+            <div class="col-md-8">
+              <div class="jumbotron">
+                <h1>Welcome to TurboGears 2.3</h1>
+                <p>If you see this page it means your installation was successful!</p>
+                <p>TurboGears 2 is rapid web application development toolkit designed to make your life easier.</p>
+                <p>
+                  <a class="btn btn-primary btn-lg" href="http://www.turbogears.org" target="_blank">
+                    ${h.icon('book')} Learn more
+                  </a>
+                </p>
+              </div>
+            </div>
+            <div class="col-md-4 hidden-xs hidden-sm">
+              <a class="btn btn-info btn-sm active" href="http://turbogears.readthedocs.org/en/latest">${h.icon('book')} TG2 Documentation</a> <span class="label label-success">new</span><em> Get Started</em><br/>
+                <br/>
+              <a class="btn btn-info btn-sm active" href="http://turbogears.readthedocs.org/en/latest/cookbook/cookbook.html">${h.icon('book')} TG2 CookBook</a><em> Read the Cookbook</em> <br/>
+                <br/>
+              <a class="btn btn-info btn-sm active" href="http://groups.google.com/group/turbogears">${h.icon('comment')} Join the Mail List</a> <em>for help/discussion</em><br/>
+                <br/>
+              <a class="btn btn-info btn-sm active" href="http://runnable.com/TurboGears">${h.icon('play')} Play on Runnable</a> <em>for basic examples</em><br/>
+                <br/>
+              <a class="btn btn-info btn-sm active" href="http://stackoverflow.com/questions/tagged/turbogears2">${h.icon('search')} Search Stackoverflow</a> <em>for questions</em>
+            </div>
           </div>
-        </div>
-        <div class="span4">
-          <a class="btn btn-small" href="http://www.turbogears.org/2.2/docs/">${h.icon('book')} TG2 Documents</a>
-          <span class="label label-success">new</span>
-          Read the Getting Started section<br/>
-          <br/>
-          <a class="btn btn-small" href="http://www.turbogears.org/book/">${h.icon('book')} TG2 Book</a>
-          Work in progress TurboGears2 book<br/>
-          <br/>
-          <a class="btn btn-small" href="http://groups.google.com/group/turbogears">${h.icon('comment')} Join the Mail List</a>
-          for general TG use/topics
-        </div>
-      </div>
 
-      <div class="row">
-        <div class="span4">
-          <h3>Code your data model</h3>
-          <p> Design your data <code>model</code>, Create the database, and Add some bootstrap data.</p>
-        </div>
-        <div class="span4">
-          <h3>Design your URL architecture</h3>
-          <p> Decide your URLs, Program your <code>controller</code> methods, Design your
-            <code>templates</code>, and place some static files (CSS and/or Javascript). </p>
-        </div>
-        <div class="span4">
-          <h3>Distribute your app</h3>
-          <p> Test your source, Generate project documents, Build a distribution.</p>
-        </div>
-      </div>
+          <div class="row">
+            <div class="col-md-4">
+              <h3>Code your data model</h3>
+              <p> Design your data <code>model</code>, Create the database, and Add some bootstrap data.</p>
+            </div>
 
-      <div class="notice"> Thank you for choosing TurboGears.</div>
-    </body>
+            <div class="col-md-4">
+              <h3>Design your URL architecture</h3>
+              <p> Decide your URLs, Program your <code>controller</code> methods, Design your
+                <code>templates</code>, and place some static files (CSS and/or Javascript). </p>
+            </div>
+
+            <div class="col-md-4">
+              <h3>Distribute your app</h3>
+              <p> Test your source, Generate project documents, Build a distribution.</p>
+            </div>
+          </div>
+
+          <em class="pull-right small"> Thank you for choosing TurboGears.</em>
+        </body>
     </html>
+
 
 
 Wiki Model
