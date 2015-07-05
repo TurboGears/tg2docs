@@ -130,21 +130,22 @@ but the wiki we are building does.
 Your ``install_requires`` should end up looking like:
 
 .. code-block:: python
-    :emphasize-lines: 12
+    :emphasize-lines: 13
 
     install_requires=[
-        "TurboGears2 >= 2.3.0",
+        "TurboGears2 >= 2.3.5",
+        "Babel",
+        "Beaker",
         "Genshi",
         "zope.sqlalchemy >= 0.4",
         "sqlalchemy",
-        "sqlalchemy-migrate",
+        "alembic",
         "repoze.who",
-        "repoze.who-friendlyform >= 1.0.4",
-        "tgext.admin >= 0.5.1",
-        "repoze.who.plugins.sa",
         "tw2.forms",
+        "tgext.admin >= 0.6.1",
+        "WebHelpers2"
         "docutils"
-        ]
+    ]
 
 Now to be able to run the project you will need to install it and
 its dependencies. This can be quickly achieved by running from
@@ -160,15 +161,19 @@ inside the ``wiki20`` directory::
 
 You should now be able to start the newly create project with the ``gearbox serve`` command::
 
-    (tgenv)$ gearbox serve --reload
+    (tgenv)$ gearbox serve --reload --debug
     Starting subprocess with file monitor
     Starting server in PID 32797.
     serving on http://127.0.0.1:8080
 
 .. note::
-    The `--reload` option makes the server restart whenever a file is changed, this greatly speeds
+    The ``--reload`` option makes the server restart whenever a file is changed, this greatly speeds
     up the development process by avoiding to manually restart the server whenever we need to try
     our changes.
+
+.. note::
+    The ``--debug`` option provides full stacktrace in case the server was unable to start, this
+    is useful in case your server didn't start due to a configuration error.
 
 Pointing your browser to http://127.0.0.1:8080/ should open up the TurboGears2 welcome page.
 By default newly quickstarted projects provide a bunch of pages to guide the user through
