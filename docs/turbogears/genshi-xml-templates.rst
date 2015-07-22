@@ -693,3 +693,174 @@ exclamation mark, so the above could also be written as follows:
 .. code-block:: genshi
 
   <!--! this is a comment too, but one that will be stripped from the output -->
+
+-------------------------------------
+Converting Genshi Templates to Kajiki
+-------------------------------------
+
+Kajiki is a fast template engine which is 90% compatible with Genshi,
+all of Genshi directives_ work in Kajiki too apart those involved in templates
+inheritance as Kajiki uses **blocks** instead of XInclude_ and **XPath**.
+
+Simple templates hierarchies (like the one coming from TurboGears quickstart)
+can be moved to Kajiki blocks in a matter of seconds through the Kajiki
+``autoblocks`` feature. Autoblocks will automatically create inclusion blocks
+whenever a tag with the given name is found. So in case of simple hierarchies
+we can easily remove the ``py:match`` and rely on ``autoblocks``.
+
+.. note::
+
+  Please note that this guide only works on version ``2.3.6`` and greater.
+
+.. note::
+
+  It's suggested to try this steps on a newly quickstarted Genshi application
+  and then test them on your real apps when you are confident with the
+  whole process.
+
+Enabling Autoblocks
+===================
+
+Enabling autoblocks in Kajiki involves adding the ``templating.kajiki.xml_autoblocks``
+option to your ``app_cfg.py`` with the list of tags that should be considered
+autoblocks::
+
+  base_config.renderers.append('kajiki')
+  base_config['templating.kajiki.xml_autoblocks'] = ['head', 'body']
+
+  # Set the default renderer
+  base_config.default_renderer = 'kajiki'
+
+Restarting your web application you will probably lead to an ``IOError``
+regarding TurboGears being unable to find your template. This is because
+Kajiki uses ``.xml`` as the default templates extension, while Genshi used
+``.html``. What we need to do is add the following line to make Kajiki load
+templates from ``.html`` files::
+
+  base_config['templating.kajiki.template_extension'] = '.html'
+
+Adapting the Master Template
+============================
+
+The only template we will need to adapt by hand is our ``master.html``
+template, everything else will be done automatically. So the effort
+of porting an application from Genshi to Kajiki is the same independently
+from the size of the application.
+
+First of all let's adapt our ``head`` tag to make it so that the content
+from templates that extend our master gets included inside it:
+
+.. code-block:: html+genshi
+  :emphasize-lines: 1, 5
+
+  <head py:match="head" py:attrs="select('@*')">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="${response.charset}" />
+    <title py:if="False">Your generic title goes here</title>
+    <meta py:replace="select('*')"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="${tg.url('/css/bootstrap.min.css')}" />
+    <link rel="stylesheet" type="text/css" media="screen" href="${tg.url('/css/style.css')}" />
+  </head>
+
+should became:
+
+.. code-block:: html+genshi
+  :emphasize-lines: 1, 5
+
+  <head py:autoblock="False">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="${response.charset}" />
+    <title py:if="False">Your generic title goes here</title>
+    <py:blocks name="head"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="${tg.url('/css/bootstrap.min.css')}" />
+    <link rel="stylesheet" type="text/css" media="screen" href="${tg.url('/css/style.css')}" />
+  </head>
+
+Then we do the same with the ``body`` tag by disabling it as a block and
+placing a block with the same name inside of it:
+
+.. code-block:: html+genshi
+  :emphasize-lines: 1, 16
+
+  <body py:match="body" py:attrs="select('@*')">
+    <!-- Navbar -->
+    [...]
+
+    <div class="container">
+      <!-- Flash messages -->
+      <py:with vars="flash=tg.flash_obj.render('flash', use_js=False)">
+        <div class="row">
+          <div class="col-md-8 col-md-offset-2">
+            <div py:if="flash" py:replace="Markup(flash)" />
+          </div>
+        </div>
+      </py:with>
+
+      <!-- Main included content -->
+      <div py:replace="select('*|text()')"/>
+    </div>
+  </body>
+
+Which should became:
+
+.. code-block:: html+genshi
+  :emphasize-lines: 1, 16
+
+  <body py:autoblock="False">
+    <!-- Navbar -->
+    [...]
+
+    <div class="container">
+      <!-- Flash messages -->
+      <py:with vars="flash=tg.flash_obj.render('flash', use_js=False)">
+        <div class="row">
+          <div class="col-md-8 col-md-offset-2">
+            <div py:if="flash" py:replace="Markup(flash)" />
+          </div>
+        </div>
+      </py:with>
+
+      <!-- Main included content -->
+      <py:blocks name="body"/>
+    </div>
+  </body>
+
+What happened is that we replaced the ``head`` and ``body`` blocks in the
+master template (which were created by the ``xml_autoblocks`` option) with
+blocks with the same name inside the head and body tags.
+
+Now your application will properly start, but you will get a broken page
+due to missing layout, css and so on.
+
+Upgrading Templates
+===================
+
+This is because Kajiki doesn't understand the ``xi:include`` command and
+so it is not including the ``master.html`` at all. To solve this issue
+we can rely on a simple but helpful ``gearbox`` command to patch all our
+templates by replacing ``xi:include`` with ``py:extends`` which is used
+and recognized by Kajiki.
+
+Just move inside the root of your project and run::
+
+  $ gearbox patch -R '*.html' xi:include -r py:extends
+
+You should get an output similar to::
+
+  7 files matching
+  ! Patching /private/tmp/prova/prova/templates/about.html
+  ! Patching /private/tmp/prova/prova/templates/data.html
+  ! Patching /private/tmp/prova/prova/templates/environ.html
+  ! Patching /private/tmp/prova/prova/templates/error.html
+  ! Patching /private/tmp/prova/prova/templates/index.html
+  ! Patching /private/tmp/prova/prova/templates/login.html
+  x Patching /private/tmp/prova/prova/templates/master.html
+
+Which means that all our templates apart from ``master.html`` got patched
+properly and now correctly use ``py:extends``.
+
+Restarting your application now should lead to a properly working page
+equal to the original Genshi one.
+
+Congratulations, you successfully moved your templates from Genshi
+to Kajiki.
