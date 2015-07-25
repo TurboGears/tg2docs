@@ -4,6 +4,13 @@ Upgrading Your TurboGears Project
 From 2.3.5 to 2.3.6
 -------------------
 
+Beaker Dependency
+~~~~~~~~~~~~~~~~~
+
+TurboGears 2.3.6 now doesn't enlist ``beaker`` as a dependency anymore.
+If your application makes use of sessions and caching make sure that it requires
+beaker in the dependencies or session and caching will be disabled.
+
 Identity provider
 ~~~~~~~~~~~~~~~~~
 
