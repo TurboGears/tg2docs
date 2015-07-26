@@ -30,7 +30,7 @@ You should also add this requirement to your project's `setup.py` file::
     install_requires=[
         ...,
         "who_ldap",
-        ]
+    ]
 
 Note that `who_ldap` itself requires the `ldap3` package
 (formerly known as python3-ldap), which is a pure Python implementation

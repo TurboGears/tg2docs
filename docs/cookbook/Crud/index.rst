@@ -100,7 +100,7 @@ add utility methods on the fly::
         }
 
         __setters__ = {
-            'release':('release_date', datetime.datetime.utcnow)
+            'release': ('release_date', lambda o: datetime.datetime.utcnow())
         }
 
 The ``title`` option provides a way to customize the title displayed in the titlebar

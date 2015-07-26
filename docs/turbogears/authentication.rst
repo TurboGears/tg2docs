@@ -41,28 +41,13 @@ You can customize the interaction with the user through four kinds of
   will start another request on the application, which should be caught by
   an `identifier` to extract the login data and then such data will be used
   by the `authenticator`.
-* For authenticated users, :mod:`repoze.who` provides the ability to load
-  related data (e.g., real name, email) in the WSGI environment so that it can
+* For authenticated users, the :class:`.IdentityApplicationWrapper`
+  provides the ability to load related data (e.g., real name, email) so that it can
   be easily used in the application. Such a functionality is provided by
-  so-called ``metadata provider plugins``. There may be many metadata providers
-  and :mod:`repoze.who` will run them all.
+  so-called ``ApplicationAuthMetadata`` in your ``app_cfg.py``.
 
-When :mod:`repoze.who` needs to store data about the authenticated user in the
-WSGI environment, it uses its ``repoze.who.identity`` key, which can be
-accessed using the code below::
-
-    from tg import request
-
-    # The authenticated user's data kept by repoze.who:
-    identity = request.environ.get('repoze.who.identity')
-
-Such a value is a dictionary and is often called "the identity dict". It will
-only be defined if the current user has been authenticated.
-
-
-There is a short-cut to the code above in the WSGI ``request``, which will
-be defined in ``{yourproject}.lib.base.BaseController`` if you enabled
-authentication and authorization when you created the project.
+When the :class:`.IdentityApplicationWrapper` retrieves the user identity and its
+metadata it makes them available inside request as ``request.identity``.
 
 For example, to check whether the user has been authenticated you may
 use:
@@ -78,8 +63,14 @@ use:
 ``request.identity`` will equal to ``None`` if the user has not been
 authenticated.
 
-Likewise, this short-cut is also set in the template context as
-``tg.identity``.
+Also the whole :mod:`repoze.who` authentication information are available
+in WSGI environment with ``repoze.who.identity`` key, which can be
+accessed using the code below::
+
+    from tg import request
+
+    # The authenticated user's data kept by repoze.who:
+    who_identity = request.environ.get('repoze.who.identity')
 
 The username will be available in ``identity['repoze.who.userid']``
 (or ``request.identity['repoze.who.userid']``, depending on the method you
@@ -111,8 +102,8 @@ Customizing authentication and authorization
 It's very easy for you to customize authentication and identification settings
 in :mod:`repoze.who` from ``{yourproject}.config.app_cfg.base_config.sa_auth``.
 
-Customizing how user informations, groups and permissions are retrieved
------------------------------------------------------------------------
+Customizing how user information, groups and permissions are retrieved
+----------------------------------------------------------------------
 
 TurboGears provides an easy shortcut to customize how your authorization
 data is retrieved without having to face the complexity of the underlying
@@ -144,11 +135,11 @@ The available directives are all optional:
     of overridding this list.
 * ``authmetadata``: This is the object that TG will use to fetch authorization metadata.
     Changing the authmetadata object you will be able to change how TurboGears
-    fetches your user data, groups and permissions. Using authmetada a new
-    :mod:`repoze.who` metadata provider is created.
+    fetches your user data, groups and permissions.
 * ``mdproviders``: This is a list of :mod:`repoze.who` metadata providers.
-    If ``authmetadata`` is not None a metadata provider based on it will always
-    be appended to the mdproviders.
+    Those usually to the same work that ``authmetadata`` does and in case
+    a :mod:`repoze.who` metadata provider already provided identity metadata
+    it will be available inside ``identity`` in ``authmetadata`` and can be used.
 
 Customizing the model structure assumed by the quickstart
 ---------------------------------------------------------
@@ -319,7 +310,7 @@ urls which are now unused:
 .. _disabling-auth:
 
 Disabling authentication and authorization
-============================================
+==========================================
 
 If you need more flexibility than that provided by the quickstart, or you are
 not going to use :mod:`repoze.who`, you should prevent TurboGears from dealing

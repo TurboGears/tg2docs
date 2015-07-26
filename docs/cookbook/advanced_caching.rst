@@ -29,6 +29,8 @@ actually render the template during controller execution and caching it together
     page views through an hook) or it might not, depending on your needs you might want to move
     hooks and validation inside the controller itself to ensure they are cached.
 
+.. _caching_auth:
+
 Caching Authentication
 ----------------------
 
@@ -40,75 +42,55 @@ as described in :ref:`authentication`.
     * One is authenticating the user itself for the first time (done by ``ApplicationAuthMetadata.authenticate``) which
       is in charge of returning the ``user_name`` that uniquely identifies the user (or any other unique identifier)
       that is then received by the other methods to lookup the actual user data.
-    * The second step, which is the metadata provisioning, is performed on each request and receives the previously
-      identified user as returned by the authentication step. This is performed by ``get_user``, ``get_groups`` and
-      ``get_permissions`` which are in charge of returning the three aforementioned information regarding the user.
+    * The second step, which is the metadata provisioning, is performed by :class:`.IdentityApplicationWrapper`
+      and receives the previously identified user as returned by the authentication step.
+      This is performed by ``get_user``, ``get_groups`` and ``get_permissions`` which are in charge of returning
+      the three aforementioned information regarding the user.
 
 It's easy to see that this second step is usually the one that has most weight over the request throughput as
-it involves three different queries to the database. Usually we cannot rely on the TurboGears caching for those
-methods as they happen before the TurboGears cache is ready, but fortunately we can still cache it by writing an
-:class:`.ApplicationWrapper` that performs the work in place of the metadata provisioning functions.
+it involves three different queries to the database.
 
-First action is to change our ``ApplicationAuthMetadata`` to actually avoid fetching any data::
+We can easily change the ``ApplicationAuthMetadata`` in our code to rely on the cache to fetch user data instead
+of loading it back from database::
 
-    from tg.util import Bunch
+    from tg import cache
 
     class ApplicationAuthMetadata(TGAuthMetadata):
         def __init__(self, sa_auth):
             self.sa_auth = sa_auth
 
         def authenticate(self, environ, identity):
-            ... # authenticate implementation
+            # This should be your current authenticate implementation
+            ...
 
         def get_user(self, identity, userid):
-            return Bunch(user_name=userid)
+            identity.update(self._get_cached_auth_metadata(userid))
+            return identity['user']
 
         def get_groups(self, identity, userid):
-            return []
+            return identity['groups'] or []
 
         def get_permissions(self, identity, userid):
-            return []
+            return identity['permissions'] or []
 
-    base_config.sa_auth.authmetadata = ApplicationAuthMetadata(base_config.sa_auth)
+        def _get_cached_auth_metadata(self, userid):
+            """Retrieves the user details from the cache when available"""
+            auth_cache = cache.get_cache('auth')
+            auth_metadata = auth_cache.get_value(key=userid,
+                                                 createfunc=lambda: self._retrieve_auth_metadata(userid),
+                                                 expiretime=3600)
 
-This will actually do nothing and just return a fake user for requests when they perform the metadata
-provisioning during authentication.
+            auth_metadata['user'] = self.sa_auth.dbsession.merge(auth_metadata['user'], load=False)
+            return auth_metadata
 
-The real metadata provisioning will be performed by an ad-hoc ApplicationWrapper that can access the
-cache::
-
-    from tg.appwrappers.base import ApplicationWrapper
-
-    class AuthMetadataApplicationWraper(ApplicationWrapper):
-        def __init__(self, next_handler, config):
-            super(AuthMetadataApplicationWraper, self).__init__(next_handler, config)
-            self.sa_auth = config['sa_auth']
-
-        def get_auth_metadata(self, userid):
+        def _retrieve_auth_metadata(self, userid):
+            """Retrieves user details from the database"""
             user = self.sa_auth.dbsession.query(self.sa_auth.user_class).filter_by(user_name=userid).first()
             return {
                 'user': user,
-                'groups': [g.group_name for g in user.groups],
-                'permissions': [p.permission_name for p in user.permissions]
+                'groups': user and [g.group_name for g in user.groups],
+                'permissions': user and [p.permission_name for p in user.permissions]
             }
-
-        def __call__(self, controller, environ, context):
-            identity = environ.get('repoze.who.identity')
-            if identity is not None:
-                userid = identity['repoze.who.userid']
-                auth_cache = context.cache.get_cache('auth')
-                auth_metadata = auth_cache.get_value(key=userid,
-                                                     createfunc=lambda: self.get_auth_metadata(userid),
-                                                     expiretime=3600)
-
-                auth_metadata['user'] = self.sa_auth.dbsession.merge(auth_metadata['user'], load=False)
-
-                identity.update(auth_metadata)
-                environ['repoze.what.credentials'].update(identity)
-
-            return self.next_handler(controller, environ, context)
-
-    base_config.register_wrapper(AuthMetadataApplicationWraper)
 
 This is usually enough to cache authentication requests in an environment where user data, permissions
 and groups change rarely. A better cache management, invalidating the user cache whenever the user itself
