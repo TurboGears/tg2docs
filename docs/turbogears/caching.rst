@@ -84,6 +84,10 @@ Using ``@cached`` is pretty straightforward:
         def simple(self):
             return "Hey, this is a cached controller!"
 
+When using ``@cached`` decorator, the *namespace* and
+*cache key* used are available in ``request.caching``
+as ``request.caching.namespace`` and ``request.caching.key``.
+
 You can specify additional headers to be cached or change the
 cache key by specifying the @cached arguments. Please refer
 to :func:`tg.decorators.cached` reference for details.
@@ -93,6 +97,7 @@ to :func:`tg.decorators.cached` reference for details.
     Please note that ``@cached`` will only cache the controller
     body, the template will still be rendered. To cache both
     the controller and template join it with `template_cache`_
+    using the cache key provided be ``request.caching.key``.
 
 Manually Using the Cache
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
