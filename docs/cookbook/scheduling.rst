@@ -18,7 +18,7 @@ Installation
 ------------
 
 `TGScheduler` is registered on PyPI and therefore can be installed
-with `easy_install`:
+with `pip install`:
 
 .. code-block:: bash
 
@@ -29,17 +29,23 @@ Setup
 -----
 
 `TGScheduler` is not started by default.  To allow your tasks to run,
-simply start the scheduler when your application is loaded.  You can
-do that in `lib/app_globals.py`:
+simply start the scheduler when your application is loaded configured.
+
+You can do that in ``config/app_cfg.py``:
 
 .. code-block:: python
 
-    import tgscheduler
+    def start_tgscheduler():
+        import tgscheduler
+        tgscheduler.start_scheduler()
 
-    class Globals(object):
-        def __init__(self):
-	        tgscheduler.start_scheduler()
+    from tg.configuration import milestones
+    milestones.config_ready.register(start_tgscheduler)
 
+Using a :ref:`config_milestones` ensures that our scheduler is not
+started twice, it is also suggested to register tasks inside
+the ``start_tgscheduler`` function so that they are not
+scheduled twice.
 
 Scheduling Tasks
 ----------------
@@ -66,9 +72,17 @@ like the following:
             price = model.StockPrice(el.get("name"), int(el.get("price")))
             model.DBSession.add(price)
 
-    class Globals(object):
-        def __init__(self):
-            tgscheduler.start_scheduler()
-            tgscheduler.add_interval_task(60*15, update_stocks)
+    def start_tgscheduler():
+        import tgscheduler
+        tgscheduler.start_scheduler()
+        tgscheduler.add_interval_task(60*15, update_stocks)
 
+    from tg.configuration import milestones
+    milestones.config_ready.register(start_tgscheduler)
 
+.. note::
+
+    Inside the scheduled tasks you won't have TurboGears automatically
+    flushing and committing transactions for you, so remember to add
+    a ``transaction.commit()`` call a the end of your tasks if your
+    application is relying on the transaction manager.
