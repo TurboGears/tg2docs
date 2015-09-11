@@ -268,7 +268,8 @@ intersphinx_mapping = {
     'sqlalchemy': ('http://www.sqlalchemy.org/docs', None),
     'tw2' : ('http://tw2core.readthedocs.org/en/latest/', None),
     'webob': ('http://docs.webob.org/en/latest/', None),
-    'webtest': ('http://docs.webob.org/en/latest/', None)
+    'webtest': ('http://docs.webob.org/en/latest/', None),
+    'ming': ('http://ming.readthedocs.org/en/latest', None)
 }
 
 # The maximum number of days to cache remote inventories.
