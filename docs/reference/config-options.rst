@@ -12,6 +12,27 @@ you might want to add to your ``app_cfg.base_config`` the following::
 
     base_config['json.isodates'] = True
 
+All the configuration options provided by Application Wrappers can
+usually be set both through the ``app_cfg.py`` or through your ``.ini`` file,
+while *AppConfig* configuration options can only be set through the ``app_cfg``
+unless they are listed in :attr:`.AppConfig.CONFIG_OPTIONS`.
+
+AppConfig
+=========
+
+.. autoclass:: tg.configuration.AppConfig
+    :noindex:
+
+Error Reporting
+===============
+
+.. autofunction:: tg.error.ErrorReporter
+
+Slow Requests Reporting
+=======================
+
+.. autofunction:: tg.error.SlowReqsReporter
+
 JSON Encoding
 =============
 
@@ -58,3 +79,26 @@ Ming Session Manager
 ====================
 
 .. autoclass:: tg.appwrappers.mingflush.MingApplicationWrapper
+
+Rendering Engines
+=================
+
+Genshi
+------
+
+.. autoclass:: tg.renderers.genshi.GenshiRenderer
+
+Kajiki
+------
+
+.. autoclass:: tg.renderers.kajiki.KajikiRenderer
+
+Jinja2
+------
+
+.. autoclass:: tg.renderers.jinja.JinjaRenderer
+
+Mako
+----
+
+.. autoclass:: tg.renderers.mako.MakoRenderer
