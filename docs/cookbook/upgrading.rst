@@ -1,6 +1,16 @@
 Upgrading Your TurboGears Project
 =================================
 
+From 2.3.6 to 2.3.7
+-------------------
+
+Kajiki Templates Extension
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In TG 2.3.7 Kajiki templates have switched to have ``.xhtml`` extension, this
+suites them better than the previous .xml extenion as HTML is actually generated
+and is widely supported by IDEs which will correctly highlight them.
+
 From 2.3.5 to 2.3.6
 -------------------
 
