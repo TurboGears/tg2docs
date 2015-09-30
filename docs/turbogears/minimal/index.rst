@@ -1,8 +1,8 @@
 .. _minimal-tutorial:
 
-==========================================================
+================
 Hello TurboGears
-==========================================================
+================
 
 The fastest way to start using TurboGears is through the **minimal mode**, when using TurboGears with
 minimal mode a default setup that minimizes dependencies and complexity is provided.
@@ -14,7 +14,7 @@ minimal mode a default setup that minimizes dependencies and complexity is provi
     the :ref:`20 Minutes Wiki Tutorial <wiki20>` tutorial is provided.
 
 Play with TurboGears
-========================
+====================
 
 If you want to experiment with this tutorial without installing TurboGears on your local machine, feel free
 to edit the `Basic TurboGears Example <http://runnable.com/Unq2c2CaTc52AAAm/basic-turbogears-example-for-python>`_ 
@@ -25,7 +25,7 @@ This will provide a working TurboGears application in your browser you can freel
 .. _minimal-setup:
 
 Setup
-============================
+=====
 
 First we are going to create a virtual environment where to install the framework, if you want to
 proceed without using a virtual environment simply skip to :ref:`Install TurboGears <TurboGears2_install>`.
@@ -54,7 +54,7 @@ Now we are ready to install TurboGears itself:
     (tgenv)$ pip install |private_index_path| TurboGears2
 
 Hello World
-======================
+===========
 
 A TurboGears application consists of an ``AppConfig`` application configuration and an application ``RootController``.
 The first is used to setup and create the application itself, while the latter is used to dispatch requests
@@ -65,9 +65,9 @@ For our first application we are going to define a controller with an index meth
     from tg import expose, TGController, AppConfig
 
     class RootController(TGController):
-         @expose()
-         def index(self):
-             return 'Hello World'
+        @expose()
+        def index(self):
+            return 'Hello World'
 
 now to make TurboGears serve our controller we must create the actual application from an ``AppConfig``::
 
@@ -86,8 +86,8 @@ then we must actually serve the application::
 Running the Python module just created will start a server on port ``8080`` with the our hello world application,
 opening your browser and pointing it to ``http://localhost:8080`` should present you with an Hello World text.
 
-Greetings
-========================
+Serving Multiple Pages
+======================
 
 Now that we have a working application it's time to say hello to our user instead of greeting the world,
 to do so we can extend our controller with an ``hello`` method which gets as a parameter the person to greet::
@@ -114,7 +114,7 @@ of the parameters in your method, TurboGears will automatically map them to func
 when calling an exposed method.
 
 Serving Templates
-=========================
+=================
 
 Being able to serve text isn't usually enough for a web application, for more advanced output
 using a template is usually preferred. Before being able to serve a template we need to install
@@ -163,8 +163,49 @@ Restarting the application and pointing the browser to ``http://localhost:8080/h
 ``http://localhost:8080/hello?person=MyName`` will display an hello page greeting the person
 whose name is passed as parameter or the world itself if the parameter is missing.
 
-Serving Statics
-===============================
+Enabling Helpers
+----------------
+
+Helpers are python functions which render small HTML snippets that can be useful in your
+templates. This might include your user avatar, a proper date formatter or whatever might
+come in hand in your templates. Those are usually provided by turbogears with the ``h`` name
+inside all your templates.
+
+TurboGears2 usually provides the ``WebHelpers2`` package in applications quickstarted in
+full stack mode, but this can be easily made available in minimal mode too.
+
+First we are going to install the ``WebHelpers2`` package::
+
+    $ pip install webhelpers2
+
+Then we are going to import webhelpers2 and register it in our configuration as the application
+helpers (any python module or object can be registered as the helpers)::
+
+    import webhelpers2
+    import webhelpers2.text
+    config['helpers'] = webhelpers2
+
+Now the helpers are available in all our templates as ``h.helpername`` and in this case
+we are going to use the ``text.truncate`` helper to truncate strings longer than 5 characters
+in our ``hello.jinja`` template:
+
+.. code-block:: html+jinja
+
+    <!doctype html>
+    <title>Hello</title>
+    {% if person %}
+      <h1>Hello {{ h.text.truncate(person, 5) }}</h1>
+    {% else %}
+      <h1>Hello World!</h1>
+    {% endif %}
+
+By restarting the application you will notice that pointing the browser to
+``http://localhost:8080/hello?person=World`` prints **Hello World** while pointing it to
+``http://localhost:8080/hello?person=TurboGears`` will print ``Hello Tu...`` as TurboGears is
+now properly truncated.
+
+Serving Static Files
+====================
 
 Even for small web applications being able to apply style through CSS or serving javascript
 scripts is often required, to do so we must tell TurboGears to serve our static files and
@@ -181,14 +222,94 @@ After restating the application, any file placed inside the ``public`` directory
 served directly by TurboGears. Supposing you have a ``style.css`` file you can access
 it as ``http://localhost:8080/style.css``.
 
-Going Forward
-===============================
+Working With Database
+=====================
 
-While it is possible to manually enable more advanced features like the ``SQLAlchemy`` and ``Ming``
-storage backends, the application ``helpers``, ``app_globals``, ``i18n`` and all the TurboGears
-features through the ``AppConfig`` object, if you need them you probably want TurboGears
-to create a full featured application through the ``gearbox quickstart`` command.
+TurboGears2 supports both SQL dbms through SQLAlchemy and MongoDB through Ming, both can be
+enabled with some options and by providing a Model for the application.
+
+The following will cover how to work with SQLAlchemy and extend the sample application to
+log and retrieve a list of greeted people.
+First we will need to enable SQLAlchemy support for our application::
+
+    config['use_sqlalchemy'] = True
+    config['sqlalchemy.url'] = 'sqlite:///devdata.db'
+
+Now TurboGears will configure a SQLAlchemy engine for us, but it will require that we provide
+a data model, otherwise it will just crash when starting up. This can be done by providing a
+*database Session* and a model initialization function::
+
+    from tg.util import Bunch
+    from sqlalchemy.orm import scoped_session, sessionmaker
+
+    DBSession = scoped_session(sessionmaker(autoflush=True, autocommit=False))
+
+    def init_model(engine):
+        DBSession.configure(bind=engine)
+
+    config['model'] = Bunch(
+        DBSession=DBSession,
+        init_model=init_model
+    )
+
+This will properly make our application work and able to interact with the database, but it won't
+do much as we are not actually declaring any table or model to work with.
+
+Accessing Data
+--------------
+
+To start working with tables and the data they contain we need to declare the table itself, this
+can be done through the SQLAlchemy declarative layer by using a Declarative Base class::
+
+    from sqlalchemy.ext.declarative import declarative_base
+
+    DeclarativeBase = declarative_base()
+
+From this class we can then inherit all our models::
+
+    from sqlalchemy import Column, Integer, DateTime, String
+    from datetime import datetime
+
+
+    class Log(DeclarativeBase):
+        __tablename__ = 'logs'
+
+        uid = Column(Integer, primary_key=True)
+        timestamp = Column(DateTime, nullable=False, default=datetime.utcnow)
+        person = Column(String(50), nullable=False)
+
+This will allow us to read and write rows from the ``logs`` table, but before we are able
+to do so we must ensure that the table actually exists, which can be done by extending our
+model initialization function to create the tables::
+
+    def init_model(engine):
+        DBSession.configure(bind=engine)
+        DeclarativeBase.metadata.create_all(engine)  # Create tables if they do not exist
+
+Now we can finally extend our controller to log the people we greet and provide us the
+list of past greetings::
+
+    class RootController(TGController):
+        @expose(content_type='text/plain')
+        def index(self):
+            logs = DBSession.query(Log).order_by(Log.timestamp.desc()).all()
+            return 'Past Greetings\n' + '\n'.join(['%s - %s' % (l.timestamp, l.person) for l in logs])
+
+        @expose('hello.jinja')
+        def hello(self, person=None):
+            DBSession.add(Log(person=person or ''))
+            DBSession.commit()
+            return dict(person=person)
+
+
+Going Forward
+=============
+
+While it is possible to manually enable the TurboGears features like the ``SQLAlchemy`` and ``Ming``
+storage backends, the application ``helpers``, ``app_globals``, ``i18n`` features through the
+:class:`AppConfig` object, if you need them you probably want to switch to **full stack** mode and
+to create a full stack application through the ``gearbox quickstart`` command.
 
 The :ref:`20 Minutes Wiki Tutorial <wiki20>` provides an introduction to more complex applications
-enabled all the TurboGears features, follow it if you want to unleash all the features that
+with all the TurboGears features enabled, follow it if you want to unleash all the features that
 TurboGears provides!
