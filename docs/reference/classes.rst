@@ -135,6 +135,13 @@ General Utilities
 .. automodule:: tg.util.webtest
     :members:
 
+.. automodule:: tg.util.sqlalchemy
+    :members:
+
+.. automodule:: tg.util.ming
+    :members:
+
 .. automodule:: tg.configuration.utils
     :members:
+
 
