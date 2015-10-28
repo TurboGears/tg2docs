@@ -143,7 +143,7 @@ Your ``install_requires`` should end up looking like:
         "repoze.who",
         "tw2.forms",
         "tgext.admin >= 0.6.1",
-        "WebHelpers2"
+        "WebHelpers2",
         "docutils"
     ]
 
