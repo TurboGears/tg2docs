@@ -396,7 +396,7 @@ in a more declarative manner like this::
             __model__ = Movie
 
 Options reference
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------
 
 .. _tgext.crud.reference:
 
@@ -406,6 +406,9 @@ the controller and providing them in a declarative way:
 
 .. autoclass:: tgext.crud.CrudRestController
 
+.. autoclass:: tgext.crud.EasyCrudRestController
+
+.. autofunction:: tgext.crud.addopts
 
 Customizing Crud Operations
 -----------------------------
