@@ -141,6 +141,9 @@ General Utilities
 .. automodule:: tg.util.ming
     :members:
 
+.. automodule:: tg.util.misc
+    :members:
+
 .. automodule:: tg.configuration.utils
     :members:
 
