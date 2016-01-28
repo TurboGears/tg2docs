@@ -143,3 +143,28 @@ provided an ``app``  object through which is possible to make requests::
     >>> model.DBSession.query(model.User).first()
     <User: name=manager, email=manager@somedomain.com, display=Example manager>
 
+Adding your own command
+=======================
+
+To add commands to available gearbox commands, add them to your project entry points under the ``gearbox.commands`` group. Here is en example with `setuptools`_::
+
+    setup(
+        name='SampleApp',
+        # [...]
+        entry_points={
+            'gearbox.commands': [
+                'my_command = sample_app.my_commands_module.my_command_module:MyCommandClass'
+            ]
+    )
+
+Where your command class extend ``gearbox.command.Command``::
+
+    # -*- coding: utf-8 -*-
+    from gearbox.command import Command
+
+
+    class MyCommandClass(Command):
+        def take_action(self, parsed_args):
+            print('Hello world')
+
+.. _setuptools: https://pythonhosted.org/setuptools/setuptools.html#dynamic-discovery-of-services-and-plugins
