@@ -74,7 +74,8 @@ or for an hook.
 Available Hooks
 ####################
 
-* ``startup()`` - application wide only, called when the application starts
+* ``initialized_config(configurator, config)`` - new configuration got loaded by the application configurator, application not yet created.
+* ``startup()`` - application wide only, called when the application is going to start
 * ``shutdown()`` - application wide only, called when the application exits
 * ``configure_new_app(app)`` - new application got created by the application configurator.
     This is the only call that can guarantee to receive the TGApp instance before any
