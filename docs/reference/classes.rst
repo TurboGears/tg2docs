@@ -83,6 +83,12 @@ Request & Response
 .. autoclass:: tg.request_local.Response
     :members:
 
+.. autoclass:: crank.dispatchstate.DispatchState
+    :members:
+
+    DispatchState instance for current request is made available in TurboGears2
+    as ``tg.request.dispatch_state`` as soon as the dispatch process is completed.
+
 Hooks
 =====
 
