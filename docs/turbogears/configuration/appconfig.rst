@@ -1,7 +1,7 @@
 .. _config:
 
-TurboGears 2 Configuration
-==========================
+Configuration Process
+=====================
 
 .. module:: tg.configuration
 
@@ -230,64 +230,7 @@ the majority of what you need to do with the config object.  These
 shortcuts eliminate the need to provide your own setup methods
 for configuring your TurboGears application.
 
-Mimetypes
-+++++++++++++
-
-By default, only json/application and text/html are defined mimetypes.
-If you would like to use additional mime-types you must register
-them with your application's config. You can accomplish this by
-adding the following code your your app_cfg.py file::
-
-    base_config.mimetype_lookup = {'.ext':'my-mimetype'}
-
-Static Files
-++++++++++++++++
-
-``base_config.serve_static`` -- automatically set to ``True`` for you.
-Set to False if you have set up apache, or nginx (or some other
-server) to handles static files.
-
-Request Extensions
-+++++++++++++++++++++++
-
-``base_config.disable_request_extensions`` -- by default this is false.
-This means that TG will take the request, and strip anything off the end
-of the last element in the URL that follows ".".  It will then take this
-information, and assign an appropriate mime-type and store the data in the
-tg.request.response_type and tg.request.response_ext variables.  By enabling
-this flag, you disable this behavior, rendering TG unable to determine the
-mime-type that the user is requesting automatically.
-
-
-Stand Alone
-+++++++++++++++
-
-``base_config.stand_alone`` -- set this to ``False`` if you don't want
-error handling, HTTP status code error pages, etc.  This is intended
-for the case where you're embedding the TG app in some other WSGI app
-which handles these things for you.
-
-
-Cookie Secret
-+++++++++++++++
-
-The ``beaker.session.secret`` key of the ``base_config`` object
-contains the secret used to store user sessions.  TurboGears automatically
-generates a random secret for you when you create a project.  If an
-attacker gets his hands on this key, he will be able to forge a valid
-session an use your application at though he was logged in.  In the
-event of a security breach, you can change this key to invalidate all
-user sessions.
-
-Authentication Character Set
-+++++++++++++++++++++++++++++
-
-Set ``base_config.sa_auth.charset`` to define the character encoding for your
-user's login.  This is especially important if you expect your users to have
-non-ascii usernames and passwords.  To set it to utf-8, your add this to your
-app_config.py file.::
-
-   base_config.sa_auth.charset = 'utf-8'
+To see the list of available configuration options refer to :class:`AppConfig`.
 
 Advanced Configuration
 -------------------------

@@ -6,5 +6,4 @@ TurboGears2 Configuration
     :maxdepth: 2
 
     appconfig
-    sqlalchemy
     rendering
