@@ -1,6 +1,47 @@
 Upgrading Your TurboGears Project
 =================================
 
+From 2.3.7 to 2.3.8
+-------------------
+
+tmpl_context is now always strict
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Since TG 2.3.8 the ``tg.strict_tmpl_context`` option no longer changes
+depending on the ``debug`` option. By default it's always ``True``, to
+keep a consistent behaviour between development and production environments.
+
+Dispatcher state renamed as dispatch_state
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Previously the dispatcher state was available as ``tg.request.controller_state``.
+The ``.controller_state`` attribute is now deprecated in favour of ``.dispatch_state``
+attribute.
+
+Action parameters are now always read from the dispatch state
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Previously the action arguments were always read from request, even when the dispatcher
+modified them the changes were ignored. Now they are read from the dispatch state and
+when the dispatcher modifies them the modified values is now used.
+
+Arguments not accepted by dispatched action are now discarded
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When a request provides parameters unexpected by the action they are now discarded.
+Previously TG would keep them around which lead to a crash if the action didn't provide
+a **kwargs argument. Original parameters are still available from the ``tg.request``.
+
+Builtin routes support removed
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Routes support was deprecated since version 2.3 in favour of
+`tgext.routes <https://github.com/TurboGears/tgext.routes>`_ and has now been
+removed.
+
+This is because it is now possible to implement a totally custom routing by
+overriding ``RootController._dispatch`` to return a new :class:`.DispatchState` instance.
+
 From 2.3.6 to 2.3.7
 -------------------
 
