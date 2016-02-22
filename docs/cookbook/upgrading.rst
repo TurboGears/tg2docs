@@ -4,6 +4,23 @@ Upgrading Your TurboGears Project
 From 2.3.7 to 2.3.8
 -------------------
 
+Configuration Process tweaks
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+With TG2.3.5 the configuration process has started a refactoring process
+which is proceeding one step at time to minimize backward incompatibilities.
+
+In 2.3.8 all the functions that setup helpers, globals, persistence,
+renderers and middleares are now guaranteed to read and write options
+from configuration dictionary instead of the application configurator object.
+
+In case you provided your own ``setup_`` or ``add_`` functions that override the
+default ``AppConfig`` those have been renamed as internal method (``_setup_something``
+and ``_add_some_middleware``), each one of them will now accept the current configuration
+dictionary as the first argument. Make sure you read/write from that configuration instead
+of ``self`` or ``tg.config``.
+Otherwise you might be reading/setting options that other steps ignore.
+
 tmpl_context is now always strict
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
