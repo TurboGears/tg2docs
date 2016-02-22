@@ -1,5 +1,57 @@
 .. _multidatabase:
 
+Using both SQLAlchemy and MongoDB
+=================================
+
+TurboGears since version 2.3.8 allows to enable both Ming and SQLAlchemy into
+the same project. This can be achieved by specifying both the ``use_ming=True``
+and ``use_sqlalchemy=True`` options in ``AppConfig``.
+
+By Default the *SQLAlchemy* session is considered the primary and is installed as
+``config['DBSession']`` unless it's explicitly set in ``AppConfig``. When a new
+project is created, the quickstart will automatically set this according to the
+``--ming`` or ``--sqlalchemy`` option, so you usually are ensured that the primary
+database is the one you quickstarted the project with.
+
+Both databases will call ``model.init_model`` with their engine, according to the
+engine type you can take proper action and return the right database session.
+
+To configure both Ming and SQLAlchemy sessions your ``model/__init__.py``
+will probably look like::
+
+    from sqlalchemy.engine import Engine
+
+    # SQLAlchemy Configuration
+    from zope.sqlalchemy import ZopeTransactionExtension
+    from sqlalchemy.orm import scoped_session, sessionmaker
+    from sqlalchemy.ext.declarative import declarative_base
+
+    maker = sessionmaker(autoflush=True, autocommit=False,
+                         extension=ZopeTransactionExtension())
+    DBSession = scoped_session(maker)
+    DeclarativeBase = declarative_base()
+    metadata = DeclarativeBase.metadata
+
+    # Ming Configuration
+    from ming import Session
+    from ming.orm import ThreadLocalORMSession
+
+    mingsession = Session()
+    ODMSession = ThreadLocalORMSession(mingsession)
+
+    def init_model(engine):
+        if isinstance(engine, Engine):
+            # SQLAlchemy
+            DBSession.configure(bind=engine)
+            return DBSession
+        else:
+            # Ming
+            mingsession.bind = engine
+            return ODMSession
+
+The returned session will be available as ``config['MingSession']`` and ``config['SQLASession']``
+according to the initialized engine. You just have to ensure your models use the right session.
+
 Using Multiple Databases In TurboGears
 ======================================
 
