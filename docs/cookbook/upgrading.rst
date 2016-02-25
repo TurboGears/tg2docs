@@ -47,7 +47,7 @@ Arguments not accepted by dispatched action are now discarded
 
 When a request provides parameters unexpected by the action they are now discarded.
 Previously TG would keep them around which lead to a crash if the action didn't provide
-a **kwargs argument. Original parameters are still available from the ``tg.request``.
+a ``**kwargs`` argument. Original parameters are still available from the ``tg.request``.
 
 Builtin routes support removed
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
