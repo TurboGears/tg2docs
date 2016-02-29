@@ -60,7 +60,8 @@ A TurboGears application consists of an ``AppConfig`` application configuration 
 The first is used to setup and create the application itself, while the latter is used to dispatch requests
 and take actions.
 
-For our first application we are going to define a controller with an index method that just tells *Hello World*::
+For our first application we are going to define a controller with an index method that just tells *Hello World*.
+Just create a new ``tgapp.py`` file and declare your ``RootController``::
 
     from tg import expose, TGController, AppConfig
 
@@ -69,7 +70,7 @@ For our first application we are going to define a controller with an index meth
         def index(self):
             return 'Hello World'
 
-now to make TurboGears serve our controller we must create the actual application from an ``AppConfig``::
+Now to make TurboGears serve our controller we must create the actual application from an ``AppConfig``::
 
     config = AppConfig(minimal=True, root_controller=RootController())
 
@@ -83,8 +84,9 @@ then we must actually serve the application::
     httpd = make_server('', 8080, application)
     httpd.serve_forever()
 
-Running the Python module just created will start a server on port ``8080`` with the our hello world application,
-opening your browser and pointing it to ``http://localhost:8080`` should present you with an Hello World text.
+Running ``python tgapp`` (the python module we just created) will start a server on port ``8080``
+with the our hello world application, opening your browser and pointing it
+to ``http://localhost:8080`` should present you with an Hello World text.
 
 Serving Multiple Pages
 ======================
