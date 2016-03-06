@@ -99,10 +99,6 @@ add utility methods on the fly::
             'computed': lambda filler, row: row.some_field * 2
         }
 
-        __setters__ = {
-            'release': ('release_date', lambda o: datetime.datetime.utcnow())
-        }
-
 The ``title`` option provides a way to customize the title displayed in the titlebar
 of your browser.
 
@@ -117,16 +113,6 @@ To have a look at the available options refer to
 `Sprox TableBase <http://sprox.org/modules/sprox.tablebase.html#sprox.tablebase.TableBase>`_,
 `Sprox TableFiller <http://sprox.org/modules/sprox.fillerbase.html?highlight=tablefiller#sprox.fillerbase.TableFiller>`_,
 and their parents as well.
-
-The ``__setters__`` option provides a way to add new simple methods on the fly
-to the controller. The key of the provided dictionary is the name of the method, while
-the value is a tuple where the first argument is the attribute of the object
-that has to be changed. The second argument is the value that has to be set, if the
-second argument is a callable it will be called passing the object to edit as the
-argument.
-
-In the previous example calling http://localhost:8080/movies/5/release will mark
-the movie 5 as released today.
 
 Enabling SubString Searches
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
