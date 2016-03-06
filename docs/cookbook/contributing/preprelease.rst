@@ -86,7 +86,7 @@ simply to get the new version numbers into the distributed files.
      * Change TurboGears dependency line from ``@development`` to
        current release (EX: ``@tg2.3.2``).
 
-   * Update docs/confg.py:
+   * Update docs/conf.py:
 
      * Update the version number
 
