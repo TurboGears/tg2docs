@@ -8,7 +8,7 @@ TurboGears relies on ToscaWidgets for Forms building and validations.
 Since version 2.2 TurboGears uses ToscaWidgets2, this is an introduction
 on using ToscaWidgets2 for building and validating forms, a more complete
 documentation is available on the
-`ToscaWidgets2 Documentation <http://tw2core.readthedocs.org/en/latest/index.html#>`_ itself.
+`ToscaWidgets2 Documentation <http://tw2core.readthedocs.io/en/latest/index.html#>`_ itself.
 
 Displaying Forms
 ======================

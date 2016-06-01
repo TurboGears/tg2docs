@@ -148,7 +148,7 @@ the defaults.
 
 See the FormEncode documentation for how this is done.
 
-.. _`FormEncode validators`: https://formencode.readthedocs.org/en/latest/modules/validators.html
+.. _`FormEncode validators`: https://formencode.readthedocs.io/en/latest/modules/validators.html
 
 You can also compose ``compound`` validators with logical operations,
 the FormEncode compound module provides `All` (all must pass), 
