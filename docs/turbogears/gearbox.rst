@@ -43,7 +43,8 @@ database engine to use various other options::
       --disable-migrations  disable sqlalchemy-migrate model migrations
       --enable-tw1          use toscawidgets 1.x in place of 2.x version
       --skip-tw             Disables ToscaWidgets
-      --noinput             no input (don't ask any questions)
+      --skip-genshi         Disables Genshi default template
+      --minimal-quickstart  Throw away example boilerplate from quickstart project
 
 Setup-App
 =======================
