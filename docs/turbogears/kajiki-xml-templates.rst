@@ -411,9 +411,8 @@ the same effect as using a truth value (i.e. the element is stripped).
 
 .. _includes:
 
---------
 Includes
---------
+========
 
 To reuse common snippets of template code, you can include other files using
 py:include_ and py:import_.
@@ -472,7 +471,7 @@ Converting Genshi Templates to Kajiki
 
 Kajiki is a fast template engine which is 90% compatible with Genshi,
 all of Genshi directives_ work in Kajiki too apart those involved in templates
-inheritance as Kajiki uses **blocks** instead of XInclude_ and **XPath**.
+inheritance as Kajiki uses **blocks** instead of **XInclude** and **XPath**.
 
 Simple templates hierarchies (like the one coming from TurboGears quickstart)
 can be moved to Kajiki blocks in a matter of seconds through the Kajiki
