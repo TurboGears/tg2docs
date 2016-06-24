@@ -284,11 +284,13 @@ References
 Template Caching
 --------------------
 
-Genshi Loader Cache
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Template Loader Cache
+^^^^^^^^^^^^^^^^^^^^^
 
-``genshi`` will retrieve the templates from a cache if they have not changed. 
-This cache has a default size of 25, when there are more than 25, 
+``Kajiki`` and ``Genshi`` will retrieve the templates from a cache if they have not changed.
+
+On Kajiki the cache is unlimited, every template loaded from file system is cached in memory,
+while on Genshi this cache has a default size of 25, when there are more than 25,
 the least recently used templates will be removed from this cache.
 
 You can change this behavior by setting the ``genshi.max_cache_size`` option
@@ -299,7 +301,9 @@ into the development.ini:
     [app:main]
     genshi.max_cache_size=100    
 
-Another speed boost can be achieved by disabling template automatic reloading.
+Another speed boost can be achieved by disabling template automatic reloading,
+this will avoid having Genshi and Kajiki compare the timestamp of files
+whenever they are rendered.
 
 .. code-block:: ini
 

@@ -29,7 +29,7 @@ file inside the ``install_requires`` list::
 
     install_requires=[
         "TurboGears2 >= 2.3.4",
-        "Genshi",
+        "Kajiki",
         "zope.sqlalchemy >= 0.4",
         "sqlalchemy",
         "alembic",
@@ -127,17 +127,12 @@ available inside the file is going to just be removed and replaced with:
 
 .. code-block:: html+genshi
 
-    <html xmlns="http://www.w3.org/1999/xhtml"
-          xmlns:py="http://genshi.edgewall.org/"
-          xmlns:xi="http://www.w3.org/2001/XInclude">
-
-      <xi:include href="master.html" />
-
-    <head>
-      <title>TurboGears2 Wikier Index</title>
+    <html py:extends="master.xhtml" py:strip="True">
+    <head py:block="head" py:strip="True">
+        <title py:block="master_title">Wikier Index</title>
     </head>
 
-    <body>
+    <body py:block="body" py:strip="True">
       <div class="row">
         <div class="col-md-3">
           <ul>
@@ -170,17 +165,12 @@ First we are going to create a template for our wiki pages and save it as
 
 .. code-block:: html+genshi
 
-    <html xmlns="http://www.w3.org/1999/xhtml"
-          xmlns:py="http://genshi.edgewall.org/"
-          xmlns:xi="http://www.w3.org/2001/XInclude">
-
-      <xi:include href="master.html" />
-
-    <head>
-      <title>${title}</title>
+    <html py:extends="master.xhtml" py:strip="True">
+    <head py:block="head" py:strip="True">
+        <title py:block="master_title">${title}</title>
     </head>
 
-    <body>
+    <body py:block="body" py:strip="True">
       <div class="row">
         <div class="col-md-12">
           <h2>${title}</h2>

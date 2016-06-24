@@ -28,7 +28,7 @@ Basic Documentation
 
     controllers
     templating
-    genshi-xml-templates
+    kajiki-xml-templates
     scaffolding
     validation
     webflash

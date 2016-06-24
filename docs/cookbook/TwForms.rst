@@ -190,7 +190,7 @@ You can easily provide your custom layout by subclassing ``tw2.forms.widgets.Bas
 and declaring a template for it inside your forms.
 
 For example it is possible to create a name/surname form with a side field for notes
-using the boostrap CSS framework:
+using the bootstrap CSS framework:
 
 .. code-block:: python
 
@@ -201,10 +201,9 @@ using the boostrap CSS framework:
         action = '/submit'
 
         class child(BaseLayout):
-            inline_engine_name = 'genshi'
+            inline_engine_name = 'kajiki'
             template = '''
-    <div xmlns:py="http://genshi.edgewall.org/"
-         py:strip="">
+    <div py:strip="">
         <py:for each="c in w.children_hidden">
             ${c.display()}
         </py:for>

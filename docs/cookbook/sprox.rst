@@ -66,12 +66,8 @@ values previously typed by the user can be displayed on failed validation.
 
 And finally, our template code::
 
-    <html xmlns="http://www.w3.org/1999/xhtml"
-          xmlns:py="http://genshi.edgewall.org/"
-          xmlns:xi="http://www.w3.org/2001/XInclude">
-      <xi:include href="master.html" />
-    <head/>
-    <body>
+    <html py:extends="master.xhtml" py:strip="True">
+    <body py:block="body" py:strip="True">
       <div style="height:0px;"> &nbsp; </div>
       <div>
         <div style="float:left width: 80%">
@@ -115,7 +111,7 @@ If you want the fields displayed in a ordering different from that of the specif
 you may use field_ordering to do so.  Here is our form with the fields moved around a bit::
     
     class NewMovieForm(AddRecordForm):
-    __model__ = Movie
+        __model__ = Movie
         __omit_fields__ = ['movie_id', 'genre_id']
         __field_order__ = ['title', 'description', 'genre', 'directors']
 
