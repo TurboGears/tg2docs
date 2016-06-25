@@ -977,7 +977,7 @@ After editing, our `pagelist.xhtml` looks like:
     </body>
     </html>
 
-The highlighted section represents the Genshi code of interest. You can
+The highlighted section represents the template code of interest. You can
 guess that the ``py:for`` is a python ``for`` loop, modified to fit
 into Kajiki's XML. It iterates through each of the ``pages`` (which
 we'll send in via the controller, using a modification you'll see
