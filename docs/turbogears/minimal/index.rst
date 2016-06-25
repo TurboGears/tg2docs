@@ -194,7 +194,7 @@ in our ``hello.xhtml`` template:
 
     <title>Hello</title>
     <py:if test="person">
-      <h1>Hello ${h.text.truncate(person, 5)}</h1>
+        <h1>Hello ${h.text.truncate(person, 5)}</h1>
     </py:if><py:else>
         <h1>Hello World!</h1>
     </py:else>
