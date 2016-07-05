@@ -1,8 +1,8 @@
 .. _webflash:
 
-================================
-Displaying Flash/Notice Messages
-================================
+======================
+Flash & Alert Messages
+======================
 
 TurboGears provides a way to display short messages inside the current
 or next page. This works by using the WebFlash module which stores

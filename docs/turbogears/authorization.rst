@@ -1,6 +1,6 @@
-****************************************************************
-Authorization in TurboGears
-****************************************************************
+********************************
+Access Control and Authorization
+********************************
 
 This document describes how authentication is integrated into TurboGears
 and how you may get started with it.

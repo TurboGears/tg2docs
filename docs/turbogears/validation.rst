@@ -1,8 +1,8 @@
 .. _validation:
 
-===============================================
-TurboGears Validation
-===============================================
+=====================
+Parameters Validation
+=====================
 
 When using TurboGears, your controller methods get their arguments
 built from the various GET, POST, and URL mechanisms provided by

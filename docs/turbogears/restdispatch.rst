@@ -1,8 +1,8 @@
 .. _restdispatch:
 
-===================================================
-RESTful Web Applications with TurboGears
-===================================================
+============================
+RESTful Requests Dispatching
+============================
 
 If you are developing an application where you want to expose your
 database using a stateless API, :class:`tg.RestController`

@@ -1,8 +1,8 @@
 .. _wikier:
 
-==========================================================
-Rapid Prototyping: A Wiki using the TurboGears Admin
-==========================================================
+======================================================
+Rapid Prototyping Tutorial: Using the TurboGears Admin
+======================================================
 
 TurboGears2 Wikier application is inspired by the :ref:`TurboGears2 20 Minutes Wiki <wiki20>` Tutorial.
 

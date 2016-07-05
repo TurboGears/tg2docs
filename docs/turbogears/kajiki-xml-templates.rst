@@ -2,9 +2,9 @@
 
 .. _kajiki-language:
 
-=======================
-Kajik Template Language
-=======================
+========================
+Kajiki Template Language
+========================
 
 Kajiki provides a XML-based template language that is heavily inspired by Kid_,
 and Genshi_ which in turn was inspired by a number of existing template languages, namely

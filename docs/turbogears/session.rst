@@ -1,7 +1,7 @@
 .. _session:
 
-Web Session Usage
-=================
+Web Session
+===========
 
 :Status: Work in progress
 

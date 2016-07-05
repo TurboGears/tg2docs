@@ -3,13 +3,6 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-.. toctree::
-   :hidden:
-
-   turbogears/starting
-   cookbook/cookbook
-   reference/reference
-
 The TurboGears documentation
 ============================
 
@@ -20,73 +13,21 @@ The TurboGears documentation
 +----------------------------------------------------+-------------------------------------------------+-------------------------------------------------+
 
 Getting Started
-==============================
+===============
 
 TurboGears is a Python web framework based on the :ref:`ObjectDispatch <writing_controllers>` paradigm,
-it is meant to make possible to write both small and concise applications in :ref:`Minimal mode <index-minimal>`
-or complex application in :ref:`Full Stack mode <index-fullstack>`.
+it is meant to make possible to write both small and concise applications in :ref:`Minimal mode <minimal-tutorial>`
+or complex application in :ref:`Full Stack mode <wiki20>`.
 
-Installing TurboGears
-------------------------------
+Tutorials
+=========
 
-TurboGears is meant to run inside python virtualenv and provides its own private index to
-avoid messing with your system packages and to provide a reliable set of packages that will
-correctly work together.
+.. toctree::
+    :maxdepth: 2
 
-.. code-block:: bash
-
-    $ virtualenv tg2env
-    $ tg2env/bin/pip install tg.devtools
-    $ source tg2env/bin/activate
-    (tg2env)$ #now you are ready to work with TurboGears
-
-Single File Application
-------------------------------
-
-.. _index-minimal:
-
-TurboGears minimal mode makes possible to quickly create single file applications,
-this makes easy to create simple examples and web services with a minimal set
-of dependencies.
-
-.. code-block:: python
-
-    from wsgiref.simple_server import make_server
-    from tg import expose, TGController, AppConfig
-
-    class RootController(TGController):
-         @expose()
-         def index(self):
-             return "<h1>Hello World</h1>"
-
-    config = AppConfig(minimal=True, root_controller=RootController())
-
-    print "Serving on port 8080..."
-    httpd = make_server('', 8080, config.make_wsgi_app())
-    httpd.serve_forever()
-
-Play with it on `Runnable <http://runnable.com/Unq2c2CaTc52AAAm/basic-turbogears-example-for-python>`_
-or follow the :ref:`Minimal Mode Tutorial <minimal-tutorial>` to setup your own *Single File Applications*.
-
-Full Stack Projects
---------------------------------
-
-.. _index-fullstack:
-
-For more complex projects TurboGears provides the so called full stack setup,
-to manage full stack projects the :ref:`GearBox <tg-gearbox>` command is provided.
-
-To try a full stack TurboGears application feel free to *quickstart* one and start
-playing around:
-
-.. code-block:: bash
-
-    (tg2env)$ gearbox quickstart -n -x example
-    (tg2env)$ cd example/
-    (tg2env)$ python setup.py develop
-    (tg2env)$ gearbox serve
-
-Visiting *http://localhost:8080/index* you will see a ready made sample application
-with a brief introduction to the framework itself.
-
-Explore the :ref:`Getting Started <tg-starting>` section to get started with TurboGears!
+    turbogears/minimal/index
+    turbogears/wiki20
+    turbogears/wikier/index
+    turbogears/starting
+    cookbook/cookbook
+    reference/reference

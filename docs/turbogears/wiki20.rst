@@ -1,8 +1,8 @@
 .. _wiki20:
 
-==================================================
-Full Featured TurboGears: A Wiki in 20 Minutes
-==================================================
+=========================================
+Full Stack TurboGears: Wiki in 20 Minutes
+=========================================
 
 How does TurboGears2 help you get development done quickly? We'll show
 you by developing a simple wiki application that should take you no
@@ -32,63 +32,17 @@ If you want to see the final version you can download a copy of the
 
 .. highlight:: bash
 
-Setup
-=====
+Installing the Development Tools
+================================
 
-This tutorial takes for granted that you have a working Python environment
-with Python2.6+ or Python3.3+, with `pip <http://www.pip-installer.org/en/latest/>`_
-installed and you have a working browser to look at the web application
-you are developing.
-
-This tutorial doesn't cover Python at all. Check the `Python
-Documentation`_ page for more coverage of Python.
-
-Setting up our Environment
---------------------------------
-
-If it is your first TurboGears2 project you need to create an environment and install
-the TurboGears2 web framework to make the development commands available.
-
-Creating the Environment
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-First we are going to create a Virtual Environment where to install the framework,
-this helps keeping our system clean by not installing the packages system-wide.
-To do so we need to install the ``virtualenv`` package::
-
-    $ pip install virtualenv
-
-Now the virtualenv command should be available and we can create and activate
-a virtual environment for our TurboGears2 project::
-
-    $ virtualenv tgenv
-    $ . tgenv/bin/activate
-
-
-If our environment got successfully created and activated we should end up with
-a prompt that looks like::
-
-    (tgenv)$
-
-Installing TurboGears2
---------------------------------
-
-TurboGears2 can be quickly installed by installing the TurboGears2 development tools,
-those will install TurboGears2 itself and a bunch of commands useful when developing
-TurboGears applications:
+The TurboGears2 Development Tools are a bunch of commands and extensions useful when
+developing TurboGears2 applications. They provide the ``gearbox`` suite of commands
+to create new full stack projects, quickly create controllers, templates, models and
+the TurboGears debugbar.
 
 .. parsed-literal::
 
-    (tgenv)$ pip install |private_index_path| tg.devtools
-
-.. note::
-    The `-i http://tg.gy/VERSION` option is used to make sure that we install
-    TurboGears2 latest version and its dependencies at the right version, replacing
-    it, for example, with 220 or 215 will install the 2.2 and 2.1.5 version respectively.
-    TurboGears2 package doesn't usually enforce dependencies version to make possible
-    for developers to upgrade dependencies if they need a bugfix or new features.
-    It is suggested to always use the `-i` option to avoid installing incompatible packages.
-
+    (tgenv)$ pip install tg.devtools
 
 Quickstart
 ==========
@@ -133,7 +87,7 @@ Your ``install_requires`` should end up looking like:
     :emphasize-lines: 13
 
     install_requires=[
-        "TurboGears2 >= 2.3.5",
+        "TurboGears2 >= 2.3.9",
         "Babel",
         "Beaker",
         "Kajiki",
@@ -1037,9 +991,12 @@ Further Exploration
 Now that you have a working Wiki, there are a number of further places
 to explore:
 
+#. Continue to the :ref:`wikier`.
+
 #. You can learn more about the :ref:`kajiki-language`.
 
 #. You can learn more about the `SQLAlchemy ORM`_.
+
 
 If you had any problems with this tutorial, or have ideas on how to
 make it better, please let us know on the `mailing list`_! Suggestions

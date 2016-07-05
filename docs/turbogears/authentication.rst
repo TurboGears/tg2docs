@@ -1,8 +1,8 @@
 .. _authentication:
 
-*******************************************
-Authentication in TurboGears 2 applications
-*******************************************
+*************************************
+Identification & Authentication Layer
+*************************************
 
 This document describes how :mod:`repoze.who` is integrated into TurboGears
 and how you make get started with it. For more information, you may want
