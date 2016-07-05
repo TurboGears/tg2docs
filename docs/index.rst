@@ -12,6 +12,10 @@ The TurboGears Documentation
 |    :ref:`TurboGears Documentation <tg-starting>`   |    :ref:`TurboGears CookBook <tg-cookbook>`     |    :ref:`TurboGears Reference <tg-reference>`   |
 +----------------------------------------------------+-------------------------------------------------+-------------------------------------------------+
 
+.. raw:: html
+
+   <iframe src="http://ghbtns.com/github-btn.html?user=TurboGears&repo=tg2&type=watch&count=true&size=large"  width="140" height="35" style="float:right;margin-left:35px;margin-top:9px;border: none"></iframe>
+
 TurboGears is a Python web framework based on the :ref:`ObjectDispatch <writing_controllers>` paradigm,
 it is meant to make possible to write both small and concise applications in :ref:`Minimal mode <minimal-tutorial>`
 or complex application in :ref:`Full Stack mode <wiki20>`.
