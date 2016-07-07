@@ -11,7 +11,7 @@ strings and you'd like them converted to their normal Python datatype:
 numbers to ``int``, dates to ``datetime``, etc.
 
 This conversion functionality is provided by the `FormEncode`_ package
-and is applied to your methods using the ``@validate()``
+and is applied to your methods using the :class:`.validate`
 decorator. FormEncode provides both validation and conversion as a
 single step, reasoning that you frequently need to validate something
 before you can convert it or that you'll need to convert something
@@ -30,43 +30,42 @@ valid data.
 If you don't put a ``@validate()`` decorator on your method, you'll
 simply have to do the string conversion in your controller.
 
-Validating Arguments
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Validating Parameters
+=====================
 
 When not using forms, the story gets a bit more complex. Basically,
-you need to specify which validator goes with which argument using the
-``validators`` keyword argument. Here's a simple example:
+you need to specify which validator goes with which argument using in
+the :class:`validate` decorator. Here's a simple example:
 
 .. code-block:: python
-    
+
+    from tg import request, validate, expose, TGController
     from formencode import validators
-    
-    @expose('json')
-    @validate(validators={"a":validators.Int(), "b":validators.Email})
-    def two_validators(self, a=None, b=None, *args):
-        validation_status = tg.request.validation
-        errors = [{key, value} in validation_status['errors'].iteritems()]
-        values =  validation_status['values']
-        return dict(a=a, b=b, errors=str(errors), values=str(values))
+
+    class RootController(TGController):
+        @expose('json')
+        @validate({"a":validators.Int(not_empty=True), "b":validators.Email})
+        def two_validators(self, a=None, b=None, *args):
+            validation_status = tg.request.validation
+
+            errors = [{key, value} in validation_status['errors'].iteritems()]
+            values =  validation_status['values']
+            return dict(a=a, b=b, errors=str(errors), values=str(values))
 
 The dictionary passed to validators maps the incoming field names to
 the appropriate FormEncode validators, ``Int`` in this example.
 
-If there's a validation error, TurboGears calls the error_handler if
-it exists, but it always adds ``errors`` and ``values`` to
-``request.validation``, so they will be available there for the rest of the
-request.  In this case if there are validation errors, we grab both
-the error messages and the original `unvalidated` values and return
-them in the error message.
+In case of a validation error TurboGears will provide the errors
+and values inside ``tg.request.validation``.
 
 FormEncode provides a number of useful pre-made validators for you to
-use: they are available in the ``formencode.validators`` module.
+use: they are available in the :mod:`formencode.validators` module.
 
 For most validators, you can pass keyword arguments for more specific
 constraints.
 
 Validation Process Information
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 TurboGears provides some information on the currently running validation
 process while it is handling the validation error.
@@ -79,67 +78,126 @@ the ``tg.request.validation`` to provide overview of the validation error:
     - ``tg.request.validation['exception']`` The validation exception that triggered the error handling
     - ``tg.request.validation['error_handler']`` The error handler that is being executed
 
+The Error Handler
+=================
+
+In many cases you don't need the granularity provided by ``tg.request.validation``
+and probably in case of an error you just want to send the user somewhere else
+(maybe to reinsert the data he provided).
+
+This can be achieved by using the ``error_handler`` argument of :class:`.validate`.
+The provided function or controller method will be called to generate
+a response for the user in case of an error instead of continuing with the current
+action:
+
+.. code-block:: python
+
+    from tg import request, validate, expose, TGController
+    from formencode import validators
+
+    class RootController(TGController):
+        @expose()
+        def onerror(self, **kwargs):
+            return 'An error occurred: %s' % request.validation['errors']
+
+        @expose()
+        @validate({"a": validators.Int(not_empty=True), "b": validators.Email},
+                  error_handler=onerror)
+        def two_validators(self, a=None, b=None, *args):
+            return 'Values: %s, %s, %s' % (a, b, args)
+
+Heading to ``/two_validators`` without providing a value for ``a`` will lead
+to an ``"An error occurred"`` message as the ``onerror`` method is executed
+instead of continuing with ``two_validators``.
+
+.. note:: The method in question will be called, with the unvalidated data as
+          its parameters, so it's usually best to accept ``**kwargs``.
+          And error validation messages will be stored in ``tg.request.validation``.
 
 
+Validating Forms
+================
 
-FormEncode Validators
-------------------------
+For manually written forms you can use ``@validate`` on the action that
+processes the submitted data and add the errors in your template from
+``tg.request.validation``.
 
-* Attribute
-* Bool
-* CIDR
-* ConfirmType
-* Constant
-* CreditCardExpires
-* CreditCardSecurityCode
-* CreditCardValidator
-* DateConverter
-* DateTime
-* DateValidator
-* DictConverter
-* Email
-* Empty
-* False
-* FancyValidator
-* FieldStorageUploadConverter
-* FieldsMatch
-* FileUploadKeeper
-* FormValidator
-* IDeclarative
-* IPhoneNumberValidator
-* ISchema
-* IValidator
-* Identity
-* IndexListConverter
-* Int
-* Interface
-* Invalid
-* MACAddress
-* MaxLength
-* MinLength
-* NoDefault
-* NotEmpty
-* Number
-* OneOf
-* PhoneNumber
-* PlainText
-* PostalCode
-* Regex
-* RequireIfMissing
-* RequireIfPresent
-* Set
-* SignedString
-* StateProvince
-* String
-* StringBool
-* StringBoolean
-* StripField
-* TimeConverter
-* True
-* URL
-* UnicodeString
-* Validator
-* Wrapper
+TurboGears also provides a more convenient way to create forms,
+validate submitted data and display error messages,
+those can be managed through :ref:`tw2forms` which work together
+with validation by :ref:`tw2_forms_validation`
+
+Any widget based form can then be passed to the ``@validate`` which
+will automatically validate the submitted data against that form.
+
+Validators
+==========
+
+TurboGears applications will usually rely on three kind of validators:
+
+    * :class:`.Convert` which is builtin into TurboGears an can be used for simple conversions
+      like integers, floats and so on...
+    * :mod:`tw2.core.validation` which provide ToscaWidgets validators for **Forms**
+    * :mod:`formencode.validators` validators which can be used **Standalone** or with a **Form**
+
+While in many cases ``Convert`` will suffice, the ``FormEncode`` library provides a pretty
+complete set of validators:
+
+    * Attribute
+    * Bool
+    * CIDR
+    * ConfirmType
+    * Constant
+    * CreditCardExpires
+    * CreditCardSecurityCode
+    * CreditCardValidator
+    * DateConverter
+    * DateTime
+    * DateValidator
+    * DictConverter
+    * Email
+    * Empty
+    * False
+    * FancyValidator
+    * FieldStorageUploadConverter
+    * FieldsMatch
+    * FileUploadKeeper
+    * FormValidator
+    * IDeclarative
+    * IPhoneNumberValidator
+    * ISchema
+    * IValidator
+    * Identity
+    * IndexListConverter
+    * Int
+    * Interface
+    * Invalid
+    * MACAddress
+    * MaxLength
+    * MinLength
+    * NoDefault
+    * NotEmpty
+    * Number
+    * OneOf
+    * PhoneNumber
+    * PlainText
+    * PostalCode
+    * Regex
+    * RequireIfMissing
+    * RequireIfPresent
+    * Set
+    * SignedString
+    * StateProvince
+    * String
+    * StringBool
+    * StringBoolean
+    * StripField
+    * TimeConverter
+    * True
+    * URL
+    * UnicodeString
+    * Validator
+    * Wrapper
 
 For the absolute most up-to date list of available validators, check
 the `FormEncode validators`_ module. You can also create your own
@@ -164,7 +222,7 @@ like so::
     )
 
 Writing Custom Validators
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 If you can't or don't want to rely on the FormEncode library you can write
 your own validators.
@@ -188,65 +246,8 @@ For example a validator that converts a paramter to an integer would look like:
 Then it is possible to pass an instance of IntValidator to the TurboGears ``@validate``
 decorator.
 
-Validating Widget Based Forms
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The simplest way to use ``@validate()`` is to pass in a reference to a
-widgets-based form:
-
-.. code-block:: python
-
-    @validate(projectname.forms.a_form)
-
-The widgets system will take care of building a schema to handle the
-data conversions and you'll wind up with the ``int`` or ``datetime``
-objects you specified when building the form. When paired with the
-`validate` decorator, you can handle the common case of building a
-form, validating it, redisplaying the form if there are errors, and
-converting a valid form into the proper arguments in only a few lines
-of Python.
-
-You can also pass the form using a keyword argument:
-
-.. code-block:: python
-
-    @validate(form=projectname.forms.a_form)
-    
-You might also want to tell TurboGears to pass off handling of invalid
-data to a different controller.  To do that you just pass the method
-you want called to @validate via the error_handler param:
-
-.. code-block:: python
-
-    @validate(forms.myform, error_handler=process_form_errors)
-
-The method in question will be called, with the unvalidated data as
-its parameters.  And error validation messages will be stored in
-``tg.request.validation``.
-
-Here's a quick example of how this all works:
-
-.. code-block:: python
-
-    @expose('json')
-    @validate(form=myform)
-    def process_form_errors(self, **kwargs):
-        #add error messages to the kwargs dictionary and return it
-        kwargs['errors'] = tg.request.validation['errors']
-        return dict(kwargs)
-    
-    @expose('json')
-    @validate(form=myform, error_handler=process_form_errors)
-    def send_to_error_handler(self, **kwargs):
-        return dict(kwargs)
-
-If there's a validation error in myform, the send_to_error_handler
-method will never get called.  Instead process_form_errors will get
-called, and the validation error messages can be picked up from the
-errors value of the request validation context.
-
-Schema Validation
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Schema Validators
+-----------------
 
 Sometimes you need more power and flexibility than you can get from
 validating individual form fields.  Fortunately FormEncode provides
@@ -255,7 +256,7 @@ just the thing for us -- Schema validators.
 If you want to do multiple-field validation, reuse validators or just
 clean up your code, validation ``Schema``s are the way to go. You
 create a validation schema by inheriting from
-``formencode.schema.Schema`` and pass the newly created ``Schema``
+:class:`formencode.schema.Schema` and pass the newly created ``Schema``
 as the ``validators`` argument instead of passing a dictionary.
 
 Create a schema:

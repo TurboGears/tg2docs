@@ -231,6 +231,8 @@ GET or POST parameter.
     def save_movie(self, **kw):
         return str(kw)
 
+.. _tw2_forms_validation:
+
 Validating Fields
 -----------------
 
@@ -254,7 +256,7 @@ is provided we can use the :class:`tw2.core.Required` validator:
 
 Now the forms knows how to validate the title and director fields,
 but those are not validated in any way.
-To enable validation in TurboGears we must use the **tg.validate** decorator
+To enable validation in TurboGears we must use the :class:`.validate` decorator
 and place it at our form action:
 
 .. code-block:: python
@@ -268,6 +270,13 @@ Now every submission to */save_movie* url will be validated against
 the *MovieForm* and if it doesn't pass validation will be redirected
 to the *index* method where the form will display an error for each field
 not passing validation.
+
+.. note:: TurboGears keeps track of the form that failed validation
+          when running the ``error_handler``, so if we display that
+          form during the ``error_handler`` it will automatically
+          display the validation error messages, nothing particular
+          is required to show errors apart displaying the form after
+          validation failed.
 
 More about TurboGears support for validation is available inside the
 :ref:`validation` page.
@@ -283,7 +292,7 @@ How can we enforce people to enter two times the same name inside our form?
 Apart from fields, ToscaWidgets permits to set validators to forms.
 Those can be used to validate form fields together instead of one by one.
 To check that our two directors equals we will use the
-``formencode.validators.FieldsMatch`` validator:
+:class:`formencode.validators.FieldsMatch` validator:
 
 .. code-block:: python
 
@@ -305,6 +314,33 @@ Nothing else of our code needs to be changed, our */save_movie* controller
 already has validation for the *MovieForm* and when the form is submitted
 after checking that there is a title and director will also check that
 both *director* and *director_verify* fields equals.
+
+Manual Validation
+~~~~~~~~~~~~~~~~~
+
+Usually you will rely on the ``@validate`` decorator to check for form errors
+on submission and display the form with proper error messages, but there might
+be cases where you want to manually validate the form and then pass the errors
+to it.
+
+To validate a Form just call the :meth:`tw2.forms.Form.validate` method on it
+with the dictionary of values to validate:
+
+.. code-block:: python
+
+    MovieForm.validate({})
+
+That will raise a :class:`tw2.core.ValidationError` in case the validation failed,
+the validation error itself will contain an instance of the widget already configured
+to display the error messages:
+
+.. code-block:: python
+
+    try:
+        MovieForm.validate(dict())
+    except twc.ValidationError as e:
+        # Display widget with error messages inside.
+        e.widget.display()
 
 Relocatable Widget Actions
 --------------------------
