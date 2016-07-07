@@ -1,17 +1,181 @@
 .. _tw2forms:
 
-=================================
-Creating and Validating Forms
-=================================
+===============
+Widgets & Forms
+===============
 
-TurboGears relies on ToscaWidgets for Forms building and validations.
-Since version 2.2 TurboGears uses ToscaWidgets2, this is an introduction
-on using ToscaWidgets2 for building and validating forms, a more complete
-documentation is available on the
-`ToscaWidgets2 Documentation <http://tw2core.readthedocs.io/en/latest/index.html#>`_ itself.
+TurboGears relies on ToscaWidgets2 for Widgets and Forms definition.
+Widgets are small reusable HTML components with attached values, and
+a form is a collection of one or more widgets (one for each field) that
+display the fields.
+
+ToscaWidgets2 Widgets provide:
+
+    * Templating support to generate the HTML
+    * Support for widget configuration options
+    * Resources declaration and injection (for css & JS required by the widget)
+
+Widgets
+=======
+
+Creating Widgets
+----------------
+
+Widgets can be created by subclassing :class:`tw2.core.Widget` and defining
+a ``template`` argument for it. By default the template argument has to be
+the dotted format path of a template file (same syntax you provide to ``@expose``),
+but an ``inline_engine_name`` option can be provided to tell ToscaWidgets2
+that the template argument is actually the template itself.
+
+.. code-block:: python
+
+    import tw2.core as twc
+
+    class UserAvatarWidget(twc.Widget):
+        inline_engine_name = 'kajiki'
+        template = '<div class="username">${w.name}</div>'
+
+To display the widget just call the ``.display(**kwargs)`` method of the
+widget passing any parameter you want to provide to the widget:
+
+.. code-block:: python
+
+    >>> UserAvatarWidget.display(name='John Doe')
+    Markup(u'<div class="username">John Doe</div>')
+
+The passed ``name`` is available inside the template as ``w.name``.
+All the arguments passed to the :meth:`tw2.core.Widget.display` function will be available
+as properties of the widget instance inside the template itself.
+
+Widgets Parameters
+------------------
+
+While our previous example worked as expected, you probably noticed that when
+the ``name`` argument to display is omitted it will lead to a crash and we
+didn't provide any detail to developers that they must provide it.
+
+to solve this ToscaWidgets provides parameters support through the :class:`tw2.core.Param`
+class.
+
+To make the ``name`` parameter explicit and provide a default value for it we
+can add it to the widget as a ``Param``:
+
+.. code-block:: python
+
+    import tw2.core as twc
+
+    class UserAvatarWidget(twc.Widget):
+        name = twc.Param(default='Unknown User', description='Name of the logged user')
+
+        inline_engine_name = 'kajiki'
+        template = '<div class="username">${w.name}</div>'
+
+Trying to display the widget without a ``name`` argument will now just provide the
+default value instead of leading to a crash:
+
+.. code-block:: python
+
+    >>> UserAvatarWidget.display()
+    Markup(u'<div class="username">Unknown User</div>')
+
+    >>> UserAvatarWidget.display(name='John Doe')
+    Markup(u'<div class="username">John Doe</div>')
+
+The passed value will be available inside the template as properties
+of the widget instance and the widget instance will be available as ``w``.
+So in the previous example the user name was available as ``w.name``.
+
+.. note:: Whenever you need to know which options a widget provides you want
+          to have a look at its parameters. They will usually provide a short
+          description of the parameter purpose.
+
+Widgets Resources
+-----------------
+
+To implement more advanced widgets you will probably need to add styling
+and javascript to them. This can easily be done through **resources**
+support provided by ToscaWidgets.
+
+A resource is an instance of :class:`tw2.core.JSLink`, :class:`tw2.core.JSSource`,
+:class:`tw2.core.CSSLink` and :class:`tw2.core.CSSSource`, which allow to provide
+access to a CSS and Javascript file or to inline code for the widget.
+
+Resources are injected for you in the ``<head>`` tag by a middleware that
+handles resources injection for widgets. Each resource has an ``id`` attribute
+so the same resource won't be injected twice as far as all instances of the
+resources share the same ``id``.
+
+The following example adds an inline CSS to make user avatars bold and provides
+*jQuery* as a dependency to add a *click* function that shows a dialog with the
+username inside when clicked:
+
+.. code-block:: python
+
+    import tw2.core as twc
+
+
+    class UserAvatarWidget(twc.Widget):
+        name = twc.Param(default='Unknown User', description='Name of the logged user')
+
+        inline_engine_name = 'kajiki'
+        template = '''
+            <div class="useravatar" id="${w.id}">
+                <div class="username">${w.name}</div>
+                <script>$('#${w.id}').click(function() { alert('${w.name}') })</script>
+            </div>
+        '''
+        resources = [
+            twc.CSSSource(id='useravatarstyle',
+                          src='.useravatar .username { font-weight: bold; }'),
+            twc.JSLink(id='jquery',
+                       link='https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js')
+        ]
+
+Calling ``UserAvatarWidget.display`` will generate the short html snippet:
+
+.. code-block:: html
+
+    <div class="useravatar" id="id_a9a9fbba90744ff2a894f5ea5ae99f44">
+        <div class="username">John Doe</div>
+        <script>$('#id_a9a9fbba90744ff2a894f5ea5ae99f44').click(function() { alert('John Doe') })</script>
+    </div>
+
+but will also inject the required resources into the ``head`` tag:
+
+.. code-block:: html
+
+    <head>
+        <style type="text/css">.useravatar .username { font-weight: bold; }</style>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js" type="text/javascript" id="jquery"></script>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        ...
+    </head>
+
+Note that display the widgets twice on the page won't inject the resources twice. That's
+because ToscaWidgets will recognize that ``useravatarstyle`` and ``jquery`` resources already
+got injected and won't insert them again.
+
+Widgets also provide an ``.id`` attribute automatically generated by ToscaWidgets2
+(it can be overwritten at display time), this allows to uniquely identify
+each widget instance from any javascript injected into the page.
+
+In the previous example we leveraged this feature to point *jQuery* to each specific
+widget instance through ``$('#${w.id}')``. If you display two ``UserAvatarWidget``
+with different names on the same page, you will notice that clicking each one of them
+will properly show the right name thanks to this.
+
+
+Forms
+=====
 
 Displaying Forms
-======================
+----------------
+
+Forms are actually a particular kind of Widget, actually a particular kind of
+:class:`tw2.core.CompoundWidget` as they can contain more widgets inside themselves.
+
+A Forms is actually a widget that provides a template to displays through a
+``Layout`` all the other widgets that are provided inside the form.
 
 To create a form you will have to declare it specifying:
 
@@ -20,8 +184,8 @@ To create a form you will have to declare it specifying:
     * the form fields
 
 The *action* can be specified as an attribute of the form itself, while the *layout*
-must be a class named **child** which has to inherit from ``tw2.forms.BaseLayout``.
-Any of ``tw2.forms.TableLayout`` or ``tw2.forms.ListLayout`` will usually do, but you
+must be a class named **child** which has to inherit from :class:`tw2.forms.BaseLayout`.
+Any of :class:`tw2.forms.TableLayout` or :class:`tw2.forms.ListLayout` will usually do, but you
 can easily write your own custom layouts. The form *fields* can then be specified
 inside the **child** class.
 
@@ -47,7 +211,7 @@ To display the form we can return it from the controller where it must be render
         return dict(page='index', form=MovieForm)
 
 and *display* it inside the template itself.
-Any field of the form can be filled using the *value* argument passed to the
+Any field of the form can be filled using the ``value`` argument passed to the
 display function. The values provided inside this argument will override the
 field default ones.
 
@@ -68,15 +232,15 @@ GET or POST parameter.
         return str(kw)
 
 Validating Fields
-=====================
+-----------------
 
 ToscaWidgets2 is able to use any `FormEncode` validator for validation of
 both fields and forms. More validators are also provided inside the
-``tw2.core.validators`` module.
+:mod:`tw2.core.validators` module.
 
 To start using validation we have to declare the validator for each form field.
 For example to block submission of our previous form when no title or director
-is provided we can use the ``tw2.core.Required`` validator:
+is provided we can use the :class:`tw2.core.Required` validator:
 
 .. code-block:: python
 
@@ -109,7 +273,7 @@ More about TurboGears support for validation is available inside the
 :ref:`validation` page.
 
 Validating Compound Fields
------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Suppose that you are afraid that people might enter a wrong director name
 for your movies. The most simple solution would be to require them to
@@ -143,7 +307,7 @@ after checking that there is a title and director will also check that
 both *director* and *director_verify* fields equals.
 
 Relocatable Widget Actions
-===========================
+--------------------------
 
 Whenever you run your application on a mount point which is not the root of
 the domain name your actions will have to poin to the right path inside the
@@ -180,7 +344,7 @@ all the ``Link`` subclasses like ``JSLink``, ``CSSLink`` and so on will already
 serve the resource using the application mount point.
 
 Custom Layouts
-===========================
+--------------
 
 While using ``tw2.forms.TableLayout`` and ``tw2.forms.ListLayout`` it's easy to perform
 most simple styling and customization of your forms, for more complex widgets

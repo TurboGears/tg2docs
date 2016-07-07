@@ -18,10 +18,11 @@ to them and some intermediate features.
     scaffolding
     validation
     webflash
+    widgets_forms
     authorization
+    pagination
     session
     caching
-    pagination
     i18n
     Pluggable/index
     restdispatch
