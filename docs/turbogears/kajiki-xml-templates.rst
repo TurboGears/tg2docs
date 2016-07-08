@@ -474,10 +474,8 @@ all of Genshi directives_ work in Kajiki too apart those involved in templates
 inheritance as Kajiki uses **blocks** instead of **XInclude** and **XPath**.
 
 Simple templates hierarchies (like the one coming from TurboGears quickstart)
-can be moved to Kajiki blocks in a matter of seconds through the Kajiki
-``autoblocks`` feature. Autoblocks will automatically create inclusion blocks
-whenever a tag with the given name is found. So in case of simple hierarchies
-we can easily remove the ``py:match`` and rely on ``autoblocks``.
+can be moved to Kajiki blocks in a matter of seconds through the ``gearbox patch``
+command.
 
 .. note::
 
@@ -489,26 +487,19 @@ we can easily remove the ``py:match`` and rely on ``autoblocks``.
   and then test them on your real apps when you are confident with the
   whole process.
 
-Enabling Autoblocks
-===================
+Enabling Kajiki Templates
+=========================
 
-Enabling autoblocks in Kajiki involves adding the ``templating.kajiki.xml_autoblocks``
-option to your ``app_cfg.py`` with the list of tags that should be considered
-autoblocks::
+Enabling Kajiki support involves changing the ``base_config.default_renderer``
+option in your ``app_cfg.py`` and adding ``kajiki`` to the ``renderers``:
 
+.. code-block:: python
+
+  # Add kajiki support
   base_config.renderers.append('kajiki')
-  base_config['templating.kajiki.xml_autoblocks'] = ['head', 'body']
 
   # Set the default renderer
   base_config.default_renderer = 'kajiki'
-
-Restarting your web application you will probably lead to an ``IOError``
-regarding TurboGears being unable to find your template. This is because
-Kajiki uses ``.xml`` as the default templates extension, while Genshi used
-``.html``. What we need to do is add the following line to make Kajiki load
-templates from ``.html`` files::
-
-  base_config['templating.kajiki.template_extension'] = '.html'
 
 Adapting the Master Template
 ============================
@@ -518,7 +509,21 @@ template, everything else will be done automatically. So the effort
 of porting an application from Genshi to Kajiki is the same independently
 from the size of the application.
 
-First of all let's adapt our ``head`` tag to make it so that the content
+First of all we will need to remove the ``py:strip`` and ``xmlns`` attributes
+from the ``html`` tag:
+
+.. code-block:: html+genshi
+
+  <html xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:py="http://genshi.edgewall.org/"
+        xmlns:xi="http://www.w3.org/2001/XInclude"
+        py:strip="">
+
+should became:
+
+  <html>
+
+Then let's adapt our ``head`` tag to make it so that the content
 from templates that extend our master gets included inside it:
 
 .. code-block:: html+genshi
@@ -538,11 +543,11 @@ should became:
 .. code-block:: html+genshi
   :emphasize-lines: 1, 5
 
-  <head py:autoblock="False">
+  <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta charset="${response.charset}" />
     <title py:if="False">Your generic title goes here</title>
-    <py:blocks name="head"/>
+    <py:block name="head"/>
     <link rel="stylesheet" type="text/css" media="screen" href="${tg.url('/css/bootstrap.min.css')}" />
     <link rel="stylesheet" type="text/css" media="screen" href="${tg.url('/css/style.css')}" />
   </head>
@@ -577,7 +582,7 @@ Which should became:
 .. code-block:: html+genshi
   :emphasize-lines: 1, 16
 
-  <body py:autoblock="False">
+  <body>
     <!-- Navbar -->
     [...]
 
@@ -592,43 +597,75 @@ Which should became:
       </py:with>
 
       <!-- Main included content -->
-      <py:blocks name="body"/>
+      <py:block name="body"/>
     </div>
   </body>
 
-What happened is that we replaced the ``head`` and ``body`` blocks in the
-master template (which were created by the ``xml_autoblocks`` option) with
-blocks with the same name inside the head and body tags.
+What is did is replacing all the *XPath* expressions that lead to
+insert content from the child templates into ``head`` and ``body``
+with two head and body **blocks**. So our child templates will be
+able to rely on those blocks to inject their content into the master.
 
-Now your application will properly start, but you will get a broken page
-due to missing layout, css and so on.
+Last importat step is **renaming the master template**, as Kajiki
+in turbogears uses ``.xhtml`` extension we will need to rename
+``master.html`` to ``master.xhtml``::
 
-Upgrading Templates
-===================
+  $ find ./ -iname 'master.html' -exec sh -c 'mv {} `dirname {}`/master.xhtml' \;
 
-This is because Kajiki doesn't understand the ``xi:include`` command and
-so it is not including the ``master.html`` at all. To solve this issue
-we can rely on a simple but helpful ``gearbox`` command to patch all our
-templates by replacing ``xi:include`` with ``py:extends`` which is used
+.. note:: The previous expression will rename the master file if run
+          from within your project directory.
+
+Upgrading Child Templates
+=========================
+
+There are three things we need to do to upgrade all our child templates
+to Kajiki:
+
+  * Replace ``xi:include`` with ``py:extends``
+  * Strip ``<html>`` tags to avoid a duplicated root tag
+  * Replace ``<head>`` tag with a kajiki block
+  * Replace ``<body>`` tag with a kajiki block
+
+To perform those changes we can rely on a simple but helpful ``gearbox`` command
+to patch all our templates by replacing ``xi:include`` with ``py:extends`` which is used
 and recognized by Kajiki.
 
 Just move inside the root of your project and run::
 
-  $ gearbox patch -R '*.html' xi:include -r py:extends
+  $ gearbox patch -R '*.html' 'xi:include href="master.html"' -r 'py:extends href="master.xhtml"'
 
 You should get an output similar to::
 
-  7 files matching
+  6 files matching
   ! Patching /private/tmp/prova/prova/templates/about.html
   ! Patching /private/tmp/prova/prova/templates/data.html
   ! Patching /private/tmp/prova/prova/templates/environ.html
   ! Patching /private/tmp/prova/prova/templates/error.html
   ! Patching /private/tmp/prova/prova/templates/index.html
   ! Patching /private/tmp/prova/prova/templates/login.html
-  x Patching /private/tmp/prova/prova/templates/master.html
 
 Which means that all our templates apart from ``master.html`` got patched
 properly and now correctly use ``py:extends``.
+
+Now we can start adapting our tags to move them to kajiki blocks.
+
+First of all we will need to strip the ``html`` from all the templates apart
+``master.xhtml`` to avoid ending up with duplicated root tag::
+
+  $ gearbox patch -R '*.html' 'xmlns="http://www.w3.org/1999/xhtml"' -r 'py:strip=""'
+
+Then we will need to do the same for the head tag::
+
+  $ gearbox patch -R '*.html' '<head>' -r '<head py:block="head" py:strip="True">'
+
+Then repeat for body::
+
+  $ gearbox patch -R '*.html' '<body>' -r '<body py:block="body" py:strip="True">'
+
+Now that all our templates got upgraded from Genshi to Kajiki, we
+must remember to rename them all, like we did for master::
+
+  $ find ./ -iname '*.html' -exec sh -c 'mv {} `dirname {}`/`basename {} .html`.xhtml' \;
 
 Restarting your application now should lead to a properly working page
 equal to the original Genshi one.
