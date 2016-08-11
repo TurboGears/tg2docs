@@ -107,18 +107,13 @@ the previously created API:
     style expected by AngularJS
 
 .. note::
-    Pay attention to the double **$$** required to escape the dollar sign on Genshi
+    Pay attention to the double **$$** required to escape the dollar sign on Kajiki
 
 .. code-block:: html
 
-    <html xmlns="http://www.w3.org/1999/xhtml"
-          xmlns:py="http://genshi.edgewall.org/"
-          xmlns:xi="http://www.w3.org/2001/XInclude">
-
-      <xi:include href="master.html" />
-
-    <head>
-      <title>AngularTG</title>
+    <html py:extends="master.xhtml" py:strip="True">
+    <head py:block="head" py:strip="True">
+      <title py:block="master_title">AngularTG</title>
       <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.min.js"></script>
       <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular-resource.min.js"></script>
       <style>
@@ -128,7 +123,7 @@ the previously created API:
       </style>
     </head>
 
-    <body>
+    <body py:block="body" py:strip="True">
       <div class="row">
         <div class="col-md-12">
          <div ng-app="myApp" class="ng-cloak">

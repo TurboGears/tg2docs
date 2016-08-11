@@ -1,8 +1,8 @@
 .. _minimal-tutorial:
 
-================
-Hello TurboGears
-================
+============================
+Get Started with TurboGears2
+============================
 
 The fastest way to start using TurboGears is through the **minimal mode**, when using TurboGears with
 minimal mode a default setup that minimizes dependencies and complexity is provided.
@@ -10,22 +10,23 @@ minimal mode a default setup that minimizes dependencies and complexity is provi
 .. note::
 
     While minimal mode is well suited for small simple web applications or web services, for more complex
-    projects moving to a package based configuration is suggested. To start with a package based application
-    the :ref:`20 Minutes Wiki Tutorial <wiki20>` tutorial is provided.
-
-Play with TurboGears
-====================
-
-If you want to experiment with this tutorial without installing TurboGears on your local machine, feel free
-to edit the `Basic TurboGears Example <http://runnable.com/Unq2c2CaTc52AAAm/basic-turbogears-example-for-python>`_ 
-on Runnable and skip the :ref:`Setup <minimal-setup>` section.
-
-This will provide a working TurboGears application in your browser you can freely edit and run.
+    projects moving to a package based configuration is suggested.
 
 .. _minimal-setup:
 
-Setup
-=====
+Installing TurboGears2
+======================
+
+This tutorial takes for granted that you have a working Python environment
+with Python2.6+ or Python3.3+, with `pip <http://www.pip-installer.org/en/latest/>`_
+installed and you have a working browser to look at the web application
+you are developing.
+
+This tutorial doesn't cover Python at all. Check the `Python Documentation`_ page
+for more coverage of Python.
+
+Creating Virtual Environment
+----------------------------
 
 First we are going to create a virtual environment where to install the framework, if you want to
 proceed without using a virtual environment simply skip to :ref:`Install TurboGears <TurboGears2_install>`.
@@ -47,11 +48,14 @@ a prompt that looks like::
 
 .. _TurboGears2_install:
 
+Installing TurboGears
+---------------------
+
 Now we are ready to install TurboGears itself:
 
 .. parsed-literal::
 
-    (tgenv)$ pip install |private_index_path| TurboGears2
+    (tgenv)$ pip install TurboGears2
 
 Hello World
 ===========
@@ -122,32 +126,31 @@ Being able to serve text isn't usually enough for a web application, for more ad
 using a template is usually preferred. Before being able to serve a template we need to install
 a template engine and enable it.
 
-The template engine we are going to use for this example is ``Jinja2`` which is a fast and
-flexible template engine with python3 support. To install jinja simply run::
+The template engine used by TurboGears is :ref:`Kajiki-language` which is a fast and
+validated template engine with python3 support. To install Kajiki simply run::
 
-    (tgenv)$ pip install jinja2
+    (tgenv)$ pip install kajiki
 
 Now that the template engine is available we need to enable it in TurboGears, doing so is as
 simple as adding it to the list of the available engines inside our ``AppConfig``::
 
     config = AppConfig(minimal=True, root_controller=RootController())
-    config.renderers = ['jinja']
+    config.renderers = ['kajiki']
 
     application = config.make_wsgi_app()
 
-Now our application is able to expose templates based on the Jinja template engine,
-to test them we are going to create an ``hello.jinja`` file inside the same directory
+Now our application is able to expose templates based on the Kajiki template engine,
+to test them we are going to create an ``hello.xhtml`` file inside the same directory
 where our application is available:
 
-.. code-block:: html+jinja
+.. code-block:: html+genshi
 
-    <!doctype html>
     <title>Hello</title>
-    {% if person %}
-      <h1>Hello {{ person }}</h1>
-    {% else %}
-      <h1>Hello World!</h1>
-    {% endif %}
+    <py:if test="person">
+        <h1>Hello ${person}</h1>
+    </py:if><py:else>
+        <h1>Hello World!</h1>
+    </py:else>
 
 then the ``hello`` method will be changed to display the newly created template
 instead of using a string directly::
@@ -157,7 +160,7 @@ instead of using a string directly::
         def index(self):
             return 'Hello World'
 
-        @expose('hello.jinja')
+        @expose('hello.xhtml')
         def hello(self, person=None):
             return dict(person=person)
 
@@ -189,17 +192,16 @@ helpers (any python module or object can be registered as the helpers)::
 
 Now the helpers are available in all our templates as ``h.helpername`` and in this case
 we are going to use the ``text.truncate`` helper to truncate strings longer than 5 characters
-in our ``hello.jinja`` template:
+in our ``hello.xhtml`` template:
 
-.. code-block:: html+jinja
+.. code-block:: html+genshi
 
-    <!doctype html>
     <title>Hello</title>
-    {% if person %}
-      <h1>Hello {{ h.text.truncate(person, 5) }}</h1>
-    {% else %}
-      <h1>Hello World!</h1>
-    {% endif %}
+    <py:if test="person">
+        <h1>Hello ${h.text.truncate(person, 5)}</h1>
+    </py:if><py:else>
+        <h1>Hello World!</h1>
+    </py:else>
 
 By restarting the application you will notice that pointing the browser to
 ``http://localhost:8080/hello?person=World`` prints **Hello World** while pointing it to
@@ -214,7 +216,7 @@ scripts is often required, to do so we must tell TurboGears to serve our static 
 from where to serve them::
 
     config = AppConfig(minimal=True, root_controller=RootController())
-    config.renderers = ['jinja']
+    config.renderers = ['kajiki']
     config.serve_static = True
     config.paths['static_files'] = 'public'
 
@@ -297,21 +299,23 @@ list of past greetings::
             logs = DBSession.query(Log).order_by(Log.timestamp.desc()).all()
             return 'Past Greetings\n' + '\n'.join(['%s - %s' % (l.timestamp, l.person) for l in logs])
 
-        @expose('hello.jinja')
+        @expose('hello.xhtml')
         def hello(self, person=None):
             DBSession.add(Log(person=person or ''))
             DBSession.commit()
             return dict(person=person)
 
 
-Going Forward
-=============
+Going Full Stack
+================
 
 While it is possible to manually enable the TurboGears features like the ``SQLAlchemy`` and ``Ming``
 storage backends, the application ``helpers``, ``app_globals``, ``i18n`` features through the
 :class:`AppConfig` object, if you need them you probably want to switch to **full stack** mode and
 to create a full stack application through the ``gearbox quickstart`` command.
 
-The :ref:`20 Minutes Wiki Tutorial <wiki20>` provides an introduction to more complex applications
+The :ref:`Full Stack Tutorial <wiki20>` provides an introduction to more complex applications
 with all the TurboGears features enabled, follow it if you want to unleash all the features that
 TurboGears provides!
+
+.. _Python Documentation: http://www.python.org/doc

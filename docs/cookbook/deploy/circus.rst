@@ -50,7 +50,7 @@ application running under ``Chaussette`` through ``Circus``.
 
 #.  Chaussette supports many backends to serve the requests. The default one is based on
     ``wsgiref``, which is not really fast.
-    Have a look at the `Chaussette Documentation <http://chaussette.readthedocs.org/en/latest/>`_
+    Have a look at the `Chaussette Documentation <http://chaussette.readthedocs.io/en/latest/>`_
     for the available backends: ``waitress``, ``gevent``, ``meinheld`` and many more are supported.
 
     For this tutorial we are going to use ``Waitress``, which is a multithreaded WSGI server,
@@ -118,5 +118,5 @@ application running under ``Chaussette`` through ``Circus``.
     the `VHostino <https://github.com/amol-/vhostino>`_ project for circus
     to serve multiple applications through virtual hosts
 
-See the `circus documentation <http://circus.readthedocs.org/en/latest/>`_ for
+See the `circus documentation <http://circus.readthedocs.io/en/latest/>`_ for
 more in-depth configuration information.

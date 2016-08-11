@@ -9,9 +9,9 @@ link controller methods to template and through the :func:`tg.render_template` f
 
 Each template is rendered using a *template engine*, TurboGears provides some builtin engines
 but additional can be configured. The ``default_renderer`` for TurboGears applications is
-``Genshi`` which permits to write templates in pure xhtml and validates them to detect issues
-at compile time and prevent serving broken pages. For documentation on Genshi templates see
-the :ref:`Genshi Template Language <genshi-language>`.
+``Kajiki`` which permits to write templates in pure xhtml and validates them to detect issues
+at compile time and prevent serving broken pages. For documentation on Kajiki templates see
+the :ref:`Kajiki Template Language <kajiki-language>`.
 
 By default TurboGears references to templates using *dotted notation*, this is the path
 of the template file in terms of python packages. This makes possible to refer to template
@@ -28,7 +28,7 @@ Explicit Engine in Exposition
 The ``@expose`` decorator template files will always be rendered using the ``default_renderer``
 specified into the application configurator unless explicitly set. To explicitly provide
 the template engine to use just prepend it to the template path in the form **engine:template_path**
-like **genshi:mypackage.templates.template_file**.
+like **kajiki:mypackage.templates.template_file**.
 
 Refer to :ref:`Rendering Engines Configuration <renderingconfig>` documentation for information
 on setting up available renderers and specifying the default one.

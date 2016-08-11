@@ -1,6 +1,6 @@
-===============================
-TurboGears2 Configuration
-===============================
+========================
+The Configuration System
+========================
 
 .. toctree::
     :maxdepth: 2

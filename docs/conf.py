@@ -38,7 +38,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'TurboGears'
-copyright_year = '2015'
+copyright_year = '2016'
 copyright = copyright_year + u' by the TurboGears Doc Team'
 project_url = 'http://www.turbogears.org'
 
@@ -47,7 +47,7 @@ project_url = 'http://www.turbogears.org'
 # built documents.
 #
 # The short X.Y version.
-version = '2.3.8'
+version = '2.3.9'
 # The full version, including alpha/beta/rc tags.
 release = max(tg_release_version, version)
 # The private index, something like http://tg.gy/230
@@ -266,10 +266,11 @@ todo_include_todos = True
 intersphinx_mapping = {
     'python': ('http://docs.python.org', None),
     'sqlalchemy': ('http://www.sqlalchemy.org/docs', None),
-    'tw2' : ('http://tw2core.readthedocs.org/en/latest/', None),
+    'tw2' : ('http://tw2core.readthedocs.io/en/latest/', None),
     'webob': ('http://docs.webob.org/en/latest/', None),
-    'webtest': ('http://docs.webob.org/en/latest/', None),
-    'ming': ('http://ming.readthedocs.org/en/latest', None)
+    'webtest': ('http://docs.pylonsproject.org/projects/webtest/en/latest/', None),
+    'ming': ('http://ming.readthedocs.io/en/latest', None),
+    'formencode': ('http://www.formencode.org/en/latest/', None)
 }
 
 # The maximum number of days to cache remote inventories.

@@ -62,7 +62,7 @@ Now the grid can be displayed in the template like this:
 
 .. highlight:: html+genshi
 
-Template code necessary to show the grid in ``templates/index.html``::
+Template code necessary to show the grid in ``templates/index.xhtml``::
 
 	<div>${grid.display(value=data)}</div>
 
@@ -93,7 +93,7 @@ a working pagination for our datagrid.
 
 .. highlight:: html+genshi
 
-Template in ``templates/index.html`` would become::
+Template in ``templates/index.xhtml`` would become::
 
 	<div>${grid.display(value=data)}</div>
 	<div>${tmpl_context.paginators.data.pager()}</div>
@@ -112,7 +112,7 @@ First of all we need to declare or SortableColumn class that will return the lin
 
 	from sqlalchemy import asc, desc
 	from tw2.forms.datagrid import Column
-	import genshi
+	from markupsafe import Markup
 
 	class SortableColumn(Column):
 	    def __init__(self, title, name):
@@ -134,7 +134,7 @@ First of all we need to declare or SortableColumn class that will return the lin
 		new_params['ordercol'] = current_ordering
 
 		new_url = url(request.path_url, params=new_params)
-		return genshi.Markup('<a href="%(page_url)s">%(title)s</a>' % dict(page_url=new_url, title=self._title_))
+		return Markup('<a href="%(page_url)s">%(title)s</a>' % dict(page_url=new_url, title=self._title_))
 
 	    title = property(get_title, set_title)
 
@@ -178,7 +178,7 @@ In this example addressbook_grid would become::
 	    SortableColumn('Name', 'name'),
 	    SortableColumn('Surname', 'surname'),
 	    SortableColumn('Phone', 'phone'),
-	    ('Action', lambda obj:genshi.Markup('<a href="%s">Edit</a>' % url('/edit', params=dict(item_id=obj.uid))))
+	    ('Action', lambda obj: Markup('<a href="%s">Edit</a>' % url('/edit', params=dict(item_id=obj.uid))))
 	])
 
 

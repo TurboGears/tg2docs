@@ -59,17 +59,12 @@ too:
 
 .. code-block:: html+genshi
 
-    <html xmlns="http://www.w3.org/1999/xhtml"
-          xmlns:py="http://genshi.edgewall.org/"
-          xmlns:xi="http://www.w3.org/2001/XInclude">
-
-      <xi:include href="master.html" />
-
-    <head>
-      <title>${wikipage.title}</title>
+    <html py:extends="master.xhtml" py:strip="True">
+    <head py:block="head" py:strip="True">
+        <title py:block="master_title">${wikipage.title}</title>
     </head>
 
-    <body>
+    <body py:block="body" py:strip="True">
       <div class="row">
         <div class="col-md-12">
           <h2>${wikipage.title}</h2>

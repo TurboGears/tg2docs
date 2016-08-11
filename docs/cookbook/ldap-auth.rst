@@ -35,7 +35,7 @@ You should also add this requirement to your project's `setup.py` file::
 Note that `who_ldap` itself requires the `ldap3` package
 (formerly known as python3-ldap), which is a pure Python implementation
 of an LDAP v3 client. See the `documentation for ldap3
-<https://ldap3.readthedocs.org/en/latest/>`_ for details.
+<https://ldap3.readthedocs.io/en/latest/>`_ for details.
 
 
 Configuration

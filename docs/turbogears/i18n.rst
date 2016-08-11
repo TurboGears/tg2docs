@@ -1,5 +1,5 @@
-Handling Internationalization And Localization
-==============================================
+Internationalization And Localization
+=====================================
 
 :Status: Work in progress
 
@@ -115,8 +115,7 @@ file contains the following section::
 
     message_extractors = {'yourapp': [
              ('**.py', 'python', None),
-             ('templates/**.mako', 'mako', None),
-             ('templates/**.html', 'genshi', None),
+             ('templates/**.xhtml', 'kajiki', None),
              ('public/**', 'ignore', None)]},
 
 This is an extraction method mapping that indicates to distutils which

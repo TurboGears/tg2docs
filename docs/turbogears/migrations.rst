@@ -9,7 +9,7 @@ for each new quickstarted project.
 TurboGears 2.3 and newer rely on the `alembic`_ project to
 automate database schema migration.
 
-.. _alembic: http://alembic.readthedocs.org/en/latest/
+.. _alembic: http://alembic.readthedocs.io/en/latest/
 
 Getting Started
 -----------------

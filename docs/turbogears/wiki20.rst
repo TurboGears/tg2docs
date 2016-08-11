@@ -1,8 +1,8 @@
 .. _wiki20:
 
-==================================================
-Full Featured TurboGears: A Wiki in 20 Minutes
-==================================================
+=========================================
+Full Stack TurboGears: Wiki in 20 Minutes
+=========================================
 
 How does TurboGears2 help you get development done quickly? We'll show
 you by developing a simple wiki application that should take you no
@@ -32,63 +32,17 @@ If you want to see the final version you can download a copy of the
 
 .. highlight:: bash
 
-Setup
-=====
+Installing the Development Tools
+================================
 
-This tutorial takes for granted that you have a working Python environment
-with Python2.6 or Python2.7, with `pip <http://www.pip-installer.org/en/latest/>`_
-installed and you have a working browser to look at the web application
-you are developing.
-
-This tutorial doesn't cover Python at all. Check the `Python
-Documentation`_ page for more coverage of Python.
-
-Setting up our Environment
---------------------------------
-
-If it is your first TurboGears2 project you need to create an environment and install
-the TurboGears2 web framework to make the development commands available.
-
-Creating the Environment
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-First we are going to create a Virtual Environment where to install the framework,
-this helps keeping our system clean by not installing the packages system-wide.
-To do so we need to install the ``virtualenv`` package::
-
-    $ pip install virtualenv
-
-Now the virtualenv command should be available and we can create and activate
-a virtual environment for our TurboGears2 project::
-
-    $ virtualenv tgenv
-    $ . tgenv/bin/activate
-
-
-If our environment got successfully created and activated we should end up with
-a prompt that looks like::
-
-    (tgenv)$
-
-Installing TurboGears2
---------------------------------
-
-TurboGears2 can be quickly installed by installing the TurboGears2 development tools,
-those will install TurboGears2 itself and a bunch of commands useful when developing
-TurboGears applications:
+The TurboGears2 Development Tools are a bunch of commands and extensions useful when
+developing TurboGears2 applications. They provide the ``gearbox`` suite of commands
+to create new full stack projects, quickly create controllers, templates, models and
+the TurboGears debugbar.
 
 .. parsed-literal::
 
-    (tgenv)$ pip install |private_index_path| tg.devtools
-
-.. note::
-    The `-i http://tg.gy/VERSION` option is used to make sure that we install
-    TurboGears2 latest version and its dependencies at the right version, replacing
-    it, for example, with 220 or 215 will install the 2.2 and 2.1.5 version respectively.
-    TurboGears2 package doesn't usually enforce dependencies version to make possible
-    for developers to upgrade dependencies if they need a bugfix or new features.
-    It is suggested to always use the `-i` option to avoid installing incompatible packages.
-
+    (tgenv)$ pip install tg.devtools
 
 Quickstart
 ==========
@@ -133,10 +87,10 @@ Your ``install_requires`` should end up looking like:
     :emphasize-lines: 13
 
     install_requires=[
-        "TurboGears2 >= 2.3.5",
+        "TurboGears2 >= 2.3.9",
         "Babel",
         "Beaker",
-        "Genshi",
+        "Kajiki",
         "zope.sqlalchemy >= 0.4",
         "sqlalchemy",
         "alembic",
@@ -223,7 +177,7 @@ render the page.  Our ``@expose()`` specifies::
     @expose('wiki20.templates.index')
 
 This gives TurboGears the template to use, including the path
-information (the ``.html`` extension is implied). We'll look at this
+information (the ``.xhtml`` extension is implied). We'll look at this
 file shortly.
 
 Each controller method returns a dictionary, as you can see at the end
@@ -256,18 +210,18 @@ template.
 Displaying The Page
 -------------------
 
-`Wiki-20/wiki20/templates/index.html` is the template
+`Wiki-20/wiki20/templates/index.xhtml` is the template
 specified by the ``@expose()`` decorator, so it formats what you view
 on the welcome screen. Look at the file; you'll see that it's standard
 XHTML with some simple namespaced attributes. This makes it very
 designer-friendly, and well-behaved design tools will respect all the
-`Genshi`_ attributes and tags.  You can even open it directly in your
+:ref:`kajiki-language` attributes and tags.  You can even open it directly in your
 browser.
 
-Genshi directives are elements and/or attributes in the template that
-are usually prefixed with ``py:``. They can affect how the template is
-rendered in a number of ways: Genshi provides directives for
-conditionals and looping, among others.  We'll see some simple Genshi
+Kajiki directives are elements and/or attributes in the template that
+are prefixed with ``py:``. They can affect how the template is
+rendered in a number of ways: Kajiki provides directives for
+conditionals and looping, among others.  We'll see some simple Kajiki
 directives in the sections on :ref:`Editing pages <editing_pages>` and
 :ref:`Adding views <adding_views>`.
 
@@ -277,17 +231,12 @@ at 2.3 release time:
 
 .. code-block:: html+genshi
 
-    <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:py="http://genshi.edgewall.org/"
-      xmlns:xi="http://www.w3.org/2001/XInclude">
-
-        <xi:include href="master.html" />
-
-        <head>
-          <title>Welcome to TurboGears 2.3, standing on the shoulders of giants, since 2007</title>
+    <html py:extends="master.xhtml" py:strip="True">
+        <head py:block="head" py:strip="True">
+            <title py:block="master_title">Welcome to TurboGears 2.3, standing on the shoulders of giants, since 2007</title>
         </head>
 
-        <body>
+        <body py:block="body" py:strip="True">
           <div class="row">
             <div class="col-md-8">
               <div class="jumbotron">
@@ -302,9 +251,9 @@ at 2.3 release time:
               </div>
             </div>
             <div class="col-md-4 hidden-xs hidden-sm">
-              <a class="btn btn-info btn-sm active" href="http://turbogears.readthedocs.org/en/latest">${h.icon('book')} TG2 Documentation</a> <span class="label label-success">new</span><em> Get Started</em><br/>
+              <a class="btn btn-info btn-sm active" href="http://turbogears.readthedocs.io/en/latest">${h.icon('book')} TG2 Documentation</a> <span class="label label-success">new</span><em> Get Started</em><br/>
                 <br/>
-              <a class="btn btn-info btn-sm active" href="http://turbogears.readthedocs.org/en/latest/cookbook/cookbook.html">${h.icon('book')} TG2 CookBook</a><em> Read the Cookbook</em> <br/>
+              <a class="btn btn-info btn-sm active" href="http://turbogears.readthedocs.io/en/latest/cookbook/cookbook.html">${h.icon('book')} TG2 CookBook</a><em> Read the Cookbook</em> <br/>
                 <br/>
               <a class="btn btn-info btn-sm active" href="http://groups.google.com/group/turbogears">${h.icon('comment')} Join the Mail List</a> <em>for help/discussion</em><br/>
                 <br/>
@@ -464,7 +413,7 @@ the ``@expose('wiki20.templates.index')`` line to::
 
     @expose('wiki20.templates.page')
 
-This requires us to create a new template named `page.html` in the
+This requires us to create a new template named `page.xhtml` in the
 `wiki20/templates` directory; we'll do this in the next section.
 
 Now we must specify which page we want to see.  To do this, add a
@@ -536,39 +485,31 @@ Adding Views (Templates)
 .. highlight:: html
 
 ``quickstart`` also created some templates for us in the
-`Wiki-20/wiki20/templates` directory: `master.html` and `index.html`.
+`Wiki-20/wiki20/templates` directory: `master.xhtml` and `index.xhtml`.
 Back in our simple controller, we used ``@expose()`` to hand off a
 dictionary of data to a template called ``'wiki20.templates.index'``,
-which corresponds to `Wiki-20/wiki20/templates/index.html`.
+which corresponds to `Wiki-20/wiki20/templates/index.xhtml`.
 
-Take a look at the following line in `index.html`::
+Take a look at the following line in `index.xhtml`::
 
-    <xi:include href="master.html" />
+    <html py:extends="master.xhtml" py:strip="True">
 
-This tells the ``index`` template to *include* the ``master``
-template.  Using includes lets you easily maintain a cohesive look and
+This tells the ``index`` template to *extend* the ``master``
+template.  Using inheritance lets you easily maintain a cohesive look and
 feel throughout your site by having each page include a common master
 template.
 
-Copy the contents of `index.html` into a new file called `page.html`.
+Copy the contents of `index.xhtml` into a new file called `page.xhtml`.
 Now modify it for our purposes:
 
 .. code-block:: html+genshi
 
-    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-                          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-    <html xmlns="http://www.w3.org/1999/xhtml"
-          xmlns:py="http://genshi.edgewall.org/"
-          xmlns:xi="http://www.w3.org/2001/XInclude">
-
-      <xi:include href="master.html" />
-
-    <head>
-      <meta content="text/html; charset=UTF-8" http-equiv="content-type" py:replace="''"/>
-      <title>${wikipage.pagename} -  The TurboGears 2 Wiki</title>
+    <html py:extends="master.xhtml" py:strip="True">
+    <head py:block="head" py:strip="True">
+        <title py:block="master_title">${wikipage.pagename} -  The TurboGears 2 Wiki</title>
     </head>
 
-    <body>
+    <body py:block="body" py:strip="True">
         <div class="main_content">
             <div style="float:right; width: 10em;"> Viewing
                 <span py:replace="wikipage.pagename">Page Name Goes Here</span>
@@ -597,7 +538,7 @@ This is a basic XHTML page with three substitutions:
     <title>${wikipage.pagename} -  The TurboGears 2 Wiki</title>
 
 2.  In the second ``<div>`` element, we substitute the page name again
-    with Genshi's ``py:replace``:
+    with ``py:replace``:
 
 .. code-block:: html+genshi
 
@@ -612,10 +553,8 @@ This is a basic XHTML page with three substitutions:
 When you refresh the output web page you should see "initial data"
 displayed on the page.
 
-.. note:: py.replace_ replaces the *entire tag* (including start and
+.. note:: :ref:`py:replace` replaces the *entire tag* (including start and
   end tags) with the value of the variable provided.
-
-   .. _py.replace: http://genshi.edgewall.org/wiki/Documentation/xml-templates.html#id8
 
 .. _editing_pages:
 
@@ -624,24 +563,23 @@ Editing pages
 
 One of the fundamental features of a wiki is the ability to edit the
 page just by clicking "Edit This Page," so we'll create a template for
-editing. First, make a copy of `page.html`:
+editing. First, make a copy of `page.xhtml`:
 
 .. code-block:: bash
 
     cd wiki20/templates
-    cp page.html edit.html
+    cp page.xhtml edit.xhtml
 
 We need to replace the content with an editing form and ensure people
-know this is an editing page. Here are the changes for ``edit.html``.
+know this is an editing page. Here are the changes for ``edit.xhtml``.
 
 #. Change the title in the header to reflect that we are editing the
    page:
 
     .. code-block:: html+genshi
-        :emphasize-lines: 3
+        :emphasize-lines: 2
 
-        <head>
-          <meta content="text/html; charset=UTF-8" http-equiv="content-type" py:replace="''"/>
+        <head py:block="head" py:strip="True">
           <title>Editing: ${wikipage.pagename}</title>
         </head>
 
@@ -873,22 +811,14 @@ interesting with the new key-value pair we'll need to edit
 ``wiki20.templates.page``:
 
 .. code-block:: html+genshi
-    :emphasize-lines: 22-22
+    :emphasize-lines: 14
 
-    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-                          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-    <html xmlns="http://www.w3.org/1999/xhtml"
-          xmlns:py="http://genshi.edgewall.org/"
-          xmlns:xi="http://www.w3.org/2001/XInclude">
-
-      <xi:include href="master.html" />
-
-    <head>
-      <meta content="text/html; charset=UTF-8" http-equiv="content-type" py:replace="''"/>
-      <title>${wikipage.pagename} -  The TurboGears 2 Wiki</title>
+    <html py:extends="master.xhtml" py:strip="True">
+    <head py:block="head" py:strip="True">
+        <title py:block="master_title">${wikipage.pagename} -  The TurboGears 2 Wiki</title>
     </head>
 
-    <body>
+    <body py:block="body" py:strip="True">
         <div class="main_content">
             <div style="float:right; width: 10em;"> Viewing
                 <span py:replace="wikipage.pagename">Page Name Goes Here</span>
@@ -967,33 +897,25 @@ Adding A Page List
 ==================
 
 Most wikis have a feature that lets you view an index of the pages. To
-add one, we'll start with a new template, `pagelist.html`. We'll copy
-`page.html` so that we don't have to write the boilerplate.
+add one, we'll start with a new template, `pagelist.xhtml`. We'll copy
+`page.xhtml` so that we don't have to write the boilerplate.
 
 .. code-block:: bash
 
     cd wiki20/templates
-    cp page.html pagelist.html
+    cp page.xhtml pagelist.xhtml
 
-After editing, our `pagelist.html` looks like:
+After editing, our `pagelist.xhtml` looks like:
 
 .. code-block:: html+genshi
-    :emphasize-lines: 18-23
+    :emphasize-lines: 10-15
 
-    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-                          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-    <html xmlns="http://www.w3.org/1999/xhtml"
-          xmlns:py="http://genshi.edgewall.org/"
-          xmlns:xi="http://www.w3.org/2001/XInclude">
-
-      <xi:include href="master.html" />
-
-    <head>
-      <meta content="text/html; charset=UTF-8" http-equiv="content-type" py:replace="''"/>
-      <title>Page Listing - The TurboGears 2 Wiki</title>
+    <html py:extends="master.xhtml" py:strip="True">
+    <head py:block="head" py:strip="True">
+        <title py:block="master_title">Page Listing -  The TurboGears 2 Wiki</title>
     </head>
 
-    <body>
+    <body py:block="body" py:strip="True">
         <div class="main_content">
             <h1>All Pages</h1>
             <ul>
@@ -1009,13 +931,12 @@ After editing, our `pagelist.html` looks like:
     </body>
     </html>
 
-The highlighted section represents the Genshi code of interest. You can
+The highlighted section represents the template code of interest. You can
 guess that the ``py:for`` is a python ``for`` loop, modified to fit
-into Genshi's XML. It iterates through each of the ``pages`` (which
+into Kajiki's XML. It iterates through each of the ``pages`` (which
 we'll send in via the controller, using a modification you'll see
 next). For each one, ``Page Name Here`` is replaced by ``pagename``,
-as is the URL. You can learn more about the `Genshi templating
-engine`_ at their site.
+as is the URL. You can learn more about the :ref:`kajiki-language`.
 
 
 We must also modify the ``RootController`` class to implement ``pagelist`` and to
@@ -1031,26 +952,18 @@ create and pass ``pages`` to our template:
 Here, we select all of the ``Page`` objects from the database, and
 order them by pagename.
 
-We can also modify `page.html` so that the link to the page list is
+We can also modify `page.xhtml` so that the link to the page list is
 available on every page:
 
 .. code-block:: html+genshi
-    :emphasize-lines: 26-26
+    :emphasize-lines: 14
 
-    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-                          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-    <html xmlns="http://www.w3.org/1999/xhtml"
-          xmlns:py="http://genshi.edgewall.org/"
-          xmlns:xi="http://www.w3.org/2001/XInclude">
-
-      <xi:include href="master.html" />
-
-    <head>
-      <meta content="text/html; charset=UTF-8" http-equiv="content-type" py:replace="''"/>
-      <title>${wikipage.pagename} -  The TurboGears 2 Wiki</title>
+    <html py:extends="master.xhtml" py:strip="True">
+    <head py:block="head" py:strip="True">
+        <title py:block="master_title">${wikipage.pagename} -  The TurboGears 2 Wiki</title>
     </head>
 
-    <body>
+    <body py:block="body" py:strip="True">
         <div class="main_content">
             <div style="float:right; width: 10em;"> Viewing
                 <span py:replace="wikipage.pagename">Page Name Goes Here</span>
@@ -1078,13 +991,12 @@ Further Exploration
 Now that you have a working Wiki, there are a number of further places
 to explore:
 
-#. You can add JSON support via jQuery
+#. Continue to the :ref:`wikier`.
 
-#. You can learn more about the `Genshi templating engine`_.
+#. You can learn more about the :ref:`kajiki-language`.
 
 #. You can learn more about the `SQLAlchemy ORM`_.
 
-.. todo:: Add link to help show how to add jQuery support
 
 If you had any problems with this tutorial, or have ideas on how to
 make it better, please let us know on the `mailing list`_! Suggestions
@@ -1092,7 +1004,6 @@ are almost always incorporated.
 
 
 .. _`mailing list`: http://groups.google.com/group/turbogears
-.. _`Genshi templating engine`: http://genshi.edgewall.org/wiki/Documentation/templates.html
 .. _`SQLAlchemy ORM`: http://www.sqlalchemy.org/
 .. _`wiki code`: ../_static/wiki20.zip
 .. _TurboGears discussion list: http://groups.google.com/group/turbogears
@@ -1104,4 +1015,3 @@ are almost always incorporated.
 .. _SQLite: http://www.sqlite.org/
 .. _Model-View-Controller paradigm: http://en.wikipedia.org/wiki/Model-view-controller
 .. _plugins available: http://www.turbogears.org/cogbin/
-.. _Genshi: http://genshi.edgewall.org/wiki/Documentation/xml-templates.html

@@ -125,7 +125,7 @@ tag (i.e.: ``git tag -a"``).
 Do this for each of the three repositories.
 
 Pushing master branch of documentation will automatically trigger a new
-documentation build in ``readthedocs.org``.
+documentation build in ``readthedocs.io``.
 
 Making The Source Distribution to `PyPI`_
 =========================================

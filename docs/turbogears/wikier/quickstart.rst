@@ -97,7 +97,7 @@ Default project dependencies should look like::
 
     install_requires=[
         "TurboGears2 >= 2.3.0",
-        "Genshi",
+        "Kajiki",
         "zope.sqlalchemy >= 0.4",
         "sqlalchemy",
         "sqlalchemy-migrate",
@@ -107,7 +107,7 @@ Default project dependencies should look like::
         "tw2.forms",
         ]
 
-*Genshi* dependency is the template engine our application is going to use, the *zope.sqlalchemy,
+*Kajiki* dependency is the template engine our application is going to use, the *zope.sqlalchemy,
 sqlalchemy and sqlalchemy-migrate* dependencies are there to provide support for SQLALchemy based
 database layer. *repoze.who and repoze.who.plugins.sa* are used by the authentication
 and authorization layer. *tgext.admin* and *tw2.forms* are used to generate administrative interfaces

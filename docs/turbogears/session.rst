@@ -1,7 +1,7 @@
 .. _session:
 
-Web Session Usage
-=================
+Web Session
+===========
 
 :Status: Work in progress
 
@@ -35,7 +35,7 @@ the session, :ref:`Memcache <memcache>` is recommended.
     a regular basis yourself.
     Refer to the `Beaker documentation`_ for more details.
 
-.. _Beaker documentation: http://beaker.readthedocs.org/en/latest/sessions.html#removing-expired-old-sessions
+.. _Beaker documentation: http://beaker.readthedocs.io/en/latest/sessions.html#removing-expired-old-sessions
 
 How To Use Sessions?
 --------------------

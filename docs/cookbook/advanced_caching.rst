@@ -20,7 +20,7 @@ actually render the template during controller execution and caching it together
     @expose(content_type='text/html')
     def cached_func(self, what='about'):
         return render_template(dict(page=what, time=time.time()),
-                               'genshi', 'myproj.templates.cached_func')
+                               'kajiki', 'myproj.templates.cached_func')
 
 .. note::
 

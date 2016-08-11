@@ -1,8 +1,8 @@
 .. _writing_controllers:
 
-===================================
-Writing Controllers
-===================================
+=================================
+Request Dispatching & Controllers
+=================================
 
 The nerve center of your TurboGears application is **the
 controller**. It ultimately handles all user actions, because every

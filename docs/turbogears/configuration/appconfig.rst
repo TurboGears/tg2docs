@@ -167,8 +167,8 @@ change is ``app_config.py``:
     base_config.package = wiki20
 
     #Set the default renderer
-    base_config.default_renderer = 'genshi'
-    base_config.renderers.append('genshi')
+    base_config.default_renderer = 'kajiki'
+    base_config.renderers.append('kajiki')
 
     #Configure the base SQLALchemy Setup
     base_config.use_sqlalchemy = True

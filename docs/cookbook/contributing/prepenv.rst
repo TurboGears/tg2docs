@@ -26,9 +26,10 @@ for you to read that will teach you the many options you can use with
 Create A virtualenv
 ===================
 
-As stated in :ref:`whyvirtualenv`, a virtualenv is extremely recommended
-for development work. Make a new blank virtualenv and activate
-it. This way, you will have all of your work isolated, preventing
+A virtualenv is extremely recommended for development work.
+
+Make a new blank virtualenv and activate it.
+This way, you will have all of your work isolated, preventing
 conflicts with anything else on which you might be working.
 
 Do not do any easy_install's of any sort. We will cover that in the next step.
