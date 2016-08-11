@@ -1,6 +1,23 @@
 Upgrading Your TurboGears Project
 =================================
 
+From 2.3.8 to 2.3.9
+-------------------
+
+Quickstart with Genshi
+~~~~~~~~~~~~~~~~~~~~~~
+
+Due to incompatibilities with Python3 and due to slower development Genshi
+has been replaced by Kajiki as the default template engine in newly quickstarted
+projects.
+
+To quickstart a project with genshi you will need to use::
+
+    $ gearbox quickstart --genshi --skip-default-template PROJECT_NAME
+
+This will quickstart a project with genshi as the template engine same as before.
+
+
 From 2.3.7 to 2.3.8
 -------------------
 
