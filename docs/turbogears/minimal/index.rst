@@ -84,7 +84,7 @@ then we must actually serve the application::
 
     from wsgiref.simple_server import make_server
 
-    print "Serving on port 8080..."
+    print("Serving on port 8080...")
     httpd = make_server('', 8080, application)
     httpd.serve_forever()
 
@@ -145,12 +145,14 @@ where our application is available:
 
 .. code-block:: html+genshi
 
-    <title>Hello</title>
-    <py:if test="person">
-        <h1>Hello ${person}</h1>
-    </py:if><py:else>
-        <h1>Hello World!</h1>
-    </py:else>
+    <html>
+        <title>Hello</title>
+        <py:if test="person">
+            <h1>Hello ${person}</h1>
+        </py:if><py:else>
+            <h1>Hello World!</h1>
+        </py:else>
+    </html>
 
 then the ``hello`` method will be changed to display the newly created template
 instead of using a string directly::
@@ -196,12 +198,14 @@ in our ``hello.xhtml`` template:
 
 .. code-block:: html+genshi
 
-    <title>Hello</title>
-    <py:if test="person">
-        <h1>Hello ${h.text.truncate(person, 5)}</h1>
-    </py:if><py:else>
-        <h1>Hello World!</h1>
-    </py:else>
+    <html>
+        <title>Hello</title>
+        <py:if test="person">
+            <h1>Hello ${h.text.truncate(person, 5)}</h1>
+        </py:if><py:else>
+            <h1>Hello World!</h1>
+        </py:else>
+    </html>
 
 By restarting the application you will notice that pointing the browser to
 ``http://localhost:8080/hello?person=World`` prints **Hello World** while pointing it to
