@@ -102,3 +102,8 @@ Mako
 ----
 
 .. autoclass:: tg.renderers.mako.MakoRenderer
+
+JSON
+----
+
+.. autoclass:: tg.renderers.json.JSONRenderer

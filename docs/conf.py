@@ -270,7 +270,8 @@ intersphinx_mapping = {
     'webob': ('http://docs.webob.org/en/latest/', None),
     'webtest': ('http://docs.pylonsproject.org/projects/webtest/en/latest/', None),
     'ming': ('http://ming.readthedocs.io/en/latest', None),
-    'formencode': ('http://www.formencode.org/en/latest/', None)
+    'formencode': ('http://www.formencode.org/en/latest/', None),
+    'kajiki': ('http://kajiki.readthedocs.io/en/latest/', None)
 }
 
 # The maximum number of days to cache remote inventories.
