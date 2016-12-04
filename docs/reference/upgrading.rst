@@ -1,6 +1,18 @@
 Upgrading Your TurboGears Project
 =================================
 
+From 2.3.9 to 2.3.10
+--------------------
+
+By default Custom Error Pages for content types != ``text/html`` got disabled
+(to avoid responding with a html error page to a software client expecting JSON or something else).
+
+To re-enable custom error pages for all content types set::
+
+    base_config['errorpage.content_types'] = []
+
+In your ``app_cfg.py``.
+
 From 2.3.8 to 2.3.9
 -------------------
 
