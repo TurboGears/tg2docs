@@ -200,6 +200,8 @@ this can be used to test features that require submission of form values::
 The *form* itself is identified by its **id**, so the ``page.forms['form1']`` works as
 the form has ``id="form1"``.
 
+.. _testing_outside_controllers:
+
 Testing Outside Controllers
 ---------------------------
 

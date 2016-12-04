@@ -144,6 +144,54 @@ provided an ``app``  object through which is possible to make requests::
     >>> model.DBSession.query(model.User).first()
     <User: name=manager, email=manager@somedomain.com, display=Example manager>
 
+Running Scripts from Command Line
+---------------------------------
+
+You will notice that writing a python script that depends on TurboGears and
+running from the command line will fail with an error.
+
+Suppose you have a script like::
+
+    import tg
+    print 'Hello From', tg.request.path
+
+Saving it as ``myscript.py`` and running it will fail with TurboGears
+complaining about a missing context::
+
+    $ python myscript.py
+    Hello From
+    Traceback (most recent call last):
+      File "myscript.py", line 2, in <module>
+        print 'Hello From', tg.request._path
+      File "/Users/amol/wrk/tg/tg2/tg/support/objectproxy.py", line 19, in __getattr__
+        return getattr(self._current_obj(), attr)
+      File "/Users/amol/wrk/tg/tg2/tg/request_local.py", line 214, in _current_obj
+        return getattr(context, self.name)
+      File "/Users/amol/wrk/tg/tg2/tg/support/objectproxy.py", line 19, in __getattr__
+        return getattr(self._current_obj(), attr)
+      File "/Users/amol/wrk/tg/tg2/tg/support/registry.py", line 72, in _current_obj
+        'thread' % self.____name__)
+    TypeError: No object (name: context) has been registered for this thread
+
+That because we are trying to access the current request (``tg.request``) but we are outside
+of a web application, so no request exists.
+
+**TGShell** command solves this problem as it uses same features described in
+:ref:`testing_outside_controllers` to run any script inside a fake request::
+
+    $ gearbox tgshell myscript.py
+    15:30:13,925 INFO  [tgext.debugbar] Enabling Debug Toolbar
+    15:30:13,953 INFO  [auth] request classification: browser
+    15:30:13,953 INFO  [auth] -- repoze.who request started (/_test_vars) --
+    15:30:13,953 INFO  [auth] no identities found, not authenticating
+    15:30:13,953 INFO  [auth] no challenge required
+    15:30:13,953 INFO  [auth] -- repoze.who request ended (/_test_vars) --
+    Hello From /_test_vars
+
+So through **TGShell** it's also possible to run turbogears based scripts
+like you were inside an HTTP request for a controller.
+
+
 Adding your own command
 =======================
 

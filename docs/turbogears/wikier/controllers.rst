@@ -23,8 +23,9 @@ the slug for the model and provide the url where the page is available, while
 the second will give back the page content parsed accordingly to the
 `Markdown <http://en.wikipedia.org/wiki/Markdown>`_ language.
 
-To generate the slugs we are going to use ``tgext.datahelpers``, so
-the first thing we are going to do is add it to our project ``setup.py``
+To generate the **slugs** we are going to use ``tgext.datahelpers``, and to
+process **markdown** we are going to use the ``markdown`` library. So
+the first thing we are going to do is add them to our project ``setup.py``
 file inside the ``install_requires`` list::
 
     install_requires=[
@@ -36,7 +37,7 @@ file inside the ``install_requires`` list::
         "repoze.who",
         "tw2.forms",
         "tgext.admin >= 0.6.1",
-        "webhelpers",
+        "markdown",
         "tgext.datahelpers"
     ]
 
@@ -44,7 +45,7 @@ Then we need to run again ``pip install -e .`` to install our new
 project dependency::
 
     (tg22env)$ pip install -e .
-    Successfully installed tgext.datahelpers wikir
+    Successfully installed tgext.datahelpers markdown wikir
     Cleaning up...
 
 Now that we installed the datahelpers we can add the **url** and **html_content**
@@ -53,7 +54,7 @@ properties to our WikiPage model. Our model should end up looking like::
     #all the other sqlalchemy imports here...
     import tg
     from tgext.datahelpers.utils import slugify
-    from webhelpers.html.converters import markdown
+    from markdown import markdown
 
     class WikiPage(DeclarativeBase):
         __tablename__ = 'page'

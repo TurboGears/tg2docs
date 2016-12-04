@@ -130,7 +130,7 @@ parent ``py:switch`` value:
 .. code-block:: genshi
 
   <div>
-    <py:switch="1">
+    <py:switch test="1">
       <span py:case="0">0</span>
       <span py:case="1">1</span>
       <span py:else="">2</span>

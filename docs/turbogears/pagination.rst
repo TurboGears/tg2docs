@@ -48,9 +48,9 @@ The pager method of the paginator supports various customization options to tune
 the look and feel of the paginator, make sure you take a look at
 :py:class:`tg.support.paginate.Page` for more details:
 
-.. code-block:: python
+.. code-block:: genshi
 
-	${tmpl_context.paginators.movies.pager(format='~3~', page_param='page', show_if_single_page=True)}
+    ${tmpl_context.paginators.movies.pager(format='~3~', page_param='page', show_if_single_page=True)}
 
 
 Adding Parameters to Links
