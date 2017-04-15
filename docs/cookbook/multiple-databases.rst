@@ -66,6 +66,17 @@ databases engines that will use db session handlers of DBSession and
 DBSession2, db metadata names of metadata and metadata2, and
 DeclarativeBase objects of DeclarativeBase and DeclarativeBase2.
 
+.. note::
+
+When using multiple databases you won't be able to create relations
+(foreign keys) between tables on two different databases.
+
+.. note::
+
+Most plugins and extensions will take for granted that you have
+a single database connection, and might not work properly when multiple
+databases are used.
+
 Define your database urls in the [app:main] section of your .ini file(s)
 ------------------------------------------------------------------------
 
@@ -73,44 +84,57 @@ The first thing you will need to do is edit your .ini file to specify
 multiple url options for the sqlalchemy configuration.
 
 In myapp/development.ini (or production.ini, or whatever.ini you are
-using), comment out the original sqlalchemy.url assignment and add the
+using), comment out the original ``sqlalchemy.url`` assignment and add the
 multiple config options::
 
-    #sqlalchemy.url = sqlite:///%(here)s/devdata.db
+    # We need two different connection URLs for the two engines,
+    # so we comment the default one to avoid unexpected usages.
+    # sqlalchemy.url = sqlite:///%(here)s/devdata.db
+
     sqlalchemy.first.url = sqlite:///%(here)s/database_1.db
     sqlalchemy.second.url = sqlite:///%(here)s/database_2.db
-
 
 Change The Way Your App Loads The Database Engines
 --------------------------------------------------
 
-Now we need to instruct the app to load the multiple databases
+Now we need to instruct the app configurator to load the multiple databases
 correctly. This requires telling base_config (in app_cfg.py) to load
 our own custom AppConfig with the proper multi-db assignments and a
 call to the model's init_model method (more on that in the next step).
 
 In myapp/config/app_cfg.py::
 
-    # make sure these imports are added to the top
-    from tg.configuration import AppConfig, config
-    from myapp.model import init_model
+   # make sure these imports are added to the top
+   from tg.configuration import AppConfig
+   from myapp import model
 
-    # add this before base_config =
-    class MultiDBAppConfig(AppConfig):
-        def setup_sqlalchemy(self):
-            """Setup SQLAlchemy database engine(s)"""
-            from sqlalchemy import engine_from_config
-            engine1 = engine_from_config(config, 'sqlalchemy.first.')
-            engine2 = engine_from_config(config, 'sqlalchemy.second.')
-            # engine1 should be assigned to sa_engine as well as your first engine's name
-            config['tg.app_globals'].sa_engine = engine1
-            config['tg.app_globals'].sa_engine_first = engine1
-            config['tg.app_globals'].sa_engine_second = engine2
-            # Pass the engines to init_model, to be able to introspect tables
-            init_model(engine1, engine2)
+   # add this before base_config =
+   class MultiDBAppConfig(AppConfig):
+      def _setup_sqlalchemy(self, conf):
+         from sqlalchemy import engine_from_config
+         engine1 = engine_from_config(conf, 'sqlalchemy.first.')
+         engine2 = engine_from_config(conf, 'sqlalchemy.second.')
 
-    #base_config = AppConfig()
-    base_config = MultiDBAppConfig()
+         # We will consider engine1 the "default" engine
+         conf['tg.app_globals'].sa_engine = engine1
+         conf['tg.app_globals'].sa_engine2 = engine2
+
+         # Pass the engines to init_model, to be able to introspect tables
+         model.init_model(engine1, engine2)
+         conf['SQLASession'] = conf['DBSession'] = model.DBSession
+         conf['SQLASession2'] = conf['DBSession2'] = model.DBSession2
+
+      def _add_sqlalchemy_middleware(self, conf, app):
+         # We need to ensure that both sessions are closed at the end of a request.
+         from tg.support.middlewares import DBSessionRemoverMiddleware
+         dbsession = conf.get('SQLASession')
+         app = DBSessionRemoverMiddleware(dbsession, app)
+         dbsession2 = conf.get('SQLASession2')
+         app = DBSessionRemoverMiddleware(dbsession2, app)
+         return app
+
+   # base_config = AppConfig()
+   base_config = MultiDBAppConfig()
 
 Update Your Model's __init__ To Handle Multiple Sessions And Metadata
 ---------------------------------------------------------------------
@@ -122,28 +146,30 @@ each engine correctly.
 
 In myapp/model/__init__.py::
 
-    # after the first maker/DBSession assignment, add a 2nd one
-    maker2 = sessionmaker(autoflush=True, autocommit=False,
-                         extension=ZopeTransactionExtension())
-    DBSession2 = scoped_session(maker2)
+   # after the first maker/DBSession assignment, add a 2nd one
+   maker2 = sessionmaker(autoflush=True, autocommit=False,
+                      extension=ZopeTransactionExtension())
+   DBSession2 = scoped_session(maker2)
 
-    # after the first DeclarativeBase assignment, add a 2nd one
-    DeclarativeBase2 = declarative_base()
+   # after the first DeclarativeBase assignment, add a 2nd one
+   DeclarativeBase2 = declarative_base()
 
-    # uncomment the metadata2 line and assign it to DeclarativeBase2.metadata
-    metadata2 = DeclarativeBase2.metadata
+   # uncomment the metadata2 line and assign it to DeclarativeBase2.metadata
+   metadata2 = DeclarativeBase2.metadata
 
-    # finally, modify the init_model method to allow both engines to be passed (see previous step)
-    # and assign the sessions and metadata to each engine
-    def init_model(engine1, engine2):
-        """Call me before using any of the tables or classes in the model."""
-     
-    #    DBSession.configure(bind=engine)
-        DBSession.configure(bind=engine1)
-        DBSession2.configure(bind=engine2)
 
-        metadata.bind = engine1
-        metadata2.bind = engine2
+
+   # finally, modify the init_model method to allow both engines to be passed (see previous step)
+   # and assign the sessions and metadata to each engine
+   def init_model(engine1, engine2):
+     """Call me before using any of the tables or classes in the model."""
+
+      #    DBSession.configure(bind=engine)
+      DBSession.configure(bind=engine1)
+      DBSession2.configure(bind=engine2)
+
+      metadata.bind = engine1
+      metadata2.bind = engine2
 
 
 Tell Your Models Which Engine To Use
@@ -189,25 +215,27 @@ If you needed to use the DBSession here (or in your controllers), you
 would use DBSession for the 1st engine and DBSession2 for the 2nd (see
 the previous and next sections).
 
-Optional: Create And Populate Each Database In Websetup.py
-----------------------------------------------------------
+Create And Populate Each Database In Websetup
+---------------------------------------------
 
 If you want your setup_app method to populate each database with data,
 simply use the appropriate metadata/DBSession objects as you would in
 a single-db setup.
 
-In myapp/websetup.py::
+In myapp/websetup/schema.py::
 
-    def setup_app(command, conf, vars):
-        """Place any commands to setup myapp here"""
-        load_environment(conf.global_conf, conf.local_conf)
-        # Load the models
-        from myapp import model
-        print "Creating tables for engine1"
-        model.metadata.create_all()
-        print "Creating tables for engine2"
-        model.metadata2.create_all()
+   def setup_schema(command, conf, vars):
+       from tgmultidb import model
+       print("Creating tables")
+       model.metadata.create_all(bind=config['tg.app_globals'].sa_engine)
+       model.metadata2.create_all(bind=config['tg.app_globals'].sa_engine2)
+       transaction.commit()
 
+In myapp/websetup/bootstrap.py::
+
+   def setup_app(command, conf, vars):
+      from sqlalchemy.exc import IntegrityError
+      try:
         # populate spam table
         spam = [model.Spam(1, u'Classic'), model.Spam(2, u'Golden Honey Grail')]
         # DBSession is bound to the spam table
@@ -222,8 +250,75 @@ In myapp/websetup.py::
         model.DBSession2.flush()
         transaction.commit()
         print "Successfully setup"
+      except IntegrityError:
+         print('Warning, there was a problem adding your auth data, '
+              'it may have already been added:')
+         import traceback
+         print(traceback.format_exc())
+         transaction.abort()
+         print('Continuing with bootstrapping...')
 
-.. todo:: Difficulty: Hard. At some point, we should also find a way to document how to
-   handle `Horizontal and Vertical Partitioning
-   <http://www.sqlalchemy.org/docs/05/session.html#partitioning-strategies>`_
-   properly, and document that in here, too.
+Additional Support
+------------------
+
+There are some additional features that TurboGears2 provides out of
+the box for single databases that might require change when multiple
+DBs are involved.
+
+Authentication
+~~~~~~~~~~~~~~
+
+Your User/Group/Permission and support tables usually need to
+be all in the same database. In case this database is not the
+one managed by primary ``DeclarativeBase`` and primary ``DBSession``
+you need to provide to ``base_config.sa_auth.dbsession`` the
+right session.
+
+Admin
+~~~~~
+
+The default turbogears admin is mounted to handle all the models
+through ``DBSession``. If you moved any mode to ``DBSession2`` you
+will have to accordingly configure two admins::
+
+   class RootController(BaseController):
+       admin = AdminController([model.Spam], DBSession, config_type=TGAdminConfig)
+       admin2 = AdminController([model.Eggs], DBSession2, config_type=TGAdminConfig)
+
+Migrations
+~~~~~~~~~~
+
+Code in myapp/websetup/schema.py that initializes the migrations
+will have to be duplicated to allow migrations for both DB1 and DB2::
+
+    print('Initializing Primary Migrations')
+    import alembic.config
+    alembic_cfg = alembic.config.Config()
+    alembic_cfg.set_main_option("script_location", "migration1")
+    alembic_cfg.set_main_option("sqlalchemy.url", config['sqlalchemy.first.url'])
+    import alembic.command
+    alembic.command.stamp(alembic_cfg, "head")
+
+    print('Initializing Secondary Migrations')
+    import alembic.config
+    alembic_cfg = alembic.config.Config()
+    alembic_cfg.set_main_option("script_location", "migration2")
+    alembic_cfg.set_main_option("sqlalchemy.url", config['sqlalchemy.second.url'])
+    import alembic.command
+    alembic.command.stamp(alembic_cfg, "head")
+
+You will need also to provide two different migration repositories for the two
+db. The easiest way is usually to take the ``migration`` directory and rename
+it to ``migration1`` and ``migration2``, then make sure to update references
+to ``sqlchemy.`` inside the two directories ``migration1/env.py`` and ``migration2/env.py``
+so that they point to ``sqlalchemy.first.`` and ``sqlalchemy.second.``.
+
+You can then choose for which database run the migrations by providing the
+``--location`` option to ``gearbox migrate`` command::
+
+   $ gearbox migrate -l migration1 db_version
+   198f81ba8170 (head)
+   $ gearbox migrate -l migration2 db_version
+   350269a5537c (head)
+
+
