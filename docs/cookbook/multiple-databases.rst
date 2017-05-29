@@ -68,14 +68,14 @@ DeclarativeBase objects of DeclarativeBase and DeclarativeBase2.
 
 .. note::
 
-When using multiple databases you won't be able to create relations
-(foreign keys) between tables on two different databases.
+   When using multiple databases you won't be able to create relations
+   (foreign keys) between tables on two different databases.
 
 .. note::
 
-Most plugins and extensions will take for granted that you have
-a single database connection, and might not work properly when multiple
-databases are used.
+   Most plugins and extensions will take for granted that you have
+   a single database connection, and might not work properly when multiple
+   databases are used.
 
 Define your database urls in the [app:main] section of your .ini file(s)
 ------------------------------------------------------------------------

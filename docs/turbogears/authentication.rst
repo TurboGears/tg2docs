@@ -188,6 +188,89 @@ its groups from the ``Team`` table. Using ``TGAuthMetadata`` makes also possible
 to introduce a caching layer to avoid performing too many queries to fetch
 the authentication data for each request.
 
+SimpleToken Example
+-------------------
+
+The following is an example of a customization of the authentication stack
+to allow identification of the user through a token provided through a custom header.
+
+This example **is not secure** and the token is simply the username itself,
+it's simply intended to showcase how to implement your own identification,
+never use this in production.
+
+Identifying User
+~~~~~~~~~~~~~~~~
+
+We will be identifying the user through the value provided in ``X-LogMeIn`` header.
+This can be done by registering in TurboGears an object with ``identify``, ``remember``
+and ``forget`` methods.
+
+The ``identify`` method is the one we are looking to catch the token value
+and return an identity that ``TGAuthMetadata`` can use to authenticate our user.
+
+``remember`` and ``forget`` methods are intended when the server can also drive
+the fact that the values requred to identify the user must be provided on subsequent
+requests or not (IE: set or remove cookies). In this case we are not concerned
+as we expect the client to explicitly provide the token for each request::
+
+    class SimpleTokenIdentifier(object):
+        def identify(self, environ):
+            logmein_header = environ.get('HTTP_X_LOGMEIN')
+            if logmein_header:
+                return {'login': logmein_header, 'password': None, 'identifier': 'simpletoken'}
+        def forget(self, environ, identity):
+            return None
+        def remember(self, environ, identity):
+            return None
+
+Then our ``SimpleTokenIdentifier`` must be registered in ``identifiers`` list of
+simple authentication options to allow its usaged::
+
+    base_config.sa_auth.identifiers = [('simpletoken', SimpleTokenIdentifier()), ('default', None)]
+
+We also keep the ``('default', None)`` entry to have TurboGears configure cookie based
+identification for us, such that we can continue to login through the usual username and
+password form.
+
+Authenticating User
+~~~~~~~~~~~~~~~~~~~
+
+Once we have an identity for the user it's *authenticators* job to ensure that identity
+is valid. This means that the identity will be passed to ``TGAuthMetadata`` for
+authentication.
+
+.. note::
+
+    It's required that your identity has a ``password`` field even though it doesn't
+    have a password. Or it will be discarded and won't be passed to ``TGAuthMetadata``.
+
+We need to modify ``TGAuthMetadata.authenticate`` a little to allow identities
+that do not provide a valid password but has been identified by ``SimpleTokenIdentifier``.
+
+We can do this by adding a specific check before the one for password:
+
+.. code-block:: python
+    :emphasize-lines: 9-11
+
+    def authenticate(self, environ, identity):
+        login = identity['login']
+        user = self.sa_auth.dbsession.query(self.sa_auth.user_class).filter_by(
+            user_name=login
+        ).first()
+
+        if not user:
+            login = None
+        elif identity.get('identifier') in ('simpletoken', ):
+            # User exists and was identified by simpletoken, skip password validation
+            pass
+        elif not user.validate_password(identity['password']):
+            login = None
+
+        # ... rest of method here ...
+
+Now you can try sending requests with ``X-LogMeIn: manager`` header and you should
+be able to get recognised as the site manager.
+
 BasicAuth Example
 -----------------
 
