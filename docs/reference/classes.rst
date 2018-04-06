@@ -43,7 +43,10 @@ Pagination
 Configuration
 =============
 
-.. autoclass:: tg.configuration.AppConfig
+.. autoclass:: tg.FullStackApplicationConfigurator
+    :members:
+
+.. autoclass:: tg.MinimalApplicationConfigurator
     :members:
 
 .. autoclass:: tg.wsgiapp.TGApp

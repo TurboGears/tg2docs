@@ -17,11 +17,17 @@ usually be set both through the ``app_cfg.py`` or through your ``.ini`` file,
 while *AppConfig* configuration options can only be set through the ``app_cfg.py``
 unless explicitly stated otherwise.
 
-AppConfig
-=========
+Authentication
+==============
 
-.. autoclass:: tg.configuration.AppConfig
-    :noindex:
+.. autoclass:: tg.configuration.configurator.components.auth.SimpleAuthenticationConfigurationComponent
+
+.. autoclass:: tg.appwrappers.identity.IdentityApplicationWrapper
+
+App Globals
+===========
+
+.. autoclass:: tg.configuration.configurator.components.app_globals.AppGlobalsConfigurationComponent
 
 Error Reporting
 ===============
@@ -59,11 +65,6 @@ Internationalization
 ====================
 
 .. autoclass:: tg.appwrappers.i18n.I18NApplicationWrapper
-
-User Identity
-=============
-
-.. autoclass:: tg.appwrappers.identity.IdentityApplicationWrapper
 
 Transaction Manager
 ===================

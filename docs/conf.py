@@ -267,7 +267,7 @@ intersphinx_mapping = {
     'python': ('http://docs.python.org', None),
     'sqlalchemy': ('http://www.sqlalchemy.org/docs', None),
     'tw2' : ('http://tw2core.readthedocs.io/en/latest/', None),
-    'webob': ('http://docs.webob.org/en/latest/', None),
+    'webob': ('http://docs.pylonsproject.org/projects/webob/en/stable/', None),
     'webtest': ('http://docs.pylonsproject.org/projects/webtest/en/latest/', None),
     'ming': ('http://ming.readthedocs.io/en/latest', None),
     'formencode': ('http://www.formencode.org/en/latest/', None),
