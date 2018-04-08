@@ -29,60 +29,73 @@ App Globals
 
 .. autoclass:: tg.configuration.configurator.components.app_globals.AppGlobalsConfigurationComponent
 
-Error Reporting
-===============
-
-.. autofunction:: tg.error.ErrorReporter
-
-Slow Requests Reporting
-=======================
-
-.. autofunction:: tg.error.SlowReqsReporter
-
-JSON Encoding
-=============
-
-.. automethod:: tg.jsonify.JSONEncoder.configure
-    :noindex:
-
-Flash Messages
-==============
-
-.. automethod:: tg.flash.TGFlash.configure
-    :noindex:
-
-Sessions
-========
-
-.. autoclass:: tg.appwrappers.session.SessionApplicationWrapper
-
 Caching
 =======
 
+.. autoclass:: tg.configuration.configurator.components.caching.CachingConfigurationComponent
+
 .. autoclass:: tg.appwrappers.caching.CacheApplicationWrapper
-
-Internationalization
-====================
-
-.. autoclass:: tg.appwrappers.i18n.I18NApplicationWrapper
-
-Transaction Manager
-===================
-
-.. autoclass:: tg.appwrappers.transaction_manager.TransactionApplicationWrapper
 
 Custom Error Pages
 ==================
 
+.. autoclass:: tg.configuration.configurator.components.error_pages.ErrorPagesConfigurationComponent
+
 .. autoclass:: tg.appwrappers.errorpage.ErrorPageApplicationWrapper
 
-Ming Session Manager
+Debugging
+=========
+
+.. autoclass:: tg.configuration.configurator.components.debugger.DebuggerConfigurationComponent
+
+Dispatch
+========
+
+.. autoclass:: tg.configuration.configurator.components.dispatch.DispatchConfigurationComponent
+
+Error Reporting
+===============
+
+.. autoclass:: tg.configuration.configurator.components.error_reporting.ErrorReportingConfigurationComponent
+
+Helpers
+=======
+
+.. autoclass:: tg.configuration.configurator.components.helpers.HelpersConfigurationComponent
+
+Internationalization
 ====================
+
+.. autoclass:: tg.configuration.configurator.components.i18n.I18NConfigurationComponent
+
+.. autoclass:: tg.appwrappers.i18n.I18NApplicationWrapper
+
+MimeTypes
+=========
+
+.. autoclass:: tg.configuration.configurator.components.mimetypes.MimeTypesConfigurationComponent
+
+Ming MongoDB Support
+====================
+
+.. autoclass:: tg.configuration.configurator.components.ming.MingConfigurationComponent
 
 .. autoclass:: tg.appwrappers.mingflush.MingApplicationWrapper
 
+Paths
+=====
+
+.. autoclass:: tg.configuration.configurator.components.paths.PathsConfigurationComponent
+
+Request Local Registry
+======================
+
+.. autoclass:: tg.configuration.configurator.components.registry.RegistryConfigurationComponent
+
 Rendering Engines
 =================
+
+.. autoclass:: tg.configuration.configurator.components.rendering.TemplateRenderingConfigurationComponent
 
 Genshi
 ------
@@ -108,3 +121,54 @@ JSON
 ----
 
 .. autoclass:: tg.renderers.json.JSONRenderer
+
+Seekable Request
+================
+
+.. autoclass:: tg.configuration.configurator.components.seekable_request.SeekableRequestConfigurationComponent
+
+Sessions
+========
+
+.. autoclass:: tg.configuration.configurator.components.session.SessionConfigurationComponent
+
+.. autoclass:: tg.appwrappers.session.SessionApplicationWrapper
+
+Slow Requests Reporting
+=======================
+
+.. autoclass:: tg.configuration.configurator.components.slow_requests.SlowRequestsConfigurationComponent
+
+SQLAlchemy
+==========
+
+.. autoclass:: tg.configuration.configurator.components.sqlalchemy.SQLAlchemyConfigurationComponent
+
+Static Files
+============
+
+.. autoclass:: tg.configuration.configurator.components.statics.StaticsConfigurationComponent
+
+ToscaWidgets2
+=============
+
+.. autoclass:: tg.configuration.configurator.components.toscawidgets2.ToscaWidgets2ConfigurationComponent
+
+Transaction Manager
+===================
+
+.. autoclass:: tg.configuration.configurator.components.transactions.TransactionManagerConfigurationComponent
+
+.. autoclass:: tg.appwrappers.transaction_manager.TransactionApplicationWrapper
+
+JSON Encoding
+=============
+
+.. automethod:: tg.jsonify.JSONEncoder.configure
+    :noindex:
+
+Flash Messages
+==============
+
+.. automethod:: tg.flash.TGFlash.configure
+    :noindex:
