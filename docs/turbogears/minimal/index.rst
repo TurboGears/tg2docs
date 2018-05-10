@@ -18,7 +18,7 @@ Installing TurboGears2
 ======================
 
 This tutorial takes for granted that you have a working Python environment
-with Python2.6+ or Python3.3+, with `pip <http://www.pip-installer.org/en/latest/>`_
+with Python2.7+ or Python3.4+, with `pip <https://pip.pypa.io/en/stable/installing/>`_
 installed and you have a working browser to look at the web application
 you are developing.
 
@@ -31,7 +31,9 @@ Creating Virtual Environment
 First we are going to create a virtual environment where to install the framework, if you want to
 proceed without using a virtual environment simply skip to :ref:`Install TurboGears <TurboGears2_install>`.
 Keep in mind that using a virtual environment is the suggested way to install TurboGears without
-messing with your system packages and python modules. To do so we need to install the ``virtualenv`` package::
+messing with your system packages and python modules.
+
+To do so we need to install the ``virtualenv`` package::
 
     $ pip install virtualenv
 
@@ -60,23 +62,31 @@ Now we are ready to install TurboGears itself:
 Hello World
 ===========
 
-A TurboGears application consists of an ``AppConfig`` application configuration and an application ``RootController``.
-The first is used to setup and create the application itself, while the latter is used to dispatch requests
-and take actions.
+To create a TurboGears application we need a configurator ( :class:`.ApplicationConfigurator` )
+and a ``RootController``. The configurator will setup and create the TurboGears application
+itself, while the controller will be in charge of dispatching the received requests and
+take actions.
+
+For convenience, we will use a :class:`.MinimalApplicationConfigurator` which provides a
+minimal set of components that your application will surely need to work like routing.
 
 For our first application we are going to define a controller with an index method that just tells *Hello World*.
 Just create a new ``tgapp.py`` file and declare your ``RootController``::
 
-    from tg import expose, TGController, AppConfig
+    from tg import expose, TGController, MinimalApplicationConfigurator
 
     class RootController(TGController):
         @expose()
         def index(self):
             return 'Hello World'
 
-Now to make TurboGears serve our controller we must create the actual application from an ``AppConfig``::
+Now to make TurboGears serve our controller we must create the actual application
+through the configurator::
 
-    config = AppConfig(minimal=True, root_controller=RootController())
+    config = MinimalApplicationConfigurator()
+    config.update_blueprint({
+        'root_controller': RootController()
+    })
 
     application = config.make_wsgi_app()
 
@@ -88,7 +98,7 @@ then we must actually serve the application::
     httpd = make_server('', 8080, application)
     httpd.serve_forever()
 
-Running ``python tgapp`` (the python module we just created) will start a server on port ``8080``
+Running ``python tgapp.py`` (the python module we just created) will start a server on port ``8080``
 with the our hello world application, opening your browser and pointing it
 to ``http://localhost:8080`` should present you with an Hello World text.
 
@@ -131,11 +141,15 @@ validated template engine with python3 support. To install Kajiki simply run::
 
     (tgenv)$ pip install kajiki
 
-Now that the template engine is available we need to enable it in TurboGears, doing so is as
-simple as adding it to the list of the available engines inside our ``AppConfig``::
+Now that the template engine is available we need to enable it in our application,
+and we can do so by telling the application configurator to enable it by listing
+it in the ``renderers`` option::
 
-    config = AppConfig(minimal=True, root_controller=RootController())
-    config.renderers = ['kajiki']
+    config = MinimalApplicationConfigurator()
+    config.update_blueprint({
+        'root_controller': RootController(),
+        'renderers': ['kajiki']
+    })
 
     application = config.make_wsgi_app()
 
@@ -190,7 +204,10 @@ helpers (any python module or object can be registered as the helpers)::
 
     import webhelpers2
     import webhelpers2.text
-    config['helpers'] = webhelpers2
+
+    config.update_blueprint({
+        'helpers': webhelpers2
+    })
 
 Now the helpers are available in all our templates as ``h.helpername`` and in this case
 we are going to use the ``text.truncate`` helper to truncate strings longer than 5 characters
@@ -219,12 +236,16 @@ Even for small web applications being able to apply style through CSS or serving
 scripts is often required, to do so we must tell TurboGears to serve our static files and
 from where to serve them::
 
-    config = AppConfig(minimal=True, root_controller=RootController())
-    config.renderers = ['kajiki']
-    config.serve_static = True
-    config.paths['static_files'] = 'public'
+    from tg.configurator.components.statics import StaticsConfigurationComponent
 
-    application = config.make_wsgi_app()
+    config.register(StaticsConfigurationComponent)
+    config.update_blueprint({
+        'serve_static': True,
+        'paths': {
+            'static_files': 'public'
+        }
+    })
+
 
 After restating the application, any file placed inside the ``public`` directory will be
 served directly by TurboGears. Supposing you have a ``style.css`` file you can access
@@ -240,8 +261,14 @@ The following will cover how to work with SQLAlchemy and extend the sample appli
 log and retrieve a list of greeted people.
 First we will need to enable SQLAlchemy support for our application::
 
-    config['use_sqlalchemy'] = True
-    config['sqlalchemy.url'] = 'sqlite:///devdata.db'
+    from tg.configurator.components.sqlalchemy import SQLAlchemyConfigurationComponent
+
+    config.register(SQLAlchemyConfigurationComponent)
+    config.update_blueprint({
+        'use_sqlalchemy': True,
+        'sqlalchemy.url': 'sqlite:///devdata.db'
+    })
+
 
 Now TurboGears will configure a SQLAlchemy engine for us, but it will require that we provide
 a data model, otherwise it will just crash when starting up. This can be done by providing a
@@ -255,10 +282,10 @@ a data model, otherwise it will just crash when starting up. This can be done by
     def init_model(engine):
         DBSession.configure(bind=engine)
 
-    config['model'] = Bunch(
+    config.update_blueprint({'model': Bunch(
         DBSession=DBSession,
         init_model=init_model
-    )
+    )})
 
 This will properly make our application work and able to interact with the database, but it won't
 do much as we are not actually declaring any table or model to work with.
@@ -315,7 +342,8 @@ Going Full Stack
 
 While it is possible to manually enable the TurboGears features like the ``SQLAlchemy`` and ``Ming``
 storage backends, the application ``helpers``, ``app_globals``, ``i18n`` features through the
-:class:`AppConfig` object, if you need them you probably want to switch to **full stack** mode and
+:class:`.FullStackApplicationConfigurator` object,
+if you need them you probably want to switch to **full stack** mode and
 to create a full stack application through the ``gearbox quickstart`` command.
 
 The :ref:`Full Stack Tutorial <wiki20>` provides an introduction to more complex applications

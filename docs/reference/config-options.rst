@@ -20,82 +20,82 @@ unless explicitly stated otherwise.
 Authentication
 ==============
 
-.. autoclass:: tg.configuration.configurator.components.auth.SimpleAuthenticationConfigurationComponent
+.. autoclass:: tg.configurator.components.auth.SimpleAuthenticationConfigurationComponent
 
 .. autoclass:: tg.appwrappers.identity.IdentityApplicationWrapper
 
 App Globals
 ===========
 
-.. autoclass:: tg.configuration.configurator.components.app_globals.AppGlobalsConfigurationComponent
+.. autoclass:: tg.configurator.components.app_globals.AppGlobalsConfigurationComponent
 
 Caching
 =======
 
-.. autoclass:: tg.configuration.configurator.components.caching.CachingConfigurationComponent
+.. autoclass:: tg.configurator.components.caching.CachingConfigurationComponent
 
 .. autoclass:: tg.appwrappers.caching.CacheApplicationWrapper
 
 Custom Error Pages
 ==================
 
-.. autoclass:: tg.configuration.configurator.components.error_pages.ErrorPagesConfigurationComponent
+.. autoclass:: tg.configurator.components.error_pages.ErrorPagesConfigurationComponent
 
 .. autoclass:: tg.appwrappers.errorpage.ErrorPageApplicationWrapper
 
 Debugging
 =========
 
-.. autoclass:: tg.configuration.configurator.components.debugger.DebuggerConfigurationComponent
+.. autoclass:: tg.configurator.components.debugger.DebuggerConfigurationComponent
 
 Dispatch
 ========
 
-.. autoclass:: tg.configuration.configurator.components.dispatch.DispatchConfigurationComponent
+.. autoclass:: tg.configurator.components.dispatch.DispatchConfigurationComponent
 
 Error Reporting
 ===============
 
-.. autoclass:: tg.configuration.configurator.components.error_reporting.ErrorReportingConfigurationComponent
+.. autoclass:: tg.configurator.components.error_reporting.ErrorReportingConfigurationComponent
 
 Helpers
 =======
 
-.. autoclass:: tg.configuration.configurator.components.helpers.HelpersConfigurationComponent
+.. autoclass:: tg.configurator.components.helpers.HelpersConfigurationComponent
 
 Internationalization
 ====================
 
-.. autoclass:: tg.configuration.configurator.components.i18n.I18NConfigurationComponent
+.. autoclass:: tg.configurator.components.i18n.I18NConfigurationComponent
 
 .. autoclass:: tg.appwrappers.i18n.I18NApplicationWrapper
 
 MimeTypes
 =========
 
-.. autoclass:: tg.configuration.configurator.components.mimetypes.MimeTypesConfigurationComponent
+.. autoclass:: tg.configurator.components.mimetypes.MimeTypesConfigurationComponent
 
 Ming MongoDB Support
 ====================
 
-.. autoclass:: tg.configuration.configurator.components.ming.MingConfigurationComponent
+.. autoclass:: tg.configurator.components.ming.MingConfigurationComponent
 
 .. autoclass:: tg.appwrappers.mingflush.MingApplicationWrapper
 
 Paths
 =====
 
-.. autoclass:: tg.configuration.configurator.components.paths.PathsConfigurationComponent
+.. autoclass:: tg.configurator.components.paths.PathsConfigurationComponent
 
 Request Local Registry
 ======================
 
-.. autoclass:: tg.configuration.configurator.components.registry.RegistryConfigurationComponent
+.. autoclass:: tg.configurator.components.registry.RegistryConfigurationComponent
 
 Rendering Engines
 =================
 
-.. autoclass:: tg.configuration.configurator.components.rendering.TemplateRenderingConfigurationComponent
+.. autoclass:: tg.configurator.components.rendering.TemplateRenderingConfigurationComponent
 
 Genshi
 ------
@@ -125,39 +125,39 @@ JSON
 Seekable Request
 ================
 
-.. autoclass:: tg.configuration.configurator.components.seekable_request.SeekableRequestConfigurationComponent
+.. autoclass:: tg.configurator.components.seekable_request.SeekableRequestConfigurationComponent
 
 Sessions
 ========
 
-.. autoclass:: tg.configuration.configurator.components.session.SessionConfigurationComponent
+.. autoclass:: tg.configurator.components.session.SessionConfigurationComponent
 
 .. autoclass:: tg.appwrappers.session.SessionApplicationWrapper
 
 Slow Requests Reporting
 =======================
 
-.. autoclass:: tg.configuration.configurator.components.slow_requests.SlowRequestsConfigurationComponent
+.. autoclass:: tg.configurator.components.slow_requests.SlowRequestsConfigurationComponent
 
 SQLAlchemy
 ==========
 
-.. autoclass:: tg.configuration.configurator.components.sqlalchemy.SQLAlchemyConfigurationComponent
+.. autoclass:: tg.configurator.components.sqlalchemy.SQLAlchemyConfigurationComponent
 
 Static Files
 ============
 
-.. autoclass:: tg.configuration.configurator.components.statics.StaticsConfigurationComponent
+.. autoclass:: tg.configurator.components.statics.StaticsConfigurationComponent
 
 ToscaWidgets2
 =============
 
-.. autoclass:: tg.configuration.configurator.components.toscawidgets2.ToscaWidgets2ConfigurationComponent
+.. autoclass:: tg.configurator.components.toscawidgets2.ToscaWidgets2ConfigurationComponent
 
 Transaction Manager
 ===================
 
-.. autoclass:: tg.configuration.configurator.components.transactions.TransactionManagerConfigurationComponent
+.. autoclass:: tg.configurator.components.transactions.TransactionManagerConfigurationComponent
 
 .. autoclass:: tg.appwrappers.transaction_manager.TransactionApplicationWrapper
 

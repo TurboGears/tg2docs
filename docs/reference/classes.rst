@@ -4,6 +4,27 @@ Classes and Functions
 
 This page provides a quick access reference to the classes and functions provided by TurboGears
 
+Configuration
+=============
+
+.. autoclass:: tg.Configurator
+
+.. autoclass:: tg.ApplicationConfigurator
+
+.. autoclass:: tg.MinimalApplicationConfigurator
+
+.. autoclass:: tg.FullStackApplicationConfigurator
+
+.. autoclass:: tg.configurator.base.ConfigurationComponent
+
+.. autoclass:: tg.configurator.base.BeforeConfigConfigurationAction
+
+.. autoclass:: tg.configurator.base.ConfigReadyConfigurationAction
+
+.. autoclass:: tg.configurator.base.EnvironmentLoadedConfigurationAction
+
+.. autoclass:: tg.configurator.base.AppReadyConfigurationAction
+
 Decorators
 ==========
 
