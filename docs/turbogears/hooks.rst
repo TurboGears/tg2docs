@@ -114,7 +114,8 @@ code and TurboGears. Whenever turbogears has to call that controller it will pro
 all the registered controller wrappers which are able to forward the request to the
 next in chain or just directly return an alternative value from the controller.
 
-Registering a controller wrapper can be done using ``AppConfig.register_controller_wrapper``.
+Registering a controller wrapper can be done using
+:meth:`.DispatchConfigurationComponent.register_controller_wrapper`.
 It is possible to register a controller wrapper for a specific controller or
 for the whole application, when registered to the whole application they will be
 applied to every controller of the application or third party libraries::
@@ -133,7 +134,7 @@ applied to every controller of the application or third party libraries::
 Due to the registration performance cost, controller wrappers
 *can only be registered before the application started*.
 
-See :meth:`.AppConfig.register_controller_wrapper` for more details.
+See :meth:`.DispatchConfigurationComponent.register_controller_wrapper` for more details.
 
 .. _appwrappers:
 
@@ -181,5 +182,5 @@ other available wrapper (in order of registration)::
 
     base_config.register_wrapper(AppWrapper, after=False)
 
-See :meth:`.AppConfig.register_wrapper` for more details.
+See :meth:`.ApplicationConfigurator.register_application_wrapper` for more details.
 

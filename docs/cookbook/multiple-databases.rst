@@ -5,10 +5,10 @@ Using both SQLAlchemy and MongoDB
 
 TurboGears since version 2.3.8 allows to enable both Ming and SQLAlchemy into
 the same project. This can be achieved by specifying both the ``use_ming=True``
-and ``use_sqlalchemy=True`` options in ``AppConfig``.
+and ``use_sqlalchemy=True`` options in configuration.
 
 By Default the *SQLAlchemy* session is considered the primary and is installed as
-``config['DBSession']`` unless it's explicitly set in ``AppConfig``. When a new
+``config['DBSession']`` unless it's explicitly set in configuration. When a new
 project is created, the quickstart will automatically set this according to the
 ``--ming`` or ``--sqlalchemy`` option, so you usually are ensured that the primary
 database is the one you quickstarted the project with.

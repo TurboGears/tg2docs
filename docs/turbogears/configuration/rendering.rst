@@ -40,9 +40,9 @@ want to use.
 TG provides built-in renderers for:
 ``'kajiki'``, ``'genshi'``, ``'mako'``, ``'jinja'``, ``'json'`` and ``'jsonp'``.
 
-In 2.3.2 and newer versions, If you would like to add additional renderers, you can
+In 2.4.0 and newer versions, If you would like to add additional renderers, you can
 add it to the renderers list, and then register a rendering engine factory
-through the :func:`tg.configuration.AppConfig.register_rendering_engine`
+through the :meth:`.TemplateRenderingConfigurationComponent.register_engine`
 method.
 
 ``base_config.use_dotted_templatenames`` -- Generally you will not
@@ -77,8 +77,8 @@ to include the newly added ``add_global_tmpl_vars`` method::
 That's pretty much it, you should have access to mymodule in every
 template now.
 
-Overriding AppConfig Rendering Methods
----------------------------------------
+Overriding Rendering Methods
+----------------------------
 
-Please have a look at :func:`tg.configuration.AppConfig.register_rendering_engine`
-for informations on how to setup custom rendering engines.
+Please have a look at :meth:`.TemplateRenderingConfigurationComponent.register_engine`
+for information on how to setup custom rendering engines.

@@ -12,10 +12,8 @@ you might want to add to your ``app_cfg.base_config`` the following::
 
     base_config['json.isodates'] = True
 
-All the configuration options provided by Application Wrappers can
-usually be set both through the ``app_cfg.py`` or through your ``.ini`` file,
-while *AppConfig* configuration options can only be set through the ``app_cfg.py``
-unless explicitly stated otherwise.
+Configuration options can usually be set both through the ``app_cfg.py``
+or through your ``.ini`` file.
 
 Authentication
 ==============

@@ -73,7 +73,7 @@ minimal set of components that your application will surely need to work like ro
 For our first application we are going to define a controller with an index method that just tells *Hello World*.
 Just create a new ``tgapp.py`` file and declare your ``RootController``::
 
-    from tg import expose, TGController, MinimalApplicationConfigurator
+    from tg import expose, TGController
 
     class RootController(TGController):
         @expose()
@@ -82,6 +82,8 @@ Just create a new ``tgapp.py`` file and declare your ``RootController``::
 
 Now to make TurboGears serve our controller we must create the actual application
 through the configurator::
+
+    from tg import MinimalApplicationConfigurator
 
     config = MinimalApplicationConfigurator()
     config.update_blueprint({

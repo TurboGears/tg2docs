@@ -97,7 +97,7 @@ Flash Options
 
 Flash messages support can be styled using options inside the ``flash.`` namespace,
 those are documented in :class:`.TGFlash` and can be specified in ``config/app_cfg.py``
-or in your ``.AppConfig`` instance.
+or in your ``.ApplicationConfigurator`` instance.
 
 For example to change the default message status (when status is omitted) you can use the
 ``flash.default_status`` option and set it to any string. To change the default flash template
