@@ -1,6 +1,46 @@
 Upgrading Your TurboGears Project
 =================================
 
+From 2.3.12 to 2.4.0
+--------------------
+
+New Configuration system
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+2.4 introduced a major rewrite of the configuration system based on top
+of :class:`tg.Configurator`. Multiple :class:`tg.configurator.base.ConfigurationComponent`
+can be registered in a configurator to provide additional features to the framework.
+
+By default the :class:`tg.FullStackApplicationConfigurator` configurator already
+registers all components that provide the features that TurboGears in full stack
+mode can provide.
+
+To provide backward compatibility, the ``AppConfig`` class is still provided
+and should allow most 2.3 applications to run on 2.4 unmodified.
+
+The ``AppConfig`` in 2.4 is implemented on top of the :class:`tg.FullStackApplicationConfigurator`
+and thus some behaviours can change compared to how ``AppConfig``worked in previous
+TurboGears versions. If you had a particularly customised configuration process
+you might want to upgrade it to a :class:`tg.FullStackApplicationConfigurator` instead
+of trying to make it work on top of ``AppConfig``.
+
+Removed Support for ToscaWidgets1
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+ToscaWidgets1 is no longer supported in TG2.4.
+If you need to use ToscaWidgets1 you will have to write your own
+:class:`tg.configurator.base.ConfigurationComponent` to support it
+and register it in your application.
+
+Removed Deprecated Functions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Functions that were deprecated in previous TurboGears versions
+were removed in 2.4 and thus are no longer available.
+
+Refer to the deprecation message issued by 2.3 and to Upgrading guidelines of
+previous versions for guidance on how to upgrade your code.
+
 From 2.3.11 to 2.3.12
 ---------------------
 
