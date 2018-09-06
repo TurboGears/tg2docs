@@ -98,8 +98,8 @@ Change The Way Your App Loads The Database Engines
 --------------------------------------------------
 
 Now we need to instruct the app configurator to load the multiple databases
-correctly. This requires telling base_config (in app_cfg.py) to load
-our own custom AppConfig with the proper multi-db assignments and a
+correctly. This requires telling the configurator (in app_cfg.py) to use
+our own custom SQLAlchemy component with the proper multi-db assignments and a
 call to the model's init_model method (more on that in the next step).
 
 In myapp/config/app_cfg.py::
