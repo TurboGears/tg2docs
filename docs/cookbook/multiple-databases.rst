@@ -104,37 +104,37 @@ call to the model's init_model method (more on that in the next step).
 
 In myapp/config/app_cfg.py::
 
-   # make sure these imports are added to the top
-   from tg.configuration import AppConfig
-   from myapp import model
+    from tg.configurator.components.sqlalchemy import SQLAlchemyConfigurationComponent
+    class CustomSQLAComponent(SQLAlchemyConfigurationComponent):
+        def setup_sqlalchemy(self, conf, app):
+            from sqlalchemy import engine_from_config
+            engine1 = engine_from_config(conf, 'sqlalchemy.first.')
+            engine2 = engine_from_config(conf, 'sqlalchemy.second.')
 
-   # add this before base_config =
-   class MultiDBAppConfig(AppConfig):
-      def _setup_sqlalchemy(self, conf):
-         from sqlalchemy import engine_from_config
-         engine1 = engine_from_config(conf, 'sqlalchemy.first.')
-         engine2 = engine_from_config(conf, 'sqlalchemy.second.')
+            # We will consider engine1 the "default" engine
+            conf['tg.app_globals'].sa_engine = engine1
+            conf['tg.app_globals'].sa_engine2 = engine2
 
-         # We will consider engine1 the "default" engine
-         conf['tg.app_globals'].sa_engine = engine1
-         conf['tg.app_globals'].sa_engine2 = engine2
+            # Pass the engines to init_model, to be able to introspect tables
+            model.init_model(engine1, engine2)
+            conf['SQLASession'] = conf['DBSession'] = model.DBSession
+            conf['SQLASession2'] = conf['DBSession2'] = model.DBSession2
 
-         # Pass the engines to init_model, to be able to introspect tables
-         model.init_model(engine1, engine2)
-         conf['SQLASession'] = conf['DBSession'] = model.DBSession
-         conf['SQLASession2'] = conf['DBSession2'] = model.DBSession2
+        def add_middleware(self, conf, app):
+            # We need to ensure that both sessions are closed at the end of a request.
+            from tg.support.middlewares import DBSessionRemoverMiddleware
+            dbsession = conf.get('SQLASession')
+            app = DBSessionRemoverMiddleware(dbsession, app)
+            dbsession2 = conf.get('SQLASession2')
+            app = DBSessionRemoverMiddleware(dbsession2, app)
+            return app
 
-      def _add_sqlalchemy_middleware(self, conf, app):
-         # We need to ensure that both sessions are closed at the end of a request.
-         from tg.support.middlewares import DBSessionRemoverMiddleware
-         dbsession = conf.get('SQLASession')
-         app = DBSessionRemoverMiddleware(dbsession, app)
-         dbsession2 = conf.get('SQLASession2')
-         app = DBSessionRemoverMiddleware(dbsession2, app)
-         return app
+    # Here is where the standard configurator is created.
+    base_config = FullStackApplicationConfigurator()
 
-   # base_config = AppConfig()
-   base_config = MultiDBAppConfig()
+    # And here we replace the default SQLAlchemy component
+    # with our custom one.
+    base_config.replace('sqlalchemy', CustomSQLAComponent)
 
 Update Your Model's __init__ To Handle Multiple Sessions And Metadata
 ---------------------------------------------------------------------
