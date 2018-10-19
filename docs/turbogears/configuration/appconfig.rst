@@ -12,11 +12,13 @@ projects.
 Overview
 --------
 
-The application configuration is separated from the
-deployment specific information.  In TurboGears |version| there is a
-config module, containing several configuration specific python files --
+The application configuration is separated from the deployment specific information.  
+
+In TurboGears |version| there is a config module, 
+containing several configuration specific python files --
 these are done in python (not as INI files), because they actually setup
 the TurboGears |version| application and its associated WSGI middleware.
+
 Python provides an incredibly flexible config system with all kinds of
 tools to keep you from having to repeat yourself.  But it comes with
 some significant drawbacks, python is more complex than INI, and is less
@@ -31,6 +33,36 @@ environment that is generally declarative.
 At the same time the deployment level configuration is done in simple
 .ini files, in order to make it totally declarative, and easy for
 deployers who may not be python programmers.
+
+Structure Application Configuration
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Each TurboGears application is configured by a :class:`tg.ApplicationConfigurator`,
+usually a :class:`tg.FullStackApplicationConfigurator` ( or a :class:`tg.MinimalApplicationConfigurator`
+in case of small or heavily custom apps).
+
+The configurator is in charge of setting up the application configuration,
+that will be available as ``TGApp.config`` and as ``tg.config`` during requests.
+
+.. note::
+
+    Outside of requests, ``tg.config`` will refer to the configuration of
+    the current process wide application. Which is the last application
+    configured in the current process.
+
+The configuration is built from a ``blueprint``, which is a set of
+rules and default options that is used as the foundation for the
+configuration being built.
+
+On top of the blueprint, all the options provided through the ``.ini``
+file are applied. Once all those options are configured the 
+``initialized_config`` hook is fired and the components setup
+process is started.
+
+Some additional configuration can happen during the componenets
+setup and the final configuration as seen by the application will
+result from this last step. The ``config_setup`` hook is fired
+at the end of this phase to signal that setup completed.
 
 Configuration in the INI files
 ------------------------------
@@ -83,10 +115,14 @@ The correct way of loading boolean values for your use is
 
 .. code-block:: python
 
-   from paste.deploy.converters import asbool
+   from tg.support.converters import asbool
+
    if asbool(config['enable_subsystem']):
       ... sub systems is enabled...
 
+Configuration componenets, will instead take care of their own
+variable conversion. Thus if it's option declared by a component,
+it will already be converted to the proper type.
 
 .. _config_milestones:
 
@@ -132,11 +168,13 @@ The order of execution of the milestones and hooks provided during the
 application startup process is:
 
 * ``milestones.config_ready``
-* *startup Hook*
+* *initialized_config Hook*
 * ``milestones.renderers_ready``
+* *config_setup Hook*
 * ``milestones.environment_loaded``
-* *before_config Hook*
-* *after_config Hook*
+* *configure_new_app Hook*
+* *before_wsgi_middlewares Hook*
+* *after_wsgi_middlewares Hook*
 
 The config module
 -----------------
