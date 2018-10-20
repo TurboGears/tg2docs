@@ -21,6 +21,7 @@ Configuration
     :show-inheritance:
 
 .. autoclass:: tg.configurator.base.ConfigurationComponent
+    :members:
 
 .. autoclass:: tg.configurator.base.BeforeConfigConfigurationAction
 

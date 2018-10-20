@@ -14,10 +14,10 @@ Overview
 
 The application configuration is separated from the deployment specific information.  
 
-In TurboGears |version| there is a config module, 
+In a TurboGears |version| application there is a config module,
 containing several configuration specific python files --
 these are done in python (not as INI files), because they actually setup
-the TurboGears |version| application and its associated WSGI middleware.
+the TurboGears application and its associated WSGI middleware.
 
 Python provides an incredibly flexible config system with all kinds of
 tools to keep you from having to repeat yourself.  But it comes with
@@ -31,15 +31,18 @@ those deploying the application. We've also worked hard to create an
 environment that is generally declarative.
 
 At the same time the deployment level configuration is done in simple
-.ini files, in order to make it totally declarative, and easy for
+``.ini`` files, in order to make it totally declarative, and easy for
 deployers who may not be python programmers.
 
-Structure Application Configuration
+Application Configuration Structure
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Each TurboGears application is configured by a :class:`tg.ApplicationConfigurator`,
 usually a :class:`tg.FullStackApplicationConfigurator` ( or a :class:`tg.MinimalApplicationConfigurator`
 in case of small or heavily custom apps).
+
+Usually a configurator instance will be created within the
+``config/app_cfg.py`` module.
 
 The configurator is in charge of setting up the application configuration,
 that will be available as a property of the applications created with
@@ -51,10 +54,14 @@ that configuration (``TGApp.config``) and as ``tg.config`` during requests.
     the current process wide application. Which is the last application
     configured in the current process.
 
-    Before any application was configured, ``tg.config`` will contain
+    Before any application is configured, ``tg.config`` will contain
     the default configuration values. You should usually avoid reading
     it before the ``milestones.config_ready`` milestone fired and you
-    should prefer relying on ``initialized_config`` hook.
+    should prefer relying on ``initialized_config`` hook to ensure you
+    access application configuration outside of a request.
+
+Configuration Blueprint
+~~~~~~~~~~~~~~~~~~~~~~~
 
 The configuration is built from a **blueprint**, which is a set of
 rules and default options that is used as the foundation for the
@@ -71,7 +78,7 @@ result from this last step. The ``config_setup`` hook is fired
 at the end of this phase to signal that configuration setup completed.
 
 Configuration in the INI files
-------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A TurboGears quickstarted project will contain a couple of .ini files
 which are used to define what WSGI app ought to be run, and to store
@@ -126,7 +133,7 @@ The correct way of loading boolean values for your use is
    if asbool(config['enable_subsystem']):
       ... sub systems is enabled...
 
-Configuration componenets, will instead take care of their own
+Configuration components, will instead take care of their own
 variable conversion. Thus if it's an option declared by a component,
 it will already be converted to the proper type.
 
@@ -160,11 +167,11 @@ Milestones are available through the ``tg.configuration.milestones``
 module, the currently provided milestones are:
 
 * ``milestones.config_ready`` - Configuration file has been loaded and is
-    available in ``tg.config`` for the main application.
+  available in ``tg.config`` for the main application.
 * ``milestones.renderers_ready`` - Renderers have been registered and all
-    of them are available.
+  of them are available.
 * ``milestones.environment_loaded`` - Full environment have been loaded
-    but application has not been created yet.
+  but application has not been created yet.
 
 Registering an action to be executed whenever a milestone is reach
 can be done using :func:`tg.configuration.milestones._ConfigMilestoneTracker.register`
@@ -312,7 +319,7 @@ Registering new components is done through the :meth:`.FullStackApplicationConfi
 method. Provide the component to the method and a new instance of that component will be
 bound to the configurator.
 
-For example we might want to create a component that prints ``"Hello IPADDRESS`` on each
+For example we might want to create a component that prints ``"Hello IPADDRESS"`` on each
 new request. The way we would do that within app.cfg looks something like this::
 
     from tg.configurator import ConfigurationComponent, EnvironmentLoadedConfigurationAction
@@ -354,10 +361,15 @@ new request. The way we would do that within app.cfg looks something like this::
 
             configurator.register_application_wrapper(HelloWorldApplicationWrapper, after=True)
 
+Then, once our component is ready, we can register it within our application configurator::
 
-    # HERE WE REGISTER THE COMPONENT WITHIN THE CONFIGURATOR
     base_config = FullStackApplicationConfigurator()
+
     base_config.register(HelloWorldConfigurationComponent)
+
+The configurator will use it during the configuration phase and will trigger any
+associated action. Refer to :class:`.ConfigurationComponent` for details on
+how a configuration component is made.
 
 Replacing Components
 ~~~~~~~~~~~~~~~~~~~~
