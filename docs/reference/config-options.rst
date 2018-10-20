@@ -1,3 +1,5 @@
+.. _configo-ptions:
+
 =====================
 Configuration Options
 =====================

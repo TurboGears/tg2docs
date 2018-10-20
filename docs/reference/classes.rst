@@ -8,12 +8,17 @@ Configuration
 =============
 
 .. autoclass:: tg.Configurator
+    :members:
 
 .. autoclass:: tg.ApplicationConfigurator
+    :show-inheritance:
+    :members:
 
 .. autoclass:: tg.MinimalApplicationConfigurator
+    :show-inheritance:
 
 .. autoclass:: tg.FullStackApplicationConfigurator
+    :show-inheritance:
 
 .. autoclass:: tg.configurator.base.ConfigurationComponent
 
