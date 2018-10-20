@@ -19,7 +19,7 @@ To provide backward compatibility, the ``AppConfig`` class is still provided
 and should allow most 2.3 applications to run on 2.4 unmodified.
 
 The ``AppConfig`` in 2.4 is implemented on top of the :class:`tg.FullStackApplicationConfigurator`
-and thus some behaviours can change compared to how ``AppConfig``worked in previous
+and thus some behaviours can change compared to how ``AppConfig`` worked in previous
 TurboGears versions. If you had a particularly customised configuration process
 you might want to upgrade it to a :class:`tg.FullStackApplicationConfigurator` instead
 of trying to make it work on top of ``AppConfig``.
