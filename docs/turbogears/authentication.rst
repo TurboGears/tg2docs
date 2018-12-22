@@ -5,8 +5,8 @@ Identification & Authentication Layer
 *************************************
 
 This document describes how :mod:`repoze.who` is integrated into TurboGears
-and how you make get started with it. For more information, you may want
-to check :mod:`repoze.who`'s website.
+and how to get started with it. For more information, you may want to check
+:mod:`repoze.who`'s website.
 
 :mod:`repoze.who` is a powerful and extensible ``authentication`` package for
 arbitrary WSGI applications. By default TurboGears2 configures it to log using
@@ -18,7 +18,7 @@ the user against given login and password.
 How it works in TurboGears
 ==========================
 
-The authentication layer it's a WSGI middleware which is able to authenticate
+The authentication layer is a WSGI middleware that is able to authenticate
 the user through the method you want (e.g., LDAP or HTTP authentication),
 "remember" the user in future requests and log the user out.
 
