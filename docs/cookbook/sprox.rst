@@ -204,7 +204,7 @@ Creating Custom Dropdown Data
 
 Sometimes providing a fieldname alone is not enough of a customization to inform your users into what
 they should be selecting.  For this example, we will provide both name and description for the Genre field.
-This requires us to override the genre widget with one of our choosing.  We will exend the existing
+This requires us to override the genre widget with one of our choosing.  We will extend the existing
 sprox dropdown widget, modifying the update_params method to inject both name and description into
 the dropdown.  This requires some knowledge of ToscaWidgets in general, but this recipe will work
 for the majority of developers looking to modify their dropdowns in a custom manner.
