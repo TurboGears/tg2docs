@@ -42,7 +42,7 @@ the TurboGears debugbar.
 
 .. parsed-literal::
 
-    (tgenv)$ pip install tg.devtools
+    (tgenv)$ pip install |private_index_path| tg.devtools
 
 Quickstart
 ==========
