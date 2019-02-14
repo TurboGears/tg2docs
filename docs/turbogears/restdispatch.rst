@@ -173,8 +173,8 @@ not empty, and that the release_date has correct formatting:
                'release_date':DateConverter(not_empty=True)})
     @expose('json')
     def post(self, **kw):
-        if request.validation['errors']:
-            return dict(errors=dict([(field, str(e)) for field, e in request.validation['errors'].items()]))
+        if request.validation.errors:
+            return dict(errors=dict([(field, str(e)) for field, e in request.validation.errors.items()]))
 
         #...proceed like before...
 
@@ -208,8 +208,8 @@ can validate in the same manner as before:
                'release_date':DateConverter(not_empty=True)})
     @expose('json')
     def put(self, movie_id, title, description, directors, genre_id, release_date, **kw):
-        if request.validation['errors']:
-            return dict(errors=dict([(field, str(e)) for field, e in request.validation['errors'].items()]))
+        if request.validation.errors:
+            return dict(errors=dict([(field, str(e)) for field, e in request.validation.errors.items()]))
 
         movie = DBSession.query(Movie).get(movie_id)
         if not movie:

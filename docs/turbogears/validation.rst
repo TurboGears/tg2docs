@@ -48,8 +48,8 @@ the :class:`validate` decorator. Here's a simple example:
         def two_validators(self, a=None, b=None, *args):
             validation_status = tg.request.validation
 
-            errors = [{key, value} in validation_status['errors'].iteritems()]
-            values =  validation_status['values']
+            errors = [{key, value} in validation_status.errors.iteritems()]
+            values =  validation_status.values
             return dict(a=a, b=b, errors=str(errors), values=str(values))
 
 The dictionary passed to validators maps the incoming field names to
@@ -73,10 +73,10 @@ process while it is handling the validation error.
 Whenever an error handling is in process some properties are available in
 the ``tg.request.validation`` to provide overview of the validation error:
 
-    - ``tg.request.validation['values']`` The submitted values before validation
-    - ``tg.request.validation['errors']`` The errors that triggered the error handling
-    - ``tg.request.validation['exception']`` The validation exception that triggered the error handling
-    - ``tg.request.validation['error_handler']`` The error handler that is being executed
+    - ``tg.request.validation.values`` The submitted values before validation
+    - ``tg.request.validation.errors`` The errors that triggered the error handling
+    - ``tg.request.validation.exception`` The validation exception that triggered the error handling
+    - ``tg.request.validation.error_handler`` The error handler that is being executed
 
 The Error Handler
 =================
@@ -98,7 +98,7 @@ action:
     class RootController(TGController):
         @expose()
         def onerror(self, **kwargs):
-            return 'An error occurred: %s' % request.validation['errors']
+            return 'An error occurred: %s' % request.validation.errors
 
         @expose()
         @validate({"a": validators.Int(not_empty=True), "b": validators.Email},
@@ -274,7 +274,7 @@ validators::
     @expose()    
     @validate(validators=PwdSchema())
     def password(self, pwd1, pwd2):
-        if tg.request.validation['errors']:
+        if tg.request.validation.errors:
             return "There was an error"
         else:
             return "Password ok!"
