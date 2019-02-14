@@ -57,7 +57,7 @@ Now we are ready to install TurboGears itself:
 
 .. parsed-literal::
 
-    (tgenv)$ pip install TurboGears2
+    (tgenv)$ pip install |private_index_path| TurboGears2
 
 Hello World
 ===========
