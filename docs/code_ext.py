@@ -161,7 +161,7 @@ def code_directive(name, arguments, options, content, lineno,
             source = format_block('\n'.join(data))
         retnode = nodes.literal_block(source, source)
         retnode.line = 1
-    except Exception, e:
+    except Exception as e:
         retnode = state.document.reporter.warning(
             'Reading file %r failed: %r' % (arguments[0], str(e)), line=lineno)
     else:
