@@ -31,8 +31,7 @@ Customizing JSON Encoder
 While you can create your own encoder, turbogears has a default instance of :class:`.JSONEncoder`
 which is used for all encoding performed by the framework itself. Behavior of this encoder
 can be driven by providing a ``__json__`` method inside objects for which you want to
-customize encoding and can be configured using :class:`.AppConfig` which supports the
-following options:
+customize encoding and can be configured using through following options:
 
     * ``json.isodates`` -> Whenever to encode dates in ISO8601 or not, the default is ``False``
     * ``json.custom_encoders`` -> Dictionary of ``type: function`` mappings which can specify

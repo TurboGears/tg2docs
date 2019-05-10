@@ -115,14 +115,17 @@ for AppEngine to serve it:
 
 .. code-block:: python
 
-    from tg import expose, TGController, AppConfig
+    from tg import expose, TGController, MinimalApplicationConfigurator
 
     class RootController(TGController):
          @expose()
          def index(self):
              return "<h1>Hello World</h1>"
 
-    config = AppConfig(minimal=True, root_controller=RootController())
+    config = MinimalApplicationConfigurator()
+    config.update_blueprint({
+        'root_controller': RootController()
+    })
     app = config.make_wsgi_app()
 
 Step 4: Start The Application

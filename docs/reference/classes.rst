@@ -4,6 +4,33 @@ Classes and Functions
 
 This page provides a quick access reference to the classes and functions provided by TurboGears
 
+Configuration
+=============
+
+.. autoclass:: tg.Configurator
+    :members:
+
+.. autoclass:: tg.ApplicationConfigurator
+    :show-inheritance:
+    :members:
+
+.. autoclass:: tg.MinimalApplicationConfigurator
+    :show-inheritance:
+
+.. autoclass:: tg.FullStackApplicationConfigurator
+    :show-inheritance:
+
+.. autoclass:: tg.configurator.base.ConfigurationComponent
+    :members:
+
+.. autoclass:: tg.configurator.base.BeforeConfigConfigurationAction
+
+.. autoclass:: tg.configurator.base.ConfigReadyConfigurationAction
+
+.. autoclass:: tg.configurator.base.EnvironmentLoadedConfigurationAction
+
+.. autoclass:: tg.configurator.base.AppReadyConfigurationAction
+
 Decorators
 ==========
 
@@ -43,7 +70,10 @@ Pagination
 Configuration
 =============
 
-.. autoclass:: tg.configuration.AppConfig
+.. autoclass:: tg.FullStackApplicationConfigurator
+    :members:
+
+.. autoclass:: tg.MinimalApplicationConfigurator
     :members:
 
 .. autoclass:: tg.wsgiapp.TGApp

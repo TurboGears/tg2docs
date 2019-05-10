@@ -15,6 +15,9 @@ ToscaWidgets2 Widgets provide:
     * Support for widget configuration options
     * Resources declaration and injection (for css & JS required by the widget)
 
+For additional details about how ToscaWidgets2 Forms work,
+refer to the `ToscaWidgets2 Documentation <https://tw2core.readthedocs.io/en/latest>`_
+
 Widgets
 =======
 

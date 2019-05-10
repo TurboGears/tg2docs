@@ -4,7 +4,7 @@ Writing TurboGears Extensions
 
 TurboGears provides a bunch of hook points and ways to extend the framework behavior
 to write extensions. Most of the needs can usually be satisfied by relying on
-:class:`tg.configuration.AppConfig`, :ref:`config_milestones` and :ref:`Hooks<hooks_and_events>`.
+:class:`tg.ApplicationConfigurator`, :ref:`config_milestones` and :ref:`Hooks<hooks_and_events>`.
 
 Creating an Extension
 =================================
@@ -97,7 +97,7 @@ If you actually created ``tgext.myextension`` you should get a
 
             # Application Wrappers are much like easier WSGI Middleware
             # that get a TurboGears context and return a Response object.
-            self.configurator.register_wrapper(echo_wrapper_factory)
+            self.configurator.register_application_wrapper(echo_wrapper_factory)
 
         def on_startup(self):
             log.info('+ Application Running!')
@@ -108,7 +108,7 @@ The core parts of the previous example are:
         will be automatically called by ``tgext.pluggable`` when the extension
         is enabled using the *pluggable application* interface or by the
         user itself when manually enabling your extension. Inside this
-        method the application configurator (AppConfig) object is available
+        method the application configurator object is available
         and the options the user specified for the extension, but not application
         configuration as it has not been loaded yet.
 

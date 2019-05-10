@@ -12,11 +12,13 @@ projects.
 Overview
 --------
 
-The application configuration is separated from the
-deployment specific information.  In TurboGears |version| there is a
-config module, containing several configuration specific python files --
+The application configuration is separated from the deployment specific information.  
+
+In a TurboGears |version| application there is a config module,
+containing several configuration specific python files --
 these are done in python (not as INI files), because they actually setup
-the TurboGears |version| application and its associated WSGI middleware.
+the TurboGears application and its associated WSGI middleware.
+
 Python provides an incredibly flexible config system with all kinds of
 tools to keep you from having to repeat yourself.  But it comes with
 some significant drawbacks, python is more complex than INI, and is less
@@ -29,11 +31,54 @@ those deploying the application. We've also worked hard to create an
 environment that is generally declarative.
 
 At the same time the deployment level configuration is done in simple
-.ini files, in order to make it totally declarative, and easy for
+``.ini`` files, in order to make it totally declarative, and easy for
 deployers who may not be python programmers.
 
+Application Configuration Structure
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Each TurboGears application is configured by a :class:`tg.ApplicationConfigurator`,
+usually a :class:`tg.FullStackApplicationConfigurator` ( or a :class:`tg.MinimalApplicationConfigurator`
+in case of small or heavily custom apps).
+
+Usually a configurator instance will be created within the
+``config/app_cfg.py`` module.
+
+The configurator is in charge of setting up the application configuration,
+that will be available as a property of the applications created with
+that configuration (``TGApp.config``) and as ``tg.config`` during requests.
+
+.. note::
+
+    Outside of requests, ``tg.config`` will refer to the configuration of
+    the current process wide application. Which is the last application
+    configured in the current process.
+
+    Before any application is configured, ``tg.config`` will contain
+    the default configuration values. You should usually avoid reading
+    it before the ``milestones.config_ready`` milestone fired and you
+    should prefer relying on ``initialized_config`` hook to ensure you
+    access application configuration outside of a request.
+
+Configuration Blueprint
+~~~~~~~~~~~~~~~~~~~~~~~
+
+The configuration is built from a **blueprint**, which is a set of
+rules and default options that is used as the foundation for the
+configuration being built.
+
+On top of the blueprint, all the options provided through the ``.ini``
+file are applied. Once all those options are configured the 
+``initialized_config`` hook is fired and the components setup
+process is started.
+
+Some additional configuration can happen during the components
+setup and the final configuration, as seen by the application, will
+result from this last step. The ``config_setup`` hook is fired
+at the end of this phase to signal that configuration setup completed.
+
 Configuration in the INI files
-------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A TurboGears quickstarted project will contain a couple of .ini files
 which are used to define what WSGI app ought to be run, and to store
@@ -83,10 +128,17 @@ The correct way of loading boolean values for your use is
 
 .. code-block:: python
 
-   from paste.deploy.converters import asbool
+   from tg.support.converters import asbool
+
    if asbool(config['enable_subsystem']):
       ... sub systems is enabled...
 
+Configuration components, will instead take care of their own
+variable conversion. Thus if it's an option declared by a component,
+it will already be converted to the proper type.
+
+Refer to :ref:`config-options` for all the components configuration
+options.
 
 .. _config_milestones:
 
@@ -101,21 +153,25 @@ Whenever a milestone is reached all the registered callbacks are fired
 and the configuration process can continue. If the milestone is already
 passed when a callback is registered, the callback gets instantly fired.
 
+Milestone behave like :ref:`hooks <hooks_and_events>`, but they are not
+bound to a specific application, they refer to the main process application
+(in case multiple TG applications are running within the same process).
+
 .. note::
     The ``tg.config`` object is available at import time but until the
     configuration file is parsed, it only contains the system
     defaults.  If you need to perform startup time setup based on the
-    supplied configuration, you should do so in a milestone.
+    supplied configuration, you should do so in a milestone or in an hook.
 
 Milestones are available through the ``tg.configuration.milestones``
 module, the currently provided milestones are:
 
 * ``milestones.config_ready`` - Configuration file has been loaded and is
-    available in ``tg.config``
+  available in ``tg.config`` for the main application.
 * ``milestones.renderers_ready`` - Renderers have been registered and all
-    of them are available
+  of them are available.
 * ``milestones.environment_loaded`` - Full environment have been loaded
-    but application has not been created yet.
+  but application has not been created yet.
 
 Registering an action to be executed whenever a milestone is reach
 can be done using :func:`tg.configuration.milestones._ConfigMilestoneTracker.register`
@@ -132,11 +188,13 @@ The order of execution of the milestones and hooks provided during the
 application startup process is:
 
 * ``milestones.config_ready``
-* *startup Hook*
+* *initialized_config Hook*
 * ``milestones.renderers_ready``
+* *config_setup Hook*
 * ``milestones.environment_loaded``
-* *before_config Hook*
-* *after_config Hook*
+* *configure_new_app Hook*
+* *before_wsgi_middlewares Hook*
+* *after_wsgi_middlewares Hook*
 
 The config module
 -----------------
@@ -152,113 +210,232 @@ The config module
 
 Our hope is that 90% of applications don't need to edit any of the
 config module files, but for those who do, the most common file to
-change is ``app_config.py``:
+change is ``app_cfg.py``:
 
 .. code-block:: python
 
-    from tg.configuration import AppConfig
-    import wiki20
-    from wiki20 import model
-    from wiki20.lib import app_globals, helpers
+    from tg import FullStackApplicationConfigurator
 
-    base_config = AppConfig()
-    base_config.renderers = []
+    import plain24
+    from plain24 import model, lib
 
-    base_config.package = wiki20
+    base_config = FullStackApplicationConfigurator()
 
-    #Set the default renderer
-    base_config.default_renderer = 'kajiki'
-    base_config.renderers.append('kajiki')
+    # General configuration
+    base_config.update_blueprint({
+        # True to prevent dispatcher from striping extensions
+        # For example /socket.io would be served by "socket_io"
+        # method instead of "socket".
+        'disable_request_extensions': False,
 
-    #Configure the base SQLALchemy Setup
-    base_config.use_sqlalchemy = True
-    base_config.model = wiki20.model
-    base_config.DBSession = wiki20.model.DBSession
+        # Set None to disable escaping punctuation characters to "_"
+        # when dispatching methods.
+        # Set to a function to provide custom escaping.
+        'dispatch_path_translator': True,
 
-``app_cfg.py`` exists primarily so that ``middleware.py`` and ``environment.py``
-can import and use the ``base_config`` object.
+        'package': plain24,
+    })
 
-The ``base_config`` object is an ``AppConfig()`` instance which allows
-you to access its attributes like a normal object, or like a standard
-python dictionary.
+    # ToscaWidgets configuration
+    base_config.update_blueprint({
+        'tw2.enabled': True,
+    })
 
-One of the reasons for this is that ``AppConfig()`` provides some
-defaults in its ``__init__``.  But equally important it provides us
-with several methods that work on the config values to produce the two
-functions that set up your TurboGears app.
+    # Rendering Engines Configuration
+    base_config.update_blueprint({
+        'renderers': ['json', 'kajiki'],
+        'default_renderer': 'kajiki',
+        'templating.kajiki.strip_text': False
+    })
+
+    # Configure Sessions, store data as JSON to avoid pickle security issues
+    base_config.update_blueprint({
+        'session.enabled': True,
+        'session.data_serializer': 'json',
+    })
+
+    # Configure the base SQLALchemy Setup
+    base_config.update_blueprint({
+        'use_sqlalchemy': True,
+        'model': plain24.model,
+        'DBSession': plain24.model.DBSession,
+    })
+
+    [ ... ]
+
+``app_cfg.py`` exists primarily so that ``application.py``
+can import and use the ``base_config`` object to create the application
+using that configurator.
+
+The ``base_config`` object is the configurator in charge of preparing
+the configuration of our application and creating it.
 
 We've taken care to make sure that the entire setup of the
-TurboGears |version| framework is done in code which you as the
+TurboGears framework is done in code which you as the
 application developer control. You can easily customize it to your needs.
-If the standard config options we provide don't do what you need, you
-can subclass and override ``AppConfig`` to get exactly the setup you want.
+If the standard config flow we provide don't do what you need, you
+can replace specific configuration components to get exactly the setup you want.
+
+You can refer to :class:`.FullStackApplicationConfigurator` documentation
+for the list of components enabled by default.
 
 The ``base_config`` object that is created in ``app_cfg.py`` should be
-used to set whatever configuration values that belong to the
+used to set a blueprint with configuration values that belong to the
 application itself and are required for all instances of this app, as
 distinct from the configuration values that you set in the
 ``development.ini`` or ``production.ini`` files that are intended to
 be editable by those who deploy the app.
 
-As part of the app loading process the ``base_config`` object will be
-merged in with the config values from the .ini file you're using to
+As part of the app loading process the blueprint from ``base_config``
+will be merged in with the config values from the .ini file you're using to
 launch your app, and placed in ``tg.config``.
 
-As we mentioned previously, in addition to the attributes on the
-``base_config`` object there are a number of methods which are used to
-setup the environment for your application, and to create the actual
-TurboGears WSGI application, and all the middleware you need.
-
-You can override ``base_config``'s methods to further customize your
-application's WSGI stack, for various advanced use cases, like adding
-custom middleware at arbitrary points in the WSGI pipeline, or doing
-some unanticipated (by us) application environment manipulation.
-
-And we'll look at the details of how that all works in the advanced
-configuration section of this document.
-
 Configuring your application
-----------------------------------------------
+----------------------------
 
-Here's are some of the more general purpose configuration attributes:
-
-Configuration Attributes
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The configuration object has a number of attributes that automate
-the majority of what you need to do with the config object.  These
-shortcuts eliminate the need to provide your own setup methods
+The configurator object comes with a bunch of preregistered components
+that automate the majority of what you need to do.
+These shortcuts eliminate the need to provide your own setup methods
 for configuring your TurboGears application.
 
-To see the list of available configuration options refer to :class:`AppConfig`.
+To see the list of available configuration options refer to :ref:`config-options`.
 
 Advanced Configuration
 -------------------------
 
 Sometimes you need to go beyond the basics of setting configuration
-options.  We've created a number of methods that you can use to override the way
-that particular pieces of the TurboGears |version| stack are configured.
-The basic way you override the configuration within app.cfg looks something
-like this::
+options.
 
-    from tg.configuration import AppConfig
-    from tw2.core.middleware import TwMiddleware
+You might want to replace behaviours of your application or add new
+components that are not available in TurboGears by default.
 
-    class MyAppConfig(AppConfig):
+That can be done by registering or replacing components in the configurator
+object.
 
-        def add_tosca2_middleware(self, app):
+Registering New Components
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-            app = TwMiddleware(app,
-                default_engine=self.default_renderer,
-                translator=ugettext,
-                auto_reload_templates = False
-                )
+Registering new components is done through the :meth:`.FullStackApplicationConfigurator.register`
+method. Provide the component to the method and a new instance of that component will be
+bound to the configurator.
 
+For example we might want to create a component that prints ``"Hello IPADDRESS"`` on each
+new request. The way we would do that within app.cfg looks something like this::
+
+    from tg.configurator import ConfigurationComponent, EnvironmentLoadedConfigurationAction
+    from tg.support.converters import asbool
+
+    class HelloWorldConfigurationComponent(ConfigurationComponent):
+        """A component that will say hello world on each new request"""
+        id = 'helloworld'
+
+        def get_defaults(self):
+            return {
+                'helloworld.enabled': True
+            }
+
+        def get_coercion(self):
+            return {
+                'helloworld.enabled': asbool
+            }
+
+        def on_bind(self, configurator):
+            from tg.appwrappers import ApplicationWrapper
+            class HelloWorldApplicationWrapper(ApplicationWrapper):
+                def __init__(self, handler, config):
+                    super(HelloWorldApplicationWrapper, self).__init__(handler, config)
+
+                    # The option will always be there because the
+                    # HelloWorldConfigurationComponent declares a default for it
+                    # and will always be a boolean value because a coercion
+                    # is also declared.
+                    self.enabled = config['helloworld.enabled']
+
+                @property
+                def injected(self):
+                    return self.enabled
+
+                def __call__(self, controller, environ, context):
+                    print 'Hello %s' % (environ['REMOTE_HOST'], )
+                    return self.next_handler(controller, environ, context)
+
+            configurator.register_application_wrapper(HelloWorldApplicationWrapper, after=True)
+
+Then, once our component is ready, we can register it within our application configurator::
+
+    base_config = FullStackApplicationConfigurator()
+
+    base_config.register(HelloWorldConfigurationComponent)
+
+The configurator will use it during the configuration phase and will trigger any
+associated action. Refer to :class:`.ConfigurationComponent` for details on
+how a configuration component is made.
+
+Replacing Components
+~~~~~~~~~~~~~~~~~~~~
+
+Currently registered component (including those registered by TG itself),
+can be replaced using :meth:`.FullStackApplicationConfigurator.replace`.
+
+Provided the component ``identifier`` (which is usually available in the
+component class itself as the ``.id`` property) we can replace the
+component that has that identifier with a new component.
+
+.. note::
+
+    When replacing components, make sure that the new component has
+    the same ``.id`` attribute of the old one, while this is not required,
+    it will cause confusion to have a component named ``"foobar"`` being
+    registered for ``"somethingelse"``.
+
+Suppose we have a component that prints ``"Ready to Fly!"`` when the
+application is ready::
+
+    class ReadyToFlyConfigurationComponent(ConfigurationComponent):
+        """A component that print when the application is ready!"""
+        id = "ready2fly"
+
+        def get_actions(self):
+            from tg.configurator import AppReadyConfigurationAction
+            return (
+                AppReadyConfigurationAction(self._print_ready),
+            )
+
+        def _print_ready(self, conf, app):
+            print 'Ready to Fly!'
             return app
-    base_config = MyAppConfig()
 
-    # modify base_config parameters below
+.. note::
 
-The above example shows how one would go about overridding the ToscaWidgets2
-middleware.  See the :py:class:`AppConfig` for more ideas on how you
-could modify your own custom config
+    The ``AppReadyConfigurationAction`` is usually also the right
+    time to add WSGI middlewares to your application as it allows
+    you to return a new WSGI application in place of the original one.
+    So you can't take for granted that the ``app`` your receive is
+    actually a :class:`.TGApp`, but it can be any WSGI application
+    that wraps the TGApp.
+
+That component will be registered against the configurator::
+
+   base_config.register(ReadyToFlyConfigurationComponent)
+
+and from that moment on will be known by the configurator
+with the ``ready2fly`` identifier.
+
+Now, if we want to change its behaviour, and instead of printing
+``"Ready to Fly!"`` we want to print ``"Ready for take off!"``,
+we can sublcass the component, replace its ``_print_ready``
+implementation and replace the component itself::
+
+    class ReadyForTakeOffConfigurationComponent(ReadyToFlyConfigurationComponent):
+        def _print_ready(self, conf, app):
+            print 'Ready for take off!'
+            return app
+
+    base_config.replace("ready2fly", ReadyForTakeOffConfigurationComponent)
+
+So, instead of the ``ReadyToFlyConfigurationComponent`` we will
+use the ``ReadyForTakeOffConfigurationComponent``.
+
+This can be used to replace also TurboGears provided components,
+see :mod:`tg.configurator.components` for all components provided
+by TurboGears.
