@@ -1,7 +1,7 @@
-TurboGears 2.3 Documentation Source
+TurboGears 2.4 Documentation Source
 ===================================
 
-This is the source of the latest Turbogears 2.3 documentation effort.
+This is the source of the latest Turbogears 2.4 documentation effort.
 
 The docs are written in reStructuredText_ (.rst files), a simple markup 
 language often used to document python projects.   
