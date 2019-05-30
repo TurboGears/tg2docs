@@ -869,7 +869,7 @@ methods for our ``RootController`` class:
         try:
             page = DBSession.query(Page).filter_by(pagename=pagename).one()
         except InvalidRequestError:
-            raise redirect("notfound", pagename=pagename)
+            raise redirect("notfound", params={"pagename": pagename})
 
         content = publish_parts(page.data, writer_name="html")["html_body"]
         root = url('/')
