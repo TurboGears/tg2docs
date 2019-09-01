@@ -50,6 +50,7 @@ Dispatch
 ========
 
 .. autoclass:: tg.configurator.components.dispatch.DispatchConfigurationComponent
+    :members: register_controller_wrapper
 
 Error Reporting
 ===============
@@ -94,6 +95,7 @@ Rendering Engines
 =================
 
 .. autoclass:: tg.configurator.components.rendering.TemplateRenderingConfigurationComponent
+    :members: register_engine
 
 Genshi
 ------

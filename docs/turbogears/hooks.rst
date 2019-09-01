@@ -132,7 +132,7 @@ applied to every controller of the application or third party libraries::
                 print 'After Handler!'
         return call
 
-    base_config.register_controller_wrapper(controller_wrapper)
+    base_config.get_component('dispatch').register_controller_wrapper(controller_wrapper)
 
 Due to the registration performance cost, controller wrappers
 *can only be registered before the application started*.
@@ -173,17 +173,17 @@ instance::
 Application wrappers can be registered from you application
 configuration object in ``app_cfg.py``::
 
-    base_config.register_wrapper(AppWrapper)
+    base_config.register_application_wrapper(AppWrapper)
 
 When registering a wrapper, it is also possible to specify after
 which other wrapper it has to run if available::
 
-    base_config.register_wrapper(AppWrapper, after=OtherWrapper)
+    base_config.register_application_wrapper(AppWrapper, after=OtherWrapper)
 
 Wrappers registered with ``after=False`` will run before any
 other available wrapper (in order of registration)::
 
-    base_config.register_wrapper(AppWrapper, after=False)
+    base_config.register_application_wrapper(AppWrapper, after=False)
 
 See :meth:`.ApplicationConfigurator.register_application_wrapper` for more details.
 
