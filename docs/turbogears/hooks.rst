@@ -34,15 +34,11 @@ register them in your ``app_cfg.py`` file::
     def on_startup():
         print 'hello, startup world'
 
-    def on_shutdown():
-        print 'hello, shutdown world'
-
     def before_render(remainder, params, output):
         print 'system wide before render'
 
     # ... (base_config init code)
-    tg.hooks.register('startup', on_startup)
-    tg.hooks.register('shutdown', on_shutdown)
+    tg.hooks.register('initialized_config', on_startup)
     tg.hooks.register('before_render', before_render)
 
 To register controller based hooks you can use the event decorators::
@@ -74,20 +70,27 @@ or for an hook.
 Available Hooks
 ####################
 
+Configuration Hooks
+~~~~~~~~~~~~~~~~~~~
+
 * ``initialized_config(configurator, config)`` - new configuration got loaded by the application configurator, application not yet created.
-* ``startup()`` - application wide only, called when the application is going to start
-* ``shutdown()`` - application wide only, called when the application exits
+  note that derived options that are configured during setup phase are not available here.
+* ``config_setup(configurator, config)`` - configuration setup completed, application not yet created.
 * ``configure_new_app(app)`` - new application got created by the application configurator.
-    This is the only call that can guarantee to receive the TGApp instance before any
-    middleware wrapping.
-* ``before_config(app) -> app`` - application wide only, called right after creating application,
-    but before setting up most of the options and middleware.
-    Must return the application itself.
-    Can be used to wrap the application into middlewares that have to be executed having the full TG stack available.
-* ``after_config(app) -> app`` - application wide only, called after finishing setting everything up.
-    Must return the application iself.
-    Can be used to wrap the application into middleware that have to be executed before the TG ones.
-    Can also be used to modify the Application by mounting additional subcontrollers inside the RootController.
+  This is the only call that can guarantee to receive the :class:`.TGApp` instance before any
+  middleware wrapping. To access configuration here use ``app.config``
+* ``before_wsgi_middlewares(app) -> app`` - application wide only, called right after creating application,
+  but before setting up most of the options and middleware.
+  Must return the WSGI application itself.
+  Can be used to wrap the application into WSGI middlewares that have to be executed after all TG ones.
+* ``before_wsgi_middlewares(app) -> app`` - application wide only, called after finishing setting everything up.
+  Must return the WSGI application iself.
+  Can be used to wrap the application into WSGI middleware that have to be executed before the TG ones.
+  Can also be used to modify the Application by mounting additional subcontrollers inside the RootController.
+
+Request Life Cycle Hooks
+~~~~~~~~~~~~~~~~~~~~~~~~
+
 * ``before_validate(remainder, params)`` - Called before performing validation
 * ``before_call(remainder, params)`` - Called after valdation, before calling the actual controller method
 * ``before_render(remainder, params, output)`` - Called before rendering a controller template, ``output`` is the controller return value
