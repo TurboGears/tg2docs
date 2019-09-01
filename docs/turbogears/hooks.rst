@@ -83,7 +83,7 @@ Configuration Hooks
   but before setting up most of the options and middleware.
   Must return the WSGI application itself.
   Can be used to wrap the application into WSGI middlewares that have to be executed after all TG ones.
-* ``before_wsgi_middlewares(app) -> app`` - application wide only, called after finishing setting everything up.
+* ``after_wsgi_middlewares(app) -> app`` - application wide only, called after finishing setting everything up.
   Must return the WSGI application iself.
   Can be used to wrap the application into WSGI middleware that have to be executed before the TG ones.
   Can also be used to modify the Application by mounting additional subcontrollers inside the RootController.
