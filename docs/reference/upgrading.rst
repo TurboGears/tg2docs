@@ -1,6 +1,11 @@
 Upgrading Your TurboGears Project
 =================================
 
+From 2.4.0 to 2.4.1
+--------------------
+
+No backward incompatible changes happened in 2.4.1
+
 From 2.3.12 to 2.4.0
 --------------------
 
