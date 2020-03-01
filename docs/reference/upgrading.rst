@@ -1,6 +1,17 @@
 Upgrading Your TurboGears Project
 =================================
 
+From 2.4.2 to 2.4.3
+-------------------
+
+Email based error reporting now errors if it's enabled but not configured.
+If you actually want to disable it set ``trace_errors.error_email = false``
+
+From 2.4.1 to 2.4.2
+-------------------
+
+No backward incompatible changes happened in 2.4.2
+
 From 2.4.0 to 2.4.1
 --------------------
 
