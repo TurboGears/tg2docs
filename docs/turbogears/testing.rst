@@ -4,129 +4,113 @@
 Testing with TurboGears
 =======================
 
+.. warning::
+  Starting from turbogears 2.5 newly quickstarted projects make use of pytest instead of nose.
+  If you already quickstarted and want to stay on nose you can check the `old documentation`_
+  Or if you just have the default tests you might try to replace the tests directory with one got from a new quickstart with the same options of your project
+
 TurboGears quickstart command already provides a fully working test suite for your
 newly quickstarted app.
+
+.. _old documentation: https://turbogears.readthedocs.io/en/tg2.4.3/turbogears/testing.html
 
 Running Tests
 =============
 
-The only required dependency to run the testsuite is the ``nose`` package, which
-can be installed with::
+Tests dependencies can be installed through::
 
-    $ pip install nose
-
-Other dependencies used by your tests will automatically be installed when the
-test suite is run through the ``install_requires`` and ``testpkgs`` variables in ``setup.py``,
-so if your application requires any dependency specific for testing just make sure is
-listed there.
+    $ pip install -e ".[testing]"
 
 To actually run the test suite you can run::
 
-    $ python setup.py nosetests
+    $ pytest
 
-This will install all the required dependencies and will run the tests.
 You should get an output similar to::
 
-    Wrong password keeps user_name in login form ... ok
-    Anonymous users are forced to login ... ok
-    Logouts must work correctly ... ok
-    Voluntary logins must work correctly ... ok
-    The data display demo works with HTML ... ok
-    The data display demo works with JSON ... ok
-    Displaying the wsgi environ works ... ok
-    The front page is working properly ... ok
-    Anonymous users must not access the secure controller ... ok
-    The editor cannot access the secure controller ... ok
-    The manager can access the secure controller ... ok
-    plain.tests.functional.test_root.TestWithContextController.test_i18n ... ok
-    Model objects can be created ... ok
-    Model objects can be queried ... ok
-    Model objects can be created ... ok
-    Model objects can be queried ... ok
-    Model objects can be created ... ok
-    Users should be fetcheable by their email addresses ... ok
-    User objects should have no permission by default. ... ok
-    The obj constructor must set the email right ... ok
-    The obj constructor must set the user name right ... ok
-    Model objects can be queried ... ok
+  ================================= test session starts ==================================
+  platform linux -- Python 3.8.6, pytest-6.1.1, py-1.9.0, pluggy-0.13.1
+  Using --randomly-seed=221764868
+  rootdir: /mnt/esterno/axant/tg2devtools/newapp, configfile: setup.cfg
+  plugins: cov-2.10.1, randomly-3.4.1
+  collected 32 items                                                                     
 
-    ----------------------------------------------------------------------
-    Ran 22 tests in 11.931s
+  newapp/tests/models/test_auth.py ...........                                     [ 34%]
+  newapp/tests/functional/test_authentication.py ......                            [ 53%]
+  newapp/tests/functional/test_root.py ...............                             [100%]
 
-    OK
+  ----------- coverage: platform linux, python 3.8.6-final-0 -----------
+  Name    Stmts   Miss  Cover   Missing
+  -------------------------------------
+  -------------------------------------
+  TOTAL     496      0   100%
 
-Those are the default tests that TurboGears generated for you.
+  24 files skipped due to complete coverage.
 
-Tests Collection
-----------------
+  ============================ 32 passed, 1 warning in 6.16s =============================
 
-When running the ``nosetests`` command nose will look for any ``tests``
+The default tests that TurboGears generated for you depends on the options of your quickstart.
+It will always run with 100% code coverage.
+
+Tests Suite Structure
+---------------------
+
+When running the ``pytest`` command nose will look for any ``tests``
 directory inside your application package.
 
-Nose itself will look in all files whose name starts with test_[something].py for all the classes
-which name starts with Test[Something] and will consider them as Test Cases,
-for each method inside the test case whose name starts with test_[something]
-they will be treated as Test Units.
+The ``pytest-randomly`` plugin is automatically used to run tests in a different order on each run
+
+Inside the tests directory there is a file called ``conftest.py`` and a directory called ``_conftest``
+Turbogears default fixtures are in that directory.
+You can add your own in separate files and import them in the conftest file.
+Those Fixtures are automatically available in all tests
 
 Writing Tests
 =============
 
-When quickstarting an application you will notice that there is a tests package inside it.
-This package is provided by TurboGears itself and contains the fixture already creates a ``TestApp``
-instance for you and loads configuration from ``test.ini`` instead of ``development.ini``.
+Available Fixtures
+------------------
 
-The ``TestApp`` which is available inside *Test Cases* as ``self.app`` is an object with methods
-that emulate HTTP requests: ``.get``, ``.post``, ``.put`` and so on and is able to understand
-both **html** and **json** responses.
+There are ``app`` and ``_app`` fixtures.
+``app`` is the default test application, it is like calling ``_app`` without arguments.
+``_app`` returns a webtest object you can use it to make requests to your app; you can see `webtest documentation`_
+``_app`` also takes ``name``, ``reconfig`` and ``setup_app`` paramters:
+
+- ``name``: is the name of the wsgi app you are testing, it must be in the ``test.ini`` file. it is a way of configuring the app
+- ``reconfig``: dictionary used to change the configuration of the app on the fly for the given test
+- ``setup_app``: init the database, the same as running ``gearbox setup-app -c test.ini``
 
 Take note that ``test.ini`` actually inherits from development.ini and just overwrites some options.
 For example for tests by default a ``sqlalchemy.url = sqlite:///:memory:`` is used which forces
 SQLAlchemy to use an in memory database instead of a real one, so that it is created
 and discarded when the test suite is run withouth requiring you to use a real database.
 
-All your application tests that call a web page should inherit from ``tests.TestController``
-which ensure:
+Also note that:
 
-    * For each test unit the database is created and initialized by calling setup-app.
-    * For each test unit the ``self.app`` object is provided which is a ``TestApp``
-      instance of your TurboGears2 application loaded from ``test.ini``.
-    * After each test unit the database is deleted.
-    * After each test unit the SQLAlchemy session is cleared.
+* After each test unit the database is deleted.
+* After each test unit the SQLAlchemy/Ming session is cleared.
 
 For a sample test see ``tests/functional/test_root``::
 
-    from nose.tools import ok_
-    from testapp.tests import TestController
+  @pytest.mark.parametrize('url,user,status', (
+      ('/secc', None, 401),
+      ('/secc', 'manager', 200),
+      ('/secc', 'editor', 403),
+      ('/secc/some_where', 'manager', 200),
+      ('/secc/some_where', 'editor', 403),
+  ))
+  def test_secc_access(app, env, url, user, status):
+      app.get(url, extra_environ=env(user), status=status)
 
+In this example we also make use of the ``env`` fixture, it is a shorthand to ``{'REMOTE_USER': user}``
+The extra_environ is documeted here_ and the environ itself is documented in PEP333_
 
-    class TestRootController(TestController):
-        """Tests for the method in the root controller."""
+There is also a ``obj`` fixture that can be useful to test database objects::
 
-        def test_index(self):
-            response = self.app.get('/')
-            msg = 'TurboGears 2 is rapid web application development toolkit '\
-                  'designed to make your life easier.'
-            ok_(msg in response)
+  obj(model.User, dict(user_name="ignucius", email_address="ignucius@example.org"))
 
-        def test_environ(self):
-            response = self.app.get('/environ.html')
-            ok_('The keys in the environment are:' in response)
-
-Simulating Authentication Requests
-----------------------------------
-
-To simulate authentication you can just pass to the ``.get``, ``.post`` and so on methods an
-``extra_environ`` parameter (which is used to add WSGI environ values available
-in ``tg.request.environ``) named ``REMOTE_USER``.
-
-For example if you want to behave like you are logged as the editor user you just pass::
-
-    def test_secc_with_editor(self):
-        environ = {'REMOTE_USER': 'editor'}
-        self.app.get('/secc', extra_environ=environ, status=403)
-
-The previous test will check that when user is logged as *editor* a *403* error is returned
-from the ``/secc`` url instead of the *401* which is returned when user is not logged at all.
+.. _webtest documentation: https://docs.pylonsproject.org/projects/webtest/en/latest/
+.. _here: https://docs.pylonsproject.org/projects/webtest/en/latest/testapp.html?highlight=extra_environ#modifying-the-environment-simulating-authentication
+.. _PEP333: https://www.python.org/dev/peps/pep-0333/#environ-variables
 
 Checking HTML Responses
 -----------------------
@@ -139,10 +123,7 @@ automatically installed when running the test suite.
 
 **PyQuery** is a python module that works like jQuery and permits easy traversing of the DOM::
 
-    from testapp.tests import TestController
-
-
-    class TestHelloWorldApp(TestController):
+    def test_hello_world_and_title(app):
         """Tests an app that returns a simple HTML response with:
 
             <html>
@@ -154,53 +135,13 @@ automatically installed when running the test suite.
                 </body>
             </html>
         """
+        res = self.app.get('/')
+        assert res.pyquery('h1').text() == 'Hello World'
+        assert res.pyquery('title').text() == 'Hello to You'
 
-        def test_hello_world(self):
-            res = self.app.get('/')
-            assert res.pyquery('h1').text() == 'Hello World'
+For ``pyquery`` documentation `see here`_
 
-        def test_title(self):
-            res = self.app.get('/')
-            assert res.pyquery('title').text() == 'Hello to You'
-
-For ``pyquery`` documentation please rely on https://pythonhosted.org/pyquery/
-
-Submitting Forms
-----------------
-
-The ``TestApp`` permits also to easily fill and submit forms,
-this can be used to test features that require submission of form values::
-
-    from testapp.tests import TestController
-
-
-    class TestFormApp(TestController):
-        """Tests an app that contains a simple HTML form with:
-
-            <form id="form1" action="/submit" method="POST">
-                <input type="text" name="value"/>
-            </form>
-
-           That submits to:
-
-            @expose('json')
-            def submit(self, value=None, **kwargs):
-                return dict(value=value)
-        """
-
-        def test_form_submission(self):
-            page = self.app.get('/')
-
-            form = page.forms['form1']
-            form['value'] = 'prova'
-
-            res = form.submit()
-            assert res.json['value'] == 'prova', res
-
-The *form* itself is identified by its **id**, so the ``page.forms['form1']`` works as
-the form has ``id="form1"``.
-
-.. _testing_outside_controllers:
+.. _see here: https://pythonhosted.org/pyquery/
 
 Testing Outside Controllers
 ---------------------------
@@ -208,15 +149,17 @@ Testing Outside Controllers
 There might be cases when you are required to test something outside a controller,
 this is common with validators or utility methods.
 
-In those cases you can inherit from ``tests.TestController`` as usual, and you
-will probably won't use the ``self.app`` object. Unless you are required to have a
+You will probably won't use the ``app`` object. Unless you are required to have a
 request in place during your test.
 
 This might be the case if your utility function or class uses TurboGears features that
 depend on a request like ``tg.url``, ``tg.i18n.ugettext`` and so on...
 
+Notes about older TurboGears versions
+-------------------------------------
+
 Since version ``2.3.6`` the :class:`.test_context` context is available, when used
-together with a ``with`` statement, the whole body of the ``with`` will run with
+in a context manager, the whole body of the ``with`` will run with
 a fake TurboGears context, much like the one you get when using ``/_test_vars``::
 
     from tg.util.webtest import test_context
@@ -228,34 +171,18 @@ a fake TurboGears context, much like the one you get when using ``/_test_vars``:
 On ``2.3.5`` the same behaviour could be achieved using the special ``/_test_vars``
 url which initializes a fake TurboGears context which will be used until removed::
 
-    from testapp.tests import TestController
+  def test_i18n(self):
+      self.app.get('/_test_vars')  # Initialize a fake request
 
-
-    class TestWithContextController(TestController):
-        def test_i18n(self):
-            self.app.get('/_test_vars')  # Initialize a fake request
-
-            hello = ugettext('hello')
-            assert hello == 'hello', hello
+      hello = ugettext('hello')
+      assert hello == 'hello', hello
 
 Make sure you reset the request context after using ``/_test_vars`` otherwise
 you might end up with a messy environment as you have left behind the globally
 registered objects. It is a good practice to perform another another request to
 properly reset the global object status at the end of the test unit::
 
-    from testapp.tests import TestController
-
-
-    class TestWithContextController(TestController):
-        def tearDown(self):
-            self.app.get('/_del_test_vars', status=404)  # Reset fake request
-            super(TestWithContextController, self).tearDown()
-
-        def test_i18n(self):
-            self.app.get('/_test_vars')  # Initialize a fake request
-
-            hello = ugettext('hello')
-            assert hello == 'hello', hello
+  self.app.get('/_del_test_vars', status=404)  # Reset fake request
 
 Coverage
 ========
@@ -269,24 +196,14 @@ to measure code that we should have written but didn't.
 Missing errors handling won't be detected in coverage but it is a fairly reliable tool to ensure
 that everything your wrote has been checked at least once.
 
-By default coverage reporting is disabled in turbogears test suite, but it can easily be turned
-on by changing ``with-coverage`` option in ``setup.cfg``::
+By default coverage reporting is enabled in turbogears test suite, but it can easily be turned
+off by changing ``addopts`` option in ``setup.cfg`` to disable ``pytest-cov`` plugin::
 
-    [nosetests]
-    verbosity = 2
-    detailed-errors = 1
-    with-coverage = true  # CHANGED TO true TO ENABLE COVERAGE
-    cover-erase = true
-    cover-package = plain
+  [tool:pytest]
+  #addopts = --cov=.
 
-When coverage is enabled, after the tests results, you will get the coverage report::
+To make the test suite fail if coverage drops below 100% you can uncomment this line in ``.coveragerc``::
 
-    ..
-    Name      Stmts   Miss  Cover   Missing
-    ---------------------------------------
-    _opnums      13      8    38%   2-3, 6-9, 12, 16-17
-    ----------------------------------------------------------------------
-    Ran 2 tests in 0.002s
+  fail_under = 100
 
-    OK
-
+Also ``tests`` directory coverage reporting is enabled by default, you can turn it off in ``omit`` values of coveragerc but is not suggested (eg you could overwrite a test by redefining it)
