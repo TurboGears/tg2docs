@@ -1,6 +1,28 @@
 Upgrading Your TurboGears Project
 =================================
 
+From 2.4.3 to 2.5.0
+-------------------
+
+In 2.5.0 most deprecations were removed
+(apart ``AppConfig`` which will be removed in a future 2.5 release).
+
+If you hadn't yet addressed those deprecations, you should take care
+of all ``DeprecationWarning`` in 2.4 and then upgrade to 2.5
+
+If you already addressed all the ``DeprecationWarning``,
+the only required change to your app is to replace::
+
+    "auth_backend": "sqlalchemy",
+
+(or any other value of ``auth_backend``) with::
+
+    "sa_auth.enabled": True,
+
+That's because "auth_backend" is no longer a valid option,
+as the backend has been by TurboGears for a long time as
+when using ``AuthMetadata`` the backend becames no longe relevant.
+
 From 2.4.2 to 2.4.3
 -------------------
 
