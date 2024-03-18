@@ -318,6 +318,12 @@ already has validation for the *MovieForm* and when the form is submitted
 after checking that there is a title and director will also check that
 both *director* and *director_verify* fields equals.
 
+.. note::
+
+   To use formencode validators, the tgext.formencode extenion 
+   must be installed and enabled.
+
+
 Manual Validation
 ~~~~~~~~~~~~~~~~~
 

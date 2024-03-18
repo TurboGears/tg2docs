@@ -40,11 +40,11 @@ the :class:`validate` decorator. Here's a simple example:
 .. code-block:: python
 
     from tg import request, validate, expose, TGController
-    from formencode import validators
+    from tg import validation
 
     class RootController(TGController):
         @expose('json')
-        @validate({"a":validators.Int(not_empty=True), "b":validators.Email})
+        @validate({"a":validation.Convert(int), "b":validation.RequireValue()})
         def two_validators(self, a=None, b=None, *args):
             validation_status = tg.request.validation
 
@@ -58,11 +58,13 @@ the appropriate FormEncode validators, ``Int`` in this example.
 In case of a validation error TurboGears will provide the errors
 and values inside ``tg.request.validation``.
 
-FormEncode provides a number of useful pre-made validators for you to
-use: they are available in the :mod:`formencode.validators` module.
+.. note::
 
-For most validators, you can pass keyword arguments for more specific
-constraints.
+    FormEncode provides a number of useful pre-made validators for you to
+    use: they are available in the :mod:`formencode.validators` module.
+
+    FormEncode can be used with TurboGears via the tgext.formencode extension.
+
 
 Validation Process Information
 ------------------------------
@@ -93,7 +95,7 @@ action:
 .. code-block:: python
 
     from tg import request, validate, expose, TGController
-    from formencode import validators
+    from tg import validation
 
     class RootController(TGController):
         @expose()
@@ -101,7 +103,7 @@ action:
             return 'An error occurred: %s' % request.validation.errors
 
         @expose()
-        @validate({"a": validators.Int(not_empty=True), "b": validators.Email},
+        @validate({"a":validation.Convert(int), "b":validation.RequireValue()},
                   error_handler=onerror)
         def two_validators(self, a=None, b=None, *args):
             return 'Values: %s, %s, %s' % (a, b, args)
@@ -135,8 +137,8 @@ Validators
 
 TurboGears applications will usually rely on three kind of validators:
 
-    * :class:`.Convert` which is builtin into TurboGears an can be used for simple conversions
-      like integers, floats and so on...
+    * :class:`.Convert` and :class:`RequireValue` which is builtin into TurboGears 
+      and can be used for simple conversions like integers, floats and so on...
     * :mod:`tw2.core.validation` which provide ToscaWidgets validators for **Forms**
     * :mod:`formencode.validators` validators which can be used **Standalone** or with a **Form**
 
@@ -254,8 +256,8 @@ validating individual form fields.  Fortunately FormEncode provides
 just the thing for us -- Schema validators.
 
 If you want to do multiple-field validation, reuse validators or just
-clean up your code, validation ``Schema``s are the way to go. You
-create a validation schema by inheriting from
+clean up your code, validation ``formencode.Schema``s are the way to go. 
+You create a validation schema by inheriting from
 :class:`formencode.schema.Schema` and pass the newly created ``Schema``
 as the ``validators`` argument instead of passing a dictionary.
 

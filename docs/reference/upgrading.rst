@@ -23,6 +23,16 @@ That's because "auth_backend" is no longer a valid option,
 as the backend has been by TurboGears for a long time as
 when using ``AuthMetadata`` the backend becames no longe relevant.
 
+Also support for some libraries, has been moved to dedicated extensions
+to ease maintenance of TurboGears:
+
+* ToscaWidgets2 support is now provided via a separate ``tgext.tw2`` package
+  that has to be explicitly installed and enabled.
+
+* Formencode support is now shipped as a separate ``tgext.formencode`` package.
+  TurboGears still provides builtin support for validation and conversion via
+  ``Convert`` and ``unless``.
+
 From 2.4.2 to 2.4.3
 -------------------
 
@@ -590,7 +600,7 @@ Error Reporting options grouped in .ini file
 Error reporting options have been grouped in ``trace_errors`` options.
 
 While previous option names continue to work for backward compatibility,
-they will be removed in future versions. 
+they will be removed in future versions.
 Email error sending options became::
 
     trace_errors.error_email = you@yourdomain.com

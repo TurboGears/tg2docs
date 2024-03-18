@@ -164,13 +164,16 @@ not empty, and that the release_date has correct formatting:
 
 .. code-block:: python
 
+    import datetime
     from tg import request, validate
-    from formencode.validators import NotEmpty, Int, DateConverter
+    from tg.validation import Convert, RequireValue
 
-    @validate({'title':NotEmpty,
-               'description':NotEmpty,
-               'genre_id':Int(not_empty=True),
-               'release_date':DateConverter(not_empty=True)})
+    @validate({
+        'title': RequireValue(),
+        "description": RequireValue(),
+        "genre_id": Convert(int),
+        "release_date": Convert(lambda v: datetime.datetime.strptime(v, "%Y-%m-%d"))
+    })
     @expose('json')
     def post(self, **kw):
         if request.validation.errors:
@@ -191,7 +194,7 @@ to the user.:
 
     @expose('json')
     def get_one(self, movie_id):
-        movie = DBSession.query(Movie).get(movie_id)
+        movie = DBSession.get(Movie, movie_id)
         return dict(movie=movie)
 
 Updating an Existing Item
@@ -202,10 +205,12 @@ can validate in the same manner as before:
 
 .. code-block:: python
 
-    @validate({'title':NotEmpty,
-               'description':NotEmpty,
-               'genre_id':Int(not_empty=True),
-               'release_date':DateConverter(not_empty=True)})
+    @validate({
+        'title': RequireValue(),
+        "description": RequireValue(),
+        "genre_id": Convert(int),
+        "release_date": Convert(lambda v: datetime.datetime.strptime(v, "%Y-%m-%d"))
+    })
     @expose('json')
     def put(self, movie_id, title, description, directors, genre_id, release_date, **kw):
         if request.validation.errors:

@@ -17,13 +17,13 @@ Let us first assume the following model for this demonstration.::
 
     from sqlalchemy import Column, Integer, String, Date, Text, ForeignKey, Table
     from sqlalchemy.orm import relation
-    
+
     from moviedemo.model import DeclarativeBase, metadata
-    
+
     movie_directors_table = Table('movie_directors', metadata,
                                   Column('movie_id', Integer, ForeignKey('movies.movie_id'), primary_key = True),
                                   Column('director_id', Integer, ForeignKey('directors.director_id'), primary_key = True))
-    
+
     class Genre(DeclarativeBase):
         __tablename__ = "genres"
         genre_id = Column(Integer, primary_key=True)
@@ -39,7 +39,7 @@ Let us first assume the following model for this demonstration.::
         genre = relation('Genre', backref='movies')
         release_date = Column(Date, nullable=True)
 
-    
+
     class Director(DeclarativeBase):
         __tablename__ = "directors"
         movie_id = Column(Integer, primary_key=True)
@@ -109,7 +109,7 @@ Field Ordering
 ---------------
 If you want the fields displayed in a ordering different from that of the specified schema,
 you may use field_ordering to do so.  Here is our form with the fields moved around a bit::
-    
+
     class NewMovieForm(AddRecordForm):
         __model__ = Movie
         __omit_fields__ = ['movie_id', 'genre_id']
@@ -144,14 +144,14 @@ and it will override the widget used for that field.  Let's change the movie tit
 field just for fun.::
 
     from tw.forms.fields import PasswordField
-    
+
     class NewMovieForm(AddRecordForm):
         __model__ = Movie
         __omit_fields__ = ['movie_id', 'genre_id']
         __field_attrs__ = {'description':{'rows':'2'}}
         title = PasswordField
-        
-        
+
+
 .. image:: images/form/password.png
 
 You can see now that the title is "starred" out.  Note that you may also send an "instance" of
@@ -176,8 +176,8 @@ for that field.  Here is an example of how to set the  rows and columns for the 
 Custom Dropdown Field Names
 ------------------------------
 
-Sometimes you want to display a field to the user for the dropdown that has not been selected by 
-sprox.  This is easy to override.  Simply pass the field names for the select boxes you want to 
+Sometimes you want to display a field to the user for the dropdown that has not been selected by
+sprox.  This is easy to override.  Simply pass the field names for the select boxes you want to
 display into the __dropdown_field_names__ modifier.::
 
     class NewMovieForm(AddRecordForm):
@@ -212,7 +212,7 @@ for the majority of developers looking to modify their dropdowns in a custom man
 First, we extend the Sprox SingleSelect Field as follows::
 
     from sprox.widgets import PropertySingleSelectField
-    
+
     class GenreField(PropertySingleSelectField):
         def _my_update_params(self, d, nullable=False):
             genres = DBSession.query(Genre).all()
@@ -229,7 +229,7 @@ Then we include our new widget in the definition of the our movie form::
         __field_order__ = ['title', 'description', 'genre', 'directors']
         __dropdown_field_names__ = {'genre':'description', 'directors':'name'}
         genre = GenreField
-    
+
 Here is the resulting dropdown:
 
 .. image:: images/form_update_params.png
@@ -244,14 +244,14 @@ want/need that data to be stored in the database.  Here is how we would go about
 adding a second description field to our widget.::
 
     from tw.forms.fields import TextArea
-    
+
     class NewMovieForm(AddRecordForm):
         __model__ = Movie
         __omit_fields__ = ['movie_id', 'genre_id']
         __field_order__ = ['title', 'description', 'description2', 'genre', 'directors']
         description2 = TextArea('description2')
-    
-For additional widgets, you must provide an instance of the widget since sprox will not 
+
+For additional widgets, you must provide an instance of the widget since sprox will not
 have enough information about the schema of the widget in order to populate it correctly.
 Here's what our form now looks like:
 
@@ -260,7 +260,7 @@ Here's what our form now looks like:
 Validation
 --------------
 Turbogears2 has some great tools for validation that work well with sprox.  In order
-to validate our form, we must first give the form a place to POST to, with a 
+to validate our form, we must first give the form a place to POST to, with a
 new method in our controller that looks like::
 
     @validate(new_movie_form, error_handler=new)
@@ -291,11 +291,12 @@ Often times you will want to provide your own custom field validator. The best w
 do this is to add the validator declaratively to your Form Definition::
 
     from formencode.validators import String
+
     class NewMovieForm(AddRecordForm):
         __model__ = Movie
         __omit_fields__ = ['movie_id', 'genre_id']
         title = String(min=4)
-    
+
 The resulting validation message looks like this:
 
 .. image:: images/form/validator.png
@@ -305,11 +306,11 @@ Overriding both Field and Validator
 Ah, you may have realized that sometimes you must override both widget and validator.  Sprox
 handles this too, by providing a :class:sprox.formbase.Field class that you can use to wrap
 your widget and validator together.::
-   
+
     from formencode.validators import String
     from sprox.formbase import Field
     from tw.forms.fields import PasswordField
-    
+
     class NewMovieForm(AddRecordForm):
         __model__ = Movie
         __omit_fields__ = ['movie_id', 'genre_id']

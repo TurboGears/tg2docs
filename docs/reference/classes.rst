@@ -31,6 +31,9 @@ Configuration
 
 .. autoclass:: tg.configurator.base.AppReadyConfigurationAction
 
+.. autoclass:: tg.wsgiapp.TGApp
+    :members:
+
 Decorators
 ==========
 
@@ -65,18 +68,6 @@ Pagination
     :noindex:
 
 .. autoclass:: tg.support.paginate.Page
-    :members:
-
-Configuration
-=============
-
-.. autoclass:: tg.FullStackApplicationConfigurator
-    :members:
-
-.. autoclass:: tg.MinimalApplicationConfigurator
-    :members:
-
-.. autoclass:: tg.wsgiapp.TGApp
     :members:
 
 WebFlash

@@ -256,7 +256,6 @@ man_pages = [
 extensions = [
     'sphinx.ext.autodoc', 'sphinx.ext.intersphinx',
     'sphinx.ext.coverage', 'sphinx.ext.todo',
-    'code_ext' # TurboGears code documentation extensions
 ]
 
 # Specify whether todo items shall be created in the output
@@ -271,7 +270,7 @@ intersphinx_mapping = {
     'webtest': ('http://docs.pylonsproject.org/projects/webtest/en/latest/', None),
     'ming': ('http://ming.readthedocs.io/en/latest', None),
     'formencode': ('http://www.formencode.org/en/latest/', None),
-    'kajiki': ('http://kajiki.readthedocs.io/en/latest/', None)
+    'kajiki': ('http://kajiki.readthedocs.io/en/master/', None)
 }
 
 # The maximum number of days to cache remote inventories.

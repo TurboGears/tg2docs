@@ -149,11 +149,6 @@ Static Files
 
 .. autoclass:: tg.configurator.components.statics.StaticsConfigurationComponent
 
-ToscaWidgets2
-=============
-
-.. autoclass:: tg.configurator.components.toscawidgets2.ToscaWidgets2ConfigurationComponent
-
 Transaction Manager
 ===================
 

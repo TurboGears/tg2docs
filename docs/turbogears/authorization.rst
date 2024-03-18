@@ -30,6 +30,7 @@ Restricting access with tg.predicates
 
 .. module:: tg.predicates
     :synopsis: built-in predicate checkers.
+    :no-index:
 
 tg.predicates allows you to define access rules based on so-called
 "predicate checkers". It is a customized version of the :mod:`repoze.what`
