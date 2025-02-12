@@ -4,6 +4,9 @@ Upgrading Your TurboGears Project
 From 2.4.3 to 2.5.0
 -------------------
 
+TurboGears 2.5.0 requires Python 3.8 minimum, support
+for prior versions of Python has been dropped.
+
 In 2.5.0 most deprecations were removed
 (apart ``AppConfig`` which will be removed in a future 2.5 release).
 
@@ -32,6 +35,9 @@ to ease maintenance of TurboGears:
 * Formencode support is now shipped as a separate ``tgext.formencode`` package.
   TurboGears still provides builtin support for validation and conversion via
   ``Convert`` and ``unless``.
+
+* ``tg.release`` and ``tg.__version__`` have been removed,
+  to get the version of TurboGears ``importlib.metadata.version`` should be used.
 
 From 2.4.2 to 2.4.3
 -------------------
