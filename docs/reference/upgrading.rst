@@ -26,6 +26,15 @@ That's because "auth_backend" is no longer a valid option,
 as the backend has been by TurboGears for a long time as
 when using ``AuthMetadata`` the backend becames no longe relevant.
 
+Some legacy behaviours have also been dismissed:
+
+* ``tg.release`` and ``tg.__version__`` have been removed,
+  to get the version of TurboGears ``importlib.metadata.version`` should be used.
+
+* Support for using ``repoze.what`` has been removed, all predicates
+  should now come from ``tg.predicates``. 
+  This has been long the case if ``repoze.what`` wasn't installed.
+
 Also support for some libraries, has been moved to dedicated extensions
 to ease maintenance of TurboGears:
 
@@ -35,9 +44,6 @@ to ease maintenance of TurboGears:
 * Formencode support is now shipped as a separate ``tgext.formencode`` package.
   TurboGears still provides builtin support for validation and conversion via
   ``Convert`` and ``unless``.
-
-* ``tg.release`` and ``tg.__version__`` have been removed,
-  to get the version of TurboGears ``importlib.metadata.version`` should be used.
 
 From 2.4.2 to 2.4.3
 -------------------
