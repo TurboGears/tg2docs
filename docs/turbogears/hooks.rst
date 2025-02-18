@@ -59,7 +59,7 @@ on third party controllers)::
 
     tg.hooks.register('before_render', before_render_cb, controller=MyController.index)
 
-See :func:`tg.configuration.hooks.HooksNamespace.register` for more details on registering
+See :func:`tg.support.hooks.HooksNamespace.register` for more details on registering
 hooks.
 
 Apart from Hooks TurboGears also provide some
@@ -106,7 +106,7 @@ for them::
 
     tg.hooks.notify('custom_global_hook')
 
-See :func:`tg.configuration.hooks.HooksNamespace.notify` for more details.
+See :func:`tg.support.hooks.HooksNamespace.notify` for more details.
 
 
 Controller Wrappers

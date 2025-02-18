@@ -10,9 +10,10 @@
 # All configuration values have a default; values that are commented out
 # serve to show the default.
 
-import sys, os
+import sys
+import os
+import importlib.metadata
 
-from tg.release import version as tg_release_version
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -47,9 +48,9 @@ project_url = 'http://www.turbogears.org'
 # built documents.
 #
 # The short X.Y version.
-version = '2.4.3'
+version = importlib.metadata.version("TurboGears2")
 # The full version, including alpha/beta/rc tags.
-release = max(tg_release_version, version)
+release = version
 # The private index, something like http://tg.gy/230
 private_index = '\\' #'-f http://tg.gy/' + version.replace('.', '')
 

@@ -4,3 +4,4 @@ tw2.forms
 -e git+https://github.com/TurboGears/tgext.crud.git@master#egg=tgext.crud
 -e git+https://github.com/TurboGears/tgext.admin.git@master#egg=tgext.admin
 nose
+sphinx

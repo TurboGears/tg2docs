@@ -113,7 +113,7 @@ Request & Response
 Hooks
 =====
 
-.. autoclass:: tg.configuration.hooks.HooksNamespace
+.. autoclass:: tg.support.hooks.HooksNamespace
     :members:
 
 .. autoclass:: tg.appwrappers.base.ApplicationWrapper
