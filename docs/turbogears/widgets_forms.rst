@@ -320,7 +320,7 @@ both *director* and *director_verify* fields equals.
 
 .. note::
 
-   To use formencode validators, the tgext.formencode extenion 
+   To use FormEncode validators, the ``tgext.formencode`` extension
    must be installed and enabled.
 
 

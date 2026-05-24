@@ -159,8 +159,8 @@ Validating The User's Input
 Before we add our record to the database, it is probably a good idea
 to validate the data so we can prompt the user if there are mistakes.
 RestController uses the same machinery that TGControllers use for
-validation. We use FormEncode's validators to test that our fields are
-not empty, and that the release_date has correct formatting:
+validation. We use TurboGears' built-in validators to test that our fields
+are not empty, and that the release_date has correct formatting:
 
 .. code-block:: python
 

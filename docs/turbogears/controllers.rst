@@ -375,11 +375,11 @@ Here is an example controller and a chart outlining the way urls are mapped to i
 
 The parameters that are turned into arguments arrive in string format.
 It is a good idea to use Python's type casting capabilities to change
-the arguments into the types the rest of your program expects.  For
+the arguments into the types the rest of your program expects. For
 instance, if you pass an integer 'id' into your function you might use
-id = int(id) to cast it into an int before usage.  Another way to
-accomplish this feat is to use the @validate decorator, which is
-explained in :ref:`Validation`
+``id = int(id)`` to cast it into an int before usage. Another way to
+accomplish this feat is to add type hints and use the ``@validate()``
+decorator, which is explained in :ref:`Validation`.
 
 Ignore Unused Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~

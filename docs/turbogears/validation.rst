@@ -10,16 +10,17 @@ TurboGears. The only downside is that all the arguments will be
 strings and you'd like them converted to their normal Python datatype:
 numbers to ``int``, dates to ``datetime``, etc.
 
-This conversion functionality is provided by the `FormEncode`_ package
-and is applied to your methods using the :class:`.validate`
-decorator. FormEncode provides both validation and conversion as a
-single step, reasoning that you frequently need to validate something
-before you can convert it or that you'll need to convert something
-before you can really validate it.
+This conversion functionality is provided by TurboGears validation
+support and is applied to your methods using the :class:`.validate`
+decorator. For simple conversions you can either annotate controller
+arguments with Python type hints or provide explicit validators such as
+:class:`.Convert` and :class:`.RequireValue`.
 
-The ``@validate()`` decorator can evaluate both widget-based forms and
-the standard form arguments so they are not dependent on widgets at
-all.
+The ``@validate()`` decorator can evaluate type hints, explicit
+validators, and widget-based forms, so validation is not dependent on
+widgets at all. FormEncode validators and schemas are supported through
+the separate ``tgext.formencode`` extension instead of being provided by
+TurboGears itself.
 
 Furthermore, the ``@validate()`` decorator is not really required at
 all.  It just provides a convenience so that you can assume that you
@@ -33,9 +34,33 @@ simply have to do the string conversion in your controller.
 Validating Parameters
 =====================
 
-When not using forms, the story gets a bit more complex. Basically,
-you need to specify which validator goes with which argument using in
-the :class:`validate` decorator. Here's a simple example:
+When not using forms, the simplest option is to add type hints to the
+controller arguments and use ``@validate()`` without passing validators.
+TurboGears will build converters from the annotations:
+
+.. code-block:: python
+
+    from tg import expose, validate, TGController
+
+    class RootController(TGController):
+        @expose('json')
+        @validate()
+        def movie(self, movie_id: int, featured: bool = False, rating: float = 0.0):
+            return dict(movie_id=movie_id, featured=featured, rating=rating)
+
+In this example ``movie_id`` is required and is converted to ``int``.
+``featured`` and ``rating`` are optional because they have default values;
+when omitted, the defaults are passed to the controller. Boolean values use
+TurboGears' normal boolean parser, so values such as ``true``, ``false``,
+``yes``, ``no``, ``1`` and ``0`` are accepted.
+
+Type hints are used as conversion callables. Plain runtime types such as
+``int``, ``float``, ``str`` and ``bool`` are appropriate for automatic
+validation; for more complex parsing, such as dates or comma-separated
+lists, provide an explicit validator.
+
+You can still specify which validator goes with which argument by passing a
+dictionary to the :class:`validate` decorator. Here's a simple example:
 
 .. code-block:: python
 
@@ -46,24 +71,22 @@ the :class:`validate` decorator. Here's a simple example:
         @expose('json')
         @validate({"a":validation.Convert(int), "b":validation.RequireValue()})
         def two_validators(self, a=None, b=None, *args):
-            validation_status = tg.request.validation
+            validation_status = request.validation
 
-            errors = [{key, value} in validation_status.errors.iteritems()]
-            values =  validation_status.values
-            return dict(a=a, b=b, errors=str(errors), values=str(values))
+            errors = {key: str(value) for key, value in validation_status.errors.items()}
+            values = validation_status.values
+            return dict(a=a, b=b, errors=errors, values=values)
 
 The dictionary passed to validators maps the incoming field names to
-the appropriate FormEncode validators, ``Int`` in this example.
+the appropriate converter or validator.
 
 In case of a validation error TurboGears will provide the errors
 and values inside ``tg.request.validation``.
 
 .. note::
 
-    FormEncode provides a number of useful pre-made validators for you to
-    use: they are available in the :mod:`formencode.validators` module.
-
-    FormEncode can be used with TurboGears via the tgext.formencode extension.
+    FormEncode validators and schemas can be used with TurboGears by
+    installing and enabling the ``tgext.formencode`` extension.
 
 
 Validation Process Information
@@ -135,15 +158,20 @@ will automatically validate the submitted data against that form.
 Validators
 ==========
 
-TurboGears applications will usually rely on three kind of validators:
+TurboGears applications will usually rely on these validation mechanisms:
 
-    * :class:`.Convert` and :class:`RequireValue` which is builtin into TurboGears 
-      and can be used for simple conversions like integers, floats and so on...
-    * :mod:`tw2.core.validation` which provide ToscaWidgets validators for **Forms**
-    * :mod:`formencode.validators` validators which can be used **Standalone** or with a **Form**
+    * Type hints on controller arguments, used by ``@validate()`` to create
+      simple converters automatically.
+    * :class:`.Convert` and :class:`RequireValue`, which are built into
+      TurboGears and can be used for explicit conversions like integers,
+      floats and so on.
+    * :mod:`tw2.core.validation`, which provides ToscaWidgets validators for
+      **Forms**.
+    * :mod:`formencode.validators` validators, which can be used **Standalone**
+      or with a **Form** after installing and enabling ``tgext.formencode``.
 
-While in many cases ``Convert`` will suffice, the ``FormEncode`` library provides a pretty
-complete set of validators:
+While in many cases type hints or ``Convert`` will suffice, applications that
+install ``tgext.formencode`` can also use FormEncode's larger validator set:
 
     * Attribute
     * Bool
@@ -202,11 +230,12 @@ complete set of validators:
     * Wrapper
 
 For the absolute most up-to date list of available validators, check
-the `FormEncode validators`_ module. You can also create your own
-validators or build on existing validators by inheriting from one of
-the defaults.
+the `FormEncode validators`_ module. To use those validators with
+TurboGears, install and enable ``tgext.formencode``.
 
-See the FormEncode documentation for how this is done.
+You can also create your own validators or build on existing validators by
+inheriting from one of the defaults. See the FormEncode documentation for how
+this is done.
 
 .. _`FormEncode validators`: https://formencode.readthedocs.io/en/latest/modules/validators.html
 
@@ -232,7 +261,7 @@ your own validators.
 Validators are simply objects that provide a ``to_python`` method
 which returns the converted value or raise :py:class:`tg.validation.TGValidationError`
 
-For example a validator that converts a paramter to an integer would look like:
+For example a validator that converts a parameter to an integer would look like:
 
 .. code-block:: python
 
@@ -252,14 +281,14 @@ Schema Validators
 -----------------
 
 Sometimes you need more power and flexibility than you can get from
-validating individual form fields.  Fortunately FormEncode provides
-just the thing for us -- Schema validators.
+validating individual form fields.  When ``tgext.formencode`` is installed,
+FormEncode schema validators can provide that.
 
 If you want to do multiple-field validation, reuse validators or just
-clean up your code, validation ``formencode.Schema``s are the way to go. 
-You create a validation schema by inheriting from
-:class:`formencode.schema.Schema` and pass the newly created ``Schema``
-as the ``validators`` argument instead of passing a dictionary.
+clean up your code, validation ``formencode.Schema``s are one option. You
+create a validation schema by inheriting from :class:`formencode.schema.Schema`
+and pass the newly created ``Schema`` as the ``validators`` argument instead
+of passing a dictionary.
 
 Create a schema:
 
@@ -288,7 +317,7 @@ matching fields.
 Again, for information about ``Invalid`` exception objects, creating
 your own validators, schema and FormEncode in general, refer to the
 `FormEncode Validator`_ documentation and don't be afraid to check the
-``Formencode.validators`` source. It's often clearer than the 
+``formencode.validators`` source. It's often clearer than the
 documentation.
 
 Note that Schema validation is rigorous by default, in particular, you 
@@ -301,6 +330,4 @@ or you will get validation errors.  To avoid this, add::
 to your schema declaration.
 
 .. _`FormEncode Validator`: http://www.formencode.org/en/latest/Validator.html
-
-.. _FormEncode: http://formencode.org/
 

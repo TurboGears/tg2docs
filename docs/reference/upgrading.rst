@@ -41,9 +41,9 @@ to ease maintenance of TurboGears:
 * ToscaWidgets2 support is now provided via a separate ``tgext.tw2`` package
   that has to be explicitly installed and enabled.
 
-* Formencode support is now shipped as a separate ``tgext.formencode`` package.
+* FormEncode support is now shipped as a separate ``tgext.formencode`` package.
   TurboGears still provides builtin support for validation and conversion via
-  ``Convert`` and ``unless``.
+  type hints, ``Convert`` and ``unless``.
 
 From 2.4.2 to 2.4.3
 -------------------
