@@ -110,24 +110,21 @@ language only.
 An i18n Quick Start
 -------------------
 
-After quickstarting your project, you will notice that the setup.py
-file contains the following section::
+Quickstarted projects store their i18n defaults in ``pyproject.toml``.
+The ``[tool.tg.devtools.i18n]`` section configures the catalog domain,
+locale directory, and generated POT file.  The ``[tool.babel]`` section
+contains the Babel extraction mappings that tell Babel which files should
+be searched for translatable strings.
 
-    message_extractors = {'yourapp': [
-             ('**.py', 'python', None),
-             ('templates/**.xhtml', 'kajiki', None),
-             ('public/**', 'ignore', None)]},
-
-This is an extraction method mapping that indicates to distutils which
-files should be searched for strings to be translated.  TurboGears2
-uses Babel to extract messages to a .pot file in your project's i18n
-directory.  Don't forget to add it to your revision control system if
-you use one.
+TurboGears uses Babel through the ``gearbox i18n`` command to extract
+messages to a POT file in your project's i18n directory.  Don't forget to
+add the generated catalog files to your revision control system if you use
+one.
 
 1. Extract all the translatable strings from your project's files by
 using the following command::
 
-    python setup.py extract_messages
+    gearbox i18n extract
 
 This command will generate a "pot" file in the i18n folder of your
 application.  This pot file is the reference file that serves for all
@@ -137,7 +134,7 @@ the different translations.
 2. Create a translation catalog for your language, let's take 'zh_tw'
 for example::
 
-    python setup.py init_catalog -l zh_tw
+    gearbox i18n init -l zh_tw
 
 3. Edit your language in i18n/[country
 code]/LC_MESSAGES/[project-name].po
@@ -151,7 +148,7 @@ Windows and provides a nice user-interface to edit po files.
 
 4. Compile your lang::
 
-    python setup.py compile_catalog  
+    gearbox i18n compile
 
 5. Config development.ini::
 
@@ -173,30 +170,37 @@ Commands
 To fresh start a translation, you could use the following command to
 handle your locales:
 
-init_catalog
+Init Catalog
 ~~~~~~~~~~~~
 
-You can extract all messages from the project with the following
-command::
+Create a catalog for a new locale with the following command::
 
-  python setup.py init_catalog -l [country code]
+  gearbox i18n init -l [country code]
 
 The country code could be es(Spanish), fr(France), zh_tw(Taiwan),
 jp(JAPAN), ru(Russian), or any other country code.
 
-Compile Catalog
-~~~~~~~~~~~~~~~
+Extract Messages
+~~~~~~~~~~~~~~~~
 
-You can extract all messages from the project with the following command::
+Extract all messages from the project with the following command::
 
-  python setup.py compile_catalog
+  gearbox i18n extract
 
 Update Catalog
 ~~~~~~~~~~~~~~
 
-You can update the catalog with the following command::
+Update an existing catalog after extracting new messages with the following
+command::
 
-  python setup.py update_catalog
+  gearbox i18n update -l [country code]
+
+Compile Catalog
+~~~~~~~~~~~~~~~
+
+Compile catalogs with the following command::
+
+  gearbox i18n compile
 
 
 .. _UserGuide: http://babel.edgewall.org/wiki/Documentation/index.html
