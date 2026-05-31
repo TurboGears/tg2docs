@@ -7,13 +7,13 @@ Prerequisites
 
  1. You have a working knowledge of how to use a `virtualenv`_.
  2. You have shell access to the `turbogears`_ site.
- 3. You know how to run the ``nosetests`` on your local git clones of TurboGears.
+ 3. You know how to run the ``pytest`` test suites on your local git clones of TurboGears.
  4. You have to have a working knowledge of git, and how to do merging and branching.
  5. You need permission to update the TurboGears2 and tg.devtools packages on `PyPI`_
 
 With those prerequisites in mind, this document will not cover all the
 command lines that you could run. Instead, we will specify steps as
-"activate your virtualenv" or "run nosetests" or the like.
+"activate your virtualenv" or "run pytest" or the like.
 
 Summary of Steps
 ================
