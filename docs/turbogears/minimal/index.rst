@@ -17,8 +17,8 @@ minimal mode a default setup that minimizes dependencies and complexity is provi
 Installing TurboGears2
 ======================
 
-This tutorial takes for granted that you have a working Python environment
-with Python2.7+ or Python3.4+, with `pip <https://pip.pypa.io/en/stable/installing/>`_
+This tutorial takes for granted that you have a working Python 3.10 or newer
+environment, with `pip <https://pip.pypa.io/en/stable/installing/>`_
 installed and you have a working browser to look at the web application
 you are developing.
 
@@ -33,14 +33,10 @@ proceed without using a virtual environment simply skip to :ref:`Install TurboGe
 Keep in mind that using a virtual environment is the suggested way to install TurboGears without
 messing with your system packages and python modules.
 
-To do so we need to install the ``virtualenv`` package::
-
-    $ pip install virtualenv
-
-Now the virtualenv command should be available and we can create and activate
+Python 3.10 and newer include the ``venv`` module, which can create and activate
 a virtual environment for our TurboGears2 project::
 
-    $ virtualenv tgenv
+    $ python3 -m venv tgenv
     $ . tgenv/bin/activate
 
 If our environment got successfully created and activated we should end up with
@@ -57,7 +53,7 @@ Now we are ready to install TurboGears itself:
 
 .. parsed-literal::
 
-    (tgenv)$ pip install |private_index_path| TurboGears2
+    (tgenv)$ python -m pip install |private_index_path| TurboGears2
 
 Hello World
 ===========
@@ -261,7 +257,11 @@ enabled with some options and by providing a Model for the application.
 
 The following will cover how to work with SQLAlchemy and extend the sample application to
 log and retrieve a list of greeted people.
-First we will need to enable SQLAlchemy support for our application::
+First install SQLAlchemy in the same virtual environment::
+
+    (tgenv)$ python -m pip install SQLAlchemy
+
+Then we will need to enable SQLAlchemy support for our application::
 
     from tg.configurator.components.sqlalchemy import SQLAlchemyConfigurationComponent
 
@@ -298,7 +298,7 @@ Accessing Data
 To start working with tables and the data they contain we need to declare the table itself, this
 can be done through the SQLAlchemy declarative layer by using a Declarative Base class::
 
-    from sqlalchemy.ext.declarative import declarative_base
+    from sqlalchemy.orm import declarative_base
 
     DeclarativeBase = declarative_base()
 
@@ -345,8 +345,11 @@ Going Full Stack
 While it is possible to manually enable the TurboGears features like the ``SQLAlchemy`` and ``Ming``
 storage backends, the application ``helpers``, ``app_globals``, ``i18n`` features through the
 :class:`.FullStackApplicationConfigurator` object,
-if you need them you probably want to switch to **full stack** mode and
-to create a full stack application through the ``gearbox quickstart`` command.
+if you need them you probably want to switch to **full stack** mode. Install
+``tg.devtools`` before creating a full stack application through the
+``gearbox quickstart`` command::
+
+    (tgenv)$ python -m pip install tg.devtools
 
 The :ref:`Full Stack Tutorial <wiki20>` provides an introduction to more complex applications
 with all the TurboGears features enabled, follow it if you want to unleash all the features that

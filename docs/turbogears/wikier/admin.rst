@@ -2,7 +2,11 @@
 Advanced Admin Customizations
 =============================================
 
-TurboGears admin configurations work through the ``TGAdminConfig`` class, which
+This section assumes that ``tgext.admin`` and ``tgext.crud`` are listed in
+``pyproject.toml``, installed with ``python -m pip install -e .``, and mounted
+in ``wikir/controllers/root.py`` as shown in the model section.
+
+TurboGears admin configurations work through the ``AdminConfig`` class, which
 makes it possible to change the behavior for each model. We are going to use the
 EasyCrudRestController to perform quick tuning of our administrative interface.
 
@@ -21,20 +25,20 @@ Custom Admin Config
 The first step is provide a custom admin config which removes the page id field.
 We are going to add this in ``wikir/controllers/root.py``::
 
+    from tgext.admin import AdminConfig, AdminController, CrudRestControllerConfig
     from tgext.crud import EasyCrudRestController
-    from tgext.admin.config import CrudRestControllerConfig
 
     class WikiPageAdminController(EasyCrudRestController):
-        __table_options__ = {'__omit_fields__':['uid']}
+        __table_options__ = {'__omit_fields__': ['uid']}
 
-    class CustomAdminConfig(TGAdminConfig):
+    class CustomAdminConfig(AdminConfig):
         class wikipage(CrudRestControllerConfig):
             defaultCrudRestController = WikiPageAdminController
 
 Once you declared your custom admin config, inside your ``RootController``
 there should be a line which looks like::
 
-    admin = AdminController(model, DBSession, config_type=TGAdminConfig)
+    admin = AdminController(model, DBSession)
 
 Replace that one with::
 
@@ -55,9 +59,9 @@ This can be done inside the ``WikiPageAdminController`` that we just declared::
 
     class WikiPageAdminController(EasyCrudRestController):
         __table_options__ = {
-            '__omit_fields__':['uid'],
-            '__field_order__':['url'],
-            '__xml_fields__':['url'],
+            '__omit_fields__': ['uid'],
+            '__field_order__': ['url'],
+            '__xml_fields__': ['url'],
 
             'url': lambda filler, row: '<a href="%(url)s">%(url)s</a>' % dict(url=row.url)
         }
@@ -66,7 +70,7 @@ This can be done inside the ``WikiPageAdminController`` that we just declared::
 
     The ``__field_order__`` option is necessary to let the admin know that we
     have a ``url`` field that we want to show. Otherwise it will just know
-    how to show it thanks to the ``__xml_fields__`` and ``slug`` properties
+    how to show it thanks to the ``__xml_fields__`` and ``url`` property
     but won't know where it has to be displayed.
 
 Extending the Admin Further

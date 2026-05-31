@@ -12,9 +12,9 @@ when needed.
 Default Setup
 =============
 
-By Default the `master.html` of a quickstarted project provides a div
-where flash messages will be displayed, this is achieved with the
-following lines of code:
+By default the ``master.xhtml`` of a current Kajiki quickstarted project
+provides a div where flash messages will be displayed. Genshi quickstarts use
+``master.html``. This is achieved with lines like:
 
 .. code-block:: html+genshi
 
@@ -61,8 +61,10 @@ Customizing Flash
 CSS Styling
 -----------
 
-By default `warning`, `error`, `info`, `ok` statuses
-provide a style in ``public/css/style.css`` for quickstarted applications.
+By default ``error``, ``info``, and ``ok`` statuses provide explicit styles in
+``public/css/style.css`` for quickstarted applications. The base ``#flash > div``
+style gives unrecognized statuses, including ``warning``, the default
+warning-like appearance.
 
 Any number of statuses can be configured using plain css:
 
@@ -109,8 +111,9 @@ Custom Flash HTML
 ~~~~~~~~~~~~~~~~~
 
 For example to render the flash using the **toastr** library you might want to remove the
-``py:with`` code block from your ``master.html`` and move it to the bottom of your ``<body>``
-right after the usage of bootstrap and jquery libraries:
+``py:with`` code block from your master template (``master.xhtml`` for Kajiki quickstarts,
+``master.html`` for Genshi quickstarts) and move it to the bottom of your ``<body>`` right
+after the usage of bootstrap and jquery libraries:
 
 .. code-block:: html+genshi
 
@@ -119,7 +122,7 @@ right after the usage of bootstrap and jquery libraries:
       <script src="http://code.jquery.com/jquery.js"></script>
       <script src="${tg.url('/javascript/bootstrap.min.js')}"></script>
 
-      <py:with vars="flash=tg.flash_obj.render('flash')">
+      <py:with vars="flash=tg.flash_obj.render('flash', use_js=False)">
         <py:if test="flash">${Markup(flash)}</py:if>
       </py:with>
     </body>
@@ -129,24 +132,26 @@ flash template.
 Now we can switch flash template to use the toastr library to display our flash by setting
 inside your ``app_cfg.py``::
 
-    base_config['flash.default_status'] = 'success'
-    base_config['flash.template'] = '''\
-        <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-        <script>toastr.$status("$message");</script>
-    '''
+    base_config.update_blueprint({
+        'flash.default_status': 'success',
+        'flash.template': '''\
+            <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+            <script>toastr.$status("$message");</script>
+        ''',
+    })
 
 This will ensure that each time the flash is displayed the toastr library with the given status
 is used.
 
 Last, to correctly display the flash with the right look and feel, don't forget to add the
-toastr CSS to the head of your ``master.html``:
+toastr CSS to the head of your master template:
 
 .. code-block:: html
 
   <link rel="stylesheet" type="text/css" media="screen"
         href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
 
-If everything is correct you should see your flash messages as baloon into the top-right corner
+If everything is correct you should see your flash messages as balloon into the top-right corner
 of your webpage.
 
 Custom Flash JavaScript
@@ -161,11 +166,13 @@ message.
 For example to use the toastr library you might want to ensure toastr CSS and JS are available
 and add the following to your ``app_cfg.py``::
 
-    base_config['flash.default_status'] = 'success'
-    base_config['flash.js_call'] = '''\
-        var payload = webflash.payload();
-        if(payload) { toastr[payload.status](payload.message); }
-    '''
+    base_config.update_blueprint({
+        'flash.default_status': 'success',
+        'flash.js_call': '''\
+            var payload = webflash.payload();
+            if(payload) { toastr[payload.status](payload.message); }
+        ''',
+    })
 
 The webflash object is provided by :class:`.TGFlash` itself and the ``webflash.payload()``
 method will fetch the current message for you.

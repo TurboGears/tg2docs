@@ -44,10 +44,14 @@ A request to ``/movie?movie_id=7&featured=true&rating=8.5`` calls the method
 with ``movie_id`` as an ``int``, ``featured`` as a ``bool`` and ``rating`` as a
 ``float``.
 
-Arguments without defaults are required by validation. Arguments with defaults
-are optional; if the request omits them, the default value is passed to the
-controller. Boolean annotations use TurboGears' boolean parser, so values such
-as ``true``, ``false``, ``yes``, ``no``, ``1`` and ``0`` are accepted.
+Arguments without defaults are also required by the controller dispatcher. If
+the request omits one, the request can fail during dispatch with ``404 Not
+Found`` before the validation error handler runs. Arguments with defaults are
+optional; if the request omits them, the default value is passed to the
+controller. Use an explicit validator on an argument with a default when a
+missing query parameter should be reported through validation instead of
+dispatch. Boolean annotations use TurboGears' boolean parser, so values such as
+``true``, ``false``, ``yes``, ``no``, ``1`` and ``0`` are accepted.
 
 Type hints are used as conversion callables. Runtime types such as ``int``,
 ``float``, ``str`` and ``bool`` are good fits for automatic validation. For
@@ -174,18 +178,36 @@ For manually written forms, put ``@validate`` on the action that processes the
 submitted data and read validation errors from ``tg.request.validation`` in the
 handler or template.
 
-TurboGears can also validate widget-based forms. When using ToscaWidgets2, pass
-the form class to ``@validate`` and provide an error handler that redisplays the
-form:
+TurboGears can also validate widget-based forms. In TurboGears 2.5, install
+and enable ``tgext.tw2`` before relying on ToscaWidgets2 forms; the extension
+adds the TW2 middleware and registers TW2 validation errors with TurboGears.
+When using ToscaWidgets2, pass the form class to ``@validate`` and provide an
+error handler that redisplays the form:
 
 .. code-block:: python
+
+    import tw2.core as twc
+    import tw2.forms as twf
+    from tg import expose, validate
+
+
+    class MovieForm(twf.Form):
+        class child(twf.TableLayout):
+            title = twf.TextField(validator=twc.Required)
+
+        action = '/save_movie'
+
+    @expose('myapp.templates.index')
+    def index(self, **kw):
+        return dict(form=MovieForm)
 
     @expose()
     @validate(MovieForm, error_handler=index)
     def save_movie(self, *args, **kw):
         return str(kw)
 
-See :ref:`tw2_forms_validation` for a larger ToscaWidgets2 form example.
+See :ref:`tw2_forms_validation` for ``tgext.tw2`` setup and a larger
+ToscaWidgets2 form example.
 
 Writing Custom Validators
 =========================
@@ -211,13 +233,18 @@ The method receives the submitted value and returns the converted value. Raise
 
             return value
 
-Use it like any other explicit validator:
+Use it like any other explicit validator. Add an error handler when invalid
+values should be rejected instead of passed to the original action with details
+in ``tg.request.validation``:
 
 .. code-block:: python
 
+    from tg import expose, validate
+    from tg.controllers.util import validation_errors_response
+
     @expose('json')
-    @validate({'count': PositiveInt()})
-    def repeat(self, count):
+    @validate({'count': PositiveInt()}, error_handler=validation_errors_response)
+    def repeat(self, count=None):
         return dict(count=count)
 
 .. _validation_extensions:
@@ -285,7 +312,7 @@ Individual FormEncode Validators
         @validate({
             'email': validators.Email(not_empty=True),
         }, error_handler=validation_errors_response)
-        def subscribe(self, email):
+        def subscribe(self, email=None):
             return dict(email=email)
 
 FormEncode Schemas
@@ -314,7 +341,7 @@ Use a schema when multiple fields must be validated together.
     class RootController(TGController):
         @expose('json')
         @validate(PasswordSchema(), error_handler=validation_errors_response)
-        def change_password(self, password, confirm_password):
+        def change_password(self, password=None, confirm_password=None):
             return dict(changed=True)
 
 FormEncode schemas are strict by default: fields that are not declared by the

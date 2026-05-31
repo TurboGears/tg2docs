@@ -22,10 +22,12 @@ the session, :ref:`Memcache <memcache>` is recommended.
 .. warning::
 
     Using cookies for storing the whole session's content exposes
-    your application to possible exploits if the attacker gets to
-    know the secret key which is used for the encryption of the
-    cookies. Considering this, it is probably better to use the
-    filesystem storage if you don't want to set up memcache.
+    your application to possible exploits if an attacker gets the
+    secret key used to validate the cookies. Current quickstarts sign
+    cookie sessions but do not encrypt them unless you configure an
+    encryption key, so avoid storing sensitive data in cookie sessions.
+    Use server-side storage such as filesystem or memcache when you need
+    to keep session data off the client.
 
 .. note::
 
@@ -43,8 +45,9 @@ How To Use Sessions?
 If you just quickstarted a TurboGears 2 application, the session
 system is pre-configured and ready to be used.
 
-By default we are using the Beaker session system. This system is
-configured to use hashed cookies for session storage.
+By default TurboGears uses the Beaker session system. Current quickstarted
+projects configure Beaker to use cookie session storage with JSON
+serialization.
 
 Each time a client connects, the session middleware (Beaker) will
 inspect the cookie using the cookie name we have defined in the
@@ -54,10 +57,11 @@ If the cookie is not found it will be set in the browser. On all
 subsequent visits, the middleware will find the cookie and make use of
 it.
 
-When using the cookie based backend, all data that you put into the
-session will be pickled, hashed and encrypted by the middleware 
-when sending the response to the browser and vice-versa when
-reading the request.
+When using the cookie based backend in a current quickstart, session data is
+JSON-serialized and signed before being sent to the browser. It is not encrypted
+unless you configure ``session.encrypt_key``. Because the default serializer is
+JSON, store JSON-serializable values unless you deliberately change the session
+serializer.
 
 In the other backends, the cookie only contains a large random key
 that was set at the first visit and has been associated behind the
@@ -109,13 +113,12 @@ usability or functional tests.
 Avoid automatic session extension
 -----------------------------------
 
-TurboGears by default automatically extends session life time
-at every request if a session is already available. You can
-avoid this behavior by changing your application configuration
+TurboGears may extend session lifetime when a request reads an existing
+session, which can emit a fresh ``Set-Cookie`` header even if your controller
+did not change session data.
 
-.. code-block:: python
-
-    beaker.session.tg_avoid_touch = true
-
-This will also prevent TurboGears from causing an automatic
-session save at every request.
+Older documentation mentioned ``beaker.session.tg_avoid_touch = true`` for this
+behavior. Current TurboGears quickstarts pass session options with the
+``session.`` prefix, and that ``beaker.session`` option is not honored. For
+cacheable or otherwise cookie-stable endpoints, avoid reading ``tg.session`` at
+all unless the endpoint really needs session data.

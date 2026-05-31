@@ -23,8 +23,12 @@ For example to create a new **Photo** model simply run::
     $ gearbox scaffold model photo
 
 It will create a ``model/photo.py`` file with a ``Photo``
-class inside which you just need to import inside ``model/__init__.py``
-to make it available inside your app.
+class inside. Import that class inside ``model/__init__.py`` and add
+it to ``__all__`` to make it available inside your app::
+
+    from myapp.model.photo import Photo
+
+    __all__ = ('User', 'Group', 'Permission', 'Photo')
 
 Creating All Together
 ---------------------
@@ -36,8 +40,17 @@ and an index page you can run::
     $ gearbox scaffold model controller template photo
 
 Which will create a new controller with the associated page
-and model. To start using the controller mount it inside
-your application ``RootController``.
+and model. To start using the controller, import and mount it inside
+your application ``RootController``::
+
+    from myapp.controllers.photo import PhotoController
+
+    class RootController(BaseController):
+        photo = PhotoController()
+
+If you are following each example in the same project, use a different
+scaffold name for each example or start from a fresh quickstart; the
+examples are alternatives and reuse ``photo`` for readability.
 
 Creating Packages
 -----------------
@@ -54,4 +67,17 @@ To create scaffold in a package just provide the
     $ gearbox scaffold -s photo controller template photo
 
 This will create a photo controller and template inside
-a photo package where multiple templates can be placed.
+a photo package where multiple templates can be placed. The generated
+controller lives in the nested module, so import and mount it from
+there::
+
+    from myapp.controllers.photo.photo import PhotoController
+
+    class RootController(BaseController):
+        photo = PhotoController()
+
+The packaged template is created at ``templates/photo/photo.xhtml``.
+If the generated controller exposes ``myapp.templates.photo``, update
+that exposure to the packaged template path::
+
+    @expose('myapp.templates.photo.photo')

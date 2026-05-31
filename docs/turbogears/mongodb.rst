@@ -33,16 +33,23 @@ By default the application will try to connect to a server on port
 *27017* on local machine using a database that has the same name
 of your package.
 
-This can be changed by editing the development.ini file::
+This can be changed by editing the ``development.ini`` file. Current
+quickstarts keep the server URL and database name in separate settings::
 
-    ming.url = mongodb://localhost:27017/myproject
+    ming.url = mongodb://localhost:27017/
+    ming.db = myproject
 
-Now that everything is in place to start using MongoDB_ as your
-database server you just need to proceed the usual way by filling
-your database.
+Do not put the database name in both values, or Ming will build a nested
+connection path such as ``mongodb://localhost:27017/myproject/myproject``.
+
+The ``--ming`` quickstart writes Ming and PyMongo requirements to
+``pyproject.toml``. Install the generated application and its dependencies,
+then fill your database. Run these commands from the project root while a
+MongoDB server is listening on ``localhost:27017``.
 
 .. code-block:: bash
 
+      $ pip install -e .
       $ gearbox setup-app
 
 The quickstart command from above will create the authentication
@@ -97,10 +104,12 @@ of this file would look like this:
 .. code-block:: python
 
   # Import your model modules here.
-  from auth import User, Permission
+  from myproj.model.auth import User, Group, Permission
   # Say you defined these three classes in the 'movies'
   # module of your 'model' package.
-  from movies import Movie, Actor, Director
+  from myproj.model.movies import Movie, Actor, Director
+
+  __all__ = ('User', 'Group', 'Permission', 'Movie', 'Actor', 'Director')
 
 Indexing Support
 ----------------
@@ -172,9 +181,11 @@ You can see the ``permissions`` and ``groups`` properties that provide
 the interface to the relation and the ``_groups`` property that stores
 ids of groups related to each Permission in a mongodb array.
 
-In this case each user will have one or more groups stored with their group_name
-inside the `Permission._groups` array. Accessing `Permission.groups` will provide a list
-of the groups the user is part of.
+In this case each ``Permission`` stores the ids of the groups that have that
+permission inside the ``Permission._groups`` array. Accessing
+``Permission.groups`` provides those ``Group`` objects. Users have their own
+``User._groups`` array and ``User.groups`` relation for the groups they belong
+to.
 
 For a complete coverage of Relationships with Ming refer to Ming Relations_ guide.
 
@@ -193,25 +204,18 @@ through Python Descriptors Protocol:
 
 .. code-block:: python
 
+    import os
+    from hashlib import sha256
+
+    from ming.odm import FieldProperty
+
+
     class PasswordProperty(FieldProperty):
         @classmethod
         def _hash_password(cls, password):
-            salt = sha256()
-            salt.update(os.urandom(60))
-            salt = salt.hexdigest()
-
-            hash = sha256()
-            # Make sure password is a str because we cannot hash unicode objects
-            hash.update((password + salt).encode('utf-8'))
-            hash = hash.hexdigest()
-
-            password = salt + hash
-
-            # Make sure the hashed password is a unicode object at the end of the
-            # process because SQLAlchemy _wants_ unicode objects for Unicode cols
-            password = password.decode('utf-8')
-
-            return password
+            salt = os.urandom(60).hex()
+            digest = sha256((password + salt).encode('utf-8')).hexdigest()
+            return salt + digest
 
         def __set__(self, instance, value):
             value = self._hash_password(value)

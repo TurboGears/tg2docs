@@ -9,11 +9,13 @@ and how to get started with it. For more information, you may want to check
 :mod:`repoze.who`'s website.
 
 :mod:`repoze.who` is a powerful and extensible ``authentication`` package for
-arbitrary WSGI applications. By default TurboGears2 configures it to log using
-a form and retrieving the user information through the user_name field of the
-User class. This is made possible by the ``authenticator plugin`` that TurboGears2
-uses by default which asks ``base_config.sa_auth.authmetadata`` to ``authenticate``
-the user against given login and password.
+arbitrary WSGI applications. By default TurboGears2 configures it to log in using
+a form and retrieve the user information through the ``user_name`` field of the
+``User`` class. This is made possible by the ``authenticator plugin`` that
+TurboGears2 uses by default, which asks the object configured as
+``sa_auth.authmetadata`` in ``base_config.update_blueprint(...)`` to
+authenticate the user against the given login and password when that
+application-specific object provides an optional ``authenticate`` method.
 
 How it works in TurboGears
 ==========================
@@ -87,11 +89,14 @@ form will be sent and ``/logout_handler`` as the relative URL where the
 user will be logged out. The so-called rememberer of such identifier will
 be an instance of :class:`repoze.who.plugins.cookie.AuthTktCookiePlugin`.
 
-All these settings can be customized through the ``config.app_cfg.base_config.sa_auth``
-options in your project. Identifiers, Authenticators and Challengers can be overridden
-providing a different list for each of them as::
+All these settings can be customized through ``sa_auth.*`` keys passed to
+``base_config.update_blueprint(...)`` in your project's ``config/app_cfg.py``.
+Identifiers, authenticators and challengers can be overridden by providing a
+different list for each of them as::
 
-    base_config.sa_auth['identifiers'] = [('myidentifier', myidentifier)]
+    base_config.update_blueprint({
+        'sa_auth.identifiers': [('myidentifier', myidentifier), ('default', None)],
+    })
 
 You don't have to use :mod:`repoze.who` directly either, unless you decide not
 to use it the way TurboGears configures it.
@@ -100,7 +105,8 @@ Customizing authentication and authorization
 ============================================
 
 It's very easy for you to customize authentication and identification settings
-in :mod:`repoze.who` from ``{yourproject}.config.app_cfg.base_config.sa_auth``.
+in :mod:`repoze.who` with ``sa_auth.*`` keys in
+``{yourproject}.config.app_cfg.base_config.update_blueprint(...)``.
 
 Customizing how user information, groups and permissions are retrieved
 ----------------------------------------------------------------------
@@ -108,38 +114,44 @@ Customizing how user information, groups and permissions are retrieved
 TurboGears provides an easy shortcut to customize how your authorization
 data is retrieved without having to face the complexity of the underlying
 authentication layer. This is performed by the ``TGAuthMetadata`` object
-which is configured in your project ``config.app_cfg.base_config``.
+configured with the ``sa_auth.authmetadata`` key in your project's
+``config/app_cfg.py``.
 
 This object provides three methods which have to return respectively the
-user, its groups and its permissions. You can freely change them as you wish
-as they are part of your own application behavior.
+user, its groups and its permissions. Your application-specific
+``ApplicationAuthMetadata`` subclass can also provide an optional
+``authenticate`` method when authentication should be handled by that object.
+You can freely change these methods as you wish as they are part of your own
+application behavior.
 
 Advanced Customizations
 -----------------------
 
-For more advanced customizations or to use repoze plugins to implement
-different forms of authentication you can freely customize the whole
-authentication layer using through the ``{yourproject}.config.app_cfg.base_config.sa_auth``
-options.
+For more advanced customizations or to use :mod:`repoze.who` plugins to
+implement different forms of authentication you can customize the whole
+authentication layer with ``sa_auth.*`` keys in
+``{yourproject}.config.app_cfg.base_config.update_blueprint(...)``.
 
-The available directives are all optional:
+The available directives are all optional and are configured with the
+``sa_auth.`` prefix:
 
-* ``form_plugin``: This is a replacement for the FriendlyForm plugin and will be
-    always used as a challenger. If ``form_identifies`` option is True it will
-    also be appended to the list of identifiers.
-* ``ìdentifiers``: A custom list of :mod:`repoze.who` identifiers.
+* ``sa_auth.form_plugin``: This is a replacement for the FriendlyForm plugin and
+    will be always used as a challenger. If ``sa_auth.form_identifies`` is True
+    it will also be appended to the list of identifiers.
+* ``sa_auth.identifiers``: A custom list of :mod:`repoze.who` identifiers.
     By default it contains the ``form_plugin`` and the ``AuthTktCookiePlugin``.
-* ``challengers``: A custom list of :mod:`repoze.who` challengers.
+* ``sa_auth.challengers``: A custom list of :mod:`repoze.who` challengers.
     The ``form_plugin`` is always appended to this list, so if you have
     only one challenger you will want to change the ``form_plugin`` instead
-    of overridding this list.
-* ``authmetadata``: This is the object that TG will use to fetch authorization metadata.
-    Changing the authmetadata object you will be able to change how TurboGears
-    fetches your user data, groups and permissions.
-* ``mdproviders``: This is a list of :mod:`repoze.who` metadata providers.
-    Those usually to the same work that ``authmetadata`` does and in case
-    a :mod:`repoze.who` metadata provider already provided identity metadata
-    it will be available inside ``identity`` in ``authmetadata`` and can be used.
+    of overriding this list.
+* ``sa_auth.authmetadata``: This is the object that TG will use to fetch
+    authorization metadata. Changing the authmetadata object you will be able to
+    change how TurboGears fetches your user data, groups and permissions.
+* ``sa_auth.mdproviders``: This is a list of :mod:`repoze.who` metadata
+    providers. Those usually do the same work that ``authmetadata`` does and in
+    case a :mod:`repoze.who` metadata provider already provided identity
+    metadata it will be available inside ``identity`` in ``authmetadata`` and
+    can be used.
 
 Customizing the model structure assumed by the quickstart
 ---------------------------------------------------------
@@ -150,30 +162,31 @@ class for your users, groups and permissions are, respectively, ``User``,
 ``User.user_name``. What if you prefer ``Member`` and ``Team`` instead of
 ``User`` and ``Group``, respectively?
 
-First of all we need to inform the authentication layer that our user is stored
-in a different class. This makes :mod:`repoze.who` know where to look for the user
-to check its password::
-
-    # what is the class you want to use to search for users in the database
-    base_config.sa_auth.user_class = model.Member
-
-Then we have to tell out ``authmetadata`` how to retrieve the user, its groups
-and permissions::
+First of all we need to make ``authmetadata`` look up users in the
+``Member`` class instead of the default ``User`` class. In a current
+quickstarted application this is done by passing the database session and user
+class to your ``TGAuthMetadata`` object and configuring it with
+``base_config.update_blueprint(...)``::
 
     from tg.configuration.auth import TGAuthMetadata
 
-    #This tells to TurboGears how to retrieve the data for your user
+    # This tells TurboGears how to retrieve the data for your user.
     class ApplicationAuthMetadata(TGAuthMetadata):
-        def __init__(self, sa_auth):
-            self.sa_auth = sa_auth
+        def __init__(self, dbsession, user_class):
+            self.dbsession = dbsession
+            self.user_class = user_class
 
         def authenticate(self, environ, identity):
-            user = self.sa_auth.dbsession.query(self.sa_auth.user_class).filter_by(user_name=identity['login']).first()
+            user = self.dbsession.query(self.user_class).filter_by(
+                user_name=identity['login']
+            ).first()
             if user and user.validate_password(identity['password']):
                 return identity['login']
 
         def get_user(self, identity, userid):
-            return self.sa_auth.user_class.query.get(user_name=userid)
+            return self.dbsession.query(self.user_class).filter_by(
+                user_name=userid
+            ).first()
 
         def get_groups(self, identity, userid):
             return [team.team_name for team in identity['user'].teams]
@@ -181,7 +194,9 @@ and permissions::
         def get_permissions(self, identity, userid):
             return [p.permission_name for p in identity['user'].permissions]
 
-    base_config.sa_auth.authmetadata = ApplicationAuthMetadata(base_config.sa_auth)
+    base_config.update_blueprint({
+        'sa_auth.authmetadata': ApplicationAuthMetadata(model.DBSession, model.Member),
+    })
 
 Now our application is able to fetch the user from the ``Member`` table and
 its groups from the ``Team`` table. Using ``TGAuthMetadata`` makes also possible
@@ -206,7 +221,8 @@ This can be done by registering in TurboGears an object with ``identify``, ``rem
 and ``forget`` methods.
 
 The ``identify`` method is the one we are looking to catch the token value
-and return an identity that ``TGAuthMetadata`` can use to authenticate our user.
+and return an identity that your application-specific authmetadata object can
+use to authenticate our user.
 
 ``remember`` and ``forget`` methods are intended when the server can also drive
 the fact that the values requred to identify the user must be provided on subsequent
@@ -223,10 +239,15 @@ as we expect the client to explicitly provide the token for each request::
         def remember(self, environ, identity):
             return None
 
-Then our ``SimpleTokenIdentifier`` must be registered in ``identifiers`` list of
-simple authentication options to allow its usaged::
+Then our ``SimpleTokenIdentifier`` must be registered in the
+``sa_auth.identifiers`` list to allow its usage::
 
-    base_config.sa_auth.identifiers = [('simpletoken', SimpleTokenIdentifier()), ('default', None)]
+    base_config.update_blueprint({
+        'sa_auth.identifiers': [
+            ('simpletoken', SimpleTokenIdentifier()),
+            ('default', None),
+        ],
+    })
 
 We also keep the ``('default', None)`` entry to have TurboGears configure cookie based
 identification for us, such that we can continue to login through the usual username and
@@ -236,25 +257,29 @@ Authenticating User
 ~~~~~~~~~~~~~~~~~~~
 
 Once we have an identity for the user it's *authenticators* job to ensure that identity
-is valid. This means that the identity will be passed to ``TGAuthMetadata`` for
-authentication.
+is valid. If your application-specific authmetadata object is used as an
+authenticator, this means the identity will be passed to its optional
+``authenticate`` method.
 
 .. note::
 
     It's required that your identity has a ``password`` field even though it doesn't
-    have a password. Or it will be discarded and won't be passed to ``TGAuthMetadata``.
+    have a password. Or it will be discarded before it reaches your authmetadata
+    authenticator.
 
-We need to modify ``TGAuthMetadata.authenticate`` a little to allow identities
-that do not provide a valid password but has been identified by ``SimpleTokenIdentifier``.
+If your application-specific ``ApplicationAuthMetadata`` subclass defines an
+``authenticate`` method, update that optional method to allow identities that do
+not provide a valid password but have been identified by
+``SimpleTokenIdentifier``.
 
-We can do this by adding a specific check before the one for password:
+You can do this by adding a specific check before the one for password:
 
 .. code-block:: python
     :emphasize-lines: 9-11
 
     def authenticate(self, environ, identity):
         login = identity['login']
-        user = self.sa_auth.dbsession.query(self.sa_auth.user_class).filter_by(
+        user = self.dbsession.query(self.user_class).filter_by(
             user_name=login
         ).first()
 
@@ -280,19 +305,12 @@ to use browser basic authentication instead of form based authentication.
 Declaring a Custom Authentication Backend
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-First required step is to declare that we are going to use a custom
-authentication backend::
-
-    base_config.auth_backend = 'htpasswd'
-
-When this is valued to ``ming`` or ``sqlalchemy`` TurboGears will configure
-a default authentication stack based on users stored on the according database,
-if ``auth_backend`` is ``None`` the whole stack will be disabled.
-
-Then we must remove all the simple authentication options, deleting all the
-``basic_config.sa_auth`` from ``app_cfg.py`` is usually enough. Leaving
-unexpected options behind (options our authentication stack doesn't use)
-might lead to a crash on application startup.
+Current quickstarted applications do not select authentication by assigning a
+backend name on ``base_config``. Authentication is enabled by the
+``sa_auth.enabled`` blueprint key, and the active plugins are selected with the
+other ``sa_auth.*`` keys. When replacing the form login flow with BasicAuth,
+keep ``sa_auth.enabled`` true and replace the form-oriented identifiers,
+authenticators and challengers with the plugins shown below.
 
 Using HTPasswd file for users
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -301,7 +319,12 @@ Next step is storing our users inside an ``htpasswd`` file,
 this can be achieved by using the ``HTPasswdPlugin`` authenticator::
 
     from repoze.who.plugins.htpasswd import HTPasswdPlugin, plain_check
-    base_config.sa_auth.authenticators = [('htpasswd', HTPasswdPlugin('./htpasswd', plain_check))]
+
+    base_config.update_blueprint({
+        'sa_auth.authenticators': [
+            ('htpasswd', HTPasswdPlugin('./htpasswd', plain_check)),
+        ],
+    })
 
 This will make TurboGears load users from an htpasswd file inside the directory
 we are starting the application from. The ``plain_check`` function is the
@@ -319,7 +342,9 @@ file, we need to use BasicAuth for identifying returning users::
     from repoze.who.plugins.basicauth import BasicAuthPlugin
 
     base_auth = BasicAuthPlugin('MyTGApp')
-    base_config.sa_auth.identifiers = [('basicauth', base_auth)]
+    base_config.update_blueprint({
+        'sa_auth.identifiers': [('basicauth', base_auth)],
+    })
 
 This will correctly identify users that are already logged using
 BasicAuth, but we are still sending users to login form to
@@ -330,12 +355,13 @@ we must disable the login form and set the basic auth
 plugin as a challenger::
 
     # Disable the login form, it won't work anyway as the credentials
-    # for basic auth must be provided through the browser itself
-    base_config.sa_auth.form_identifies = False
-
-    # Use BasicAuth plugin to ask user for credentials, this will replace
-    # the whole login form.
-    base_config.sa_auth.challengers = [('basicauth', base_auth)]
+    # for basic auth must be provided through the browser itself.
+    # Use BasicAuth plugin to ask user for credentials; this replaces
+    # the login form challenger.
+    base_config.update_blueprint({
+        'sa_auth.form_identifies': False,
+        'sa_auth.challengers': [('basicauth', base_auth)],
+    })
 
 Providing User Data
 ~~~~~~~~~~~~~~~~~~~
@@ -345,38 +371,36 @@ but we will need to also identify the authenticated user so that
 also ``request.identity`` and the authorization layer can work as
 expected.
 
-This is achieved through the ``authmetadata`` option, which tells
-TurboGears how to retrieve the user and it's informations. In this
+This is achieved through the ``sa_auth.authmetadata`` option, which tells
+TurboGears how to retrieve the user and its information. In this
 case as we don't have a database of users we will just provide a
 simple user with only ``display_name`` and ``user_name`` so that
-most things can work. For ``manager`` user we will also provide the
-``managers`` group so that user can access the TurboGears admin::
+most things can work. For the ``manager`` user we will also provide the
+``managers`` group and ``manage`` permission used by quickstarted protected
+controllers::
 
     from tg.configuration.auth import TGAuthMetadata
 
     class ApplicationAuthMetadata(TGAuthMetadata):
-        def __init__(self, sa_auth):
-            self.sa_auth = sa_auth
-
         def get_user(self, identity, userid):
-            # As we use htpasswd for authentication
-            # we cannot lookup the user in a database,
-            # so just return a fake user object
+            # As we use htpasswd for authentication we cannot look up the user
+            # in a database, so return a simple user-like object.
             from tg.util import Bunch
             return Bunch(display_name=userid, user_name=userid)
 
         def get_groups(self, identity, userid):
-            # If the user is manager we give him the
-            # managers group, otherwise no groups
             if userid == 'manager':
                 return ['managers']
-            else:
-                return []
-
-        def get_permissions(self, identity, userid):
             return []
 
-    base_config.sa_auth.authmetadata = ApplicationAuthMetadata(base_config.sa_auth)
+        def get_permissions(self, identity, userid):
+            if userid == 'manager':
+                return ['manage']
+            return []
+
+    base_config.update_blueprint({
+        'sa_auth.authmetadata': ApplicationAuthMetadata(),
+    })
 
 Removing Login Form
 ~~~~~~~~~~~~~~~~~~~
@@ -397,10 +421,13 @@ Disabling authentication and authorization
 
 If you need more flexibility than that provided by the quickstart, or you are
 not going to use :mod:`repoze.who`, you should prevent TurboGears from dealing
-with authentication/authorization by removing (or commenting) the following
-line from ``{yourproject}.config.app_cfg``::
+with authentication/authorization by disabling the ``sa_auth.enabled`` blueprint
+key in ``{yourproject}.config.app_cfg``::
 
-    base_config.auth_backend = '{whatever you find here}'
+    base_config.update_blueprint({
+        'sa_auth.enabled': False,
+    })
 
-Then you may also want to delete those settings like ``base_config.sa_auth.*``
--- they'll be ignored.
+Then you may also want to remove the remaining ``sa_auth.*`` settings from
+``app_cfg.py`` so that future readers do not mistake them for active
+configuration.

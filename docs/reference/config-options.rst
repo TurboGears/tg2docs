@@ -20,6 +20,9 @@ Authentication
 
 .. autoclass:: tg.configurator.components.auth.SimpleAuthenticationConfigurationComponent
 
+.. autoclass:: tg.configuration.auth.TGAuthMetadata
+    :members:
+
 .. autoclass:: tg.appwrappers.identity.IdentityApplicationWrapper
 
 App Globals
@@ -155,6 +158,11 @@ Transaction Manager
 .. autoclass:: tg.configurator.components.transactions.TransactionManagerConfigurationComponent
 
 .. autoclass:: tg.appwrappers.transaction_manager.TransactionApplicationWrapper
+
+Validation
+==========
+
+.. autoclass:: tg.configurator.components.validation.ValidationConfigurationComponent
 
 JSON Encoding
 =============

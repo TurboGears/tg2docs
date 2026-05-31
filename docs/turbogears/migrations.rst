@@ -15,15 +15,19 @@ Getting Started
 -----------------
 
 TurboGears provides a ``gearbox migrate`` command to manage schema migration.
+Run these commands from an installed quickstarted project; during
+development, installing the project in editable mode is enough::
+
+    $ python -m pip install -e '.[testing]'
+
 You can run ``gearbox migrate db_version`` to see the current version
 of your schema::
 
     $ gearbox migrate -c development.ini db_version
     Context impl SQLiteImpl.
-    Will assume transactional DDL.
-    Current revision for sqlite:////tmp/migr/devdata.db: None
+    Will assume non-transactional DDL.
 
-By default the database version is ``None`` until a migration is applied.
+By default the database version is unset until a migration is applied.
 The first time a migration is applied the ``migrate_version`` table is
 created. This table will keep the current version
 of your schema to track when applying migrations is required.
@@ -34,11 +38,10 @@ table and check what it is the current version of your schema::
     sqlite> .headers on
     sqlite> select * from migrate_version;
     version_num
-    4681af2393c8
+    <generated revision>
 
-This is exactly like running the ``gearbox migrate db_version`` command, both
+This is exactly like running the ``gearbox migrate db_version`` command; both
 should tell you the same database version.
-In this case the reported version is 4681af2393c8.
 
 Integrating Migrations in the Development Process
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -54,7 +57,7 @@ model.
 Creating migrations
 ---------------------------------
 
-The ``gearbox migrate script`` command will create an empty change script for you,
+The ``gearbox migrate create`` command will create an empty change script for you,
 automatically naming it and placing it in your repository::
 
     $ gearbox migrate create 'Initial Schema'
@@ -63,20 +66,23 @@ The command will return by just printing the migrations repository where it is
 going to create the new script::
 
     $ gearbox migrate create 'Initial Schema'
-        Generating /tmp/migr/migration/versions/2a3f515bad0_initial_schema.py... done
+        Generating /tmp/migr/migration/versions/2a3f515bad0_initial_schema.py ...  done
 
     $ ls migration/versions
-    2a3f515bad0_this_is_an_example.py
+    2a3f515bad0_initial_schema.py
+    empty.txt
 
 Edit the Script
 ~~~~~~~~~~~~~~~
 
 Each change script provides an ``upgrade`` and ``downgrade`` method, and
 we implement those methods by creating and dropping the ``account`` table
-respectively::
+respectively. Keep the ``revision`` and ``down_revision`` values that
+Alembic generated for your project; do not copy the example identifiers
+below into your own script::
 
-    revision = '2a3f515bad0'
-    down_revision = '4681af2393c8'
+    revision = '2a3f515bad0'  # example; keep your generated revision
+    down_revision = None      # example; keep your generated down_revision
 
     from alembic import op
     import sqlalchemy as sa
@@ -103,11 +109,11 @@ successful::
 
     $ gearbox migrate test
     Context impl SQLiteImpl.
-    Will assume transactional DDL.
-    Running upgrade 4681af2393c8 -> 2a3f515bad0
+    Will assume non-transactional DDL.
+    Running upgrade <base> -> <generated revision>
     Context impl SQLiteImpl.
-    Will assume transactional DDL.
-    Running downgrade 2a3f515bad0 -> 4681af2393c8
+    Will assume non-transactional DDL.
+    Running downgrade <generated revision> -> <base>
 
 If you receive an error while testing your script, one of two issues
 is probably the cause:
@@ -130,8 +136,8 @@ will produce no output.  If migrations are applied, you will see
 output similar to the following::
 
     Context impl SQLiteImpl.
-    Will assume transactional DDL.
-    Running upgrade 4681af2393c8 -> 2a3f515bad0
+    Will assume non-transactional DDL.
+    Running upgrade <base> -> <generated revision>
 
 Keeping your websetup on sync
 ---------------------------------
@@ -145,9 +151,11 @@ migration will probably crash due to the existing tables.
 
 To prevent this your ``websetup`` script should always initialize the
 database in the same state where it would be after applying all the
-available migrations. To ensure this you will have to add at the end
-of the ``websetup/schema.py`` script a pool of commands to set the
-schema version to the last one::
+available migrations. Current quickstarted projects already include
+equivalent stamping code in ``websetup/schema.py``. If you maintain an
+older or custom project that lacks it, add commands like these at the
+end of ``websetup/schema.py`` to set the schema version to the latest
+revision::
 
     import alembic.config, alembic.command
     alembic_cfg = alembic.config.Config()
@@ -163,5 +171,5 @@ In those cases you can perform the ``gearbox migrate downgrade`` command::
 
     $ gearbox migrate downgrade
     Context impl SQLiteImpl.
-    Will assume transactional DDL.
-    Running downgrade 2a3f515bad0 -> 4681af2393c8
+    Will assume non-transactional DDL.
+    Running downgrade <generated revision> -> <base>

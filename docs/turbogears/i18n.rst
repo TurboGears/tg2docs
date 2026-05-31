@@ -15,8 +15,8 @@ documentation:
 A quickstarted project comes fully i18n enabled so you should get
 started quickly.
 
-If you're lucky enough you'll even see "Your application is now
-running" message in your language.
+If the quickstarted project includes a catalog for your browser language,
+its generated welcome page can be displayed in that language.
 
 Language Auto-Select
 --------------------
@@ -43,9 +43,9 @@ The current language in use is usually ``get_lang(all=False)[0]``.
 Forcing a Language
 ------------------------------
 
-Developer can force the currently used language for each request
-using the :func:`tg.i18n.set_temporary_lang` function. This
-will change the language only for the current request.
+Developers can force the currently used language for each request
+using the :func:`tg.i18n.set_request_lang` function. This changes
+the language only for the current request.
 
 If you need to permanently change the language for the user
 session duration, :func:`tg.i18n.set_lang` can be used.
@@ -117,9 +117,14 @@ contains the Babel extraction mappings that tell Babel which files should
 be searched for translatable strings.
 
 TurboGears uses Babel through the ``gearbox i18n`` command to extract
-messages to a POT file in your project's i18n directory.  Don't forget to
-add the generated catalog files to your revision control system if you use
-one.
+messages to a POT file in your project's package i18n directory. Install the
+generated project into the active environment before running ``gearbox i18n``
+commands so that the project-provided command is available::
+
+    python -m pip install -e .
+
+Don't forget to add the generated catalog files to your revision control system
+if you use one.
 
 1. Extract all the translatable strings from your project's files by
 using the following command::
@@ -136,8 +141,9 @@ for example::
 
     gearbox i18n init -l zh_tw
 
-3. Edit your language in i18n/[country
-code]/LC_MESSAGES/[project-name].po
+3. Edit your language catalog in ``[package]/i18n/[locale]/LC_MESSAGES/[domain].po``.
+For example, a project whose package and catalog domain are both ``myproject``
+will create ``myproject/i18n/zh_tw/LC_MESSAGES/myproject.po``.
 
 If you're not an expert in i18n or if you would like to give the files
 to someone else so that he helps you we recommend that you use the
@@ -150,12 +156,11 @@ Windows and provides a nice user-interface to edit po files.
 
     gearbox i18n compile
 
-5. Config development.ini::
+5. Configure the default language in ``development.ini`` if you want to force
+one instead of using browser language negotiation::
 
     [app:main]
-    use = egg: my-project
-    full_stack = true
-    lang = zh_tw
+    i18n.lang = zh_tw
 
 6. Start server::
 
@@ -175,10 +180,10 @@ Init Catalog
 
 Create a catalog for a new locale with the following command::
 
-  gearbox i18n init -l [country code]
+  gearbox i18n init -l [locale]
 
-The country code could be es(Spanish), fr(France), zh_tw(Taiwan),
-jp(JAPAN), ru(Russian), or any other country code.
+The locale could be ``es`` (Spanish), ``fr`` (French), ``zh_tw`` (Taiwan),
+``ja`` (Japanese), ``ru`` (Russian), or any other locale recognized by Babel.
 
 Extract Messages
 ~~~~~~~~~~~~~~~~
@@ -193,7 +198,7 @@ Update Catalog
 Update an existing catalog after extracting new messages with the following
 command::
 
-  gearbox i18n update -l [country code]
+  gearbox i18n update -l [locale]
 
 Compile Catalog
 ~~~~~~~~~~~~~~~

@@ -459,7 +459,7 @@ function as follows:
 .. code-block:: xml
 
     <div>
-       <py:import hef="lib.xml" alias="lib"/>
+       <py:import href="lib.xml" alias="lib"/>
        <ul>
           <li py:for="i in range(sz)">$i is ${lib.evenness(i)}</li>
        </ul>
@@ -490,16 +490,24 @@ command.
 Enabling Kajiki Templates
 =========================
 
-Enabling Kajiki support involves changing the ``base_config.default_renderer``
-option in your ``app_cfg.py`` and adding ``kajiki`` to the ``renderers``:
+Current quickstarted projects configure renderers through a
+``rendering_config`` dictionary in ``app_cfg.py`` and apply it with
+``base_config.update_blueprint(rendering_config)``. To switch a Genshi
+quickstart to Kajiki, make sure Kajiki is listed in that dictionary and set it
+as the default renderer before the blueprint update:
 
 .. code-block:: python
 
-  # Add kajiki support
-  base_config.renderers.append('kajiki')
+  rendering_config = {
+      'renderers': ['json'],
+      'default_renderer': 'kajiki',
+  }
+  rendering_config['renderers'].append('kajiki')
+  rendering_config['templating.kajiki.strip_text'] = False
+  base_config.update_blueprint(rendering_config)
 
-  # Set the default renderer
-  base_config.default_renderer = 'kajiki'
+Do not use the old ``base_config.renderers`` or ``base_config.default_renderer``
+attributes with current quickstarts; those attributes are no longer present.
 
 Adapting the Master Template
 ============================
@@ -606,19 +614,22 @@ insert content from the child templates into ``head`` and ``body``
 with two head and body **blocks**. So our child templates will be
 able to rely on those blocks to inject their content into the master.
 
-Last importat step is **renaming the master template**, as Kajiki
-in turbogears uses ``.xhtml`` extension we will need to rename
+Last important step is **renaming the master template**, as Kajiki
+in TurboGears uses the ``.xhtml`` extension, so we need to rename
 ``master.html`` to ``master.xhtml``::
 
   $ find ./ -iname 'master.html' -exec sh -c 'mv {} `dirname {}`/master.xhtml' \;
 
 .. note:: The previous expression will rename the master file if run
-          from within your project directory.
+          from within your project directory. Current Genshi quickstarts may
+          already contain a ``master.xhtml`` used by pluggable applications;
+          decide whether to replace or preserve that file before running the
+          command.
 
 Upgrading Child Templates
 =========================
 
-There are three things we need to do to upgrade all our child templates
+There are four things we need to do to upgrade all our child templates
 to Kajiki:
 
   * Replace ``xi:include`` with ``py:extends``
@@ -667,8 +678,15 @@ must remember to rename them all, like we did for master::
 
   $ find ./ -iname '*.html' -exec sh -c 'mv {} `dirname {}`/`basename {} .html`.xhtml' \;
 
+If this is a fresh quickstarted project, install it before serving so the
+project metadata can be found::
+
+  $ python -m pip install -e .
+
 Restarting your application now should lead to a properly working page
-equal to the original Genshi one.
+equal to the original Genshi one. If you use the generated scaffold template,
+convert ``templates/template.html.template`` separately because the ``*.html``
+patch commands above do not match that file.
 
 Congratulations, you successfully moved your templates from Genshi
 to Kajiki.

@@ -17,47 +17,51 @@ a sidebar containing all the available wiki pages, so the user can easily move a
 Pages Slug and Content
 -----------------------
 
-To create links to the pages and display their content we are going to add url
-and html_content properties to the page model. The first property will create
-the slug for the model and provide the url where the page is available, while
-the second will give back the page content parsed accordingly to the
-`Markdown <http://en.wikipedia.org/wiki/Markdown>`_ language.
+To create links to the pages and display their content we are going to add url,
+slug, and html_content properties to the page model. The slug gives each page a
+stable URL-friendly path segment, while html_content gives back the page content
+parsed accordingly to the `Markdown <http://en.wikipedia.org/wiki/Markdown>`_
+language.
 
-To generate the **slugs** we are going to use ``tgext.datahelpers``, and to
-process **markdown** we are going to use the ``markdown`` library. So
-the first thing we are going to do is add them to our project ``setup.py``
-file inside the ``install_requires`` list::
+To process **markdown** we are going to use the ``Markdown`` library. Add it to
+our project ``pyproject.toml`` file inside the ``[project].dependencies`` list::
 
-    install_requires=[
-        "TurboGears2 >= 2.3.4",
-        "Kajiki",
-        "zope.sqlalchemy >= 0.4",
-        "sqlalchemy",
-        "alembic",
-        "repoze.who",
-        "tw2.forms",
-        "tgext.admin >= 0.6.1",
-        "markdown",
-        "tgext.datahelpers"
+    [project]
+    dependencies = [
+      # keep the dependencies already listed here...
+      "Markdown",
     ]
 
-Then we need to run again ``pip install -e .`` to install our new
+Then we need to run again ``python -m pip install -e .`` to install our new
 project dependency::
 
-    (tg22env)$ pip install -e .
-    Successfully installed tgext.datahelpers markdown wikir
-    Cleaning up...
+    (tgenv)$ python -m pip install -e .
 
-Now that we installed the datahelpers we can add the **url** and **html_content**
-properties to our WikiPage model. Our model should end up looking like::
+Now that we installed Markdown we can add the **slug**, **url** and
+**html_content** properties to our WikiPage model. Our model should end up
+looking like::
 
-    #all the other sqlalchemy imports here...
+    # -*- coding: utf-8 -*-
+    from datetime import datetime
+    import re
+    import unicodedata
+
     import tg
-    from tgext.datahelpers.utils import slugify
     from markdown import markdown
+    from sqlalchemy import Column
+    from sqlalchemy.types import DateTime, Integer, Unicode
+
+    from wikir.model import DeclarativeBase
+
+    _slug_pattern = re.compile(r'[^a-z0-9]+')
+
+    def slugify(value):
+        value = unicodedata.normalize('NFKD', value).encode('ascii', 'ignore').decode('ascii')
+        value = _slug_pattern.sub('-', value.lower()).strip('-')
+        return value or 'page'
 
     class WikiPage(DeclarativeBase):
-        __tablename__ = 'page'
+        __tablename__ = 'wiki_page'
 
         uid = Column(Integer, primary_key=True)
         updated_at = Column(DateTime, default=datetime.utcnow, nullable=False)
@@ -65,16 +69,20 @@ properties to our WikiPage model. Our model should end up looking like::
         data = Column(Unicode(4096), nullable=False, default='')
 
         @property
+        def slug(self):
+            return slugify(self.title)
+
+        @property
         def url(self):
-            return tg.url('/'+slugify(self, self.title))
+            return tg.url('/' + self.slug)
 
         @property
         def html_content(self):
             return markdown(self.data)
 
         class __sprox__(object):
-            hide_fields =  ['updated_at']
-            field_widget_args = {'data': {'rows':15}}
+            hide_fields = ['updated_at']
+            field_widget_args = {'data': {'rows': 15}}
 
 Index Controller
 ------------------------
@@ -84,7 +92,7 @@ we need to retrieve the list of the wiki pages with their urls
 so that our index page can display the sidebar.
 
 Our index page is a wiki page itself, so we are also going to load up
-it's content from the page titled "index".
+its content from the page titled "index".
 
 To do so we must edit the ``RootController`` class inside the ``wikir/controllers/root.py``
 file and look for the **index** method. When you found it change it to look like::
@@ -92,7 +100,7 @@ file and look for the **index** method. When you found it change it to look like
 
     @expose('wikir.templates.index')
     def index(self):
-        wikipages = [(w.url, w.title) for w in DBSession.query(model.WikiPage).filter(model.WikiPage.title!='index')]
+        wikipages = [(w.url, w.title) for w in DBSession.query(model.WikiPage).filter(model.WikiPage.title != 'index')]
 
         indexpage = DBSession.query(model.WikiPage).filter_by(title='index').first()
         if not indexpage:
@@ -119,14 +127,14 @@ Now, if you reloaded to your index page you probably already noticed that nothin
 changed. This is because our controller retrieved the wiki pages, but we didn't
 expose them in the index template in any place.
 
-The index template is available as ``wikir/templates/index.html`` which is exactly
-the same path written inside the @expose decorator but with */* replaced by dots and
-without the template extension.
+The index template is available as ``wikir/templates/index.xhtml``. This is the
+same path written inside the @expose decorator but with */* replaced by dots and
+without the ``.xhtml`` template extension.
 
-We are going to provide a really simple template, so what is currently
+We are going to provide a really simple Kajiki template, so what is currently
 available inside the file is going to just be removed and replaced with:
 
-.. code-block:: html+genshi
+.. code-block:: xml
 
     <html py:extends="master.xhtml" py:strip="True">
     <head py:block="head" py:strip="True">
@@ -162,9 +170,9 @@ Page Template
 ---------------------------
 
 First we are going to create a template for our wiki pages and save it as
-``wikir/templates/page.html``. The content of our template will look like:
+``wikir/templates/page.xhtml``. The content of our template will look like:
 
-.. code-block:: html+genshi
+.. code-block:: xml
 
     <html py:extends="master.xhtml" py:strip="True">
     <head py:block="head" py:strip="True">
@@ -191,29 +199,25 @@ Page Controller
 Now that we have our template we just need to bind it a controller
 which is going to render the page. To do this we are going to use
 the special ``_default`` controller method. This is a method that
-turbogears will call if it's unable to find the exact method request
+TurboGears will call if it's unable to find the exact method requested
 by the url.
 
-As our wiki pages have a all different names they will all end up
+As our wiki pages have all different names they will all end up
 in _default and we will be able to serve them from there. Just
-edit ``wikir/controller/root.py`` and add the ``_default`` method
+edit ``wikir/controllers/root.py`` and add the ``_default`` method
 to the ``RootController``::
 
-    from tg import validate
-    from tgext.datahelpers.validators import SQLAEntityConverter
-    from tgext.datahelpers.utils import fail_with
+    from tg import abort
 
     @expose('wikir.templates.page')
-    @validate({'page':SQLAEntityConverter(model.WikiPage, slugified=True)},
-              error_handler=fail_with(404))
-    def _default(self, page, *args, **kw):
+    def _default(self, slug, *args, **kw):
+        page = next((w for w in DBSession.query(model.WikiPage).all() if w.slug == slug), None)
+        if page is None:
+            abort(404)
         return dict(page_id=page.uid, title=page.title, content=page.html_content)
 
-The ``@validate`` decorator makes possible to apply validators
-to the incoming parameters and if validation fails the specified
-error_handler is called. In this case we are checking if there
-is a web page with the given slug. If it fails to find one
-it will just return a 404 page.
+The ``_default`` method receives the requested path segment, looks for a wiki
+page with the same slug, and returns a 404 response when no page matches.
 
 If the page is available the page instance is returned, so
 our controller ends just returning the data of the page to

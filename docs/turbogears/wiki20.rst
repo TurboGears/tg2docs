@@ -40,9 +40,9 @@ developing TurboGears2 applications. They provide the ``gearbox`` suite of comma
 to create new full stack projects, quickly create controllers, templates, models and
 the TurboGears debugbar.
 
-.. parsed-literal::
+.. code-block:: bash
 
-    (tgenv)$ pip install |private_index_path| tg.devtools
+    (tgenv)$ pip install tg.devtools
 
 Quickstart
 ==========
@@ -76,29 +76,21 @@ TurboGears2 projects usually share a common structure, which should look like::
     We recommend you use the names given here: this documentation looks
     for files in directories based on these names.
 
-You need to update the dependencies in the file ``Wiki-20/setup.py``.
-Look for a list named ``install_requires`` and append the ``docutils``
-entry at the end. TurboGears2 does not require docutils,
-but the wiki we are building does.
+You need to update the project dependencies in ``wiki20/pyproject.toml``.
+Look for the ``[project]`` table and its ``dependencies`` list, then append
+``docutils``. TurboGears2 does not require docutils, but the wiki we are
+building does.
 
-Your ``install_requires`` should end up looking like:
+The dependency list should include an entry like this:
 
-.. code-block:: python
-    :emphasize-lines: 13
+.. code-block:: toml
+    :emphasize-lines: 5
 
-    install_requires=[
-        "TurboGears2 >= 2.3.9",
-        "Babel",
-        "Beaker",
-        "Kajiki",
-        "zope.sqlalchemy >= 0.4",
-        "sqlalchemy",
-        "alembic",
-        "repoze.who",
-        "tw2.forms",
-        "tgext.admin >= 0.6.1",
-        "WebHelpers2",
-        "docutils"
+    [project]
+    dependencies = [
+        "TurboGears2 >= 2.5.0",
+        # ... keep the other quickstart dependencies ...
+        "docutils",
     ]
 
 Now to be able to run the project you will need to install it and
@@ -108,10 +100,9 @@ inside the ``wiki20`` directory::
     $ pip install -e .
 
 .. note::
-    If you skip the ``pip install -e .`` command you might end up with an error that looks
-    like: *pkg_resources.DistributionNotFound: tw2.forms: Not Found for: wiki20 (did you run python setup.py develop?)*
-    This is because some of the dependencies your project depend on the options you choose while
-    quickstarting it.
+    If you skip the ``pip install -e .`` command, ``gearbox`` might be unable
+    to find your generated package metadata or the extra dependencies you added
+    to ``pyproject.toml``.
 
 You should now be able to start the newly create project with the ``gearbox serve`` command::
 
@@ -153,7 +144,7 @@ Controller Code
 
 .. highlight:: python
 
-``Wiki-20/wiki20/controllers/root.py`` (see below) is the code that
+``wiki20/wiki20/controllers/root.py`` (see below) is the code that
 causes the welcome page to be produced. After the imports the first
 line of code creates our main controller class by inheriting from
 TurboGears' ``BaseController``::
@@ -210,7 +201,7 @@ template.
 Displaying The Page
 -------------------
 
-`Wiki-20/wiki20/templates/index.xhtml` is the template
+`wiki20/wiki20/templates/index.xhtml` is the template
 specified by the ``@expose()`` decorator, so it formats what you view
 on the welcome screen. Look at the file; you'll see that it's standard
 XHTML with some simple namespaced attributes. This makes it very
@@ -291,20 +282,18 @@ Wiki Model
 =======================
 
 ``quickstart`` produced a directory for our model in
-`Wiki-20/wiki20/model/`. This directory contains an `__init__.py`
+`wiki20/wiki20/model/`. This directory contains an `__init__.py`
 file, which makes that directory name into a python module (so you can
 use ``import model``).
 
 Since a wiki is basically a linked collection of pages, we'll define a
 ``Page`` class as the name of our model.
 
-Create a new file called ``Wiki-20/wiki20/model/page.py``:
+Create a new file called ``wiki20/wiki20/model/page.py``:
 
 .. code-block:: python
 
-    from sqlalchemy import *
-    from sqlalchemy.orm import mapper, relation
-    from sqlalchemy import Table, ForeignKey, Column
+    from sqlalchemy import Column
     from sqlalchemy.types import Integer, Text
 
     from wiki20.model import DeclarativeBase, metadata, DBSession
@@ -316,7 +305,7 @@ Create a new file called ``Wiki-20/wiki20/model/page.py``:
         pagename = Column(Text, unique=True)
         data = Column(Text)
 
-Now to let TurboGears know that our model exists we must make it available inside the ``Wiki-20/wiki20/model/__init__.py``
+Now to let TurboGears know that our model exists we must make it available inside the ``wiki20/wiki20/model/__init__.py``
 file just by importing it at the end:
 
 .. code-block:: python
@@ -338,8 +327,8 @@ Now that our model is recognized by TurboGears we must create the table that it 
 to store its data. By default TurboGears will automatically create tables for each model it is aware of,
 this is performed during the application setup phase.
 
-The setup phase is managed by the ``Wiki-20/wiki20/websetup`` python module, we are just
-going to add to``websetup/boostrap.py`` the lines required to create a FrontPage page for
+The setup phase is managed by the ``wiki20/wiki20/websetup`` python module, we are just
+going to add to ``websetup/bootstrap.py`` the lines required to create a FrontPage page for
 our wiki, so it doesn't start empty.
 
 We need to update the file to create our `FrontPage` data just before
@@ -385,7 +374,7 @@ the ``gearbox setup-app`` command where your application configuration file is a
     Running setup_app() from wiki20.websetup
     Creating tables
 
-A file named ``Wiki-20/devdata.db`` should be created which contains
+A file named ``wiki20/devdata.db`` should be created which contains
 your ``sqlite`` database.
 For other database systems refer to the ``sqlalchemy.url``
 line inside your configuration file.
@@ -401,7 +390,7 @@ data to grab from the model, how to process it, and finally hands off
 that processed data to a template.
 
 ``quickstart`` has already created some basic controller code for us
-at `Wiki-20/wiki20/controllers/root.py`.
+at `wiki20/wiki20/controllers/root.py`.
 
 First, we must import the ``Page`` class from our model. At the end of
 the ``import`` block, add this line::
@@ -485,10 +474,10 @@ Adding Views (Templates)
 .. highlight:: html
 
 ``quickstart`` also created some templates for us in the
-`Wiki-20/wiki20/templates` directory: `master.xhtml` and `index.xhtml`.
+`wiki20/wiki20/templates` directory: `master.xhtml` and `index.xhtml`.
 Back in our simple controller, we used ``@expose()`` to hand off a
 dictionary of data to a template called ``'wiki20.templates.index'``,
-which corresponds to `Wiki-20/wiki20/templates/index.xhtml`.
+which corresponds to `wiki20/wiki20/templates/index.xhtml`.
 
 Take a look at the following line in `index.xhtml`::
 
@@ -606,7 +595,7 @@ know this is an editing page. Here are the changes for ``edit.xhtml``.
 Now that we have our view, we need to update our controller in order
 to display the form and handle the form submission. For displaying the
 form, we'll add an ``edit`` method to our controller in
-`Wiki-20/wiki20/controllers/root.py`:
+`wiki20/wiki20/controllers/root.py`:
 
 .. code-block:: python
     :emphasize-lines: 21-24
@@ -784,9 +773,9 @@ which is a utility that takes string input and returns a dictionary of
 document parts after performing conversions; in our case, the
 conversion is from Restructured Text to HTML.  The input
 (``page.data``) is in Restructured Text format, and the output format
-(specified by ``writer_name="html"``) is in HTML. Selecting the
-``fragment`` part produces the document without the document title,
-subtitle, docinfo, header, and footer.
+(specified by ``writer_name="html"``) is in HTML. The code selects the
+``html_body`` part, which produces the document body without a complete HTML
+page wrapper.
 
 You can configure TurboGears so that it doesn't live at the root of a
 site, so you can combine multiple TurboGears apps on a single
@@ -805,9 +794,9 @@ the string matching the regex.
 
 Note that ``_default()`` is now returning a ``dict`` containing an
 additional key-value pair: ``content=content``. This will not break
-``wiki20.templates.page`` because that page is only looking for
-``page`` in the dictionary, however if we want to do something
-interesting with the new key-value pair we'll need to edit
+``wiki20.templates.page`` because that page is still using ``wikipage``
+from the dictionary, however if we want to do something interesting with the
+new key-value pair we'll need to edit
 ``wiki20.templates.page``:
 
 .. code-block:: html+genshi

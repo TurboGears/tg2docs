@@ -4,11 +4,11 @@
 Templating
 ==========
 
-TurboGears enables template rendering though the :class:`tg.decorators.expose` decorator to
+TurboGears enables template rendering through the :class:`tg.decorators.expose` decorator to
 link controller methods to template and through the :func:`tg.render_template` function.
 
-Each template is rendered using a *template engine*, TurboGears provides some builtin engines
-but additional can be configured. The ``default_renderer`` for TurboGears applications is
+Each template is rendered using a *template engine*, TurboGears provides some built-in engines
+but additional engines can be configured. The ``default_renderer`` for TurboGears applications is
 ``Kajiki`` which permits to write templates in pure xhtml and validates them to detect issues
 at compile time and prevent serving broken pages. For documentation on Kajiki templates see
 the :ref:`Kajiki Template Language <kajiki-language>`.
@@ -18,9 +18,16 @@ of the template file in terms of python packages. This makes possible to refer t
 files independently from where the application is installed and started as it refers
 to the python package where the template file is provided.
 
-Typical dotted notation path looks like: **mypackage.templates.template_file** and it doesn't
-include any extention. If an extension is provided TurboGears will try to read the path
-as a file system path, not as a dotted notation path.
+A typical dotted notation path looks like **mypackage.templates.template_file**
+and does not include any extension. With the default Kajiki renderer,
+``mypackage.templates.sample`` resolves to the package template file
+``templates/sample.xhtml``.
+
+If an extension is provided, TurboGears treats the value as a filesystem-style
+template name instead of dotted notation. Absolute filesystem paths with an
+extension can be used directly. Relative paths are resolved by the renderer's
+template search path, so ``mypackage/templates/sample.xhtml`` is not equivalent
+to the dotted path ``mypackage.templates.sample``.
 
 Explicit Engine in Exposition
 -----------------------------
@@ -46,12 +53,20 @@ variables and utilities. The most useful one are probably:
       for formatting text and html in templates.
     - **request, response, tmpl_context, app_globals, config** which are the same available
       inside controllers.
-    - **identity** which is the currently logged used when recognized
     - **tg.url** which is the utility function to create urls in TurboGears.
 
-For a complete list of those variables refer to the :func:`tg.render_template` documentation.
-You can add additional variable to every single template by setting a ``variable_provider``
-function inside the Application Configurator (``app_cfg.base_config`` object).
+Authentication information is available through the request when authentication
+is enabled, but current quickstarts do not provide a guaranteed top-level
+``identity`` template variable.
 
-This function is expected to return a ``dict`` with any variable that should be added
-the default template variables. It can even replace existing variables.
+For a complete list of those variables refer to the :func:`tg.render_template` documentation.
+You can add additional variables to every single template by setting a
+``variable_provider`` function inside the Application Configurator
+(``app_cfg.base_config`` object)::
+
+    base_config.update_blueprint({
+        'variable_provider': lambda: {'provided_value': 'available everywhere'},
+    })
+
+This function is expected to return a ``dict`` with any variables that should be
+added to the default template variables. It can even replace existing variables.

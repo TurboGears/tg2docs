@@ -10,12 +10,11 @@ command previously provided by pylons.
 GearBox provides commands to create new full stack projects, serve PasteDeploy based applications,
 initialize them and their database, run migrations and start an interactive shell to work with them.
 
-By default launching gearbox without any subcommand will start the interactive mode.
-This provides an interactive prompt where gearbox commands, system shell commands and python statements
-can be executed. If you have any doubt about what you can do simply run the ``help`` command to get
-a list of the commands available (running ``help somecommand`` will provide help for the given sub command).
-
-To have a list of all the available commands simply run ``gearbox --help``
+Launching ``gearbox`` without a subcommand prints the top-level command help.
+If you have any doubt about what you can do, run ``gearbox --help`` or
+``gearbox help somecommand`` for detailed help for a specific subcommand.
+Some commands are contributed by the current project and become available
+after that project has been installed into the active Python environment.
 
 QuickStart
 ======================
@@ -25,26 +24,36 @@ just provide the name of your project to the command to create a new one::
 
     $ gearbox quickstart myproject
 
-The quickstart command provides a bunch of options to choose which template engine to use, which
-database engine to use various other options::
+The quickstart command provides options to choose which template engine to use,
+which database engine to use, and various other project settings::
 
-    optional arguments:
+    options:
       -a, --auth            add authentication and authorization support
       -n, --noauth          No authorization support
       -m, --mako            default templates mako
       -j, --jinja           default templates jinja
       -k, --kajiki          default templates kajiki
-      -g, --geo             add GIS support
+      -g, --genshi          default templates genshi
       -p PACKAGE, --package PACKAGE
                             package name for the code
       -s, --sqlalchemy      use SQLAlchemy as ORM
       -i, --ming            use Ming as ORM
       -x, --nosa            No SQLAlchemy
-      --disable-migrations  disable sqlalchemy-migrate model migrations
-      --enable-tw1          use toscawidgets 1.x in place of 2.x version
-      --skip-tw             Disables ToscaWidgets
-      --skip-genshi         Disables Genshi default template
+      --disable-migrations  disable alembic model migrations
+      --skip-default-template
+                            Disables Kajiki default templates
       --minimal-quickstart  Throw away example boilerplate from quickstart project
+
+Current quickstarted projects use ``pyproject.toml`` packaging metadata.
+Before running project-aware commands such as ``setup-app``, ``serve``,
+``tgshell``, or project-provided commands, install the generated project into
+the active environment from the project directory::
+
+    $ cd myproject
+    $ python -m pip install -e .
+
+Use ``python -m pip install -e '.[testing]'`` instead when you also want to run
+the generated test suite.
 
 Setup-App
 =======================
@@ -52,19 +61,24 @@ Setup-App
 The ``gearbox setup-app`` command runs the ``websetup.setup_app`` function of your project
 to initialize the database schema and data.
 
-By default the ``setup-app`` command is run on the ``development.ini`` file, to change this
-provide a different one to the ``--config`` option::
+By default the ``setup-app`` command is run on the ``development.ini`` file.
+Run it from an installed project directory.  Current quickstarts generate
+``development.ini`` and ``test.ini``; use another file only if you have created
+it yourself::
 
-    $ gearbox setup-app -c production.ini
+    $ python -m pip install -e .
+    $ gearbox setup-app -c development.ini
 
 Serve
 =======================
 
 The ``gearbox serve`` command starts a ``PasteDeploy`` web application defined by the provided
-configuration file. By default the ``development.ini`` file is used, to change this provide
-a different one to the ``--config`` option::
+configuration file. By default the ``development.ini`` file is used. Run it
+from an installed project directory, and use another config file only if you
+have created it yourself::
 
-    $ gearbox serve -c production.ini --reload
+    $ python -m pip install -e .
+    $ gearbox serve -c development.ini --reload
 
 The ``serve`` command provides a bunch of options to start the serve in daemon mode,
 automatically restart the application whenever the code changes and many more::
@@ -108,7 +122,9 @@ and keeps around request local data, but should never be used on production.
 
 On production system you might want to use ``egg:gearbox#cherrypy`` or ``egg:gearbox#gevent``
 servers which run the application on CherryPy and Gevent, it is also possible to use
-other servers like Waitress (``egg:waitress#main``) if available.
+other servers like Waitress (``egg:waitress#main``) if available. Alternative
+servers require their Python packages to be installed first; for example the
+CherryPy and Gevent entries require the corresponding server dependencies.
 
 TGShell
 ====================
@@ -121,7 +137,7 @@ The application to load is defined by the configuration file, by default
 different configuration provide a configuration file using the ``--config``
 option::
 
-    $ gearbox tgshell -c production.ini
+    $ gearbox tgshell -c development.ini
 
 The tgshell command provides an already active fake request which makes
 possible to call functions that depend on ``tg.request``, it is also
@@ -129,8 +145,7 @@ provided an ``app``  object through which is possible to make requests::
 
     $ gearbox tgshell
     TurboGears2 Interactive Shell
-    Python 2.7.3 (default, Aug  1 2012, 05:14:39)
-    [GCC 4.6.3]
+    Python 3.x (...)
 
       All objects from myapp.lib.base are available
       Additional Objects:
@@ -140,7 +155,7 @@ provided an ``app``  object through which is possible to make requests::
     >>> tg.request
     <Request at 0x3c963d0 GET http://localhost/_test_vars>
     >>> app.get('/data.json').body
-    '{"params": {}, "page": "data"}'
+    b'{"page": "data", "params": {}}'
     >>> model.DBSession.query(model.User).first()
     <User: name=manager, email=manager@somedomain.com, display=Example manager>
 
@@ -153,16 +168,15 @@ running from the command line will fail with an error.
 Suppose you have a script like::
 
     import tg
-    print 'Hello From', tg.request.path
+    print('Hello From', tg.request.path)
 
 Saving it as ``myscript.py`` and running it will fail with TurboGears
 complaining about a missing context::
 
     $ python myscript.py
-    Hello From
     Traceback (most recent call last):
       File "myscript.py", line 2, in <module>
-        print 'Hello From', tg.request._path
+        print('Hello From', tg.request.path)
       File "/Users/amol/wrk/tg/tg2/tg/support/objectproxy.py", line 19, in __getattr__
         return getattr(self._current_obj(), attr)
       File "/Users/amol/wrk/tg/tg2/tg/request_local.py", line 214, in _current_obj
@@ -195,18 +209,16 @@ like you were inside an HTTP request for a controller.
 Adding your own command
 =======================
 
-To add commands to available gearbox commands, add them to your project entry points under the ``gearbox.commands`` group. Here is en example with `setuptools`_::
+To add commands to available gearbox commands, add them to your project entry
+points under the ``gearbox.commands`` group. Current quickstarted projects use
+``pyproject.toml``; add an entry point like this and reinstall the project::
 
-    setup(
-        name='SampleApp',
-        # [...]
-        entry_points={
-            'gearbox.commands': [
-                'my_command = sample_app.my_commands_module.my_command_module:MyCommandClass'
-            ]
-    )
+    [project.entry-points."gearbox.commands"]
+    my-command = "sample_app.my_commands_module.my_command_module:MyCommandClass"
 
-Where your command class extend ``gearbox.command.Command``::
+    $ python -m pip install -e .
+
+Where your command class extends ``gearbox.command.Command``::
 
     # -*- coding: utf-8 -*-
     from gearbox.command import Command

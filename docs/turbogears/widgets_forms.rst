@@ -18,6 +18,41 @@ ToscaWidgets2 Widgets provide:
 For additional details about how ToscaWidgets2 Forms work,
 refer to the `ToscaWidgets2 Documentation <https://tw2core.readthedocs.io/en/latest>`_
 
+Enabling ToscaWidgets2 in TurboGears 2.5
+========================================
+
+TurboGears 2.5 keeps ToscaWidgets2 integration in the separate
+``tgext.tw2`` extension. A quickstarted project must install the extension and
+enable the TW2 middleware before widgets with resources or forms can be
+rendered in a request.
+
+Add the packages your application uses to ``pyproject.toml``::
+
+    dependencies = [
+        # ... existing dependencies ...
+        "tgext.tw2",
+        "tw2.forms",
+    ]
+
+Then install your project again::
+
+    $ pip install -e .
+
+Enable the extension in ``config/app_cfg.py`` after ``base_config`` is created
+and before the WSGI application is built:
+
+.. code-block:: python
+
+    import tgext.tw2
+
+    tgext.tw2.plugme(base_config)
+    base_config.update_blueprint({'tw2.enabled': True})
+
+The middleware provides the request-local resource registry used by TW2. Simple
+widgets without resources can be displayed in a shell, but widgets that declare
+CSS or JavaScript resources and forms rendered in a web page should be displayed
+through the TurboGears application with this middleware enabled.
+
 Widgets
 =======
 
@@ -44,7 +79,7 @@ widget passing any parameter you want to provide to the widget:
 .. code-block:: python
 
     >>> UserAvatarWidget.display(name='John Doe')
-    Markup(u'<div class="username">John Doe</div>')
+    Markup('<div class="username">John Doe</div>')
 
 The passed ``name`` is available inside the template as ``w.name``.
 All the arguments passed to the :meth:`tw2.core.Widget.display` function will be available
@@ -79,10 +114,10 @@ default value instead of leading to a crash:
 .. code-block:: python
 
     >>> UserAvatarWidget.display()
-    Markup(u'<div class="username">Unknown User</div>')
+    Markup('<div class="username">Unknown User</div>')
 
     >>> UserAvatarWidget.display(name='John Doe')
-    Markup(u'<div class="username">John Doe</div>')
+    Markup('<div class="username">John Doe</div>')
 
 The passed value will be available inside the template as properties
 of the widget instance and the widget instance will be available as ``w``.
@@ -134,7 +169,8 @@ username inside when clicked:
                        link='https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js')
         ]
 
-Calling ``UserAvatarWidget.display`` will generate the short html snippet:
+When rendered during a request handled by the TW2 middleware,
+``UserAvatarWidget.display`` will generate the short html snippet:
 
 .. code-block:: html
 
@@ -209,6 +245,8 @@ To display the form we can return it from the controller where it must be render
 
 .. code-block:: python
 
+    from tg import expose
+
     @expose('tw2test.templates.index')
     def index(self, *args, **kw):
         return dict(page='index', form=MovieForm)
@@ -218,7 +256,7 @@ Any field of the form can be filled using the ``value`` argument passed to the
 display function. The values provided inside this argument will override the
 field default ones.
 
-.. code-block:: html+genshi
+.. code-block:: html
 
     <div id="getting_started">
         ${form.display(value=dict(title='default title'))}
@@ -264,15 +302,19 @@ and place it at our form action:
 
 .. code-block:: python
 
+    from tg import expose, validate
+
     @expose()
     @validate(MovieForm, error_handler=index)
     def save_movie(self, *args, **kw):
         return str(kw)
 
 Now every submission to */save_movie* url will be validated against
-the *MovieForm* and if it doesn't pass validation will be redirected
-to the *index* method where the form will display an error for each field
-not passing validation.
+the *MovieForm* and if it doesn't pass validation the request will be handled
+by the *index* method where the form will display an error for each field
+not passing validation. This requires the ``tgext.tw2`` setup shown above;
+without it TW2 validation errors are not registered with TurboGears and will
+bubble out as server errors.
 
 .. note:: TurboGears keeps track of the form that failed validation
           when running the ``error_handler``, so if we display that
@@ -349,7 +391,7 @@ to display the error messages:
     try:
         MovieForm.validate(dict())
     except twc.ValidationError as e:
-        # Display widget with error messages inside.
+        # Display widget with error messages inside during a TW2-enabled request.
         e.widget.display()
 
 Relocatable Widget Actions
@@ -404,6 +446,7 @@ using the bootstrap CSS framework:
 
 .. code-block:: python
 
+    from tg.i18n import lazy_ugettext as l_
     from tw2.core import Validator
     from tw2.forms.widgets import Form, BaseLayout, TextField, TextArea, SubmitButton
 

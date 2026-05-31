@@ -26,16 +26,18 @@ TurboGears allows you to attach callables to a wide set of events.
 Most of those are available as both controller events and system
 wide events.
 
-To register a system wide even you can use the ``register`` method
+To register a system wide event you can use the ``register`` method
 of the ``tg.hooks`` object. As some hooks require being registered
 before the application is running, it's common practice to
 register them in your ``app_cfg.py`` file::
 
-    def on_startup():
-        print 'hello, startup world'
+    import tg
+
+    def on_startup(configurator, config):
+        print('hello, startup world')
 
     def before_render(remainder, params, output):
-        print 'system wide before render'
+        print('system wide before render')
 
     # ... (base_config init code)
     tg.hooks.register('initialized_config', on_startup)
@@ -43,13 +45,14 @@ register them in your ``app_cfg.py`` file::
 
 To register controller based hooks you can use the event decorators::
 
+    from tg import expose
     from tg.decorators import before_render
 
     def before_render_cb(remainder, params, output):
-        print 'Going to render', output
+        print('Going to render', output)
 
-    class MyController(TGController):
-        @expose()
+    class RootController(BaseController):
+        @expose('myproject.templates.index')
         @before_render(before_render_cb)
         def index(self, *args, **kw):
             return dict(page='index')
@@ -57,7 +60,9 @@ To register controller based hooks you can use the event decorators::
 Or register them explicitly (useful when registering hooks
 on third party controllers)::
 
-    tg.hooks.register('before_render', before_render_cb, controller=MyController.index)
+    import tg
+
+    tg.hooks.register('before_render', before_render_cb, controller=RootController.index)
 
 See :func:`tg.support.hooks.HooksNamespace.register` for more details on registering
 hooks.
@@ -84,7 +89,7 @@ Configuration Hooks
   Must return the WSGI application itself.
   Can be used to wrap the application into WSGI middlewares that have to be executed after all TG ones.
 * ``after_wsgi_middlewares(app) -> app`` - application wide only, called after finishing setting everything up.
-  Must return the WSGI application iself.
+  Must return the WSGI application itself.
   Can be used to wrap the application into WSGI middleware that have to be executed before the TG ones.
   Can also be used to modify the Application by mounting additional subcontrollers inside the RootController.
 
@@ -100,9 +105,11 @@ Notifying Custom Hooks
 ##########################
 
 Custom hooks can be notified using ``tg.hooks.notify``, listeners can register
-for any hook name, so it as simple as notifying your own hook and documenting
-them in your library documentation to make possible for other developers to listen
-for them::
+for any hook name, so it is as simple as importing ``tg``, notifying your own
+hook, and documenting it in your library documentation to make it possible for
+other developers to listen for it::
+
+    import tg
 
     tg.hooks.notify('custom_global_hook')
 
@@ -126,10 +133,10 @@ applied to every controller of the application or third party libraries::
     def controller_wrapper(next_caller):
         def call(*args, **kw):
             try:
-                print 'Before handler!'
+                print('Before handler!')
                 return next_caller(*args, **kw)
             finally:
-                print 'After Handler!'
+                print('After Handler!')
         return call
 
     base_config.get_component('dispatch').register_controller_wrapper(controller_wrapper)
@@ -146,7 +153,7 @@ Application Wrappers
 
 Application wrappers are like WSGI middlewares but
 are executed in the context of TurboGears and work
-with abstractions like Request and Respone objects.
+with abstractions like Request and Response objects.
 
 Application wrappers are callables built by passing
 the next handler in chain and the current TurboGears
@@ -167,10 +174,10 @@ instance::
             super(AppWrapper, self).__init__(handler, config)
 
         def __call__(self, controller, environ, context):
-            print 'Going to run %s' % context.request.path
+            print('Going to run %s' % context.request.path)
             return self.next_handler(controller, environ, context)
 
-Application wrappers can be registered from you application
+Application wrappers can be registered from your application
 configuration object in ``app_cfg.py``::
 
     base_config.register_application_wrapper(AppWrapper)

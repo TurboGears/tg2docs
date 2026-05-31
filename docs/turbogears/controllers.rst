@@ -81,7 +81,8 @@ add another method to class RootController as follows::
     def anotherpage(self):
         return "<h1>There are more pages in my website</h1>"
 
-Now, the URL ``/anotherpage`` will return:
+Restart the development server, or run it with reloading enabled, after
+changing controller code. Then the URL ``/anotherpage`` will return:
 
 **There are more pages in my website**
 
@@ -203,18 +204,18 @@ the filled template output to the browser.
 Template Example
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-A simple template file called ``sample`` could be made like
-this:
+A simple Kajiki template file named ``sample.xhtml`` in your
+project's ``templates`` package could be made like this:
 
 .. code-block:: html
 
     <html>
       <head>
-    <title>TurboGears Templating Example</title>
+        <title>TurboGears Templating Example</title>
       </head>
       <body>
-          <h2>I just want to say that ${person} should be the next
-            ${office} of the United States.</h2>
+        <h2>I just want to say that ${person} should be the next
+          ${office} of the United States.</h2>
       </body>
     </html>
 
@@ -235,8 +236,8 @@ We provide them by adding a method to the controller like this ...
 * The web user goes to ``http://localhost:8080/example``.
 * The ``example`` method is called.
 * The method ``example`` returns a Python ``dict``.
-* @expose processes the dict through the template file named
-  ``sample.html``.
+* @expose processes the dict through the Kajiki template file named
+  ``sample.xhtml``.
 * The dict values are substituted into the final web response.
 * The web user sees a marked up page saying:
 
@@ -256,17 +257,16 @@ level deep.
 TurboGears provides for this by traversing the object hierarchy, to
 find a method that can handle your request.
 
-To make a sub-controller, all you need to do is make your
-sub-controller inherit from the object class.  However there's a
-SubController class ``Controller`` in your project's lib.base
-(HelloWorld/helloworld/lib/base.py) for you to use if you want a
-central place to add helper methods or other functionality to your
-SubControllers:
+To make a sub-controller, create another controller class and mount
+an instance of it on your ``RootController``. The quickstarted project
+provides ``BaseController`` in your package's ``lib.base`` module
+(``HelloWorld/helloworld/lib/base.py``) so your controllers have a
+central place for shared helpers or request behavior:
 
 .. code-block:: python
 
-    from lib.base import BaseController
-    from tg import redirect
+    from helloworld.lib.base import BaseController
+    from tg import expose, redirect
 
     class MovieController(BaseController):
         @expose()
@@ -332,25 +332,32 @@ Here is an example controller and a chart outlining the way urls are mapped to i
 
 .. code-block:: python
 
+    from tg import expose, TGController
+
     class WikiController(TGController):
 
+        @expose()
         def index(self):
             """returns a list of wiki pages"""
             ...
 
+        @expose()
         def _default(self, *args):
             """returns one wikipage"""
             ...
 
+        @expose()
         def create(self, title, text, author='anonymous', **kw):
-            wikipage = Page(title=tile, text=text, author=author, tags=str(kw))
+            wikipage = Page(title=title, text=text, author=author, tags=str(kw))
             DBSession.add(wikipage)
 
+        @expose()
         def update(self, title, **kw):
             wikipage = DBSession.query(Page).get(title)
-            for key, value in kw:
+            for key, value in kw.items():
                 setattr(wikipage, key, value)
 
+        @expose()
         def delete(self, title):
             wikipage = DBSession.query(Page).get(title)
             DBSession.delete(wikipage)
@@ -384,14 +391,12 @@ decorator, which is explained in :ref:`Validation`.
 Ignore Unused Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-By default TurboGears2 will complain about parameters that the controller
-method was not expecting. If this is causing any issue as you need to share
-between all the urls a parameter that it is used by your javascript framework
-or for any other reason, you can use ``ignore_parameters`` option to have
-TurboGears2 ignore them. Just add the list of parameters to ignore in
+If every URL receives shared parameters from JavaScript or another
+client-side tool, and you do not want those names passed into controller
+methods or ``**kw``, configure ``ignore_parameters`` in
 *config/app_cfg.py*::
 
-    base_config.ignore_parameters = ['timestamp', 'param_name']
+    base_config.update_blueprint({'ignore_parameters': ['timestamp', 'param_name']})
 
-You will still be able to access them from the ``tg.request`` object if you
-need them for any reason.
+You will still be able to access the original request values from the
+``tg.request`` object if you need them for any reason.

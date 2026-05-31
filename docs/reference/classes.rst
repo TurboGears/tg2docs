@@ -123,14 +123,38 @@ Hooks
 Milestones
 ==========
 
-.. autoclass:: tg.configuration.milestones._ConfigMilestoneTracker
-    :members:
+.. automodule:: tg.configuration.milestones
+
+The public milestone instances are ``config_ready``, ``renderers_ready`` and
+``environment_loaded``. Register callbacks with their ``register`` method; the
+tracker implementation is internal.
+
+.. py:data:: tg.configuration.milestones.config_ready
+
+    Reached when application configuration has been prepared.
+
+.. py:data:: tg.configuration.milestones.renderers_ready
+
+    Reached when configured renderers have been initialized.
+
+.. py:data:: tg.configuration.milestones.environment_loaded
+
+    Reached when the application environment has been loaded.
 
 Internationalization
 ====================
 
 .. automodule:: tg.i18n
     :members:
+
+Controllers
+===========
+
+.. autoclass:: tg.TGController
+
+.. autoclass:: tg.RestController
+
+.. autoclass:: tg.controllers.WSGIAppController
 
 Controller Utilities
 ====================

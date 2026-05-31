@@ -86,8 +86,9 @@ end-user created configuration values, which is just another way of
 saying that the .ini files should contain *deployment specific*
 options.
 
-By default TurboGears provides a ``development.ini``, ``test.ini``,
-and ``production.ini`` files.  These are standard ini file formats.
+By default TurboGears provides ``development.ini`` and ``test.ini``
+files. For production, create a deployment-specific INI file by copying
+and adapting one of those files. These are standard ini file formats.
 
 These files are standard INI files, as used by PasteDeploy.  The
 individual sections are marked off with ``[]``'s.
@@ -128,6 +129,7 @@ The correct way of loading boolean values for your use is
 
 .. code-block:: python
 
+   from tg import config
    from tg.support.converters import asbool
 
    if asbool(config['enable_subsystem']):
@@ -173,9 +175,10 @@ module, the currently provided milestones are:
 * ``milestones.environment_loaded`` - Full environment have been loaded
   but application has not been created yet.
 
-Registering an action to be executed whenever a milestone is reach
-can be done using :func:`tg.configuration.milestones._ConfigMilestoneTracker.register`
-method of each milestone. The registered action takes no parameters.
+Registering an action to be executed whenever a milestone is reached
+can be done using the ``register`` method of each public milestone instance,
+for example ``milestones.config_ready.register(callback)``. The registered
+action takes no parameters.
 
 Milestones are much like :ref:`Hooks<hooks_and_events>` but they are
 only related to the configuration process. The major difference is that
@@ -283,8 +286,8 @@ The ``base_config`` object that is created in ``app_cfg.py`` should be
 used to set a blueprint with configuration values that belong to the
 application itself and are required for all instances of this app, as
 distinct from the configuration values that you set in the
-``development.ini`` or ``production.ini`` files that are intended to
-be editable by those who deploy the app.
+``development.ini``, ``test.ini``, or deployment-specific INI files that
+are intended to be editable by those who deploy the app.
 
 As part of the app loading process the blueprint from ``base_config``
 will be merged in with the config values from the .ini file you're using to
@@ -319,8 +322,10 @@ Registering new components is done through the :meth:`.FullStackApplicationConfi
 method. Provide the component to the method and a new instance of that component will be
 bound to the configurator.
 
-For example we might want to create a component that prints ``"Hello IPADDRESS"`` on each
-new request. The way we would do that within app.cfg looks something like this::
+For example we might want to create a component that prints the client address
+on each new request. The wrapper receives the current request context, so it can
+read incoming request data from ``context.request``. The way we would do that
+within ``config/app_cfg.py`` looks something like this::
 
     from tg.configurator import ConfigurationComponent, EnvironmentLoadedConfigurationAction
     from tg.support.converters import asbool
@@ -356,7 +361,8 @@ new request. The way we would do that within app.cfg looks something like this::
                     return self.enabled
 
                 def __call__(self, controller, environ, context):
-                    print 'Hello %s' % (environ['REMOTE_HOST'], )
+                    client_addr = context.request.client_addr
+                    print('Hello %s' % (client_addr, ))
                     return self.next_handler(controller, environ, context)
 
             configurator.register_application_wrapper(HelloWorldApplicationWrapper, after=True)
@@ -402,7 +408,7 @@ application is ready::
             )
 
         def _print_ready(self, conf, app):
-            print 'Ready to Fly!'
+            print('Ready to Fly!')
             return app
 
 .. note::
@@ -428,7 +434,7 @@ implementation and replace the component itself::
 
     class ReadyForTakeOffConfigurationComponent(ReadyToFlyConfigurationComponent):
         def _print_ready(self, conf, app):
-            print 'Ready for take off!'
+            print('Ready for take off!')
             return app
 
     base_config.replace("ready2fly", ReadyForTakeOffConfigurationComponent)

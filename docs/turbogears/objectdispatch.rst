@@ -49,21 +49,21 @@ and not a specific method itself:
 The Default Method
 ------------------
 
-The developer may decide to provied a ``_default`` method within their
+The developer may decide to provide a ``_default`` method within their
 controller which is called when the dispatch mechanism cannot find
-an appropriate method in your controllers to call.  This 
-_default method might look something like this:
+an appropriate method in your controllers to call.  This
+``_default`` method might look something like this:
 
 .. code-block:: python
 
+    from tg import expose
+
     class WikiController(BaseController):
-    
-      @expose('mytgapp.wiki.new)
-      def _default(self, *args):
-        """
-          Return a page to prompt the user to create a new wiki page."""
-        """
-        return dict(new_page_slug=args)s
+
+        @expose('mytgapp.templates.wiki_new')
+        def _default(self, *args):
+            """Return a page to prompt the user to create a new wiki page."""
+            return dict(new_page_slug=args)
 
 
 The Lookup Method
@@ -106,7 +106,7 @@ have controllers that look something like this:
 
         @expose()
         def update(self):
-            ....
+            pass
 
 So a URL request to .../2007/6/28/0/edit would map first to the
 BlogController's _lookup method, which would lookup the date,
@@ -150,6 +150,9 @@ the parent methods had.
 The ``inherit`` parameter of the :py:class:`tg.decorators.expose` decorator
 enables this behavior::
 
+    from tg import TGController, expose
+    from tg.decorators import before_render
+
     class OriginalController(TGController):
         @expose('mylib.templates.index')
         def index(self):
@@ -166,11 +169,11 @@ enables this behavior::
     class MyCustomizedController(OriginalController):
         @expose(inherit=True)
         def index(self, *args, **kw):
-            dosomething()
+            # Add custom behavior here before calling the parent method.
             return super(MyCustomizedController, self).index(*args, **kw)
 
         @expose('myapp.templates.newabout', inherit=True)
-        def about(self):
+        def about(self, *args, **kw):
             return super(MyCustomizedController, self).about(*args, **kw)
 
         def _before_render_data(remainder, params, output):
@@ -198,19 +201,22 @@ For statically mounted controllers the exposed informations are:
   it will return where the controller is mounted. This is the
   url to call when you want to access that controller.
 * The ``mount_steps`` property of a controller. If statically mounted
-  it will return the complete list of parents of that controller.
+  it will return the dispatch path as ``(path_element, controller)``
+  pairs, including the mounted controller.
 
 In the case you are dispatching the request yourself, for example
 through a ``_lookup`` method, the ``mount_point`` and ``mount_steps``
 informations won't be available. In this case you can rely
 on some other functions exposed by TG:
 
-* The ``tg.request.controller_state`` object keeps track of all
-  the steps provided to dispatch the request.
+* The ``tg.request.dispatch_state`` object keeps track of the
+  dispatch state for the request.
 * The ``tg.dispatched_controller()`` method when called inside
   a request will return the last statically mounted controller.
-  This can be useful to detect which controller finished the
-  request dispatch using the ``_lookup`` method.
+  This can be useful to detect which static controller was reached
+  before a ``_lookup`` method continued dispatch. Dynamic controllers
+  returned by ``_lookup`` do not have mount point information unless
+  you provide it yourself.
 
 The application ``RootController`` can usually be retrieved from
 ``tg.config['application_root_module'].RootController``

@@ -41,9 +41,10 @@ Application-level Caching
 
 TurboGears comes with application-level caching
 middleware enabled by default in QuickStarted projects.  The
-middleware, `Beaker <http://beaker.groovie.org>`_ is the same
-package which provides Session storage for QuickStarted
-projects.  Beaker is the cache framework used by TurboGears |version|.
+middleware, `Beaker <http://beaker.groovie.org>`_, is the cache framework used
+by TurboGears |version|. Beaker also underlies TurboGears session support, but
+current quickstarted projects store session data in signed cookies by default
+instead of one of the cache backends below.
 
 Beaker supports a variety of backends which can be used for
 cache or session storage:
@@ -109,9 +110,9 @@ To access the cache from within a controller module:
 
 .. code-block:: python
 
-    from tg import cache
+    from tg import cache, expose
 
-    @expose()
+    @expose('json')
     def some_action(self, day):
         # hypothetical action that uses a 'day' variable as its key
 
@@ -203,13 +204,16 @@ To use DBM-file-based caching:
 To use SQLAlchemy-based caching you must provide the `url` parameter
 for the `Beaker` configuration.  This can be any valid SQLAlchemy
 URL, the `Beaker` storage table will be created by `Beaker` if
-necessary:
+necessary. Make sure the containing directory exists, and remember that
+``sqlite:///tmp/cache/beaker.sqlite`` is relative to the current working
+directory while ``sqlite:////tmp/cache/beaker.sqlite`` is an absolute
+``/tmp`` path:
 
 .. code-block:: ini
 
     [app:main]
     beaker.cache.type = ext:database
-    beaker.cache.url = sqlite:///tmp/cache/beaker.sqlite
+    beaker.cache.url = sqlite:////tmp/cache/beaker.sqlite
 
 .. _memcache:
 
@@ -246,12 +250,13 @@ might look like this on an Ubuntu host:
     sudo vim /etc/memcached.conf
     # Set your desired parameters...
     sudo /etc/init.d/memcached restart
-    # now install the Python-side client library...
+    # now install a Python-side client library in your application environment...
     # note that there are other implementations as well...
-    easy_install python-memcached
+    python -m pip install python-memcached
 
-You then need to configure TurboGears/Pylon's beaker support to use the
-memcached daemon in your .ini files:
+The memcached cache backend will fail at request time if no supported Python
+memcache client is installed. You then need to configure TurboGears' Beaker
+support to use the memcached daemon in your .ini files:
 
 .. code-block:: ini
 
@@ -333,8 +338,11 @@ For example to enable caching for 1 hour for the profile of an user:
 
     @expose('myproj.templates.profile')
     def profile(self, username):
-        user = DBSession.query(User).filter_by(user_name=user_name).first()
-        return dict(user=user, tg_cache=dict(key=user_name, expire=3600))
+        user = DBSession.query(User).filter_by(user_name=username).first()
+        return dict(user=user, tg_cache=dict(key=username, expire=3600))
+
+Replace ``myproj.templates.profile`` and import ``DBSession`` and ``User`` from
+your project's model package.
 
 .. _http_caching:
 
@@ -395,28 +403,33 @@ its own copy, this decision is based on the URL and the ETag key.
 
 .. code-block:: python
 
+    from tg import expose
     from tg.controllers.util import etag_cache
+
+    @expose()
     def my_action(self):
         etag_cache('somekey')
-        return render('/show.myt', cache_expire=3600)
+        return 'cached body'
 
 Or to change other aspects of the response:
 
 .. code-block:: python
 
+    from tg import expose, response
     from tg.controllers.util import etag_cache
-    from tg import response
+
+    @expose()
     def my_action(self):
         etag_cache('somekey')
-        response.headers['content-type'] = 'text/plain'
-        return render('/show.myt', cache_expire=3600)
+        response.content_type = 'text/plain'
+        return 'cached body'
 
 .. note::
-    In this example that we are using template caching in addition to ETag
-    caching. If a new visitor comes to the site, we avoid re-rendering the
-    template if a cached copy exists and repeat hits to the page by that user
-    will then trigger the ETag cache. This example also will never change the
-    ETag key, so the browsers cache will always be used if it has one.
+    If this action renders a template, you can combine ETag caching with
+    ``tg_cache`` template caching. A new visitor can then reuse the cached
+    rendered template, while repeat hits by the same browser can trigger the
+    ETag cache. These examples never change the ETag key, so the browser cache
+    will always be used if it has a copy.
 
 The frequency with which an ETag cache key is changed will depend on the web
 application and the developer's assessment of how often the browser should be

@@ -18,21 +18,24 @@ going to perform the same by customizing the TurboGears Admin.
 
 To do so we have to customize the ``WikiPageAdminController.put`` method::
 
-    from tgext.admin.config import CrudRestControllerConfig
     from datetime import datetime
 
-    class WikiPageAdminController(EasyCrudRestController):
-        __table_options__ = {'__omit_fields__':['uid'],
-                             '__field_order__':['url'],
-                             '__xml_fields__':['url'],
+    from tg import expose
+    from tgext.crud import EasyCrudRestController
 
-                             'url': lambda filler, row: '<a href="%(url)s">%(url)s</a>' % dict(url=row.url)
+    class WikiPageAdminController(EasyCrudRestController):
+        __table_options__ = {
+            '__omit_fields__': ['uid'],
+            '__field_order__': ['url'],
+            '__xml_fields__': ['url'],
+
+            'url': lambda filler, row: '<a href="%(url)s">%(url)s</a>' % dict(url=row.url)
         }
 
         @expose(inherit=True)
         def put(self, *args, **kw):
             kw['updated_at'] = datetime.utcnow()
-            return super(WikiPageAdminController, self).put(*args, **kw)
+            return super().put(*args, **kw)
 
 This way each time a wiki page is modified its updated_at field will be updated
 accordingly.
@@ -48,16 +51,17 @@ instead of using it directly from the controller. This can easily be done by
 updating our ``RootController._default`` method accordingly::
 
     @expose('wikir.templates.page')
-    @validate({'page':SQLAEntityConverter(model.WikiPage, slugified=True)},
-              error_handler=fail_with(404))
-    def _default(self, page, *args, **kw):
+    def _default(self, slug, *args, **kw):
+        page = next((w for w in DBSession.query(model.WikiPage).all() if w.slug == slug), None)
+        if page is None:
+            abort(404)
         return dict(wikipage=page)
 
 Our controller now just retrieves the page and passes it to our template,
-so we have to do some minor tuning to the ``wikir/templates/page.html`` template
+so we have to do some minor tuning to the ``wikir/templates/page.xhtml`` template
 too:
 
-.. code-block:: html+genshi
+.. code-block:: xml
 
     <html py:extends="master.xhtml" py:strip="True">
     <head py:block="head" py:strip="True">
@@ -87,11 +91,12 @@ You just need to generate a cache key and provide it inside the ``tg_cache`` dic
 returned by your controller::
 
     @expose('wikir.templates.page')
-    @validate({'page':SQLAEntityConverter(model.WikiPage, slugified=True)},
-              error_handler=fail_with(404))
-    def _default(self, page, *args, **kw):
+    def _default(self, slug, *args, **kw):
+        page = next((w for w in DBSession.query(model.WikiPage).all() if w.slug == slug), None)
+        if page is None:
+            abort(404)
         cache_key = '%s-%s' % (page.uid, page.updated_at.strftime('%Y%m%d%H%M%S'))
-        return dict(wikipage=page, tg_cache={'key':cache_key, 'expire':24*3600, 'type':'memory'})
+        return dict(wikipage=page, tg_cache={'key': cache_key, 'expire': 24 * 3600, 'type': 'memory'})
 
 This will keep our template cached in memory up to a day and will still regenerate
 the page whenever our wikipage changes as we are using the ``updated_at`` field

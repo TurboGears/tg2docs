@@ -34,12 +34,18 @@ a simple webservice that exposes a list of movies. WebServices are
 usually an ideal candidate for RESTful dispatch and so provide
 a simple and clean showcase of the feature.
 
-Here is the Model used to develop this chapter:
+Here is the model used to develop this chapter. In a quickstarted
+SQLAlchemy project, place it in a model module such as
+``moviedemo/model/movies.py`` and import the mapped classes from
+``moviedemo/model/__init__.py`` so ``metadata.create_all()`` and the
+rest of the application see the tables. The example assumes the
+project package is named ``moviedemo``; use your own package name if
+you quickstarted with a different one.
 
 .. code-block:: python
 
     from sqlalchemy import Column, Integer, String, Date, Text, ForeignKey, Table
-    from sqlalchemy.orm import relation
+    from sqlalchemy.orm import relationship
 
     from moviedemo.model import DeclarativeBase, metadata
 
@@ -60,7 +66,7 @@ Here is the Model used to develop this chapter:
         title = Column(String(100), nullable=False)
         description = Column(Text, nullable=True)
         genre_id = Column(Integer, ForeignKey('genres.genre_id'))
-        genre = relation('Genre', backref='movies')
+        genre = relationship('Genre', backref='movies')
         release_date = Column(Date, nullable=True)
 
     class Director(DeclarativeBase):
@@ -68,7 +74,7 @@ Here is the Model used to develop this chapter:
 
         director_id = Column(Integer, primary_key=True)
         title = Column(String(100), nullable=False)
-        movies = relation(Movie, secondary=movie_directors_table, backref="directors")
+        movies = relationship(Movie, secondary=movie_directors_table, backref="directors")
 
 I am isolating Movies, Genres, and Directors for the purpose of
 understanding how objects might relate to one another in a RESTful
@@ -85,8 +91,10 @@ Our controller class is going to look like this:
 
 .. code-block:: python
 
-    from tg import RestController
-    from tg.decorators import with_trailing_slash
+    from tg import expose, RestController
+
+    from moviedemo.model import DBSession
+    from moviedemo.model.movies import Director, Movie
 
     class MovieController(RestController):
 
@@ -95,13 +103,18 @@ Our controller class is going to look like this:
             movies = DBSession.query(Movie).all()
             return dict(movies=movies)
 
-Supposing our MovieController is mounted with the name ``movies`` inside
-our ``RootController`` going to http://localhost:8080/movies will provide
-the list of our movies encoded in json format.
+Mount ``MovieController`` with the name ``movies`` inside your
+``RootController``::
 
-If you ware looking for a way to fill some sample movies, just jump to
-http://localhost:8080/admin and create any data you need to make sure
-your controller is working as expected.
+    from moviedemo.controllers.movies import MovieController
+
+    class RootController(BaseController):
+        movies = MovieController()
+
+Then http://localhost:8080/movies will provide the list of movies
+encoded in JSON format. Add sample rows through your application, a
+Python shell, or your own admin interface before expecting data in the
+response.
 
 Creating New Items
 ----------------------------
@@ -114,7 +127,7 @@ url is accessed using a POST request:
 
     from datetime import datetime
 
-    class MovieRestController(RestController):
+    class MovieController(RestController):
 
         @expose('json')
         def post(self, title, description, directors=None, genre_id=None, release_date=None):
@@ -236,9 +249,10 @@ can validate in the same manner as before:
 Deleting An Item From Our Resource
 --------------------------------------
 
-The work-horse of delete is attached to the post_delete method.  Here
-we actually remove the record from the database, and then redirect
-back to the listing page:
+The work-horse of delete is attached to the ``post_delete`` method.
+A ``DELETE`` request to ``/movies/<movie_id>`` invokes this method; in
+this JSON API it removes the record from the database and returns the
+deleted id:
 
 .. code-block:: python
 
@@ -266,9 +280,13 @@ The challenge for design of your RESTful interface is determining how
 to associate parts of the URL to the resource definition, and defining
 which parts of the URL are part of the dispatch.  
 
-To do this, RestController introspects the get_one method to determine 
-how many bits of the URL to nip off and makes them available inside the 
-``request.controller_state.routing_args`` dictionary.
+To do this, RestController introspects the get_one method to determine
+how many bits of the URL to nip off and, when routing args are enabled,
+makes them available inside the
+``request.dispatch_state.routing_args`` dictionary. Enable routing args
+in ``config/app_cfg.py`` before using this pattern::
+
+    base_config.update_blueprint({'enable_routing_args': True})
 
 This is because you may have one or more identifiers to determine an object; 
 for instance you might use lat/lon to define a location.  
@@ -286,11 +304,11 @@ functionality:
     class MovieDirectorController(RestController):
         @expose('json')
         def get_all(self):
-            movie_id = request.controller_state.routing_args.get('movie_id')
+            movie_id = request.dispatch_state.routing_args.get('movie_id')
             movie = DBSession.query(Movie).get(movie_id)
             return dict(movie=movie, directors=movie.directors)
 
-    class MovieRestController(RestController):
+    class MovieController(RestController):
         directors = MovieDirectorController()
 
         @expose('json')
@@ -310,11 +328,12 @@ Here is what the Controller looks like with ``_before`` added in:
 .. code-block:: python
 
     from tg import tmpl_context, request
+    from tg.decorators import with_trailing_slash
 
     class MovieDirectorController(RestController):
 
         def _before(self, *args, **kw):
-            movie_id = request.controller_state.routing_args.get('movie_id')
+            movie_id = request.dispatch_state.routing_args.get('movie_id')
             tmpl_context.movie = DBSession.query(Movie).get(movie_id)
 
         @with_trailing_slash

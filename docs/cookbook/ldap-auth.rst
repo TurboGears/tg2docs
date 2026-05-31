@@ -23,13 +23,15 @@ You can find the `documentation for who_ldap
 <https://pypi.python.org/pypi/who_ldap/>`_ on PyPi.
 From there, you can also install `who_ldap`, just run::
 
-    pip install who_ldap
+    python -m pip install who_ldap
 
-You should also add this requirement to your project's `setup.py` file::
+You should also add this requirement to your project's ``pyproject.toml``
+``[project].dependencies`` list::
 
-    install_requires=[
-        ...,
-        "who_ldap",
+    [project]
+    dependencies = [
+      # keep the dependencies already listed here...
+      "who_ldap",
     ]
 
 Note that `who_ldap` itself requires the `ldap3` package
@@ -44,15 +46,13 @@ Configuration
 Here is an example configuration that you can put into the
 `config/app_cfg.py` file of your project::
 
-    # Configure the base SQLALchemy setup:
-    base_config.use_sqlalchemy = False
-
-    # Configure the authentication backend:
-
+    # Configure the base SQLAlchemy setup and authentication backend.
     # YOU MUST CHANGE THIS VALUE IN PRODUCTION TO SECURE YOUR APP
-    base_config.sa_auth.cookie_secret = 'secret'
-
-    base_config.auth_backend = 'ldapauth'
+    base_config.update_blueprint({
+        'use_sqlalchemy': False,
+        'sa_auth.enabled': True,
+        'sa_auth.cookie_secret': 'secret',
+    })
 
     from who_ldap import (LDAPSearchAuthenticatorPlugin,
                           LDAPAttributesPlugin, LDAPGroupsPlugin)
@@ -74,7 +74,9 @@ Here is an example configuration that you can put into the
         naming_attribute='sAMAccountName',
         start_tls=True)
 
-    base_config.sa_auth.authenticators = [('ldapauth', ldap_auth)]
+    base_config.update_blueprint({
+        'sa_auth.authenticators': [('ldapauth', ldap_auth)],
+    })
 
     # Retrieve user metadata from LDAP
 
@@ -94,9 +96,12 @@ Here is an example configuration that you can put into the
         name='groups',
         start_tls=True)
 
-    base_config.sa_auth.mdproviders = [
-        ('ldapuser', ldap_user_provider),
-        ('ldapgroups', ldap_groups_provider)]
+    base_config.update_blueprint({
+        'sa_auth.mdproviders': [
+            ('ldapuser', ldap_user_provider),
+            ('ldapgroups', ldap_groups_provider),
+        ],
+    })
 
     from tg.configuration.auth import TGAuthMetadata
 
@@ -108,9 +113,6 @@ Here is an example configuration that you can put into the
 
         # set of permissions for all mapped groups
         permissions_for_groups = {'managers': {'manage'}}
-
-        def __init__(self, sa_auth):
-            self.sa_auth = sa_auth
 
         def get_user(self, identity, userid):
             user = identity.get('user')
@@ -134,21 +136,23 @@ Here is an example configuration that you can put into the
             return permissions
 
 
-    base_config.sa_auth.authmetadata = ApplicationAuthMetadata(
-        base_config.sa_auth)
+    base_config.update_blueprint({
+        'sa_auth.authmetadata': ApplicationAuthMetadata(),
+    })
 
     # Override this if you would like to provide a different who plugin for
     # managing login and logout of your application:
 
-    base_config.sa_auth.form_plugin = None
+    base_config.update_blueprint({
+        'sa_auth.form_plugin': None,
+    })
 
-    # Page where you want users to be redirected to on login:
+    # Page where you want users to be redirected to on login and logout:
 
-    base_config.sa_auth.post_login_url = '/post_login'
-
-    # Page where you want users to be redirected to on logout:
-
-    base_config.sa_auth.post_logout_url = '/post_logout'
+    base_config.update_blueprint({
+        'sa_auth.post_login_url': '/post_login',
+        'sa_auth.post_logout_url': '/post_logout',
+    })
 
 You will need to change the connection parameters to point to your
 user base in your LDAP directory and login with a bind user and

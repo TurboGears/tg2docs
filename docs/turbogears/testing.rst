@@ -150,10 +150,10 @@ an example of accessing the parsed response::
 If you prefer jQuery-like DOM traversal, install ``pyquery`` and use the
 ``response.pyquery`` helper::
 
-    def test_hello_world(self):
+    def test_homepage_heading(self):
         res = self.app.get('/')
-        assert res.pyquery('h1').text() == 'Hello World'
-        assert res.pyquery('title').text() == 'Hello to You'
+        assert res.pyquery('h1').text().startswith('Welcome to TurboGears')
+        assert 'Welcome to TurboGears' in res.pyquery('title').text()
 
 For ``pyquery`` documentation, see https://pyquery.readthedocs.io/.
 
@@ -205,10 +205,12 @@ This might be the case if your utility function or class uses TurboGears
 features that depend on a request like ``tg.url``, ``tg.i18n.ugettext`` and so
 on.
 
-Since version ``2.3.6`` the :class:`.test_context` context is available. When
-used with a ``with`` statement, the whole body of the ``with`` will run with a
-fake TurboGears context, much like the one you get when using ``/_test_vars``::
+Since version ``2.3.6`` the :func:`tg.util.webtest.test_context` context is
+available. When used with a ``with`` statement, the whole body of the ``with``
+will run with a fake TurboGears context, much like the one you get when using
+``/_test_vars``::
 
+    from tg.i18n import ugettext
     from tg.util.webtest import test_context
 
     with test_context(self.app):
@@ -219,6 +221,7 @@ On ``2.3.5`` the same behaviour could be achieved using the special
 ``/_test_vars`` URL, which initializes a fake TurboGears context that will be
 used until removed::
 
+    from tg.i18n import ugettext
     from testapp.tests import TestController
 
 
@@ -234,6 +237,7 @@ you might end up with a messy environment because you have left behind globally
 registered objects. It is a good practice to perform another request to reset
 the global object status at the end of the test method::
 
+    from tg.i18n import ugettext
     from testapp.tests import TestController
 
 
