@@ -239,9 +239,9 @@ GET or POST parameter.
 Validating Fields
 -----------------
 
-ToscaWidgets2 is able to use any `FormEncode` validator for validation of
-both fields and forms. More validators are also provided inside the
-:mod:`tw2.core.validators` module.
+ToscaWidgets2 provides validators for both fields and forms through
+:mod:`tw2.core.validation`. Applications that install and enable the
+``tgext.formencode`` extension can also use FormEncode validators.
 
 To start using validation we have to declare the validator for each form field.
 For example to block submission of our previous form when no title or director
@@ -295,23 +295,23 @@ How can we enforce people to enter two times the same name inside our form?
 Apart from fields, ToscaWidgets permits to set validators to forms.
 Those can be used to validate form fields together instead of one by one.
 To check that our two directors equals we will use the
-:class:`formencode.validators.FieldsMatch` validator:
+:class:`tw2.core.MatchValidator` validator:
 
 .. code-block:: python
 
     import tw2.core as twc
     import tw2.forms as twf
-    from formencode.validators import FieldsMatch
 
     class MovieForm(twf.Form):
         class child(twf.TableLayout):
             title = twf.TextField(validator=twc.Required)
             director = twf.TextField(value="Default Director", validator=twc.Required)
-            director_verify = twf.TextField()
+            director_verify = twf.TextField(
+                validator=twc.MatchValidator('director')
+            )
             genres = twf.CheckBoxList(options=['Action', 'Comedy', 'Romance', 'Sci-fi'])
 
         action = '/save_movie'
-        validator = FieldsMatch('director', 'director_verify')
 
 Nothing else of our code needs to be changed, our */save_movie* controller
 already has validation for the *MovieForm* and when the form is submitted
@@ -320,8 +320,9 @@ both *director* and *director_verify* fields equals.
 
 .. note::
 
-   To use FormEncode validators, the ``tgext.formencode`` extension
-   must be installed and enabled.
+   FormEncode validators such as ``formencode.validators.FieldsMatch`` can still
+   be used by applications that install and enable the ``tgext.formencode``
+   extension. See :ref:`validation_extensions`.
 
 
 Manual Validation

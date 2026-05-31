@@ -288,7 +288,12 @@ Here is what the form looks like on a failed validation:
 Overriding a Validator
 -----------------------
 Often times you will want to provide your own custom field validator. The best way to
-do this is to add the validator declaratively to your Form Definition::
+do this is to add the validator declaratively to your Form Definition.
+
+The following example uses a FormEncode validator. In TurboGears 2.5 and newer,
+FormEncode support lives in the ``tgext.formencode`` extension, so install and
+enable that extension before using FormEncode validators with TurboGears
+validation. See :ref:`validation_extensions`.::
 
     from formencode.validators import String
 
@@ -305,7 +310,9 @@ Overriding both Field and Validator
 ------------------------------------
 Ah, you may have realized that sometimes you must override both widget and validator.  Sprox
 handles this too, by providing a :class:sprox.formbase.Field class that you can use to wrap
-your widget and validator together.::
+your widget and validator together. This example also uses a FormEncode
+validator, so it requires ``tgext.formencode`` when used with TurboGears 2.5 and
+newer.::
 
     from formencode.validators import String
     from sprox.formbase import Field

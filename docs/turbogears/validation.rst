@@ -4,121 +4,151 @@
 Parameters Validation
 =====================
 
-When using TurboGears, your controller methods get their arguments
-built from the various GET, POST, and URL mechanisms provided by
-TurboGears. The only downside is that all the arguments will be
-strings and you'd like them converted to their normal Python datatype:
-numbers to ``int``, dates to ``datetime``, etc.
+Controller arguments arrive from the request as strings. TurboGears validation
+is the layer that converts those strings to Python values, checks that required
+values were submitted, and decides what response should be returned when
+validation fails.
 
-This conversion functionality is provided by TurboGears validation
-support and is applied to your methods using the :class:`.validate`
-decorator. For simple conversions you can either annotate controller
-arguments with Python type hints or provide explicit validators such as
-:class:`.Convert` and :class:`.RequireValue`.
+In TurboGears 2.5.1 this support is built in. The common cases are handled by:
 
-The ``@validate()`` decorator can evaluate type hints, explicit
-validators, and widget-based forms, so validation is not dependent on
-widgets at all. FormEncode validators and schemas are supported through
-the separate ``tgext.formencode`` extension instead of being provided by
-TurboGears itself.
+* Python type hints on controller arguments, activated with ``@validate()``.
+* :class:`tg.validation.Convert`, for explicit conversion callables.
+* :class:`tg.validation.RequireValue`, for required string-like values that do
+  not need conversion.
+* Custom validators that provide a ``to_python`` method.
 
-Furthermore, the ``@validate()`` decorator is not really required at
-all.  It just provides a convenience so that you can assume that you
-have the right kind of data inside your controller methods. This helps
-separate validation logic from application logic about what to do with
-valid data.
+FormEncode is no longer part of TurboGears itself. If an application still wants
+to use FormEncode validators or schemas, install and enable the
+``tgext.formencode`` extension; see :ref:`validation_extensions`.
 
-If you don't put a ``@validate()`` decorator on your method, you'll
-simply have to do the string conversion in your controller.
+Validating Parameters with Type Hints
+=====================================
 
-Validating Parameters
-=====================
-
-When not using forms, the simplest option is to add type hints to the
-controller arguments and use ``@validate()`` without passing validators.
-TurboGears will build converters from the annotations:
+For controller methods that only need simple conversions, annotate the arguments
+and add ``@validate()``. When no explicit validators are passed, TurboGears
+builds validators from the function signature.
 
 .. code-block:: python
 
-    from tg import expose, validate, TGController
+    from tg import TGController, expose, validate
+    from tg.controllers.util import validation_errors_response
+
 
     class RootController(TGController):
         @expose('json')
-        @validate()
+        @validate(error_handler=validation_errors_response)
         def movie(self, movie_id: int, featured: bool = False, rating: float = 0.0):
             return dict(movie_id=movie_id, featured=featured, rating=rating)
 
-In this example ``movie_id`` is required and is converted to ``int``.
-``featured`` and ``rating`` are optional because they have default values;
-when omitted, the defaults are passed to the controller. Boolean values use
-TurboGears' normal boolean parser, so values such as ``true``, ``false``,
-``yes``, ``no``, ``1`` and ``0`` are accepted.
+A request to ``/movie?movie_id=7&featured=true&rating=8.5`` calls the method
+with ``movie_id`` as an ``int``, ``featured`` as a ``bool`` and ``rating`` as a
+``float``.
 
-Type hints are used as conversion callables. Plain runtime types such as
-``int``, ``float``, ``str`` and ``bool`` are appropriate for automatic
-validation; for more complex parsing, such as dates or comma-separated
-lists, provide an explicit validator.
+Arguments without defaults are required by validation. Arguments with defaults
+are optional; if the request omits them, the default value is passed to the
+controller. Boolean annotations use TurboGears' boolean parser, so values such
+as ``true``, ``false``, ``yes``, ``no``, ``1`` and ``0`` are accepted.
 
-You can still specify which validator goes with which argument by passing a
-dictionary to the :class:`validate` decorator. Here's a simple example:
+Type hints are used as conversion callables. Runtime types such as ``int``,
+``float``, ``str`` and ``bool`` are good fits for automatic validation. For
+custom parsing, use an explicit validator.
+
+Explicit Native Validators
+==========================
+
+For fields that need a custom conversion function or custom error message, pass
+a dictionary to :class:`tg.decorators.validate`. The dictionary maps request
+parameter names to validators.
 
 .. code-block:: python
 
-    from tg import request, validate, expose, TGController
-    from tg import validation
+    from tg import TGController, expose, request, validate
+    from tg.validation import Convert, RequireValue
+
 
     class RootController(TGController):
         @expose('json')
-        @validate({"a":validation.Convert(int), "b":validation.RequireValue()})
-        def two_validators(self, a=None, b=None, *args):
+        @validate({
+            'quantity': Convert(int, msg='Quantity must be a number'),
+            'title': RequireValue(msg='Title is required'),
+        })
+        def save(self, quantity=None, title=None):
             validation_status = request.validation
+            return dict(
+                quantity=quantity,
+                title=title,
+                errors={
+                    key: str(value)
+                    for key, value in validation_status.errors.items()
+                },
+                values=validation_status.values,
+            )
 
-            errors = {key: str(value) for key, value in validation_status.errors.items()}
-            values = validation_status.values
-            return dict(a=a, b=b, errors=errors, values=values)
+``Convert`` accepts any callable that takes one value and returns the converted
+value. If the callable raises an exception, TurboGears treats validation as
+failed and uses the validator's ``msg`` as the error message. Missing values are
+also errors unless you provide a ``default``:
 
-The dictionary passed to validators maps the incoming field names to
-the appropriate converter or validator.
+.. code-block:: python
 
-In case of a validation error TurboGears will provide the errors
-and values inside ``tg.request.validation``.
+    @expose('json')
+    @validate({'page': Convert(int, default=1)})
+    def list_items(self, page=1):
+        return dict(page=page)
 
-.. note::
+``RequireValue`` is useful when the incoming value should stay a string but must
+not be empty.
 
-    FormEncode validators and schemas can be used with TurboGears by
-    installing and enabling the ``tgext.formencode`` extension.
+Validation Errors
+=================
+
+When validation fails, TurboGears records details on ``tg.request.validation``.
+During error handling these attributes are available:
+
+* ``tg.request.validation.values`` -- the submitted values before validation.
+* ``tg.request.validation.errors`` -- the field errors that triggered error
+  handling.
+* ``tg.request.validation.exception`` -- the validation exception.
+* ``tg.request.validation.error_handler`` -- the error handler currently being
+  executed.
+
+If no error handler is configured, TurboGears uses the original controller
+action as the error handler. The action is called with the unvalidated request
+values, while ``tg.request.validation`` contains the validation errors. This is
+useful for actions that redisplay their own form, but it also means invalid
+input is not automatically rejected.
+
+For JSON APIs, a common choice is
+:func:`tg.controllers.util.validation_errors_response`, which returns a
+``412 Precondition Failed`` response containing the validation errors as JSON.
+
+.. code-block:: python
+
+    from tg import TGController, expose, validate
+    from tg.controllers.util import validation_errors_response
 
 
-Validation Process Information
-------------------------------
+    class ApiController(TGController):
+        @expose('json')
+        @validate(error_handler=validation_errors_response)
+        def item(self, item_id: int):
+            return dict(item_id=item_id)
 
-TurboGears provides some information on the currently running validation
-process while it is handling the validation error.
-
-Whenever an error handling is in process some properties are available in
-the ``tg.request.validation`` to provide overview of the validation error:
-
-    - ``tg.request.validation.values`` The submitted values before validation
-    - ``tg.request.validation.errors`` The errors that triggered the error handling
-    - ``tg.request.validation.exception`` The validation exception that triggered the error handling
-    - ``tg.request.validation.error_handler`` The error handler that is being executed
+A request such as ``/item?item_id=not-a-number`` returns a JSON error response
+instead of entering the controller action.
 
 The Error Handler
 =================
 
-In many cases you don't need the granularity provided by ``tg.request.validation``
-and probably in case of an error you just want to send the user somewhere else
-(maybe to reinsert the data he provided).
-
-This can be achieved by using the ``error_handler`` argument of :class:`.validate`.
-The provided function or controller method will be called to generate
-a response for the user in case of an error instead of continuing with the current
-action:
+For HTML forms and other user-facing pages, you usually want to redisplay a page
+or redirect the user when validation fails. Pass an ``error_handler`` to
+``@validate`` when validation failures should be handled by a different action.
 
 .. code-block:: python
 
-    from tg import request, validate, expose, TGController
-    from tg import validation
+    from tg import TGController, expose, request, validate
+    from tg.validation import Convert, RequireValue
+
 
     class RootController(TGController):
         @expose()
@@ -126,208 +156,190 @@ action:
             return 'An error occurred: %s' % request.validation.errors
 
         @expose()
-        @validate({"a":validation.Convert(int), "b":validation.RequireValue()},
-                  error_handler=onerror)
-        def two_validators(self, a=None, b=None, *args):
-            return 'Values: %s, %s, %s' % (a, b, args)
+        @validate({
+            'quantity': Convert(int, msg='Quantity must be a number'),
+            'title': RequireValue(msg='Title is required'),
+        }, error_handler=onerror)
+        def save(self, quantity=None, title=None):
+            return 'Saved %s copies of %s' % (quantity, title)
 
-Heading to ``/two_validators`` without providing a value for ``a`` will lead
-to an ``"An error occurred"`` message as the ``onerror`` method is executed
-instead of continuing with ``two_validators``.
-
-.. note:: The method in question will be called, with the unvalidated data as
-          its parameters, so it's usually best to accept ``**kwargs``.
-          And error validation messages will be stored in ``tg.request.validation``.
-
+The error handler is called with the unvalidated request parameters, so it is
+usually best for handlers to accept ``**kwargs``. Validation messages remain
+available through ``tg.request.validation`` while the handler runs.
 
 Validating Forms
 ================
 
-For manually written forms you can use ``@validate`` on the action that
-processes the submitted data and add the errors in your template from
-``tg.request.validation``.
+For manually written forms, put ``@validate`` on the action that processes the
+submitted data and read validation errors from ``tg.request.validation`` in the
+handler or template.
 
-TurboGears also provides a more convenient way to create forms,
-validate submitted data and display error messages,
-those can be managed through :ref:`tw2forms` which work together
-with validation by :ref:`tw2_forms_validation`
+TurboGears can also validate widget-based forms. When using ToscaWidgets2, pass
+the form class to ``@validate`` and provide an error handler that redisplays the
+form:
 
-Any widget based form can then be passed to the ``@validate`` which
-will automatically validate the submitted data against that form.
+.. code-block:: python
 
-Validators
-==========
+    @expose()
+    @validate(MovieForm, error_handler=index)
+    def save_movie(self, *args, **kw):
+        return str(kw)
 
-TurboGears applications will usually rely on these validation mechanisms:
-
-    * Type hints on controller arguments, used by ``@validate()`` to create
-      simple converters automatically.
-    * :class:`.Convert` and :class:`RequireValue`, which are built into
-      TurboGears and can be used for explicit conversions like integers,
-      floats and so on.
-    * :mod:`tw2.core.validation`, which provides ToscaWidgets validators for
-      **Forms**.
-    * :mod:`formencode.validators` validators, which can be used **Standalone**
-      or with a **Form** after installing and enabling ``tgext.formencode``.
-
-While in many cases type hints or ``Convert`` will suffice, applications that
-install ``tgext.formencode`` can also use FormEncode's larger validator set:
-
-    * Attribute
-    * Bool
-    * CIDR
-    * ConfirmType
-    * Constant
-    * CreditCardExpires
-    * CreditCardSecurityCode
-    * CreditCardValidator
-    * DateConverter
-    * DateTime
-    * DateValidator
-    * DictConverter
-    * Email
-    * Empty
-    * False
-    * FancyValidator
-    * FieldStorageUploadConverter
-    * FieldsMatch
-    * FileUploadKeeper
-    * FormValidator
-    * IDeclarative
-    * IPhoneNumberValidator
-    * ISchema
-    * IValidator
-    * Identity
-    * IndexListConverter
-    * Int
-    * Interface
-    * Invalid
-    * MACAddress
-    * MaxLength
-    * MinLength
-    * NoDefault
-    * NotEmpty
-    * Number
-    * OneOf
-    * PhoneNumber
-    * PlainText
-    * PostalCode
-    * Regex
-    * RequireIfMissing
-    * RequireIfPresent
-    * Set
-    * SignedString
-    * StateProvince
-    * String
-    * StringBool
-    * StringBoolean
-    * StripField
-    * TimeConverter
-    * True
-    * URL
-    * UnicodeString
-    * Validator
-    * Wrapper
-
-For the absolute most up-to date list of available validators, check
-the `FormEncode validators`_ module. To use those validators with
-TurboGears, install and enable ``tgext.formencode``.
-
-You can also create your own validators or build on existing validators by
-inheriting from one of the defaults. See the FormEncode documentation for how
-this is done.
-
-.. _`FormEncode validators`: https://formencode.readthedocs.io/en/latest/modules/validators.html
-
-You can also compose ``compound`` validators with logical operations,
-the FormEncode compound module provides `All` (all must pass), 
-`Any` (any one must pass) and `Pipe` (all must pass with the results of 
-each validator passed to the next item in the Pipe).  You can use these 
-like so::
-
-    from formencode.compound import All
-    ...
-    the_validator=All(
-        validators.NotEmpty(),
-        validators.UnicodeString(),
-    )
+See :ref:`tw2_forms_validation` for a larger ToscaWidgets2 form example.
 
 Writing Custom Validators
--------------------------
+=========================
 
-If you can't or don't want to rely on the FormEncode library you can write
-your own validators.
-
-Validators are simply objects that provide a ``to_python`` method
-which returns the converted value or raise :py:class:`tg.validation.TGValidationError`
-
-For example a validator that converts a parameter to an integer would look like:
+A native TurboGears field validator is any object with a ``to_python`` method.
+The method receives the submitted value and returns the converted value. Raise
+:class:`tg.validation.TGValidationError` when validation fails.
 
 .. code-block:: python
 
     from tg.validation import TGValidationError
 
-    class IntValidator(object):
+
+    class PositiveInt:
         def to_python(self, value, state=None):
             try:
-                return int(value)
-            except:
-                raise TGValidationError('Integer expected')
+                value = int(value)
+            except (TypeError, ValueError):
+                raise TGValidationError('Integer expected', value)
 
-Then it is possible to pass an instance of IntValidator to the TurboGears ``@validate``
-decorator.
+            if value <= 0:
+                raise TGValidationError('Positive integer expected', value)
 
-Schema Validators
------------------
+            return value
 
-Sometimes you need more power and flexibility than you can get from
-validating individual form fields.  When ``tgext.formencode`` is installed,
-FormEncode schema validators can provide that.
-
-If you want to do multiple-field validation, reuse validators or just
-clean up your code, validation ``formencode.Schema``s are one option. You
-create a validation schema by inheriting from :class:`formencode.schema.Schema`
-and pass the newly created ``Schema`` as the ``validators`` argument instead
-of passing a dictionary.
-
-Create a schema:
+Use it like any other explicit validator:
 
 .. code-block:: python
 
-    class PwdSchema(schema.Schema):
-        pwd1 = validators.String(not_empty=True)
-        pwd2 = validators.String(not_empty=True)
-        chained_validators = [validators.FieldsMatch('pwd1', 'pwd2')]
+    @expose('json')
+    @validate({'count': PositiveInt()})
+    def repeat(self, count):
+        return dict(count=count)
 
-Then you can use that schema in @validate rather than a dictionary of
-validators::
+.. _validation_extensions:
 
-    @expose()    
-    @validate(validators=PwdSchema())
-    def password(self, pwd1, pwd2):
-        if tg.request.validation.errors:
-            return "There was an error"
-        else:
-            return "Password ok!"
+Validation Extensions
+=====================
 
-Besides noticing our brilliant security strategy, please notice the
-``chained_validators`` part of the schema that guarantees a pair of
-matching fields.
+TurboGears validation can be extended by registering additional validator types
+and validation exceptions with the application configurator. The main example is
+``tgext.formencode``, which restores FormEncode integration for applications
+that still depend on FormEncode validators, schemas or variable decoding.
 
-Again, for information about ``Invalid`` exception objects, creating
-your own validators, schema and FormEncode in general, refer to the
-`FormEncode Validator`_ documentation and don't be afraid to check the
-``formencode.validators`` source. It's often clearer than the
-documentation.
+Using tgext.formencode
+----------------------
 
-Note that Schema validation is rigorous by default, in particular, you 
-must declare *every* field you are going to pass into your controller 
-or you will get validation errors.  To avoid this, add::
+Install the extension alongside your application::
 
-    class MySchema( schema.Schema ):
-        allow_extra_fields=True
+    $ pip install tgext.formencode
 
-to your schema declaration.
+For a packaged application, also add ``tgext.formencode`` to your project
+requirements. Then enable it in your application's ``config/app_cfg.py`` before
+the WSGI application is created:
 
-.. _`FormEncode Validator`: http://www.formencode.org/en/latest/Validator.html
+.. code-block:: python
 
+    from tg import FullStackApplicationConfigurator
+    import tgext.formencode
+
+    base_config = FullStackApplicationConfigurator()
+    tgext.formencode.plugme(base_config)
+
+Once enabled, FormEncode ``Invalid`` exceptions are treated as validation
+errors and FormEncode schemas can be passed to ``@validate``.
+
+.. note::
+
+    ``tgext.formencode`` also plugs into TurboGears i18n so FormEncode error
+    messages can be translated. FormEncode does not ship translation catalogs
+    for every locale, including English. With ``tgext.formencode`` 0.1.1, a
+    quickstarted application that has request-language detection enabled might
+    log trapped ``LanguageError`` exceptions such as ``No translation file found
+    for domain: 'FormEncode'`` even though validation responses still work.
+
+    If your application does not need request-language detection, disable it in
+    ``config/app_cfg.py`` before creating the WSGI application::
+
+        base_config.update_blueprint({'i18n.enabled': False})
+
+    If your application does use i18n, configure it to use languages for which
+    FormEncode provides catalogs, or expect untranslated FormEncode messages
+    until the extension falls back cleanly for missing catalogs.
+
+Individual FormEncode Validators
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: python
+
+    from formencode import validators
+    from tg import TGController, expose, validate
+    from tg.controllers.util import validation_errors_response
+
+
+    class RootController(TGController):
+        @expose('json')
+        @validate({
+            'email': validators.Email(not_empty=True),
+        }, error_handler=validation_errors_response)
+        def subscribe(self, email):
+            return dict(email=email)
+
+FormEncode Schemas
+~~~~~~~~~~~~~~~~~~
+
+Use a schema when multiple fields must be validated together.
+
+.. code-block:: python
+
+    from formencode import Schema, validators
+    from tg import TGController, expose, validate
+    from tg.controllers.util import validation_errors_response
+
+
+    class PasswordSchema(Schema):
+        allow_extra_fields = True
+        filter_extra_fields = True
+
+        password = validators.String(not_empty=True)
+        confirm_password = validators.String(not_empty=True)
+        chained_validators = [
+            validators.FieldsMatch('password', 'confirm_password')
+        ]
+
+
+    class RootController(TGController):
+        @expose('json')
+        @validate(PasswordSchema(), error_handler=validation_errors_response)
+        def change_password(self, password, confirm_password):
+            return dict(changed=True)
+
+FormEncode schemas are strict by default: fields that are not declared by the
+schema can produce validation errors. Set ``allow_extra_fields`` or
+``filter_extra_fields`` on the schema when your controller receives additional
+parameters.
+
+Variable Decoding
+~~~~~~~~~~~~~~~~~
+
+``tgext.formencode`` also provides the traditional FormEncode variable decoding
+decorator. It expands variable-encoded request parameters before validation:
+
+.. code-block:: python
+
+    from tg import TGController, expose
+    from tgext.formencode import variable_decode
+
+
+    class RootController(TGController):
+        @expose('json')
+        @variable_decode
+        def tags(self, **kw):
+            return kw
+
+For example, parameters such as ``tag-0=python&tag-1=turbogears`` add a
+``tag`` list to the controller parameters while leaving the original parameters
+in place.

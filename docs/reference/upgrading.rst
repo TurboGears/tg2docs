@@ -43,7 +43,7 @@ to ease maintenance of TurboGears:
 
 * FormEncode support is now shipped as a separate ``tgext.formencode`` package.
   TurboGears still provides builtin support for validation and conversion via
-  type hints, ``Convert`` and ``unless``.
+  ``Convert`` and ``RequireValue``.
 
 From 2.4.2 to 2.4.3
 -------------------
