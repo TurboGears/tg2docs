@@ -37,6 +37,7 @@ to them and some intermediate features.
     session
     caching
     i18n
+    profiling
     Pluggable/index
     restdispatch
     migrations
