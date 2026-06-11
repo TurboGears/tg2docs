@@ -9,5 +9,6 @@ TurboGears Reference
 
     upgrading
     config-options
+    context-and-registry
     classes
 
