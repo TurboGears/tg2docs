@@ -17,6 +17,9 @@ In TurboGears 2.5.1 this support is built in. The common cases are handled by:
   not need conversion.
 * Custom validators that provide a ``to_python`` method.
 
+For a complete reference of validation configuration options, see
+:ref:`Validation <config-options>`.
+
 FormEncode is no longer part of TurboGears itself. If an application still wants
 to use FormEncode validators or schemas, install and enable the
 ``tgext.formencode`` extension; see :ref:`validation_extensions`.

@@ -7,6 +7,9 @@ Templating
 TurboGears enables template rendering through the :class:`tg.decorators.expose` decorator to
 link controller methods to template and through the :func:`tg.render_template` function.
 
+For a complete reference of rendering configuration options, see
+:ref:`Rendering Engines <renderingconfig>`.
+
 Each template is rendered using a *template engine*, TurboGears provides some built-in engines
 but additional engines can be configured. The ``default_renderer`` for TurboGears applications is
 ``Kajiki`` which permits to write templates in pure xhtml and validates them to detect issues

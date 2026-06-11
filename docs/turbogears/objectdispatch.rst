@@ -10,6 +10,9 @@ There are however a few methods which provide ways to implement
 custom dispatching and some entry points that will make easy
 for the developer to track the progress of request dispatch.
 
+For a complete reference of dispatch configuration options, see
+:ref:`Dispatch <config-options>`.
+
 Dispatching Entry Points
 ---------------------------
 
