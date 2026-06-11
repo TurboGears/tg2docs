@@ -28,6 +28,18 @@ based on browser's preferences(*).
 request which tells the server which language it would prefer to see
 in a response.
 
+Language auto-select is controlled by ``i18n.enabled``. It is enabled by
+quickstarted/full-stack applications and disabled by minimal applications.
+When it is enabled, TurboGears chooses languages in this order:
+
+1. the language saved in the session by :func:`tg.i18n.set_lang`,
+2. the browser's ``Accept-Language`` values,
+3. ``i18n.lang``, if configured.
+
+So, while language detection is enabled, ``i18n.lang`` is a fallback
+candidate. It is not a forced language and does not override the session or
+browser preference.
+
 The language in use during the request is available through the 
 :func:`tg.i18n.get_lang` function. This will report the currently
 selected languages both in case of an auto-detected language preference
@@ -52,6 +64,55 @@ session duration, :func:`tg.i18n.set_lang` can be used.
 If TurboGears session support is enabled it will store the
 choosen language inside the session and recover it whenever
 the user comes back on next request.
+
+If language auto-select is disabled with ``i18n.enabled = false``, the
+request wrapper that reads the session and browser languages is not installed.
+In that mode ``i18n.lang`` is the language used for each request, unless
+application code calls :func:`tg.i18n.set_request_lang` or
+:func:`tg.i18n.set_lang` during the request.
+
+I18N Configuration
+------------------
+
+``i18n.lang``
+    Default: ``None``.
+
+    With ``i18n.enabled = true``, this is appended after the browser languages
+    and acts as a fallback. With ``i18n.enabled = false``, it is the fixed
+    application language for each request. If no catalog exists for the chosen
+    language, gettext returns the original string.
+
+``i18n.enabled``
+    Enables the i18n request wrapper that reads the session language and the
+    browser's ``Accept-Language`` header. Set it to ``false`` to disable
+    automatic language detection.
+
+``i18n.native``
+    Space-separated list, or Python list, of languages the templates are
+    already written in. These languages are treated as supported without
+    requiring a ``.mo`` catalog, and strings are returned unchanged.
+
+``i18n.lang_session_key``
+    Session key read by the i18n request wrapper. The default is ``tg_lang``.
+    ``set_lang()`` stores into ``tg_lang`` unless the legacy
+    ``lang_session_key`` config value is also set, so custom session keys should
+    set both names if they rely on ``set_lang()``.
+
+``i18n.no_session_touch``
+    Avoids marking a previously untouched session as accessed just because the
+    i18n wrapper checked it for a saved language. The default is ``false``.
+
+``localedir``
+    Directory containing runtime gettext catalogs. It defaults to
+    ``[package]/i18n`` for quickstarted applications. Runtime catalog files are
+    loaded from ``[localedir]/[locale]/LC_MESSAGES/[package_name].mo``.
+
+``i18n.domain``, ``i18n.locale_dir``, and ``i18n.gettext_fallback``
+    These are not TurboGears runtime i18n options. Runtime translations use the
+    configured application package name as the gettext domain and ``localedir``
+    as the catalog directory. The ``[tool.tg.devtools.i18n]`` section in
+    ``pyproject.toml`` configures the ``gearbox i18n`` Babel commands, not the
+    request-time translator.
 
 Making your code international
 -------------------------------
@@ -156,10 +217,17 @@ Windows and provides a nice user-interface to edit po files.
 
     gearbox i18n compile
 
-5. Configure the default language in ``development.ini`` if you want to force
-one instead of using browser language negotiation::
+5. Configure the fallback language in ``development.ini`` if you want one to
+   be used when the browser or session does not select a supported language::
 
     [app:main]
+    i18n.lang = zh_tw
+
+   To force that language for the whole application instead of using browser
+   language negotiation, disable automatic detection too::
+
+    [app:main]
+    i18n.enabled = false
     i18n.lang = zh_tw
 
 6. Start server::
