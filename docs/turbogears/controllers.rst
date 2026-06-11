@@ -398,5 +398,8 @@ methods or ``**kw``, configure ``ignore_parameters`` in
 
     base_config.update_blueprint({'ignore_parameters': ['timestamp', 'param_name']})
 
+For a complete reference of dispatch configuration options, see
+:ref:`Dispatch <config-options>`.
+
 You will still be able to access the original request values from the
 ``tg.request`` object if you need them for any reason.

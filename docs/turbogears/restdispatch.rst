@@ -288,6 +288,9 @@ in ``config/app_cfg.py`` before using this pattern::
 
     base_config.update_blueprint({'enable_routing_args': True})
 
+For a complete reference of dispatch configuration options, see
+:ref:`Dispatch <config-options>`.
+
 This is because you may have one or more identifiers to determine an object; 
 for instance you might use lat/lon to define a location.  
 Since our MovieController defines a get_one which takes a movie_id as

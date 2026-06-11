@@ -74,6 +74,9 @@ application code calls :func:`tg.i18n.set_request_lang` or
 I18N Configuration
 ------------------
 
+For a complete reference of all available i18n configuration options, see
+:ref:`Internationalization <config-options>`.
+
 ``i18n.lang``
     Default: ``None``.
 

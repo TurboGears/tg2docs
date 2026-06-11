@@ -88,6 +88,9 @@ overwrites some options. For example, SQLAlchemy applications use
 ``sqlalchemy.url = sqlite:///:memory:`` by default during tests. This creates an
 in-memory database for the test suite instead of requiring a real database.
 
+For a complete reference of SQLAlchemy configuration options, see
+:ref:`SQLAlchemy <config-options>`.
+
 All application tests that call a web page should inherit from
 ``tests.TestController``. For each test method it:
 

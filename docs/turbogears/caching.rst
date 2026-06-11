@@ -173,6 +173,9 @@ completely, should it need to be reset.
 Configuring Beaker
 ^^^^^^^^^^^^^^^^^^^^^^
 
+For a complete reference of cache configuration options, see
+:ref:`Caching <config-options>`.
+
 `Beaker` is configured in your QuickStarted application's main configuration
 file in the app:main section.
 

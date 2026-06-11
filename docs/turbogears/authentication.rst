@@ -132,6 +132,9 @@ implement different forms of authentication you can customize the whole
 authentication layer with ``sa_auth.*`` keys in
 ``{yourproject}.config.app_cfg.base_config.update_blueprint(...)``.
 
+For a complete reference of authentication configuration options, see
+:ref:`Authentication <config-options>`.
+
 The available directives are all optional and are configured with the
 ``sa_auth.`` prefix:
 
