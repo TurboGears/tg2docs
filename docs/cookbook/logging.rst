@@ -26,34 +26,123 @@ methods: ``log.warning()``, ``log.info()``, ``log.error()``,
 
 Refer to the Python :ref:`Logger documentation <python:logger>` for additional details.
 
-By default TurboGears configures the logging module so that all the
-log messages from your application are displayed from ``DEBUG`` level
-on. So even debug messages will be displayed.
+By default a quickstarted TurboGears application includes a logging
+configuration at the end of the ``development.ini`` file.  That
+configuration displays messages from your application from ``DEBUG``
+level on.
 
-This is specified at the end of the ``development.ini`` file.
-When starting your application with ``gearbox`` it will automatically
-load the logging configuration from your ``development.ini`` or provided
-configuration file.
+PasteDeploy's ``loadapp()`` only creates the WSGI application.  It does
+not apply the ``[loggers]``, ``[handlers]`` and ``[formatters]`` sections
+from the ``.ini`` file.  Those sections are read by Python's
+``logging.config.fileConfig()`` or by a command that calls it for you.
 
-When you are deploying your application on ``mod_wsgi`` or any other environment
-that doesn't rely on ``gearbox`` to run the application, remember to load
-the logging configuration before creating the actual WSGI application:
+Configuring individual loggers
+=================================
 
-.. code-block:: python
+The logging section in ``development.ini`` and ``production.ini`` uses
+Python's standard :ref:`logging configuration file format <python:logging-config-fileformat>`.
+Add every configured logger, handler and formatter to its corresponding
+``keys`` list, then add a matching section for each one:
+
+.. code-block:: ini
+
+    [loggers]
+    keys = root, sqlalchemy, beaker
+
+    [handlers]
+    keys = console
+
+    [formatters]
+    keys = generic
+
+    [logger_root]
+    level = INFO
+    handlers = console
+
+    [logger_sqlalchemy]
+    level = DEBUG
+    handlers = console
+    qualname = sqlalchemy.engine
+    propagate = 0
+
+    [logger_beaker]
+    level = DEBUG
+    handlers = console
+    qualname = beaker
+    propagate = 0
+
+    [handler_console]
+    class = StreamHandler
+    args = (sys.stderr,)
+    level = NOTSET
+    formatter = generic
+
+    [formatter_generic]
+    format = %(asctime)s,%(msecs)03d %(levelname)-5.5s [%(name)s] %(message)s
+
+The name after ``logger_`` is only the local key used in the ``[loggers]``
+list.  ``qualname`` is the real Python logger name.  For example,
+``sqlalchemy.engine`` controls SQL query logging.  Use ``propagate = 0``
+when the logger has its own handler; otherwise the same message can also
+propagate to the root logger and appear twice.
+
+TurboGears quickstarts usually configure application and library loggers
+with ``handlers =`` and no explicit ``propagate`` value.  That lets the
+messages flow to the root logger and reuse the root handler.
+
+When the ``.ini`` logging section is loaded
+=============================================
+
+``gearbox serve``
+    Loads logging automatically from the provided configuration file before
+    it creates the WSGI application.  This is why logger changes in
+    ``development.ini`` are visible when you run ``gearbox serve``.
+
+``gunicorn --paste production.ini``
+    Current Gunicorn checks the PasteDeploy file for a ``[loggers]`` section
+    and uses that file as its logging configuration by default.  If this is
+    not happening in your Gunicorn version, pass ``--log-config production.ini``.
+    If you load the TurboGears app in your own Python module with ``loadapp()``
+    and run Gunicorn against that module, then Gunicorn's PasteDeploy shortcut
+    is not involved and you must configure logging yourself.
+
+``waitress`` with PasteDeploy
+    If Waitress is started through ``gearbox serve`` or another PasteDeploy
+    runner that configures logging, the ``.ini`` logging section is applied
+    by that runner.  If you write a standalone script that does
+    ``loadapp('config:production.ini')`` and then ``waitress.serve(app)``,
+    ``loadapp()`` does not configure logging and Waitress will not apply your
+    per-logger settings for you.
+
+``mod_wsgi`` or a standalone WSGI script
+    The WSGI script is responsible for configuring logging before it creates
+    the application:
+
+    .. code-block:: python
+
+        import os
+        import logging.config
+
+        from paste.deploy import loadapp
 
         APP_CONFIG = "/var/www/myapp/myapp/production.ini"
 
-        #Setup logging
-        import logging.config
-        logging.config.fileConfig(APP_CONFIG)
-
-        #Load the application
-        from paste.deploy import loadapp
+        logging.config.fileConfig(
+            APP_CONFIG,
+            {"__file__": APP_CONFIG, "here": os.path.dirname(APP_CONFIG)},
+            disable_existing_loggers=False,
+        )
         application = loadapp('config:%s' % APP_CONFIG)
 
-Otherwise the logging configuration will be different from the one
-available when starting the application with ``gearbox`` and you might
-end up not seeing logging messages.
+    ``mod_wsgi`` will usually send ``sys.stderr`` to Apache's ``ErrorLog``,
+    but it does not read the TurboGears logging sections by itself.
+
+Use the manual ``fileConfig()`` pattern whenever your entry point calls
+``paste.deploy.loadapp()`` directly instead of using a server command that
+explicitly documents that it loads PasteDeploy logging.  If your
+``loadapp()`` URI includes a section name such as ``production.ini#admin``,
+pass only the filename to ``fileConfig()`` and keep the section name for
+``loadapp()``.
 
 Logging Output
 =================================
