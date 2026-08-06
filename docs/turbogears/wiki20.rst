@@ -4,1003 +4,647 @@
 Full Stack TurboGears: Wiki in 20 Minutes
 =========================================
 
-How does TurboGears2 help you get development done quickly? We'll show
-you by developing a simple wiki application that should take you no
-more than 20 minutes to complete. We're going to do this without
-explaining the steps in detail (that is what this book is for, after
-all). As a result, you'll see how easily you can make your own web
-applications once you are up to speed on what TurboGears2 offers.
+This tutorial builds a small reStructuredText wiki with TurboGears 2.5.1.
+It starts with the generated full-stack project, keeps the generated demo and
+authentication routes, and mounts the wiki below ``/wiki``. A page is a
+``Page`` with a ``pagename`` and ``data``; ``FrontPage`` is the first page.
 
-If you're not familiar with the concept of a wiki you might want to
-check out `the Wikipedia entry <http://en.wikipedia.org/wiki/Wiki>`_.
-Basically, a wiki is an easily-editable collaborative web content
-system that makes it trivial to link to pages and create new pages.
-Like other wiki systems, we are going to use CamelCase words to
-designate links to pages.
+The result is intentionally small: CamelCase ``WikiWords`` become links,
+missing pages open an edit form, and the page list shows every saved page. It
+is a learning path through a model, controller, database setup, and Kajiki
+views, not a complete wiki product.
 
-If you have trouble with this tutorial ask for help on the `TurboGears
-discussion list`_, or on the IRC channel #turbogears.  We're a
-friendly bunch and, depending what time of day you post, you'll get
-your answer in a few minutes to a few hours. If you search the mailing
-list or the web in general you'll probably get your answer even
-faster. **Please don't post your problem reports as comments on this
-or any of the following pages of the tutorial**. Comments are for
-suggestions for improvement of the docs, not for seeking support.
+.. warning::
 
-If you want to see the final version you can download a copy of the
-`wiki code`_.
+   **Run this sample on localhost only.** It intentionally omits
+   authentication and authorization for wiki actions, CSRF protection,
+   POST-only enforcement, input validation, and complete HTML sanitization.
+   Do not expose or deploy it. In particular, generated debug mode (including
+   ``--debug`` and its detailed error pages) must never be public.
 
-.. highlight:: bash
+Scope and checkpoints
+=====================
 
-Installing the Development Tools
-================================
+You will make one ``Page`` model, one ``/wiki`` subcontroller, three views,
+and one focused HTTP test. The checkpoints below make it clear when each
+stage is complete. Do not start the server until the **final files** stage.
 
-The TurboGears2 Development Tools are a bunch of commands and extensions useful when
-developing TurboGears2 applications. They provide the ``gearbox`` suite of commands
-to create new full stack projects, quickly create controllers, templates, models and
-the TurboGears debugbar.
+* **Project:** the virtual environment is active and the full-stack project
+  installs with its development extras.
+* **Database:** ``setup-app`` completes and creates ``FrontPage``.
+* **Final files:** the wiki controller and all three wiki templates have
+  replaced their scaffolds; the test file is also in place.
+* **Running app:** ``/wiki`` shows ``FrontPage`` and ``/demo`` still shows the
+  generated demo.
+
+Prerequisites and project setup
+===============================
+
+Use Python **3.10 or newer**. Work from an explicit directory so it is easy
+to distinguish the outer project directory from the inner Python package.
+The commands below use a POSIX shell; on Windows, activate the environment
+with ``.venv\\Scripts\\activate`` instead of ``. .venv/bin/activate``.
 
 .. code-block:: bash
 
-    (tgenv)$ pip install tg.devtools
+    $ python3 --version
+    $ mkdir -p ~/src/turbogears-tutorial
+    $ cd ~/src/turbogears-tutorial
+    $ python3 -m venv .venv
+    $ . .venv/bin/activate
+    $ python -m pip install --upgrade pip
+    $ python -m pip install tg.devtools
+    $ gearbox quickstart wiki20
+    $ cd wiki20
 
-Quickstart
-==========
+The outer project directory is now ``~/src/turbogears-tutorial/wiki20``. Run
+project commands from there unless a later command says otherwise. The
+quickstart's default options provide SQLAlchemy, Alembic migrations, Kajiki,
+and generated authentication routes. Keep those generated routes; the wiki
+is added beside them rather than replacing the root controller.
 
-TurboGears2 provides a suite of tools for working with projects by
-adding several commands to the Python command line tool ``gearbox``. A
-few will be touched upon in this tutorial. (Check the
-:ref:`GearBox <tg-gearbox>` section for a full listing.) The first tool
-you'll need is ``quickstart``, which initializes a TurboGears project.
-Go to a command line window and run the following command::
+The generated project has two levels. The outer files describe and operate
+the project; the inner ``wiki20/`` directory is the importable application
+package:
 
-    (tgenv)$ gearbox quickstart wiki20
+.. code-block:: text
 
-This will create a project called wiki20 with the default template engine and with authentication.
-TurboGears2 projects usually share a common structure, which should look like::
+    wiki20/                                  # outer project: run commands here
+    ├── pyproject.toml                       # dependencies and project metadata
+    ├── development.ini                     # local server/database configuration
+    ├── test.ini                             # generated test configuration
+    ├── migration/                           # Alembic migration environment
+    └── wiki20/                              # inner Python application package
+        ├── config/                          # application configuration
+        ├── controllers/                     # URL tree and request actions
+        │   ├── demo.py                      # generated demo; keep it
+        │   ├── error.py                     # generated error pages; keep it
+        │   ├── root.py                      # add the /wiki mount here
+        │   └── wiki.py                      # replace with the wiki controller
+        ├── i18n/                            # translation catalogs
+        ├── lib/                             # shared application helpers
+        ├── model/                           # SQLAlchemy models
+        │   ├── __init__.py                  # register Page at the bottom
+        │   └── page.py                      # create this Page model
+        ├── public/                          # static assets
+        ├── templates/                       # Kajiki views
+        │   ├── edit.xhtml                   # replace the edit view
+        │   ├── page.xhtml                   # replace the display view
+        │   └── pagelist.xhtml               # replace the list view
+        ├── tests/                            # pytest/WebTest tests
+        │   └── functional/test_wiki.py      # replace the generated test
+        └── websetup/                         # setup and bootstrap hooks
+            └── bootstrap.py                  # add the initial FrontPage
 
-     wiki20
-     ├── __init__.py
-     ├── config       <-- Where project setup and configuration relies
-     ├── controllers  <-- All the project controllers, the logic of our web application
-     ├── i18n         <-- Translation files for the languages supported
-     ├── lib          <-- Utility python functions and classes
-     ├── model        <-- Database models
-     ├── public       <-- Static files like CSS, javascript and images
-     ├── templates    <-- Templates exposed by our controllers.
-     ├── tests        <-- Tests
-     └── websetup     <-- Functions to execute at application setup. Like creating tables, a standard user and so on.
+The paths in this tutorial are relative to the outer ``wiki20`` project
+unless a path begins with ``wiki20/`` as shown above.
 
-.. note::
+Add the rendering dependency
+============================
 
-    We recommend you use the names given here: this documentation looks
-    for files in directories based on these names.
+The wiki stores reStructuredText and renders it with Docutils, so Docutils
+must be an application dependency. Open ``pyproject.toml`` and add **only**
+``"docutils",`` to the existing ``[project]`` ``dependencies`` list. Do not
+replace the generated list with an abbreviated one: it contains the runtime
+packages selected by quickstart.
 
-You need to update the project dependencies in ``wiki20/pyproject.toml``.
-Look for the ``[project]`` table and its ``dependencies`` list, then append
-``docutils``. TurboGears2 does not require docutils, but the wiki we are
-building does.
-
-The dependency list should include an entry like this:
+Keep every generated dependency and add this one line inside the existing
+``dependencies = [...]`` list; do not replace the list with a shortened
+example:
 
 .. code-block:: toml
-    :emphasize-lines: 5
 
-    [project]
-    dependencies = [
-        "TurboGears2 >= 2.5.0",
-        # ... keep the other quickstart dependencies ...
-        "docutils",
-    ]
+    "docutils",
 
-Now to be able to run the project you will need to install it and
-its dependencies. This can be quickly achieved by running from
-inside the ``wiki20`` directory::
+Install the project, its development dependencies, and the new Docutils
+requirement from the outer project directory:
 
-    $ pip install -e .
+.. code-block:: bash
 
-.. note::
-    If you skip the ``pip install -e .`` command, ``gearbox`` might be unable
-    to find your generated package metadata or the extra dependencies you added
-    to ``pyproject.toml``.
+    $ python -m pip install -e '.[development]'
 
-You should now be able to start the newly create project with the ``gearbox serve`` command::
+A quick check is useful before editing application files:
 
-    (tgenv)$ gearbox serve --reload --debug
-    Starting subprocess with file monitor
-    Starting server in PID 32797.
-    serving on http://127.0.0.1:8080
+.. code-block:: bash
 
-.. note::
-    The ``--reload`` option makes the server restart whenever a file is changed, this greatly speeds
-    up the development process by avoiding to manually restart the server whenever we need to try
-    our changes.
+    $ python -c "import docutils, tg; print('TurboGears and Docutils are ready')"
 
-.. note::
-    The ``--debug`` option provides full stacktrace in case the server was unable to start, this
-    is useful in case your server didn't start due to a configuration error.
+MVC, routing, and Kajiki in one page
+====================================
 
-Pointing your browser to http://127.0.0.1:8080/ should open up the TurboGears2 welcome page.
-By default newly quickstarted projects provide a bunch of pages to guide the user through
-some of the foundations of TurboGears2 web applications.
+TurboGears follows Model-View-Controller (MVC):
 
-Controller And View
-===================
+* The **model** maps ``Page`` objects to database rows.
+* The **controller** receives a URL, reads or changes a page, and returns
+  template variables.
+* The **view** is a Kajiki template that turns those variables into HTML.
 
-TurboGears follows the `Model-View-Controller paradigm`_
-(a.k.a. "MVC"), as do most modern web frameworks like Rails, Django,
-Struts, etc.
+TurboGears represents URLs as a tree of controller objects. Mounting
+``WikiController()`` as ``RootController.wiki`` means the ``wiki`` path is
+consumed first; the remaining path is dispatched inside that subcontroller.
+``@expose`` makes a method reachable through HTTP. ``index`` handles the
+controller's default URL, while ``_default`` catches an otherwise unmatched
+path and receives the remaining URL segment.
 
-Taking a look at the http://127.0.0.1:8080/about page is greatly suggested
-to get an overview of your newly quickstarted project and how TurboGears2
-works.
+An exposed action can return a dictionary. Its keys become variables with the
+same names in the selected template, so ``{"content": html, "wikipage": page}``
+provides ``content`` and ``wikipage`` to the view. Kajiki templates use
+``py:`` directives such as ``py:extends`` for inheritance, ``py:content`` or
+``py:replace`` for values, ``py:for`` for loops, and ``py:if`` for conditions.
+The generated ``master.xhtml`` supplies the common page layout.
 
-If you take a look at the code that ``quickstart`` created, you'll see
-everything necessary to get up and running. Here, we'll look at the
-two files directly involved in displaying this welcome page.
+The finished URL/action map is:
 
-Controller Code
----------------
+.. list-table:: Wiki routes
+   :header-rows: 1
+   :widths: 35 35 30
 
-.. highlight:: python
+   * - URL
+     - Action
+     - Purpose
+   * - ``/wiki``
+     - ``WikiController.index``
+     - Display ``FrontPage``
+   * - ``/wiki/<pagename>``
+     - ``WikiController._default``
+     - Display a page or redirect to its edit form
+   * - ``/wiki/edit?pagename=<pagename>``
+     - ``WikiController.edit``
+     - Show an edit form without creating a row
+   * - ``/wiki/save`` (form POST)
+     - ``WikiController.save``
+     - Create or update a page, then redirect
+   * - ``/wiki/pagelist``
+     - ``WikiController.pagelist``
+     - List pages alphabetically
 
-``wiki20/wiki20/controllers/root.py`` (see below) is the code that
-causes the welcome page to be produced. After the imports the first
-line of code creates our main controller class by inheriting from
-TurboGears' ``BaseController``::
-
-    class RootController(BaseController):
-
-The TurboGears 2 controller is a simple object publishing system; you
-write controller methods and ``@expose()`` them to the web. In our
-case, there's a single controller method called ``index``. As you
-might guess, this name is not accidental; this becomes the default
-page you'll get if you go to this URL without specifying a particular
-destination, just like you'll end up at ``index.html`` on an ordinary
-web server if you don't give a specific file name. You'll also go to
-this page if you explicitly name it, with
-``http://localhost:8080/index``. We'll see other controller methods
-later in the tutorial so this naming system will become clear.
-
-The ``@expose()`` decorator tells TurboGears which template to use to
-render the page.  Our ``@expose()`` specifies::
-
-    @expose('wiki20.templates.index')
-
-This gives TurboGears the template to use, including the path
-information (the ``.xhtml`` extension is implied). We'll look at this
-file shortly.
-
-Each controller method returns a dictionary, as you can see at the end
-of the ``index`` method. TG takes the key:value pairs in this
-dictionary and turns them into local variables that can be used in the
-template.
-
-.. code-block:: python
-    :emphasize-lines: 13-16
-
-    from tg import expose, flash, require, url, request, redirect
-    #Skipping some imports here...
-
-    class RootController(BaseController):
-        secc = SecureController()
-        admin = AdminController(model, DBSession, config_type=TGAdminConfig)
-
-        error = ErrorController()
-
-        def _before(self, *args, **kw):
-            tmpl_context.project_name = "Wiki 20"
-
-        @expose('wiki20.templates.index')
-        def index(self):
-            """Handle the front-page."""
-            return dict(page='index')
-
-        #more controller methods from here on...
-
-Displaying The Page
--------------------
-
-`wiki20/wiki20/templates/index.xhtml` is the template
-specified by the ``@expose()`` decorator, so it formats what you view
-on the welcome screen. Look at the file; you'll see that it's standard
-XHTML with some simple namespaced attributes. This makes it very
-designer-friendly, and well-behaved design tools will respect all the
-:ref:`kajiki-language` attributes and tags.  You can even open it directly in your
-browser.
-
-Kajiki directives are elements and/or attributes in the template that
-are prefixed with ``py:``. They can affect how the template is
-rendered in a number of ways: Kajiki provides directives for
-conditionals and looping, among others.  We'll see some simple Kajiki
-directives in the sections on :ref:`Editing pages <editing_pages>` and
-:ref:`Adding views <adding_views>`.
-
-
-The following is the content of a newly quickstarted TurboGears2 project
-at 2.3 release time:
-
-.. code-block:: html+genshi
-
-    <html py:extends="master.xhtml" py:strip="True">
-        <head py:block="head" py:strip="True">
-            <title py:block="master_title">Welcome to TurboGears 2.3, standing on the shoulders of giants, since 2007</title>
-        </head>
-
-        <body py:block="body" py:strip="True">
-          <div class="row">
-            <div class="col-md-8">
-              <div class="jumbotron">
-                <h1>Welcome to TurboGears 2.3</h1>
-                <p>If you see this page it means your installation was successful!</p>
-                <p>TurboGears 2 is rapid web application development toolkit designed to make your life easier.</p>
-                <p>
-                  <a class="btn btn-primary btn-lg" href="http://www.turbogears.org" target="_blank">
-                    ${h.icon('book')} Learn more
-                  </a>
-                </p>
-              </div>
-            </div>
-            <div class="col-md-4 hidden-xs hidden-sm">
-              <a class="btn btn-info btn-sm active" href="http://turbogears.readthedocs.io/en/latest">${h.icon('book')} TG2 Documentation</a> <span class="label label-success">new</span><em> Get Started</em><br/>
-                <br/>
-              <a class="btn btn-info btn-sm active" href="http://turbogears.readthedocs.io/en/latest/cookbook/cookbook.html">${h.icon('book')} TG2 CookBook</a><em> Read the Cookbook</em> <br/>
-                <br/>
-              <a class="btn btn-info btn-sm active" href="http://groups.google.com/group/turbogears">${h.icon('comment')} Join the Mail List</a> <em>for help/discussion</em><br/>
-                <br/>
-              <a class="btn btn-info btn-sm active" href="http://runnable.com/TurboGears">${h.icon('play')} Play on Runnable</a> <em>for basic examples</em><br/>
-                <br/>
-              <a class="btn btn-info btn-sm active" href="http://stackoverflow.com/questions/tagged/turbogears2">${h.icon('search')} Search Stackoverflow</a> <em>for questions</em>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-4">
-              <h3>Code your data model</h3>
-              <p> Design your data <code>model</code>, Create the database, and Add some bootstrap data.</p>
-            </div>
-
-            <div class="col-md-4">
-              <h3>Design your URL architecture</h3>
-              <p> Decide your URLs, Program your <code>controller</code> methods, Design your
-                <code>templates</code>, and place some static files (CSS and/or Javascript). </p>
-            </div>
-
-            <div class="col-md-4">
-              <h3>Distribute your app</h3>
-              <p> Test your source, Generate project documents, Build a distribution.</p>
-            </div>
-          </div>
-
-          <em class="pull-right small"> Thank you for choosing TurboGears.</em>
-        </body>
-    </html>
-
-
-
-Wiki Model
+Scaffold the wiki files
 =======================
 
-``quickstart`` produced a directory for our model in
-`wiki20/wiki20/model/`. This directory contains an `__init__.py`
-file, which makes that directory name into a python module (so you can
-use ``import model``).
+From the outer project directory, use the generated scaffold templates:
 
-Since a wiki is basically a linked collection of pages, we'll define a
-``Page`` class as the name of our model.
+.. code-block:: bash
 
-Create a new file called ``wiki20/wiki20/model/page.py``:
+    $ gearbox scaffold controller wiki
+    $ gearbox scaffold controller_test wiki
+    $ gearbox scaffold template page
+    $ gearbox scaffold template edit
+    $ gearbox scaffold template pagelist
+
+The controller command creates ``wiki20/controllers/wiki.py``. The
+``controller_test`` command creates
+``wiki20/tests/functional/test_wiki.py``. The three template commands create
+``wiki20/templates/page.xhtml``, ``wiki20/templates/edit.xhtml``, and
+``wiki20/templates/pagelist.xhtml``.
+
+The scaffold does **not** create ``wiki.xhtml``. That is expected: the final
+controller below exposes ``page.xhtml``, ``edit.xhtml``, and
+``pagelist.xhtml``. Do not run the server or visit ``/wiki`` yet. Replace the
+controller and all three templates first, otherwise the application can start
+with an incomplete route/template set.
+
+Create and register the model
+=============================
+
+Create ``wiki20/model/page.py``:
 
 .. code-block:: python
+
+    """Wiki page model."""
 
     from sqlalchemy import Column
     from sqlalchemy.types import Integer, Text
 
-    from wiki20.model import DeclarativeBase, metadata, DBSession
+    from wiki20.model import DeclarativeBase
+
 
     class Page(DeclarativeBase):
-        __tablename__ = 'page'
+        """A reStructuredText page in the wiki."""
+
+        __tablename__ = "page"
 
         id = Column(Integer, primary_key=True)
-        pagename = Column(Text, unique=True)
-        data = Column(Text)
+        pagename = Column(Text, unique=True, nullable=False)
+        data = Column(Text, nullable=False)
 
-Now to let TurboGears know that our model exists we must make it available inside the ``wiki20/wiki20/model/__init__.py``
-file just by importing it at the end:
+At the **bottom** of the generated ``wiki20/model/__init__.py``, after its
+existing model imports, add ``Page`` and export it. Keeping this import at the
+bottom lets the generated model setup exist before the new mapped class is
+registered:
 
 .. code-block:: python
 
-    # Import your model modules here.
+    from wiki20.model.todo import TodoItem
     from wiki20.model.auth import User, Group, Permission
     from wiki20.model.page import Page
 
-.. warning::
+    __all__ = ('TodoItem', 'User', 'Group', 'Permission', 'Page')
 
-    It's very important that this line is at the end because
-    ``Page`` requires the rest of the model to be initialized
-    before it can be imported:
+Leave the generated session, metadata, and ``init_model`` code unchanged.
 
-Initializing The Tables
------------------------
-
-Now that our model is recognized by TurboGears we must create the table that it is going to use
-to store its data. By default TurboGears will automatically create tables for each model it is aware of,
-this is performed during the application setup phase.
-
-The setup phase is managed by the ``wiki20/wiki20/websetup`` python module, we are just
-going to add to ``websetup/bootstrap.py`` the lines required to create a FrontPage page for
-our wiki, so it doesn't start empty.
-
-We need to update the file to create our `FrontPage` data just before
-the ``DBSession.flush()`` command by adding:
-
-.. code-block:: python
-
-    page = model.Page(pagename="FrontPage", data="initial data")
-    model.DBSession.add(page)
-
-You should end up having a ``try:except:`` block that should
-look like:
-
-.. code-block:: python
-    :emphasize-lines: 8-9
-
-    def bootstrap(command, conf, vars):
-        #Some comments and setup here...
-
-        try:
-            #Users and groups get created here...
-            model.DBSession.add(u1)
-
-            page = model.Page(pagename="FrontPage", data="initial data")
-            model.DBSession.add(page)
-
-            model.DBSession.flush()
-            transaction.commit()
-        except IntegrityError:
-            #Some Error handling here...
-
-The ``transaction.commit()`` call involves the transaction manager used
-by TurboGears2 which helps us to support cross database transactions, as well as
-transactions in non relational databases.
-
-Now to actually create our table and our `FrontPage` we simply need to run
-the ``gearbox setup-app`` command where your application configuration file is available
-(usually the root of the project):
-
-.. code-block:: bash
-
-    (tgenv)$ gearbox setup-app
-    Running setup_app() from wiki20.websetup
-    Creating tables
-
-A file named ``wiki20/devdata.db`` should be created which contains
-your ``sqlite`` database.
-For other database systems refer to the ``sqlalchemy.url``
-line inside your configuration file.
-
-
-Adding Controllers
-==================
-
-.. highlight:: python
-
-Controllers are the code that figures out which page to display, what
-data to grab from the model, how to process it, and finally hands off
-that processed data to a template.
-
-``quickstart`` has already created some basic controller code for us
-at `wiki20/wiki20/controllers/root.py`.
-
-First, we must import the ``Page`` class from our model. At the end of
-the ``import`` block, add this line::
-
-    from wiki20.model.page import Page
-
-Now we will change the template used to present the data, by changing
-the ``@expose('wiki20.templates.index')`` line to::
-
-    @expose('wiki20.templates.page')
-
-This requires us to create a new template named `page.xhtml` in the
-`wiki20/templates` directory; we'll do this in the next section.
-
-Now we must specify which page we want to see.  To do this, add a
-parameter to the ``index()`` method. Change the line after the
-``@expose`` decorator to::
-
-    def index(self, pagename="FrontPage"):
-
-This tells the ``index()`` method to accept a parameter called
-``pagename``, with a default value of ``"FrontPage"``.
-
-Now let's get that page from our data model.  Put this line in the
-body of ``index``::
-
-    page = DBSession.query(Page).filter_by(pagename=pagename).one()
-
-This line asks the SQLAlchemy database session object to run a query
-for records with a ``pagename`` column equal to the value of the
-``pagename`` parameter passed to our controller method.  The
-``.one()`` method assures that there is only one returned result;
-normally a ``.query`` call returns a list of matching objects. We only
-want one page, so we use ``.one()``.
-
-Finally, we need to return a dictionary containing the ``page`` we
-just looked up.  When we say::
-
-   return dict(wikipage=page)
-
-The returned ``dict`` will create a template variable called
-``wikipage`` that will evaluate to the ``page`` object that we looked
-it up.
-
-Your ``index`` controller method should end up looking like:
-
-.. code-block:: python
-    :emphasize-lines: 16-19
-
-    from tg import expose, flash, require, url, request, redirect
-
-    #More imports here...
-
-    from wiki20.model.page import Page
-
-    class RootController(BaseController):
-        secc = SecureController()
-        admin = AdminController(model, DBSession, config_type=TGAdminConfig)
-
-        error = ErrorController()
-
-        def _before(self, *args, **kw):
-            tmpl_context.project_name = "Wiki 20"
-
-        @expose('wiki20.templates.page')
-        def index(self, pagename="FrontPage"):
-            page = DBSession.query(Page).filter_by(pagename=pagename).one()
-            return dict(wikipage=page)
-
-        #more controller methods from here on...
-   
-Now our ``index()`` method fetches a record from the database
-(creating an instance of our mapped ``Page`` class along the way), and
-returns it to the template within a dictionary.
-
-.. _adding_views:
-
-Adding Views (Templates)
-========================
-
-.. highlight:: html
-
-``quickstart`` also created some templates for us in the
-`wiki20/wiki20/templates` directory: `master.xhtml` and `index.xhtml`.
-Back in our simple controller, we used ``@expose()`` to hand off a
-dictionary of data to a template called ``'wiki20.templates.index'``,
-which corresponds to `wiki20/wiki20/templates/index.xhtml`.
-
-Take a look at the following line in `index.xhtml`::
-
-    <html py:extends="master.xhtml" py:strip="True">
-
-This tells the ``index`` template to *extend* the ``master``
-template.  Using inheritance lets you easily maintain a cohesive look and
-feel throughout your site by having each page include a common master
-template.
-
-Copy the contents of `index.xhtml` into a new file called `page.xhtml`.
-Now modify it for our purposes:
-
-.. code-block:: html+genshi
-
-    <html py:extends="master.xhtml" py:strip="True">
-    <head py:block="head" py:strip="True">
-        <title py:block="master_title">${wikipage.pagename} -  The TurboGears 2 Wiki</title>
-    </head>
-
-    <body py:block="body" py:strip="True">
-        <div class="main_content">
-            <div style="float:right; width: 10em;"> Viewing
-                <span py:replace="wikipage.pagename">Page Name Goes Here</span>
-                <br/>
-                You can return to the <a href="/">FrontPage</a>.
-            </div>
-
-            <div py:replace="wikipage.data">Page text goes here.</div>
-
-            <div>
-                <a href="/edit/${wikipage.pagename}">Edit this page</a>
-            </div>
-        </div>
-    </body>
-    </html>
-   
-This is a basic XHTML page with three substitutions:
-
-1.  In the ``<title>`` tag, we substitute the name of the page, using
-    the ``pagename`` value of ``page``.  (Remember, ``wikipage`` is an
-    instance of our mapped ``Page`` class, which was passed in a
-    dictionary by our controller.):
-
-.. code-block:: html+genshi
-
-    <title>${wikipage.pagename} -  The TurboGears 2 Wiki</title>
-
-2.  In the second ``<div>`` element, we substitute the page name again
-    with ``py:replace``:
-
-.. code-block:: html+genshi
-
-    <span py:replace="wikipage.pagename">Page Name Goes Here</span>
-   
-3.  In the third ``<div>``, we put in the contents of our``wikipage``:
-
-.. code-block:: html+genshi
-
-    <div py:replace="wikipage.data">Page text goes here.</div>
-
-When you refresh the output web page you should see "initial data"
-displayed on the page.
-
-.. note:: :ref:`py:replace` replaces the *entire tag* (including start and
-  end tags) with the value of the variable provided.
-
-.. _editing_pages:
-
-Editing pages
-=============
-
-One of the fundamental features of a wiki is the ability to edit the
-page just by clicking "Edit This Page," so we'll create a template for
-editing. First, make a copy of `page.xhtml`:
-
-.. code-block:: bash
-
-    cd wiki20/templates
-    cp page.xhtml edit.xhtml
-
-We need to replace the content with an editing form and ensure people
-know this is an editing page. Here are the changes for ``edit.xhtml``.
-
-#. Change the title in the header to reflect that we are editing the
-   page:
-
-    .. code-block:: html+genshi
-        :emphasize-lines: 2
-
-        <head py:block="head" py:strip="True">
-          <title>Editing: ${wikipage.pagename}</title>
-        </head>
-
-#. Change the div that displays the page:
-
-    .. code-block:: html+genshi
-
-        <div py:replace="wikipage.data">Page text goes here.</div>
-
-   with a div that contains a standard HTML form:
-
-    .. code-block:: html+genshi
-
-        <div>
-          <form action="/save" method="post">
-            <input type="hidden" name="pagename" value="${wikipage.pagename}"/>
-            <textarea name="data" py:content="wikipage.data" rows="10" cols="60"/>
-            <input type="submit" name="submit" value="Save"/>
-          </form>
-        </div>
-
-.. highlight:: python
-
-Now that we have our view, we need to update our controller in order
-to display the form and handle the form submission. For displaying the
-form, we'll add an ``edit`` method to our controller in
-`wiki20/wiki20/controllers/root.py`:
-
-.. code-block:: python
-    :emphasize-lines: 21-24
-
-    from tg import expose, flash, require, url, request, redirect
-
-    #More imports here...
-
-    from wiki20.model.page import Page
-
-    class RootController(BaseController):
-        secc = SecureController()
-        admin = AdminController(model, DBSession, config_type=TGAdminConfig)
-
-        error = ErrorController()
-
-        def _before(self, *args, **kw):
-            tmpl_context.project_name = "Wiki 20"
-
-        @expose('wiki20.templates.page')
-        def index(self, pagename="FrontPage"):
-            page = DBSession.query(Page).filter_by(pagename=pagename).one()
-            return dict(wikipage=page)
-
-        @expose(template="wiki20.templates.edit")
-        def edit(self, pagename):
-            page = DBSession.query(Page).filter_by(pagename=pagename).one()
-            return dict(wikipage=page)
-
-        #more controller methods from here on...
-
-For now, the new method is identical to the ``index`` method; the only
-difference is that the resulting dictionary is handed to the ``edit``
-template. To see it work, go to
-http://localhost:8080/edit/FrontPage . However, this only works because
-FrontPage already exists in our database; if you try to edit a new
-page with a different name it will fail, which we'll fix in a later
-section.
-
-Don't click that save button yet! We still need to write that method.
-
-Saving Our Edits
-================
-
-When we displayed our wiki's edit form in the last section, the form's
-``action`` was ``/save``.  So, we need to make a method called
-``save`` in the Root class of our controller.
-
-However, we're also going to make another important change. Our
-``index`` method is *only* called when you either go to ``/`` or
-``/index``. If you change the ``index`` method to the special method
-``_default``, then ``_default`` will be automatically called whenever
-nothing else matches. ``_default`` will take the rest of the URL and
-turn it into positional parameters. This will cause the wiki to become
-the default when possible.
-
-Here's our new version of `root.py` which includes both ``_default``
-and ``save``:
-
-.. code-block:: python
-    :emphasize-lines: 16-20,27-31
-
-    from tg import expose, flash, require, url, request, redirect
-
-    #More imports here...
-
-    from wiki20.model.page import Page
-
-    class RootController(BaseController):
-        secc = SecureController()
-        admin = AdminController(model, DBSession, config_type=TGAdminConfig)
-
-        error = ErrorController()
-
-        def _before(self, *args, **kw):
-            tmpl_context.project_name = "Wiki 20"
-
-        @expose('wiki20.templates.page')
-        def _default(self, pagename="FrontPage"):
-            """Handle the front-page."""
-            page = DBSession.query(Page).filter_by(pagename=pagename).one()
-            return dict(wikipage=page)
-
-        @expose(template="wiki20.templates.edit")
-        def edit(self, pagename):
-            page = DBSession.query(Page).filter_by(pagename=pagename).one()
-            return dict(wikipage=page)
-
-        @expose()
-        def save(self, pagename, data, submit):
-            page = DBSession.query(Page).filter_by(pagename=pagename).one()
-            page.data = data
-            redirect("/" + pagename)
-
-        #more controller methods from here on...
-
-Unlike the previous methods we've made, ``save`` just uses a plain
-``@expose()`` without any template specified. That's because we're
-only redirecting the user back to the viewing page.
-
-Although the ``page.data = data`` statement tells SQLAlchemy that you
-intend to store the page data in the database, you would usually
-need to flush the SQLAlchemy Unit of Work and commit the currently
-running transaction, those are operations that TurboGears2
-transaction management will automatically do for us.
-
-You don't have to do anything to use this transaction management
-system, it should just work. So, you can now make changes and save the
-page we were editing, just like a real wiki.
-
-What About WikiWords?
-=====================
-
-Our wiki doesn't yet have a way to link pages. A typical wiki will
-automatically create links for *WikiWords* when it finds them
-(WikiWords have also been described as WordsSmashedTogether). This
-sounds like a job for a regular expression.
-
-Here's the new version of our ``RootController._default`` method,
-which will be explained afterwards:
-
-.. code-block:: python
-    :emphasize-lines: 20-26
-
-    from tg import expose, flash, require, url, request, redirect
-
-    #More imports here...
-
-    from wiki20.model.page import Page
-    import re
-    from docutils.core import publish_parts
-
-    wikiwords = re.compile(r"\b([A-Z]\w+[A-Z]+\w+)")
-
-    class RootController(BaseController):
-        secc = SecureController()
-        admin = AdminController(model, DBSession, config_type=TGAdminConfig)
-
-        error = ErrorController()
-
-        def _before(self, *args, **kw):
-            tmpl_context.project_name = "Wiki 20"
-
-        @expose('wiki20.templates.page')
-        def _default(self, pagename="FrontPage"):
-            page = DBSession.query(Page).filter_by(pagename=pagename).one()
-            content = publish_parts(page.data, writer_name="html")["html_body"]
-            root = url('/')
-            content = wikiwords.sub(r'<a href="%s\1">\1</a>' % root, content)
-            return dict(content=content, wikipage=page)
-
-        @expose(template="wiki20.templates.edit")
-        def edit(self, pagename):
-            page = DBSession.query(Page).filter_by(pagename=pagename).one()
-            return dict(wikipage=page)
-
-        @expose()
-        def save(self, pagename, data, submit):
-            page = DBSession.query(Page).filter_by(pagename=pagename).one()
-            page.data = data
-            redirect("/" + pagename)
-
-        #more controller methods from here on...
-
-We need some additional imports, including ``re`` for regular
-expressions and a method called ``publish_parts`` from ``docutils``.
-
-A WikiWord is a word that starts with an uppercase letter, has a
-collection of lowercase letters and numbers followed by another
-uppercase letter and more letters and numbers. The ``wikiwords``
-regular expression describes a WikiWord.
-
-In ``_default``, the new lines begin with the use of ``publish_parts``,
-which is a utility that takes string input and returns a dictionary of
-document parts after performing conversions; in our case, the
-conversion is from Restructured Text to HTML.  The input
-(``page.data``) is in Restructured Text format, and the output format
-(specified by ``writer_name="html"``) is in HTML. The code selects the
-``html_body`` part, which produces the document body without a complete HTML
-page wrapper.
-
-You can configure TurboGears so that it doesn't live at the root of a
-site, so you can combine multiple TurboGears apps on a single
-server. Using ``tg.url()`` creates relative links, so that your links
-will continue to work regardless of how many apps you're running.
-
-The next line rewrites the ``content`` by finding any WikiWords and
-substituting hyperlinks for those WikiWords. That way when you click
-on a WikiWord, it will take you to that page. The ``r'string'`` means
-'raw string', one that turns off escaping, which is mostly used in
-regular expression strings to prevent you from having to double escape
-slashes. The substitution may look a bit weird, but is more
-understandable if you recognize that the ``%s`` gets substituted with
-``root``, then the substitution is done which replaces the ``\1`` with
-the string matching the regex.
-
-Note that ``_default()`` is now returning a ``dict`` containing an
-additional key-value pair: ``content=content``. This will not break
-``wiki20.templates.page`` because that page is still using ``wikipage``
-from the dictionary, however if we want to do something interesting with the
-new key-value pair we'll need to edit
-``wiki20.templates.page``:
-
-.. code-block:: html+genshi
-    :emphasize-lines: 14
-
-    <html py:extends="master.xhtml" py:strip="True">
-    <head py:block="head" py:strip="True">
-        <title py:block="master_title">${wikipage.pagename} -  The TurboGears 2 Wiki</title>
-    </head>
-
-    <body py:block="body" py:strip="True">
-        <div class="main_content">
-            <div style="float:right; width: 10em;"> Viewing
-                <span py:replace="wikipage.pagename">Page Name Goes Here</span>
-                <br/>
-                You can return to the <a href="/">FrontPage</a>.
-            </div>
-
-            <div py:replace="Markup(content)">Formatted content goes here.</div>
-
-            <div>
-                <a href="/edit/${wikipage.pagename}">Edit this page</a>
-            </div>
-        </div>
-    </body>
-    </html>
-
-Since ``content`` comes through as XML, we can strip it off using the
-``Markup()`` function to produce plain text (try removing the function
-call to see what happens).
-
-To test the new version of the system, edit the data in your front
-page to include a WikiWord. When the page is displayed, you'll see
-that it's now a link.  You probably won't be surprised to find that
-clicking that link produces an error.
-
-
-Hey, Where's The Page?
-======================
-
-What if a Wiki page doesn't exist? We'll take a simple approach: if
-the page doesn't exist, you get an edit page to use to create it.
-
-In the ``_default`` method, we'll check to see if the page exists.
-
-If it doesn't, we'll redirect to a new ``notfound`` method. We'll add
-this method after the ``_default`` method and before the ``edit``
-method.
-
-Here are the new ``notfound`` and the updated ``_default``
-methods for our ``RootController`` class:
-
-.. code-block:: python
-
-    @expose('wiki20.templates.page')
-    def _default(self, pagename="FrontPage"):
-        from sqlalchemy.exc import InvalidRequestError
-
-        try:
-            page = DBSession.query(Page).filter_by(pagename=pagename).one()
-        except InvalidRequestError:
-            raise redirect("notfound", params={"pagename": pagename})
-
-        content = publish_parts(page.data, writer_name="html")["html_body"]
-        root = url('/')
-        content = wikiwords.sub(r'<a href="%s\1">\1</a>' % root, content)
-        return dict(content=content, wikipage=page)
-
-    @expose("wiki20.templates.edit")
-    def notfound(self, pagename):
-        page = Page(pagename=pagename, data="")
-        DBSession.add(page)
-        return dict(wikipage=page)
-
-In the ``_default`` code we now first try to get the page and
-then deal with the exception by redirecting to a method that
-will make a new page.
-
-As for the ``notfound`` method, the first two lines of the method add
-a row to the page table. From there, the path is exactly the same it
-would be for our ``edit`` method.
-
-With these changes in place, we have a fully functional wiki. Give it
-a try!  You should be able to create new pages now.
-
-Adding A Page List
-==================
-
-Most wikis have a feature that lets you view an index of the pages. To
-add one, we'll start with a new template, `pagelist.xhtml`. We'll copy
-`page.xhtml` so that we don't have to write the boilerplate.
-
-.. code-block:: bash
-
-    cd wiki20/templates
-    cp page.xhtml pagelist.xhtml
-
-After editing, our `pagelist.xhtml` looks like:
-
-.. code-block:: html+genshi
-    :emphasize-lines: 10-15
-
-    <html py:extends="master.xhtml" py:strip="True">
-    <head py:block="head" py:strip="True">
-        <title py:block="master_title">Page Listing -  The TurboGears 2 Wiki</title>
-    </head>
-
-    <body py:block="body" py:strip="True">
-        <div class="main_content">
-            <h1>All Pages</h1>
-            <ul>
-                <li py:for="pagename in pages">
-                    <a href="${tg.url('/' + pagename)}"
-                       py:content="pagename">
-                         Page Name Here.
-                    </a>
-                </li>
-            </ul>
-            Return to the <a href="/">FrontPage</a>.
-        </div>
-    </body>
-    </html>
-
-The highlighted section represents the template code of interest. You can
-guess that the ``py:for`` is a python ``for`` loop, modified to fit
-into Kajiki's XML. It iterates through each of the ``pages`` (which
-we'll send in via the controller, using a modification you'll see
-next). For each one, ``Page Name Here`` is replaced by ``pagename``,
-as is the URL. You can learn more about the :ref:`kajiki-language`.
-
-
-We must also modify the ``RootController`` class to implement ``pagelist`` and to
-create and pass ``pages`` to our template:
-
-.. code-block:: python
-
-    @expose("wiki20.templates.pagelist")
-    def pagelist(self):
-        pages = [page.pagename for page in DBSession.query(Page).order_by(Page.pagename)]
-        return dict(pages=pages)
-
-Here, we select all of the ``Page`` objects from the database, and
-order them by pagename.
-
-We can also modify `page.xhtml` so that the link to the page list is
-available on every page:
-
-.. code-block:: html+genshi
-    :emphasize-lines: 14
-
-    <html py:extends="master.xhtml" py:strip="True">
-    <head py:block="head" py:strip="True">
-        <title py:block="master_title">${wikipage.pagename} -  The TurboGears 2 Wiki</title>
-    </head>
-
-    <body py:block="body" py:strip="True">
-        <div class="main_content">
-            <div style="float:right; width: 10em;"> Viewing
-                <span py:replace="wikipage.pagename">Page Name Goes Here</span>
-                <br/>
-                You can return to the <a href="/">FrontPage</a>.
-            </div>
-
-            <div py:replace="Markup(content)">Formatted content goes here.</div>
-
-            <div>
-                <a href="/edit/${wikipage.pagename}">Edit this page</a>
-                <a href="/pagelist">View the page list</a>
-            </div>
-        </div>
-    </body>
-    </html>
-
-You can see your pagelist by clicking the link on a page or by going
-directly to http://localhost:8080/pagelist .
-
-
-Further Exploration
+Seed the first page
 ===================
 
-Now that you have a working Wiki, there are a number of further places
-to explore:
+The generated ``wiki20/websetup/bootstrap.py`` already creates its example
+authentication users. In its existing SQLAlchemy ``try`` block, immediately
+after ``model.DBSession.add(u1)`` and before the generated ``flush`` and
+``commit``, add the initial page:
 
-#. Continue to the :ref:`wikier`.
+.. code-block:: python
 
-#. You can learn more about the :ref:`kajiki-language`.
+    model.DBSession.add(model.Page(
+        pagename="FrontPage",
+        data="Welcome to the **FrontPage**. Create a NewPage.",
+    ))
 
-#. You can learn more about the `SQLAlchemy ORM`_.
+Do not remove the generated user setup or its ``IntegrityError`` handling.
+For a fresh database, initialize the tables and bootstrap data now:
+
+.. code-block:: bash
+
+    $ gearbox setup-app -c development.ini
+
+**Checkpoint:** setup completes without an import or database error. A fresh
+application now has the ``page`` table and ``FrontPage`` row, but the wiki
+routes are not ready until the remaining files are replaced.
+
+Mount the subcontroller without replacing RootController
+==========================================================
+
+Open ``wiki20/controllers/root.py``. Add only this import with the existing
+imports:
+
+.. code-block:: python
+
+    from wiki20.controllers.wiki import WikiController
+
+Add this attribute alongside the generated ``demo`` and ``error`` attributes:
+
+.. code-block:: python
+
+    wiki = WikiController()
+
+Keep the generated ``DemoController`` and ``ErrorController`` imports and
+attributes, the ``index`` redirect, and all generated login/logout methods.
+Do not replace ``RootController`` wholesale: the generated ``/demo`` and auth
+routes should continue to work, while the new attribute adds the ``/wiki``
+branch to the controller tree.
+
+Final controller: display, edit, save, and list
+===============================================
+
+Now replace **all** of ``wiki20/controllers/wiki.py`` with the following
+controller. This replacement must happen before serving the application.
+
+.. code-block:: python
+
+    """Wiki controller."""
+
+    import re
+
+    from docutils.core import publish_parts
+    from sqlalchemy import select
+    from tg import expose, redirect, url
+
+    from wiki20.lib.base import BaseController
+    from wiki20.model import DBSession, Page
+
+    wikiwords = re.compile(r"\b([A-Z]\w+[A-Z]+\w+)\b")
 
 
-If you had any problems with this tutorial, or have ideas on how to
-make it better, please let us know on the `mailing list`_! Suggestions
-are almost always incorporated.
+    class WikiController(BaseController):
+        """Display and edit pages below ``/wiki``."""
+
+        @expose("wiki20.templates.page")
+        def index(self):
+            """Display FrontPage."""
+            return self._display("FrontPage")
+
+        @expose("wiki20.templates.page")
+        def _default(self, pagename):
+            """Display the page named by the final URL segment."""
+            return self._display(pagename)
+
+        @expose("wiki20.templates.edit")
+        def edit(self, pagename):
+            """Display an edit form without creating a page."""
+            page = DBSession.scalar(select(Page).where(Page.pagename == pagename))
+            if page is None:
+                page = Page(pagename=pagename, data="")
+            return {"wikipage": page}
+
+        @expose()
+        def save(self, pagename, data):
+            """Create or update a page, then show it."""
+            page = DBSession.scalar(select(Page).where(Page.pagename == pagename))
+            if page is None:
+                page = Page(pagename=pagename, data=data)
+                DBSession.add(page)
+            else:
+                page.data = data
+            redirect(url("/wiki/" + pagename))
+
+        @expose("wiki20.templates.pagelist")
+        def pagelist(self):
+            """List all pages alphabetically."""
+            pages = DBSession.scalars(select(Page).order_by(Page.pagename)).all()
+            return {"pages": pages}
+
+        def _display(self, pagename):
+            page = DBSession.scalar(select(Page).where(Page.pagename == pagename))
+            if page is None:
+                redirect(url("/wiki/edit", params={"pagename": pagename}))
+
+            content = publish_parts(
+                page.data,
+                writer_name="html",
+                settings_overrides={
+                    "raw_enabled": False,
+                    "file_insertion_enabled": False,
+                },
+            )["html_body"]
+            content = wikiwords.sub(
+                lambda match: '<a href="{}">{}</a>'.format(
+                    url("/wiki/" + match.group(1)), match.group(1)
+                ),
+                content,
+            )
+            return {"content": content, "wikipage": page}
+
+The SQLAlchemy 2 style is deliberate: ``select()`` constructs a statement,
+``DBSession.scalar()`` returns one ``Page`` or ``None``, and
+``DBSession.scalars()`` returns the ordered collection. A request-time
+controller uses ``url()`` so the application mount point is included. The
+current generated ``RootController`` also uses ``lurl('/')`` for default
+arguments such as ``came_from``. ``lurl()`` is lazy: it defers URL resolution
+until the value is used, because Python evaluates default arguments before a
+request exists. Do not mechanically replace generated ``lurl()`` with
+``url()`` or ``tg.url()``. Use ``url()`` in request-time controller code and
+``tg.url()`` in templates; each resolves the application mount point in its
+request context, while ``lurl()`` preserves that handling for values declared
+before the request. The ``redirect()`` call is intentionally invoked directly;
+it ends the request instead of returning a template.
+
+Display the rendered page
+=========================
+
+Replace ``wiki20/templates/page.xhtml`` with this ``html+genshi`` template.
+It inherits the generated master layout and receives ``wikipage`` and
+``content`` from ``_display``:
+
+.. code-block:: html+genshi
+
+    <html py:extends="master.xhtml" py:strip="True">
+      <head py:block="head" py:strip="True">
+        <title py:block="master_title">${wikipage.pagename} - TurboGears Wiki</title>
+      </head>
+
+      <body py:block="body" py:strip="True">
+        <section class="card">
+          <div class="card-body">
+            <h1 class="h3" py:content="wikipage.pagename">Page name</h1>
+            <div py:replace="Markup(content)">Formatted content</div>
+            <p class="mt-3">
+              <a href="${tg.url('/wiki/edit', params={'pagename': wikipage.pagename})}">Edit this page</a>
+              <a class="ms-3" href="${tg.url('/wiki')}">FrontPage</a>
+              <a class="ms-3" href="${tg.url('/wiki/pagelist')}">View the page list</a>
+            </p>
+          </div>
+        </section>
+      </body>
+    </html>
+
+The ``tg.url()`` expression is the template URL helper; it is distinct from
+the controller's request-time ``url()``. ``Markup(content)`` tells Kajiki to
+insert the already-generated HTML rather than escape its tags. It is **not**
+a sanitizer and does not make untrusted content safe.
+
+Edit and save pages
+===================
+
+Replace ``wiki20/templates/edit.xhtml``:
+
+.. code-block:: html+genshi
+
+    <html py:extends="master.xhtml" py:strip="True">
+      <head py:block="head" py:strip="True">
+        <title py:block="master_title">Editing: ${wikipage.pagename}</title>
+      </head>
+
+      <body py:block="body" py:strip="True">
+        <section class="card">
+          <div class="card-body">
+            <h1 class="h3">Editing: ${wikipage.pagename}</h1>
+            <form action="${tg.url('/wiki/save')}" method="post">
+              <input type="hidden" name="pagename" value="${wikipage.pagename}" />
+              <textarea class="form-control" name="data" rows="10" py:content="wikipage.data"></textarea>
+              <button class="btn btn-primary mt-3" type="submit">Save</button>
+            </form>
+          </div>
+        </section>
+      </body>
+    </html>
+
+``edit`` creates an unsaved ``Page`` object when the name is missing, only so
+the form has a name and empty text. It does **not** add that object to
+``DBSession``. A GET for a missing page therefore performs no write. The
+``save`` action creates the row on submission, or updates its ``data`` when
+the row already exists; TurboGears' request transaction persists it before
+the redirect completes.
+
+WikiWords and missing pages
+===========================
+
+The ``wikiwords`` expression recognizes a CamelCase word with at least two
+capitalized parts, such as ``NewPage``. ``publish_parts`` first converts the
+stored reStructuredText to an HTML body. The controller then turns matching
+words in that body into links below ``/wiki``.
+
+Docutils is a real runtime dependency because of ``publish_parts``. The
+controller disables the raw directive and file insertion before rendering:
+
+* ``raw_enabled=False`` prevents raw output directives.
+* ``file_insertion_enabled=False`` prevents including local files.
+
+Those settings reduce risk but do not provide complete sanitization. The
+sample remains localhost-only, especially because ``Markup(content)`` inserts
+the generated HTML as markup.
+
+Following a ``NewPage`` link when no row exists calls ``_display`` and
+redirects to ``/wiki/edit?pagename=NewPage``. Nothing is written during that
+GET. Saving the form is the first write and then redirects to the newly
+created page.
+
+Page list
+=========
+
+Replace ``wiki20/templates/pagelist.xhtml``:
+
+.. code-block:: html+genshi
+
+    <html py:extends="master.xhtml" py:strip="True">
+      <head py:block="head" py:strip="True">
+        <title py:block="master_title">Page listing - TurboGears Wiki</title>
+      </head>
+
+      <body py:block="body" py:strip="True">
+        <section class="card">
+          <div class="card-body">
+            <h1 class="h3">All Pages</h1>
+            <ul>
+              <li py:for="page in pages">
+                <a href="${tg.url('/wiki/' + page.pagename)}" py:content="page.pagename">Page name</a>
+              </li>
+            </ul>
+            <a href="${tg.url('/wiki')}">FrontPage</a>
+          </div>
+        </section>
+      </body>
+    </html>
+
+The ``pagelist`` action passes ``pages`` from an ordered
+``DBSession.scalars(select(Page).order_by(Page.pagename))`` query. Kajiki's
+``py:for`` renders one list item per model object.
+
+Functional HTTP test
+====================
+
+Replace the generated ``wiki20/tests/functional/test_wiki.py`` with this
+focused test. It uses the generated ``TestController`` (which loads
+``test.ini`` and provides a WebTest ``self.app``) and checks behavior through
+public HTTP requests rather than private controller methods:
+
+.. code-block:: python
+
+    """Functional tests for the wiki."""
+
+    from wiki20.tests import TestController
 
 
-.. _`mailing list`: http://groups.google.com/group/turbogears
-.. _`SQLAlchemy ORM`: http://www.sqlalchemy.org/
-.. _`wiki code`: ../_static/wiki20.zip
-.. _TurboGears discussion list: http://groups.google.com/group/turbogears
-.. _Python: http://www.python.org/download/
-.. _virtualenv: http://pypi.python.org/pypi/virtualenv
-.. _ipython shell: http://ipython.scipy.org/
-.. _ipython docs: http://ipython.scipy.org/moin/Documentation
-.. _Python Documentation: http://www.python.org/doc
-.. _SQLite: http://www.sqlite.org/
-.. _Model-View-Controller paradigm: http://en.wikipedia.org/wiki/Model-view-controller
-.. _plugins available: http://www.turbogears.org/cogbin/
+    class TestWikiController(TestController):
+        """Tests for wiki requests through the public application."""
+
+        def test_wiki_journey(self):
+            response = self.app.get("/wiki")
+            response.mustcontain("FrontPage", "Welcome")
+
+            response = self.app.post(
+                "/wiki/save",
+                {"pagename": "FrontPage", "data": "Visit NewPage."},
+                status=302,
+            )
+            assert response.location.endswith("/wiki/FrontPage")
+            response = response.follow()
+            response.mustcontain("FrontPage", "Visit")
+            assert 'href="/wiki/NewPage"' in response
+
+            response = self.app.get("/wiki/NewPage", status=302)
+            assert response.location.endswith("/wiki/edit?pagename=NewPage")
+            response = response.follow()
+            response.mustcontain("Editing: NewPage")
+
+            response = self.app.get("/wiki/pagelist")
+            assert "NewPage" not in response
+
+            response = self.app.post(
+                "/wiki/save",
+                {"pagename": "NewPage", "data": "This is a new page."},
+                status=302,
+            )
+            assert response.location.endswith("/wiki/NewPage")
+            response = response.follow()
+            response.mustcontain("NewPage", "This is a new page.")
+
+            response = self.app.get("/wiki/pagelist")
+            response.mustcontain("FrontPage", "NewPage")
+
+Run the focused test first, then the generated suite:
+
+.. code-block:: bash
+
+    $ python -m pytest wiki20/tests/functional/test_wiki.py -q
+    $ python -m pytest -q
+
+The focused test proves the initial ``/wiki`` response, save/redirect/display,
+WikiWord linking, missing-page edit behavior, no-write-on-GET behavior, a
+successful new-page save/display, and ``/wiki/pagelist``. It does not attempt
+to test authentication or security features that this sample intentionally
+does not add.
+
+Start the server only after the final files
+===========================================
+
+At this point ``wiki.py``, ``page.xhtml``, ``edit.xhtml``, and
+``pagelist.xhtml`` have all replaced their scaffolds, and the functional test
+is present. Only now start the local development server:
+
+.. code-block:: bash
+
+    $ gearbox serve -c development.ini --reload
+
+Open these URLs:
+
+* http://127.0.0.1:8080/wiki shows ``FrontPage``.
+* http://127.0.0.1:8080/demo still shows the generated demo.
+* Editing ``FrontPage`` with ``Visit NewPage.`` links to the missing-page edit
+  form; saving it creates and displays ``NewPage``.
+* http://127.0.0.1:8080/wiki/pagelist lists both pages.
+
+The ``--reload`` option restarts the development server after source changes.
+The generated development configuration binds to localhost. Do not change
+that into a public debug server for this sample.
+
+Existing databases: migration path
+===================================
+
+``setup-app`` is the convenient fresh-project path. Do not use it to alter an
+existing database that already has application data. Create a migration for
+the new ``page`` table instead; see :ref:`database_migration` for the full
+Alembic workflow:
+
+.. code-block:: bash
+
+    $ gearbox migrate -c development.ini db_version
+    $ gearbox migrate -c development.ini create "Add wiki page table"
+    # Edit the generated migration/versions/*_add_wiki_page_table.py revision.
+    $ gearbox migrate -c development.ini test
+    $ gearbox migrate -c development.ini upgrade
+
+Keep the generated ``revision`` and ``down_revision`` values in the revision
+file. The migration should create the ``page`` table with the same columns as
+``Page``. Bootstrap data is separate: insert ``FrontPage`` only when it is not
+already present, according to your application's existing deployment policy.
+
+Troubleshooting
+===============
+
+* **``No module named docutils``:** confirm that ``docutils`` was added to the
+  existing dependency list, then rerun ``python -m pip install -e
+  '.[development]'`` from the outer project directory.
+* **``No module named wiki20`` or a missing ``gearbox`` command:** activate
+  ``.venv`` and install the project with the exact editable-install command
+  above.
+* **Template not found or an error mentioning ``wiki.xhtml``:** the scaffold
+  is incomplete. Confirm that the final controller exposes
+  ``wiki20.templates.page``, ``edit``, and ``pagelist``, and that all three
+  ``*.xhtml`` files were replaced before starting the server.
+* **``FrontPage`` is missing:** on a fresh database, rerun
+  ``gearbox setup-app -c development.ini`` after registering ``Page`` and
+  adding the bootstrap row. On an existing database, apply the migration
+  instead.
+* **``/wiki`` is missing but ``/demo`` works:** confirm the ``WikiController``
+  import and ``wiki = WikiController()`` attribute were added to the
+  generated ``RootController``; keep the generated root methods.
+* **A change is not visible:** use ``--reload`` during local development or
+  restart ``gearbox serve`` after changing configuration.
+
+Further exploration and security
+================================
+
+The generated ``/demo`` and authentication routes remain useful examples.
+Next, read :ref:`writing_controllers`, :ref:`templating`,
+:ref:`kajiki-language`, :ref:`testing`, and :ref:`database_migration`.
+Before building a real wiki, add an explicit authentication/authorization
+policy, CSRF protection, validation, POST enforcement, and a well-reviewed
+sanitization strategy for stored markup. Do not treat this tutorial's
+``Markup(content)`` usage or Docutils settings as that policy.

@@ -129,82 +129,94 @@ CherryPy and Gevent entries require the corresponding server dependencies.
 TGShell
 ====================
 
-The ``gearbox tgshell`` command will load a TurboGears application and start
-an interactive shell inside the application.
+Use ``gearbox tgshell`` from an installed TurboGears project root for runtime
+checks. Pass an explicit configuration; use ``test.ini`` with an in-memory
+quickstart database for isolated checks::
 
-The application to load is defined by the configuration file, by default
-``development.ini`` is used, to load a different application or under a
-different configuration provide a configuration file using the ``--config``
-option::
+    gearbox tgshell -c test.ini debug.py
 
-    $ gearbox tgshell -c development.ini
+Omit ``debug.py`` for an interactive session. ``tgshell`` makes ``wsgiapp``
+and TurboGears globals including ``config`` and ``request`` available. It
+provides ``model`` only when the application has an importable
+``<package>.model`` module. It provides ``app`` only when WebTest is installed;
+``app`` is a WebTest ``TestApp`` around ``wsgiapp``.
 
-The tgshell command provides an already active fake request which makes
-possible to call functions that depend on ``tg.request``, it is also
-provided an ``app``  object through which is possible to make requests::
+``tgshell`` loads the configured WSGI app, then immediately requests
+``/_test_vars``. That may run project imports, application startup, middleware,
+and request hooks. ``tgshell`` itself does not run ``setup-app``, migrations,
+or intentional database writes.
 
-    $ gearbox tgshell
-    TurboGears2 Interactive Shell
-    Python 3.x (...)
+Inspect locals and make a fake HTTP request
+--------------------------------------------
 
-      All objects from myapp.lib.base are available
-      Additional Objects:
-      wsgiapp    -  This project's WSGI App instance
-      app        -  WebTest.TestApp wrapped around wsgiapp
+This recipe requires WebTest because it uses ``app``. From the generated
+project root, install its testing extra first::
 
-    >>> tg.request
-    <Request at 0x3c963d0 GET http://localhost/_test_vars>
-    >>> app.get('/data.json').body
-    b'{"page": "data", "params": {}}'
-    >>> model.DBSession.query(model.User).first()
-    <User: name=manager, email=manager@somedomain.com, display=Example manager>
+    $ python -m pip install -e '.[testing]'
 
-Running Scripts from Command Line
----------------------------------
+Then use the recipe::
 
-You will notice that writing a python script that depends on TurboGears and
-running from the command line will fail with an error.
+    print("locals:", wsgiapp)
+    print("app:", app)
+    print("package:", config["package_name"])
 
-Suppose you have a script like::
+    response = app.get("/", status=302)
+    print("HTTP status:", response.status_int)
 
-    import tg
-    print('Hello From', tg.request.path)
+    from tg.util.webtest import test_context
+    with test_context(app, "/"):
+        assert request.path == "/"
+        print("request path:", request.path)
 
-Saving it as ``myscript.py`` and running it will fail with TurboGears
-complaining about a missing context::
+Use ``test_context`` only when code needs a separately scoped fake request.
+Do not use TurboGears' old request context manager.
 
-    $ python myscript.py
-    Traceback (most recent call last):
-      File "myscript.py", line 2, in <module>
-        print('Hello From', tg.request.path)
-      File "/Users/amol/wrk/tg/tg2/tg/support/objectproxy.py", line 19, in __getattr__
-        return getattr(self._current_obj(), attr)
-      File "/Users/amol/wrk/tg/tg2/tg/request_local.py", line 214, in _current_obj
-        return getattr(context, self.name)
-      File "/Users/amol/wrk/tg/tg2/tg/support/objectproxy.py", line 19, in __getattr__
-        return getattr(self._current_obj(), attr)
-      File "/Users/amol/wrk/tg/tg2/tg/support/registry.py", line 72, in _current_obj
-        'thread' % self.____name__)
-    TypeError: No object (name: context) has been registered for this thread
+SQLAlchemy quickstart only
+--------------------------
 
-That because we are trying to access the current request (``tg.request``) but we are outside
-of a web application, so no request exists.
+This deliberately creates a temporary ``TodoItem``, flushes it, and rolls the
+transaction back. It leaves no record behind. Replace ``TodoItem`` for a
+project that uses a different SQLAlchemy model::
 
-**TGShell** command solves this problem as it uses same features described in
-:ref:`testing_outside_controllers` to run any script inside a fake request::
+    TodoItem = model.TodoItem
+    print(model.DBSession.query(TodoItem).all())
 
-    $ gearbox tgshell myscript.py
-    15:30:13,925 INFO  [tgext.debugbar] Enabling Debug Toolbar
-    15:30:13,953 INFO  [auth] request classification: browser
-    15:30:13,953 INFO  [auth] -- repoze.who request started (/_test_vars) --
-    15:30:13,953 INFO  [auth] no identities found, not authenticating
-    15:30:13,953 INFO  [auth] no challenge required
-    15:30:13,953 INFO  [auth] -- repoze.who request ended (/_test_vars) --
-    Hello From /_test_vars
+    temporary = TodoItem(title="tgshell temporary item")
+    model.DBSession.add(temporary)
+    model.DBSession.flush()
+    temporary_id = temporary.id
+    assert model.DBSession.query(TodoItem).filter_by(id=temporary_id).one() is temporary
 
-So through **TGShell** it's also possible to run turbogears based scripts
-like you were inside an HTTP request for a controller.
+    model.DBSession.rollback()
+    assert model.DBSession.query(TodoItem).filter_by(id=temporary_id).first() is None
+    print("SQLAlchemy cleanup complete")
 
+Ming quickstart only
+--------------------
+
+This deliberately creates a temporary ``TodoItem``, flushes it, then deletes
+that exact object and clears the Ming session. It leaves no record behind.
+Replace ``TodoItem`` for a project that uses a different Ming model::
+
+    TodoItem = model.TodoItem
+    print(TodoItem.query.find({}).all())
+
+    temporary = TodoItem(title="tgshell temporary item")
+    model.DBSession.flush()
+    temporary_id = temporary._id
+    assert TodoItem.query.find({"_id": temporary_id}).all() == [temporary]
+
+    temporary.delete()
+    model.DBSession.flush()
+    model.DBSession.clear()
+    assert TodoItem.query.find({"_id": temporary_id}).all() == []
+    print("Ming cleanup complete")
+
+Use ``tginfo`` for static inspection and ``tgshell`` for loaded-runtime
+checks. Do not run ``setup-app``, migrations, or other database-mutating
+commands unless changing that environment is intentional. The in-memory
+``test.ini`` database is process-local. Its schema may need test setup; that
+setup is not a normal debugging step.
 
 Adding your own command
 =======================

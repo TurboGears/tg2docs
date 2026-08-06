@@ -4,3 +4,9 @@ tw2.forms
 -e git+https://github.com/TurboGears/tgext.crud.git@master#egg=tgext.crud
 -e git+https://github.com/TurboGears/tgext.admin.git@master#egg=tgext.admin
 sphinx
+WebTest
+Kajiki
+SQLAlchemy
+zope.sqlalchemy
+Ming
+-e git+https://github.com/TurboGears/tg2devtools.git@development#egg=tg.devtools
