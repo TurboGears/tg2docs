@@ -1,31 +1,28 @@
-TurboGears 2.5 Documentation Source
-===================================
+TurboGears documentation source
+===============================
 
-This is the source of the latest TurboGears 2.5 documentation effort.
+This repository contains the Sphinx source for the TurboGears 2.5 development
+documentation. Framework and extension dependencies follow the development
+branches listed in ``requirements.txt``, so builds reflect current source and
+can change over time.
 
-The docs are written in reStructuredText_ (.rst files), a simple markup 
-language often used to document python projects.   
-We use Sphinx_ to generate html from the rst files.
+Build locally with Python 3.12, the version used by Read the Docs::
 
-This documentation targets the 2.5 development branch of TurboGears.
-To generate documentation from the modules, the corresponding source must be
-available.
+    python3.12 -m venv .venv
+    . .venv/bin/activate
+    python -m pip install --upgrade pip
+    python -m pip install -r requirements.txt
+    python -m sphinx -W --keep-going -b html docs docs/_build/html
 
-If you are interested in helping with the new turbogears docs, we recommend 
-you touch base with mpedersen on the IRC channel #turbogears.  He appreciates
-any help you can give, and can help you get setup so he can more easily
-incorporate your modifications.   In :ref:`building_docs`, we give detailed
-information on how to setup an environment for building the docs.   Using
-this guide will give you a jumpstart for participating in the effort.
+The rendered documentation is in ``docs/_build/html``. Before opening a pull
+request, also check external links::
 
+    python -m sphinx -W --keep-going -b linkcheck docs docs/_build/linkcheck
 
-Building Docs
--------------
+Contributing
+------------
 
-Please see the file :ref:`building_docs` for more information.
-
-For those of you reading this outside of a restructed text setup, please view
-the file building_docs.rst for more information.
-
-.. _Sphinx: http://sphinx.pocoo.org/
+Keep changes focused, preserve existing reStructuredText style, and include the
+build command and result in the pull request. Report documentation problems at
+https://github.com/TurboGears/tg2docs/issues.
 

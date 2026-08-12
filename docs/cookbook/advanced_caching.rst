@@ -54,10 +54,12 @@ We can easily change the ``ApplicationAuthMetadata`` in our code to rely on the 
 of loading it back from database::
 
     from tg import cache
+    from tg.configuration.auth import TGAuthMetadata
 
     class ApplicationAuthMetadata(TGAuthMetadata):
-        def __init__(self, sa_auth):
-            self.sa_auth = sa_auth
+        def __init__(self, dbsession, user_class):
+            self.dbsession = dbsession
+            self.user_class = user_class
 
         def authenticate(self, environ, identity):
             # This should be your current authenticate implementation
@@ -80,12 +82,12 @@ of loading it back from database::
                                                  createfunc=lambda: self._retrieve_auth_metadata(userid),
                                                  expiretime=3600)
 
-            auth_metadata['user'] = self.sa_auth.dbsession.merge(auth_metadata['user'], load=False)
+            auth_metadata['user'] = self.dbsession.merge(auth_metadata['user'], load=False)
             return auth_metadata
 
         def _retrieve_auth_metadata(self, userid):
             """Retrieves user details from the database"""
-            user = self.sa_auth.dbsession.query(self.sa_auth.user_class).filter_by(user_name=userid).first()
+            user = self.dbsession.query(self.user_class).filter_by(user_name=userid).first()
             return {
                 'user': user,
                 'groups': user and [g.group_name for g in user.groups],

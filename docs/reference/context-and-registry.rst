@@ -38,10 +38,11 @@ are available during request processing. It provides access to:
 - ``tg.cache``: The cache for the current request
 - ``tg.tmpl_context``: Template context for the current request
 - ``tg.translator``: The i18n translator for the current request
-- ``tg.url``: URL generation utilities
 - ``tg.config``: The application configuration
 
-These objects are accessible from anywhere in your application code during a request,
+TurboGears also exports ``tg.url`` for URL generation during a request.
+
+These request-local objects are accessible from anywhere in your application code during a request,
 without needing to pass them as parameters. For example:
 
 .. code-block:: python
@@ -106,15 +107,10 @@ gets its own isolated context, so you don't need to worry about concurrent
 requests interfering with each other when using ``tg.request``, ``tg.response``,
 etc.
 
-However, **be careful with background threads**: If you spawn a background thread
-from within a request, that thread will inherit the parent request's context.
-This can lead to unexpected behavior if the background thread outlives the
-original request. If you need to work with background threads, consider:
-
-1. Passing explicit copies of the data you need to the background thread
-2. Using ``tg.request._current_obj()`` to get the actual object (not the proxy)
-   and pass it explicitly
-3. Creating a new, isolated context for the background thread
+However, **background threads do not inherit a request context**. TurboGears
+stores contexts in thread-local storage, so a background thread has no active
+``tg.request`` or other request-local proxy. Pass only the explicit data the
+background work needs; do not pass request-local objects beyond the request.
 
 Testing Outside Controllers
 ===========================
@@ -158,5 +154,5 @@ Summary
   a new one for each request and cleaning up afterwards
 - **Purpose**: Enable simple, thread-safe access to request data without explicit
   parameter passing
-- **Use**: Just use ``tg.request``, ``tg.response``, etc. in your code - the
-  context and registry handle the rest automatically
+- **Use**: Use ``tg.request``, ``tg.response``, and other request-local proxies
+  only while TurboGears is handling that request

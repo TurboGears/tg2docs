@@ -177,32 +177,33 @@ For a complete reference of cache configuration options, see
 :ref:`Caching <config-options>`.
 
 `Beaker` is configured in your QuickStarted application's main configuration
-file in the app:main section.
+file in the app:main section. TurboGears passes options prefixed with
+``cache.`` to Beaker's cache manager.
 
 To use memory-based caching:
 
 .. code-block:: ini
 
     [app:main]
-    beaker.cache.type = memory
+    cache.type = memory
 
 To use file-based caching:
 
 .. code-block:: ini
 
     [app:main]
-    beaker.cache.type = file
-    beaker.cache.data_dir = /tmp/cache/beaker
-    beaker.cache.lock_dir = /tmp/lock/beaker
+    cache.type = file
+    cache.data_dir = /tmp/cache/beaker
+    cache.lock_dir = /tmp/lock/beaker
 
 To use DBM-file-based caching:
 
 .. code-block:: ini
 
     [app:main]
-    beaker.cache.type = dbm
-    beaker.cache.data_dir = /tmp/cache/beaker
-    beaker.cache.lock_dir = /tmp/lock/beaker
+    cache.type = dbm
+    cache.data_dir = /tmp/cache/beaker
+    cache.lock_dir = /tmp/lock/beaker
 
 To use SQLAlchemy-based caching you must provide the `url` parameter
 for the `Beaker` configuration.  This can be any valid SQLAlchemy
@@ -215,8 +216,8 @@ directory while ``sqlite:////tmp/cache/beaker.sqlite`` is an absolute
 .. code-block:: ini
 
     [app:main]
-    beaker.cache.type = ext:database
-    beaker.cache.url = sqlite:////tmp/cache/beaker.sqlite
+    cache.type = ext:database
+    cache.url = sqlite:////tmp/cache/beaker.sqlite
 
 .. _memcache:
 
@@ -264,11 +265,11 @@ support to use the memcached daemon in your .ini files:
 .. code-block:: ini
 
     [app:main]
-    beaker.cache.type = ext:memcached
-    beaker.cache.url = 127.0.0.1:11211
+    cache.type = ext:memcached
+    cache.url = 127.0.0.1:11211
     # you can also store sessions in memcached, should you wish
-    # beaker.session.type = ext:memcached
-    # beaker.session.url = 127.0.0.1:11211
+    # session.type = ext:memcached
+    # session.url = 127.0.0.1:11211
 
 You can have multiple memcached servers specified using `;` separators.
 Usage, as you might imagine is the same as with any other `Beaker` cache

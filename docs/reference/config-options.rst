@@ -7,10 +7,10 @@ Configuration Options
 This section reports a reference of various configuration options available inside
 TurboGears app_cfg or .ini file.
 
-For example if you want to enable isodates in your application JSON encoder
-you might want to add to your ``app_cfg.base_config`` the following::
+For example if you want to enable isodates in your application JSON encoder,
+add the following to ``app_cfg.py``::
 
-    base_config['json.isodates'] = True
+    base_config.update_blueprint({'json.isodates': True})
 
 Configuration options can usually be set both through the ``app_cfg.py``
 or through your ``.ini`` file.

@@ -35,7 +35,7 @@ Before We Get Started
 Here is the model definition we will be using for this tutorial::
 
     from sqlalchemy import Column, Integer, String, Date, Text, ForeignKey
-    from sqlalchemy.orm import relation
+    from sqlalchemy.orm import relationship
     
     from moviedemo.model import DeclarativeBase
     
@@ -50,7 +50,7 @@ Here is the model definition we will be using for this tutorial::
         title = Column(String(100), nullable=False)
         description = Column(Text, nullable=True)
         genre_id = Column(Integer, ForeignKey('genres.genre_id'))
-        genre = relation('Genre', backref='movies')
+        genre = relationship('Genre', backref='movies')
         release_date = Column(Date, nullable=True)
 
 EasyCrudRestController

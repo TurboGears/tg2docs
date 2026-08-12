@@ -46,7 +46,9 @@ like::
     def dmy_encoded_date(d):
         return d.strftime('%d/%m/%Y')
 
-    base_config['json.custom_encoders'] = {date: dmy_encoded_date}
+    base_config.update_blueprint({
+        'json.custom_encoders': {date: dmy_encoded_date},
+    })
 
 That would cause all ``datetime.date`` instances to be encoded using ``dmy_encode_date`` function.
 
@@ -82,10 +84,12 @@ JSONP works much like JSON output, but instead of providing JSON response it pro
 an ``application/javascript`` response with a call to a javascript function providing
 all the values returned by the controller as function arguments.
 
-To enable JSONP rendering you must first append it to the list of required engines
-inside your application ``config/app_cfg.py``::
+To enable JSONP rendering, set the renderer list in your application
+``config/app_cfg.py`` before the application is created::
 
-    base_config.renderers.append('jsonp')
+    base_config.update_blueprint({
+        'renderers': ['json', 'kajiki', 'jsonp'],
+    })
 
 Then you can declare a JSONP controller by exposing it as::
 

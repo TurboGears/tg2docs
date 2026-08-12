@@ -7,8 +7,9 @@ From 2.4.3 to 2.5.0
 TurboGears 2.5.0 requires Python 3.8 minimum, support
 for prior versions of Python has been dropped.
 
-In 2.5.0 most deprecations were removed
-(apart ``AppConfig`` which will be removed in a future 2.5 release).
+In 2.5.0 most deprecations were removed. ``AppConfig`` remains available
+for backward compatibility but is deprecated; new applications should use
+``FullStackApplicationConfigurator``.
 
 If you hadn't yet addressed those deprecations, you should take care
 of all ``DeprecationWarning`` in 2.4 and then upgrade to 2.5

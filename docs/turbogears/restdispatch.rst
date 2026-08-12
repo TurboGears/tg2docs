@@ -137,7 +137,7 @@ url is accessed using a POST request:
             if directors is not None:
                 if not isinstance(directors, list):
                     directors = [directors]
-                directors = [DBSession.query(Director).get(director) for director in directors]
+                directors = [DBSession.get(Director, director) for director in directors]
             else:
                 directors = []
 
@@ -229,14 +229,14 @@ can validate in the same manner as before:
         if request.validation.errors:
             return dict(errors=dict([(field, str(e)) for field, e in request.validation.errors.items()]))
 
-        movie = DBSession.query(Movie).get(movie_id)
+        movie = DBSession.get(Movie, movie_id)
         if not movie:
             return dict(errors={'movie':'Movie not found'})
 
         genre_id = int(genre_id)
         if not isinstance(directors, list):
             directors = [directors]
-        directors = [DBSession.query(Director).get(director) for director in directors]
+        directors = [DBSession.get(Director, director) for director in directors]
 
         movie.genre_id = genre_id
         movie.title=title
@@ -258,7 +258,7 @@ deleted id:
 
     @expose('json')
     def post_delete(self, movie_id, **kw):
-        movie = DBSession.query(Movie).get(movie_id)
+        movie = DBSession.get(Movie, movie_id)
         if not movie:
             return dict(errors={'movie':'Movie not found'})
 
@@ -308,7 +308,7 @@ functionality:
         @expose('json')
         def get_all(self):
             movie_id = request.dispatch_state.routing_args.get('movie_id')
-            movie = DBSession.query(Movie).get(movie_id)
+            movie = DBSession.get(Movie, movie_id)
             return dict(movie=movie, directors=movie.directors)
 
     class MovieController(RestController):
@@ -316,7 +316,7 @@ functionality:
 
         @expose('json')
         def get_one(self, movie_id):
-            movie = DBSession.query(Movie).get(movie_id)
+            movie = DBSession.get(Movie, movie_id)
             return dict(movie=movie)
 
 This example only defines the get_all function, I leave the other
@@ -337,7 +337,7 @@ Here is what the Controller looks like with ``_before`` added in:
 
         def _before(self, *args, **kw):
             movie_id = request.dispatch_state.routing_args.get('movie_id')
-            tmpl_context.movie = DBSession.query(Movie).get(movie_id)
+            tmpl_context.movie = DBSession.get(Movie, movie_id)
 
         @with_trailing_slash
         @expose('json')

@@ -66,7 +66,7 @@ your outgoing response while running the generator.
 
     @expose(content_type='text/css')
     def stream(self):
-        def output_pause(req):
+        def output_pause():
             num = 0
             while num < 10:
                 num += 1

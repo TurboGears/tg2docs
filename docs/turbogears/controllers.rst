@@ -353,13 +353,13 @@ Here is an example controller and a chart outlining the way urls are mapped to i
 
         @expose()
         def update(self, title, **kw):
-            wikipage = DBSession.query(Page).get(title)
+            wikipage = DBSession.get(Page, title)
             for key, value in kw.items():
                 setattr(wikipage, key, value)
 
         @expose()
         def delete(self, title):
-            wikipage = DBSession.query(Page).get(title)
+            wikipage = DBSession.get(Page, title)
             DBSession.delete(wikipage)
 
 +----------------------------------------------------+------------+-------------------------------------------------+

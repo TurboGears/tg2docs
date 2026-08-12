@@ -16,7 +16,7 @@ Establishing the Model Definition
 Let us first assume the following model for this demonstration.::
 
     from sqlalchemy import Column, Integer, String, Date, Text, ForeignKey, Table
-    from sqlalchemy.orm import relation
+    from sqlalchemy.orm import relationship
 
     from moviedemo.model import DeclarativeBase, metadata
 
@@ -36,7 +36,7 @@ Let us first assume the following model for this demonstration.::
         title = Column(String(100), nullable=False)
         description = Column(Text, nullable=True)
         genre_id = Column(Integer, ForeignKey('genres.genre_id'))
-        genre = relation('Genre', backref='movies')
+        genre = relationship('Genre', backref='movies')
         release_date = Column(Date, nullable=True)
 
 
@@ -44,7 +44,7 @@ Let us first assume the following model for this demonstration.::
         __tablename__ = "directors"
         movie_id = Column(Integer, primary_key=True)
         title = Column(String(100), nullable=False)
-        movies = relation(Movie, secondary_join=movie_directors_table, backref="directors")
+        movies = relationship(Movie, secondary=movie_directors_table, backref="directors")
 
 The Basic Sprox Form
 -----------------------
@@ -267,8 +267,8 @@ new method in our controller that looks like::
     @expose()
     def post(self, **kw):
         del kw['sprox_id']
-        kw['genre'] = DBSession.query(Genre).get(kw['genre'])
-        kw['directors'] = [DBSession.query(Director).get(id) for id in kw['directors']]
+        kw['genre'] = DBSession.get(Genre, kw['genre'])
+        kw['directors'] = [DBSession.get(Director, id) for id in kw['directors']]
         kw['release_date'] = datetime.strptime(kw['release_date'],"%Y-%m-%d")
         movie = Movie(**kw)
         DBSession.add(movie)
