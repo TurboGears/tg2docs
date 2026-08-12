@@ -6,9 +6,9 @@ documentation. Framework and extension dependencies follow the development
 branches listed in ``requirements.txt``, so builds reflect current source and
 can change over time.
 
-Build locally with Python 3.12, the version used by Read the Docs::
+Build locally with Python 3::
 
-    python3.12 -m venv .venv
+    python3 -m venv .venv
     . .venv/bin/activate
     python -m pip install --upgrade pip
     python -m pip install -r requirements.txt
