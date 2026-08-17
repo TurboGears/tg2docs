@@ -38,6 +38,7 @@ to them and some intermediate features.
     caching
     i18n
     profiling
+    agent-tooling
     Pluggable/index
     restdispatch
     migrations

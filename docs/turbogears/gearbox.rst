@@ -240,4 +240,12 @@ Where your command class extends ``gearbox.command.Command``::
         def take_action(self, parsed_args):
             print('Hello world')
 
+Agent tooling
+=============
+
+TurboGears 2.5 devtools also provide agent-oriented commands: ``tginfo`` for
+read-only project inspection, ``tgskills`` for installing Agent Skills, and
+the three Agent Skills themselves. Quickstarted projects receive an
+``AGENTS.md`` pointing agents at them. See :ref:`tg-agent-tooling`.
+
 .. _setuptools: https://pythonhosted.org/setuptools/setuptools.html#dynamic-discovery-of-services-and-plugins
