@@ -4,18 +4,31 @@ Profiling Web Applications
 ==========================
 
 Profiling is an essential tool for identifying performance bottlenecks in your
-TurboGears application. TurboGears provides built-in profiling capabilities through
-the ``tgext.debugbar`` extension, which is automatically enabled in development mode.
+TurboGears application. The ``tgext.debugbar`` extension provides profiling
+capabilities when it is installed and enabled.
 
 Enabling the Debugbar
 ---------------------
 
-The debugbar is enabled by default in quickstarted TurboGears projects when running
-in development mode. When you start your application with ``gearbox serve``, the
-debugbar automatically appears at the bottom of each page.
+Quickstarted projects include ``tg.devtools`` in their development extra; it
+installs ``tgext.debugbar``. Install that extra to enable the generated debugbar
+configuration::
 
-If you need to manually enable it, ensure ``tgext.debugbar`` is in your project's
-requirements and that the middleware is configured in your application setup.
+    $ pip install -e ".[development]"
+
+The generated configuration enables the installed debugbar when ``debug = true``.
+For a project without ``tg.devtools``, install ``tgext.debugbar`` and add this to
+``config/app_cfg.py``::
+
+    $ pip install tgext.debugbar
+
+.. code-block:: python
+
+    from tgext.debugbar import enable_debugbar
+    enable_debugbar(base_config)
+
+The debugbar is injected only into non-AJAX ``text/html`` responses that contain
+both ``</head>`` and ``</body>`` markup.
 
 The Debugbar Interface
 ----------------------
@@ -25,12 +38,11 @@ Once enabled, the debugbar provides several tabs with profiling information:
 SQL Queries
 ~~~~~~~~~~~
 
-The SQL tab shows all database queries executed during the request, including:
+The SQL tab shows database queries executed during the request, including:
 
 - The SQL statement
-- Execution time
 - Parameters used
-- Number of rows returned
+- Duration
 
 This helps identify slow queries or N+1 query problems.
 
@@ -38,8 +50,9 @@ This helps identify slow queries or N+1 query problems.
    :alt: Debugbar showing SQL queries
    :align: center
 
-For PostgreSQL databases, you can also view the execution plan for each query by
-clicking on it, which helps optimize complex queries.
+For ``SELECT`` statements, **Results** displays the returned rows and column
+names. You can also view the execution plan by clicking **Explain**, which helps
+optimize complex queries.
 
 .. image:: debugbar_scanplan.jpg
    :alt: Debugbar showing SQL execution plan
@@ -48,13 +61,13 @@ clicking on it, which helps optimize complex queries.
 Request Profiling
 ~~~~~~~~~~~~~~~~
 
-The profiling tab provides detailed timing information for the entire request:
+The profiling tab provides detailed timing information for the request:
 
-- Total request time
-- Time spent in each controller method
-- Time spent in templates
-- Time spent in SQL queries
-- Stack trace with timing for each function call
+- Total time
+- Controller time
+- Render time
+- A Template table with grouped template entries, including total render time and invocation count
+- cProfile function statistics
 
 This allows you to quickly identify which parts of your application are taking the
 most time to execute.
@@ -71,8 +84,8 @@ To optimize your application performance using the debugbar:
 1. **Identify slow requests**: Look for requests with high total execution times
 2. **Check SQL queries**: Look for queries taking more than 100ms or queries executed
    multiple times for similar data (N+1 problem)
-3. **Analyze the call stack**: Identify which controller methods or template
-   rendering is taking the most time
+3. **Analyze function statistics**: Identify expensive controller or template
+   work
 4. **Review execution plans**: For slow SQL queries, check if they're using proper
    indexes or if the query plan is suboptimal
 
@@ -94,7 +107,7 @@ Common Performance Issues Found with Profiling
   Solution: Add appropriate indexes to your database tables.
 
 **Expensive Controller Logic**
-  The profiling stack trace shows which methods are taking the most time.
+  The profiling function statistics show where controller time is spent.
   Solution: Optimize the algorithm, add caching, or move to background tasks.
 
 Production Considerations

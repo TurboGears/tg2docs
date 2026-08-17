@@ -31,7 +31,11 @@ at the end the following lines::
     import tgext.myextension
     tgext.myextension.plugme(base_config)
 
-of through the *pluggable application* interface if ``tgext.pluggable`` is available::
+or through the *pluggable application* interface. Install ``tgext.pluggable`` first::
+
+    $ pip install tgext.pluggable
+
+Then, with a :class:`tg.FullStackApplicationConfigurator`, use::
 
     from tgext.pluggable import plug
     plug(base_config, 'tgext.myextension')
@@ -113,7 +117,7 @@ The core parts of the previous example are:
         configuration as it has not been loaded yet.
 
     * **SetupExtension.__call__**, this is a callable that is registered
-        by the **plugme** function for the ``config_read`` milestone so that it
+        by the **plugme** function for the ``config_ready`` milestone so that it
         is executed when the *.ini* configuration has been loaded and merged with
         the options declared through the application configurator in *config/app_cfg.py*.
 
@@ -142,14 +146,15 @@ TurboGears 2.1.4 introduced support for pluggable applications using tgext.plugg
 reusable applications.
 Currently only SQLAlchemy based applications are supported as pluggable applications.
 
-Official documentation for ``tgext.pluggable`` can be found at: http://pypi.python.org/pypi/tgext.pluggable
+Official documentation for ``tgext.pluggable`` can be found at:
+https://pypi.org/project/tgext.pluggable/
 
 Supported Features
 ==================================
 
 Pluggable applications can define their own:
 
-    * **controllers**, which will be automatically mounted when the application is purged.
+    * **controllers**, which will be automatically mounted when the application is plugged.
     * **models**, which will be available inside and outside of the plugged application.
     * **helpers**, which can be automatically exposed in ``h`` object in application template.
     * **bootstrap**, which will be executed when `setup-app` is called.
@@ -158,10 +163,13 @@ Pluggable applications can define their own:
 Mounting a pluggable application
 ==================================
 
-In your application config/app_cfg.py import ``plug`` from ``tgext.pluggable`` and
-call it for each pluggable application you want to enable.
+Install ``tgext.pluggable`` and the plugged package in your environment first::
 
-The plugged package must be installed in your environment.
+    $ pip install tgext.pluggable
+
+In your ``FullStackApplicationConfigurator`` application ``config/app_cfg.py``,
+import ``plug`` from ``tgext.pluggable`` and call it for each pluggable
+application you want to enable.
 
 .. code-block:: python
 
@@ -171,11 +179,10 @@ The plugged package must be installed in your environment.
 Creating Pluggable Applications
 ===================================
 
-``tgext.pluggable`` provides a **quickstart-pluggable** command
-to create a new pluggable applications:
+Install ``tgext.pluggable`` before using its **quickstart-pluggable** command;
+the installed package registers the command with ``gearbox``::
 
-.. code-block:: bash
-
+    $ pip install tgext.pluggable
     $ gearbox quickstart-pluggable plugtest
     ...
 
