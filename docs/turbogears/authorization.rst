@@ -304,6 +304,12 @@ as in this example::
             return dict()
         # ...
 
+Predicate instances have deterministic representations with no memory
+addresses, so they are safe to log and useful in diagnostics::
+
+    >>> repr(predicates.is_user('amol'))
+    tg.predicates.is_user(user_name='amol')
+
 
 Built-in compound predicate checkers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

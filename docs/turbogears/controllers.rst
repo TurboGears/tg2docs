@@ -248,6 +248,20 @@ separation from controller code.
 
 For more on templating have a look at :ref:`Templating <templating>`
 
+Restricting HTTP Methods
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+By default an exposed action answers requests with any HTTP method.
+Use the ``allowed_methods`` option of ``@expose`` to restrict an action
+to a specific set of methods::
+
+    @expose(allowed_methods=['GET', 'POST'])
+    def save(self, **kw):
+        ...
+
+Requests that use a different method receive a ``405 Method Not Allowed``
+response that carries the ``Allow`` header listing the accepted methods.
+
 SubControllers And The URL Hierarchy
 ------------------------------------
 
@@ -403,3 +417,25 @@ For a complete reference of dispatch configuration options, see
 
 You will still be able to access the original request values from the
 ``tg.request`` object if you need them for any reason.
+
+JSON Request Bodies
+~~~~~~~~~~~~~~~~~~~
+
+By default only query string and form parameters are passed to the
+controller. If your API clients send ``application/json`` bodies, enable
+the ``decode_json_params`` option in *config/app_cfg.py*::
+
+    base_config.update_blueprint({'decode_json_params': True})
+
+With this option enabled, a request whose ``Content-Type`` is
+``application/json`` has its JSON object body merged into the request
+parameters, on top of the query string and form values. JSON values keep
+their native types (``int``, ``bool``, ``list``, ``dict``, ...) instead of
+arriving as strings::
+
+    curl -X POST http://localhost:8080/movie \
+         -H 'Content-Type: application/json' \
+         -d '{"title": "Inception", "year": 2010}'
+
+An invalid JSON body, or a body that is not an object, results in a
+``400 Bad Request`` response.

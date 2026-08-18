@@ -8,56 +8,65 @@ Running TurboGears under Apache with ``mod_wsgi``
 It allows ``WSGI`` programs to be served using the Apache web
 server.
 
-This guide will outline broad steps that can be used to get a TurboGears
-application running under Apache via ``mod_wsgi``.
+This guide outlines broad steps for running a TurboGears application under
+Apache via ``mod_wsgi``. TurboGears application settings belong in the
+application's deployment-specific ``.ini`` file; Apache and ``mod_wsgi``
+settings belong in the Apache configuration.
 
 #.  The tutorial assumes you have Apache already installed on your
-    system.  If you do not, install Apache 2.X for your platform in
+    system. If you do not, install Apache 2.X for your platform in
     whatever manner makes sense.
 
-#.  Once you have Apache installed, install ``mod_wsgi``.  Use the
-    (excellent) `installation instructions
-    <http://code.google.com/p/modwsgi/wiki/InstallationInstructions>`_
-    for your platform into your system's Apache installation.
+#.  Once you have Apache installed, install ``mod_wsgi``. Use the
+    `mod_wsgi installation instructions
+    <https://modwsgi.readthedocs.io/en/develop/installation.html>`_ for
+    your platform and Apache installation.
 
-#.  Create a virtualenvironment with the specific TurboGears version
-    your application depends on installed.
-
-    .. parsed-literal::
-
-        $ virtualenv /var/tg2env
-        $ /var/tg2env/bin/pip install |private_index_path| tg.devtools
-
-#.  Activate the virtualenvironment
+#.  Create a virtual environment with the TurboGears project dependencies
+    installed.
 
     .. code-block:: bash
 
-        $ source /var/tg2env/bin/activate
-        (tg2env)$ #virtualenv now activated
+       $ python3 -m venv /var/tg2env
+       $ /var/tg2env/bin/python -m pip install --upgrade pip
+       $ /var/tg2env/bin/python -m pip install tg.devtools
 
-#.  Install your TurboGears application.
+#.  Activate the virtual environment and install your TurboGears application
+    using the current project packaging commands.
 
     .. code-block:: bash
 
+       $ source /var/tg2env/bin/activate
        (tg2env)$ cd /var/www/myapp
-       (tg2env)$ python setup.py develop
+       (tg2env)$ python -m pip install -e .
 
-#.  Within the application director, create a
-    script named ``app.wsgi``.  Give it these contents:
+#.  Within the application directory, create a script named ``app.wsgi``.
+    Give it these contents:
 
     .. code-block:: python
 
-        APP_CONFIG = "/var/www/myapp/myapp/production.ini"
-
-        #Setup logging
         import logging.config
-        logging.config.fileConfig(APP_CONFIG)
+        import os
 
-        #Load the application
         from paste.deploy import loadapp
-        application = loadapp('config:%s' % APP_CONFIG)
 
-#.  Edit your Apache configuration and add some stuff.
+        APP_CONFIG = "/var/www/myapp/production.ini"
+
+        logging.config.fileConfig(
+            APP_CONFIG,
+            {"__file__": APP_CONFIG, "here": os.path.dirname(APP_CONFIG)},
+            disable_existing_loggers=False,
+        )
+        application = loadapp("config:%s" % APP_CONFIG)
+
+    The ``application`` callable is the WSGI entry point that Apache loads.
+    The explicit ``fileConfig`` call applies the logging sections in the
+    PasteDeploy configuration before the application is created.
+
+#.  Edit your Apache configuration and add the ``mod_wsgi`` settings. The
+    ``python-home`` value selects the virtual environment; ``python-path``
+    points at the installed project's source directory. The static aliases
+    let Apache serve static files without sending them through TurboGears.
 
     .. code-block:: apache
 
@@ -65,10 +74,10 @@ application running under Apache via ``mod_wsgi``.
             ServerName www.site1.com
 
             WSGIProcessGroup www.site1.com
-            WSGIDaemonProcess www.site1.com user=www-data group=www-data threads=4 python-path=/var/tg2env/lib/python2.7/site-packages
+            WSGIDaemonProcess www.site1.com user=www-data group=www-data threads=4 python-home=/var/tg2env python-path=/var/www/myapp
             WSGIScriptAlias / /var/www/myapp/app.wsgi
 
-            #Serve static files directly without TurboGears
+            # Serve static files directly without TurboGears
             Alias /images /var/www/myapp/myapp/public/images
             Alias /css /var/www/myapp/myapp/public/css
             Alias /js /var/www/myapp/myapp/public/js
@@ -77,7 +86,7 @@ application running under Apache via ``mod_wsgi``.
             ErrorLog logs/www.site1.com-error_log
         </VirtualHost>
 
-#.  Restart Apache
+#.  Restart Apache so it loads the new WSGI entry point and daemon process.
 
     .. code-block:: bash
 
@@ -86,5 +95,5 @@ application running under Apache via ``mod_wsgi``.
 #.  Visit ``http://www.site1.com/`` in a browser to access the application.
 
 See the `mod_wsgi configuration documentation
-<http://code.google.com/p/modwsgi/wiki/ConfigurationGuidelines>`_ for
+<https://modwsgi.readthedocs.io/en/develop/configuration-guidelines.html>`_ for
 more in-depth configuration information.

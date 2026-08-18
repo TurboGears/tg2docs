@@ -93,15 +93,27 @@ parameter names to validators.
 
 ``Convert`` accepts any callable that takes one value and returns the converted
 value. If the callable raises an exception, TurboGears treats validation as
-failed and uses the validator's ``msg`` as the error message. Missing values are
-also errors unless you provide a ``default``:
+failed and uses the validator's ``msg`` as the error message. Missing values
+are errors unless you provide a ``default`` -- including an explicit
+``default=None``, which makes the field optional and passes ``None`` to the
+action when the value is missing:
 
 .. code-block:: python
 
     @expose('json')
-    @validate({'page': Convert(int, default=1)})
-    def list_items(self, page=1):
-        return dict(page=page)
+    @validate({'page': Convert(int, default=1),
+               'tag': Convert(str, default=None)})
+    def list_items(self, page=1, tag=None):
+        return dict(page=page, tag=tag)
+
+``Convert`` also has a deterministic representation with no memory addresses,
+which is safe to log or include in diagnostics. The ``default=<required>``
+marker distinguishes "no default supplied" from an explicit ``default=None``::
+
+    >>> repr(Convert(int))
+    Convert(func=builtins.int, msg='Invalid', default=<required>)
+    >>> repr(Convert(int, default=None))
+    Convert(func=builtins.int, msg='Invalid', default=None)
 
 ``RequireValue`` is useful when the incoming value should stay a string but must
 not be empty.
@@ -127,7 +139,8 @@ input is not automatically rejected.
 
 For JSON APIs, a common choice is
 :func:`tg.controllers.util.validation_errors_response`, which returns a
-``412 Precondition Failed`` response containing the validation errors as JSON.
+``422 Unprocessable Content`` response containing the validation errors as
+JSON (``{"errors": ..., "values": ...}``).
 
 .. code-block:: python
 
