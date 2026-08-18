@@ -615,6 +615,40 @@ file. The migration should create the ``page`` table with the same columns as
 ``Page``. Bootstrap data is separate: insert ``FrontPage`` only when it is not
 already present, according to your application's existing deployment policy.
 
+Caching rendered pages
+======================
+
+Returning a ``tg_cache`` dictionary caches the rendered template. See the
+canonical :ref:`prerendered-templates-cache` documentation for the available
+cache options. In this tutorial, derive the key from both the page name and
+its content so changing ``Page.data`` creates a new entry and two pages with
+identical content do not collide:
+
+.. code-block:: python
+
+    from hashlib import sha256
+
+    # ... inside WikiController._display, after content is rendered ...
+    cache_key = sha256(
+        f"{page.pagename}\0{page.data}".encode("utf-8")
+    ).hexdigest()
+    return {
+        "content": content,
+        "wikipage": page,
+        "tg_cache": {
+            "key": cache_key,
+            "expire": 24 * 3600,
+            "type": "memory",
+        },
+    }
+
+The database lookup and reStructuredText conversion still happen before
+rendering the template in this tutorial. This example caches the rendered
+template; it does not cache those controller computations or guarantee a
+measured throughput gain. The ``memory`` backend is process-local, so a
+multi-process deployment needs a shared cache backend and deployment-specific
+configuration.
+
 Troubleshooting
 ===============
 

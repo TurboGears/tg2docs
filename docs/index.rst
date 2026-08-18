@@ -25,7 +25,6 @@ or complex application in :ref:`Full Stack mode <wiki20>`.
 
     turbogears/minimal/index
     turbogears/wiki20
-    turbogears/wikier/index
     turbogears/starting
     cookbook/cookbook
     reference/reference
