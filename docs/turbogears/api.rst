@@ -8,26 +8,41 @@ TurboGears 2.5 ships a dedicated quickstart for JSON APIs: ``gearbox
 quickstart-api`` creates a project with REST controllers, automatic parameter
 validation, JSON error responses, an automatically generated `OpenAPI
 <https://spec.openapis.org/>`_ specification, interactive API documentation,
-and optional Bearer-token authentication.
+and Bearer-token and cookie authentication.
 
 This tutorial walks through the generated project and shows how to build on
-it: a validated, OpenAPI-compatible JSON API over a movie catalog.
+it: a validated, OpenAPI-compatible JSON API over a movie catalog. The
+examples use the command's default SQLAlchemy and form-based authentication
+configuration.
 
 Creating the project
 ====================
 
-Create a new API project and install it::
+Use Python 3.10 or newer. Create a new API project and install it::
 
-    $ gearbox quickstart-api myproject --auth --sqlalchemy
+    $ gearbox quickstart-api myproject
     $ cd myproject
     $ python -m pip install -e '.[development]'
 
-``--auth`` adds authentication (Bearer tokens and cookie login), and
-``--sqlalchemy`` selects SQLAlchemy as the ORM. ``--ming`` selects MongoDB
-via Ming and ``--nosa`` skips the database entirely; omit ``--auth`` for an
-unauthenticated API. The quickstart also installs the coding-agent skills
-into ``.agents/skills/`` and generates an ``AGENTS.md`` describing the
-project workflow — see :ref:`tg-agent-tooling`.
+The ``development`` extra includes the generated project's testing
+requirements and TurboGears development tools. A leaner environment can use
+``python -m pip install -e '.[testing]'`` when it only needs to run the test
+suite.
+
+The API quickstart enables SQLAlchemy and authentication by default. Its
+authentication support includes Bearer tokens and the standard cookie login
+flow. Use ``--noauth`` for an unauthenticated project, ``--ming`` for MongoDB
+through Ming, or ``--nosa`` for a project without an ORM. ``--disable-migrations``
+removes the generated Alembic migration support, and ``--package`` selects a
+Python package name different from the project name. The ``--auth`` and
+``--sqlalchemy`` flags are available when you want to state the defaults
+explicitly.
+
+The endpoint and OpenAPI examples below assume the default SQLAlchemy
+project. Ming and no-database projects have the same controller shape, but
+their model and persistence code differs. The quickstart also installs the
+coding-agent skills into ``.agents/skills/`` and generates an ``AGENTS.md``
+describing the project workflow — see :ref:`tg-agent-tooling`.
 
 Initialize the database (creates the schema plus demo users and sample
 movies) and start the development server::
@@ -35,14 +50,30 @@ movies) and start the development server::
     $ gearbox setup-app -c development.ini
     $ gearbox serve -c development.ini --reload
 
-The development database lives in ``devdata.db`` next to
-``development.ini``; ``test.ini`` uses an in-memory database for tests.
+The generated profiles are ``development.ini`` for local development and
+``test.ini`` for tests; ``test.ini`` references the development configuration
+and uses an in-memory database. The development database lives in
+``devdata.db`` next to ``development.ini``. The quickstart does not generate
+``production.ini``; create a production configuration as part of deployment.
+
+Run the standard project checks from the project root::
+
+    $ gearbox tginfo summary --project . --config development.ini --json
+    $ gearbox tginfo routes --project . --config development.ini --json
+    $ python -m pytest --collect-only -q
+
+``tginfo`` is read-only but imports application code. ``setup-app`` initializes
+and writes the configured database, so do not treat it as a read-only check.
 
 What was generated
 ==================
 
 The interesting parts of the generated project:
 
+- ``<package>/config/app_cfg.py`` — renderer, JSON request-body, ORM, session,
+  and authentication configuration;
+- ``<package>/controllers/root.py`` — mounts ``APIController`` at ``/api`` and
+  serves the generated HTML landing page at ``/``;
 - ``<package>/controllers/api/__init__.py`` — the ``APIController`` mounted
   at ``/api``; it exposes ``index`` (API summary), ``openapi`` (the OpenAPI
   specification) and ``docs`` (interactive Redoc documentation);
@@ -51,13 +82,22 @@ The interesting parts of the generated project:
 - ``<package>/model/movie.py`` — the ``Movie`` model with its
   ``__API_SCHEMA__`` (the OpenAPI schema of the resource) and ``__json__``
   (how the model is serialized);
-- ``<package>/tests/functional/`` — WebTest tests for the movies API and
-  for authentication.
+- ``<package>/templates/secure.xhtml`` — the protected HTML demo page;
+- ``<package>/websetup/`` — schema and bootstrap code for the generated
+  database, demo users, and demo records;
+- ``<package>/tests/functional/`` — WebTest tests for the movie API, landing
+  page, OpenAPI endpoints, and authentication.
+
+The generated landing page is available at ``/``. The API summary is at
+``/api``, the machine-readable specification is at ``/api/openapi.json``, and
+interactive Redoc documentation is at ``/api/docs``.
 
 The API in action
 =================
 
-With the server running, the catalog endpoints behave like this::
+With the server running, open ``http://127.0.0.1:8080/`` for the generated
+landing page, or use the API endpoints directly. The catalog behaves like
+this::
 
     $ curl http://127.0.0.1:8080/api/movies
     {"movies": [{"id": "1", "title": "Inception", "year": 2010, ...}]}
@@ -134,6 +174,28 @@ restrict which HTTP methods may reach an action with the 2.5.1
 
 Disallowed methods receive ``405 Method Not Allowed`` with an ``Allow``
 header.
+
+Replacing the generated demo
+============================
+
+The quickstart is a working demo, not an application skeleton with no
+opinionated code. When replacing the movie catalog, remove the generated demo
+files that apply to the selected project:
+
+- ``<package>/controllers/api/movies.py``;
+- ``<package>/controllers/demo.py``;
+- ``<package>/model/movie.py``;
+- ``<package>/tests/functional/test_movies.py``;
+- ``<package>/tests/functional/test_auth.py``;
+- ``<package>/templates/secure.xhtml``.
+
+Then remove the secure action and demo imports and registrations from
+``controllers/root.py``, and remove the movie imports and registrations from
+``controllers/api/__init__.py``, ``model/__init__.py``, and
+``websetup/bootstrap.py``. Keep the API controller, configuration, and OpenAPI
+routes if they are part of the application you are building. The generated
+``README.rst`` contains the same cleanup intent; use package-qualified paths
+when applying it from the project root.
 
 JSON responses and errors
 =========================
@@ -230,7 +292,7 @@ model, controller and template skeletons for you (see the
 Authentication
 ==============
 
-With ``--auth`` the API supports two authentication methods:
+With authentication enabled, the API supports two authentication methods:
 
 **Bearer tokens** — send the token in the ``Authorization`` header::
 
@@ -251,18 +313,19 @@ left untouched.
     $ curl -b cookies.txt http://127.0.0.1:8080/demo/admin
     {"message": "Welcome, admin!", "status": "ok", "user": "manager"}
 
-The same flow protects web pages. Open ``http://127.0.0.1:8080/secure`` in a
-browser while logged out: you are redirected to the login page, and after
-signing in with ``manager``/``managepass`` you land back on the protected
-page showing your name. The page is the ``secure`` action of the root
-controller, guarded by ``predicates.not_anonymous`` — the showcase to copy
-when you need login-protected HTML pages next to your API.
+The same flow protects the generated HTML demo page. Open
+``http://127.0.0.1:8080/secure`` while logged out: TurboGears redirects to the
+login page. After signing in with ``manager``/``managepass``, the protected
+page shows the authenticated user. The ``secure`` action uses
+``predicates.not_anonymous`` as an example for login-protected HTML pages next
+to an API.
 
 The demo users are created by ``gearbox setup-app``: ``manager``
 (password ``managepass``, token ``abc123def456ghi789jkl012mno345``, has the
 ``manage`` permission) and ``editor`` (password ``editpass``, token
-``pqr678stu901vwx234yz567abc890``). Protect actions with ``@require`` and
-predicates::
+``pqr678stu901vwx234yz567abc890``). These credentials are for local
+development only; remove or replace them before deployment. Protect API
+actions with ``@require`` and predicates::
 
     @expose('json')
     @require(predicates.has_permission('manage', msg=l_('Requires manage permission')))
@@ -281,8 +344,8 @@ The generated project ships a WebTest suite::
 
 It covers the movies CRUD cycle, the validation status codes (400, 422,
 404), the OpenAPI endpoints, and authentication (Bearer and cookie login).
-``tests/functional/test_auth.py`` shows how to create users and
-permissions in the test database.
+``tests/functional/test_auth.py`` shows how to test users, permissions, Bearer
+tokens, cookie login, and the protected HTML page.
 
 Next steps
 ==========
