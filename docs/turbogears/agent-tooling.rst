@@ -4,18 +4,21 @@
 Agent Tooling
 ==============
 
-TurboGears 2.5 devtools ship agent-oriented facilities that make a project
-inspectable and safely operable by coding agents: the ``tginfo`` static
-inspection command, the ``tgskills`` skill installer, and three Agent Skills.
-Quickstarted projects also receive an ``AGENTS.md`` that points agents at
-these tools and at version-matched reference documentation.
+TurboGears 2.5 devtools provide project-aware tooling for developers who work
+with coding agents: the ``tginfo`` static inspection command, the ``tgskills``
+skill installer, and three Agent Skills. Full-stack and API quickstarts also
+receive an ``AGENTS.md`` with project-local workflow and version-matched
+reference links.
+
+This is optional development tooling. A generated application's runtime does
+not depend on the coding-agent tools.
 
 Project commands such as ``tginfo`` and ``tgshell`` are contributed by the
-project itself. Install the generated project into the active environment
-before using them::
+project itself. Install the generated project with its development extra into
+the active environment before using them::
 
     $ cd myproject
-    $ python -m pip install -e .
+    $ python -m pip install -e '.[development]'
 
 ``tginfo`` — Static project inspection
 ======================================
@@ -44,18 +47,14 @@ Omit ``--json`` for human-readable output.
 JSON output contract
 --------------------
 
-With ``--json`` the output follows a stable contract:
+Use ``--json`` when the output will be consumed by another tool or a coding
+agent. The command writes one JSON document to stdout and diagnostics to
+stderr. Treat any nonzero exit code as failure. The output omits credentials
+and reports source locations relative to the project root.
 
-- a single JSON document on stdout; application import/startup log lines go
-  to stderr, so stdout can be parsed directly;
-- keys are sorted and rows are deterministically ordered — output is
-  byte-stable across runs for the same project;
-- exit codes: ``0`` success; ``1`` missing subcommand; ``2`` unknown
-  subcommand or not run inside the project; ``4`` config file load failure.
-  Treat any nonzero exit as failure;
-- no credentials are ever emitted: database info is ``{enabled, orm}`` and
-  auth info is ``{enabled}`` only;
-- source locations are relative to the project root.
+The current exit codes are ``0`` for success, ``1`` for a missing subcommand,
+``2`` for an unknown subcommand or a command run outside a project, and ``4``
+for a configuration-file load failure.
 
 Safety
 ------
@@ -77,18 +76,16 @@ inspection; for a read-only migration status check use::
 - by default skills are installed under ``.agents/skills/``;
 - ``--claude`` installs only ``.claude/skills/`` for Claude Code.
 
-Installation links the skills from the installed devtools package when
-possible and falls back to copying; existing skill directories are never
-overwritten, and symlinks escaping the project are rejected. The quickstart
-installs the default target automatically. Generated projects ignore
-``.agents/`` and ``.claude/`` in Git, since the skills are machine-local and
-regenerated from the installed devtools version.
+The quickstart installs the default target automatically. Running the
+installer again does not replace an existing skill directory. The skill files
+are machine-local and generated projects ignore ``.agents/`` and
+``.claude/`` in Git. Use ``--claude`` when the project is being used with
+Claude Code; otherwise the default ``.agents/skills/`` target is appropriate.
 
 Agent Skills
 ============
 
-The installed skills are Markdown guidance that teaches agents the
-TurboGears workflow:
+The installed skills are Markdown guidance for project-aware development:
 
 - ``tg-inspect`` — discovering routes, controllers, models, templates, and
   project facts through ``tginfo``;
@@ -99,18 +96,35 @@ TurboGears workflow:
 - ``tg-shell`` — running code in the fully loaded application context,
   including WebTest requests, through ``gearbox tgshell``.
 
-The commands these skills document are the ones described in this manual;
-the skills themselves are the live reference installed with the project.
+Working with a coding agent
+===========================
+
+TurboGears tooling does not decide what an application should do. A human
+still provides the product behavior, constraints, and acceptance checks. The
+tooling makes the existing project easier to understand and gives the human
+visible checks around an agent's changes:
+
+- use ``tginfo`` to inspect the project before relying on assumptions about
+  routes, models, templates, or available scaffolds;
+- use ``tg-scaffold`` when new files should follow project conventions;
+- review the generated and edited diff before accepting it, especially before
+  running setup or migration commands;
+- run the project's tests, then use ``tg-shell`` for a loaded-application or
+  WebTest check when static inspection is not enough.
+
+Keep the boundaries clear: ``tginfo`` describes project structure,
+``tg-scaffold`` writes project files, and ``tg-shell`` executes application
+code. For a complete worked example, see :ref:`tg-agentic-development`.
 
 Generated ``AGENTS.md``
 =======================
 
-Quickstart generates an ``AGENTS.md`` in the project root that instructs
-agents to use the skills above, documents the read-only ``tginfo`` workflow,
-the test discovery command (``python -m pytest --collect-only -q``), the
-migration status check, and the config profiles (``development.ini`` for
-development, ``test.ini`` for tests). It also embeds version-anchored
-reference documentation URLs:
+Quickstart generates an ``AGENTS.md`` in the project root as a project-local
+handoff document. Read it before working with an agent. It identifies the
+skills, documents the read-only ``tginfo`` workflow, the test discovery
+command (``python -m pytest --collect-only -q``), the migration status check,
+and the config profiles (``development.ini`` for development, ``test.ini``
+for tests). It also embeds version-anchored reference documentation URLs:
 
 - https://turbogears.readthedocs.io/en/development/reference/reference.html
   for development installs;
