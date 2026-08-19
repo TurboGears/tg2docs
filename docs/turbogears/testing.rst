@@ -24,7 +24,7 @@ Running Tests
 Install the application together with its testing dependencies from the project
 root::
 
-    $ pip install -e ".[testing]"
+    $ python -m pip install -e ".[testing]"
 
 A newly quickstarted TurboGears 2.5 project declares the testing dependencies in
 ``pyproject.toml`` under ``[project.optional-dependencies]``::

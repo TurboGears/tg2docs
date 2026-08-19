@@ -14,13 +14,13 @@ Quickstarted projects include ``tg.devtools`` in their development extra; it
 installs ``tgext.debugbar``. Install that extra to enable the generated debugbar
 configuration::
 
-    $ pip install -e ".[development]"
+    $ python -m pip install -e ".[development]"
 
 The generated configuration enables the installed debugbar when ``debug = true``.
 For a project without ``tg.devtools``, install ``tgext.debugbar`` and add this to
 ``config/app_cfg.py``::
 
-    $ pip install tgext.debugbar
+    $ python -m pip install tgext.debugbar
 
 .. code-block:: python
 

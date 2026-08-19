@@ -13,10 +13,10 @@ Default Setup
 =============
 
 By default the ``master.xhtml`` of a current Kajiki quickstarted project
-provides a div where flash messages will be displayed. Genshi quickstarts use
-``master.html``. This is achieved with lines like:
+provides a div where flash messages will be displayed. This is achieved with
+lines like:
 
-.. code-block:: html+genshi
+.. code-block:: html
 
     <py:with vars="flash=tg.flash_obj.render('flash', use_js=False)">
         <div py:if="flash" py:replace="Markup(flash)" />
@@ -110,16 +110,15 @@ JS version).
 Custom Flash HTML
 ~~~~~~~~~~~~~~~~~
 
-For example to render the flash using the **toastr** library you might want to remove the
-``py:with`` code block from your master template (``master.xhtml`` for Kajiki quickstarts,
-``master.html`` for Genshi quickstarts) and move it to the bottom of your ``<body>`` right
-after the usage of bootstrap and jquery libraries:
+For example to render the flash using the **toastr** library in a current Kajiki
+quickstart, remove the ``py:with`` code block from ``master.xhtml`` and move it
+to the bottom of your ``<body>`` after the Bootstrap and jQuery libraries:
 
-.. code-block:: html+genshi
+.. code-block:: html
 
     <body>
       <!-- YOUR CURRENT BODY CONTENT -->
-      <script src="http://code.jquery.com/jquery.js"></script>
+      <script src="https://code.jquery.com/jquery.js"></script>
       <script src="${tg.url('/javascript/bootstrap.min.js')}"></script>
 
       <py:with vars="flash=tg.flash_obj.render('flash', use_js=False)">
@@ -127,8 +126,8 @@ after the usage of bootstrap and jquery libraries:
       </py:with>
     </body>
 
-This will ensure that we can provide custom Javascript that depends on JQuery inside our
-flash template.
+This will ensure that custom JavaScript can depend on jQuery inside the flash
+template.
 Now we can switch flash template to use the toastr library to display our flash by setting
 inside your ``app_cfg.py``::
 

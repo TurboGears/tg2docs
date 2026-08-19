@@ -278,7 +278,7 @@ Using tgext.formencode
 
 Install the extension alongside your application::
 
-    $ pip install tgext.formencode
+    $ python -m pip install tgext.formencode
 
 For a packaged application, also add ``tgext.formencode`` to your project
 requirements. Then enable it in your application's ``config/app_cfg.py`` before

@@ -49,7 +49,7 @@ MongoDB server is listening on ``localhost:27017``.
 
 .. code-block:: bash
 
-      $ pip install -e .
+      $ python -m pip install -e .
       $ gearbox setup-app
 
 The quickstart command from above will create the authentication
@@ -230,9 +230,9 @@ For additional details on working with custom properties refer to
 CustomProperties_ Ming Documentation.
 
 
-.. _Relations: http://merciless.sourceforge.net/userguide.html#relating-classes
-.. _MongoDB: http://www.mongodb.org
-.. _Ming: http://merciless.sourceforge.net/
-.. _UserGuide: http://merciless.sourceforge.net/userguide.html#mapped-classes-and-documents
-.. _Indexing: http://merciless.sourceforge.net/mongodb_indexes.html
-.. _CustomProperties: http://merciless.sourceforge.net/custom_properties.html
+.. _Relations: https://ming.readthedocs.io/en/latest/userguide.html#relating-classes
+.. _MongoDB: https://www.mongodb.com/docs/manual/
+.. _Ming: https://ming.readthedocs.io/en/latest/
+.. _UserGuide: https://ming.readthedocs.io/en/latest/userguide.html#mapped-classes-and-documents
+.. _Indexing: https://ming.readthedocs.io/en/latest/mongodb_indexes.html
+.. _CustomProperties: https://ming.readthedocs.io/en/latest/custom_properties.html

@@ -22,7 +22,16 @@ standard project command for starting such a server.
        $ cp development.ini production.ini
        $ python3 -m venv .venv
        $ . .venv/bin/activate
-       $ python -m pip install -e .
+       $ python -m pip install -e '.[development]'
+
+    Edit ``production.ini`` and set ``debug = false`` in its ``[DEFAULT]``
+    section. The generated ``development.ini`` enables debug mode; do not use
+    that setting for a public deployment.
+
+    .. code-block:: ini
+
+       [DEFAULT]
+       debug = false
 
 #.  Install and configure a PasteDeploy-compatible WSGI server. The following
     is a server-specific example using Waitress; use the configuration format

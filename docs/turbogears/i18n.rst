@@ -279,4 +279,4 @@ Compile catalogs with the following command::
   gearbox i18n compile
 
 
-.. _UserGuide: http://babel.edgewall.org/wiki/Documentation/index.html
+.. _UserGuide: https://babel.pocoo.org/en/latest/

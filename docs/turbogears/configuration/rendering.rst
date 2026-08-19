@@ -12,11 +12,10 @@ The most common configuration change you'll likely want to make here
 is to add a second template engine or change the template engine used
 by your project.
 
-By default TurboGears sets up the Kajiki engine, but we also provide
-out of the box support for Genshi, Mako and Jinja. To tell TG to prepare these
-templating engines for you all you need to do is install the package
-and include ``'mako'`` or ``'jinja'`` in the rendering blueprint in
-``config/app_cfg.py``.
+By default TurboGears sets up the Kajiki engine. TurboGears also provides
+optional support for Mako and Jinja. To prepare one of those templating engines,
+install its package and include ``'mako'`` or ``'jinja'`` in the rendering
+blueprint in ``config/app_cfg.py``.
 
 To change the default renderer to something other than Kajiki, set the
 ``'default_renderer'`` blueprint key to the name of the rendering engine.
@@ -39,7 +38,7 @@ prepared for use in the app. To make it available in your application you
 must specify here the name of the engine you want to use.
 
 TG provides built-in renderers for:
-``'kajiki'``, ``'genshi'``, ``'mako'``, ``'jinja'``, ``'json'`` and ``'jsonp'``.
+``'kajiki'``, ``'mako'``, ``'jinja'``, ``'json'`` and ``'jsonp'``.
 
 In 2.4.0 and newer versions, if you would like to add additional renderers, you can
 add them to the ``'renderers'`` list, and then register a rendering engine factory
@@ -47,7 +46,7 @@ through the :meth:`.TemplateRenderingConfigurationComponent.register_engine`
 method.
 
 ``'use_dotted_templatenames'`` -- Generally you will not want to change
-this. But if you want to use the standard genshi/mako/jinja file system
+this. But if you want to use the standard Kajiki/Mako/Jinja file-system
 based template search paths, set this to ``False``::
 
   base_config.update_blueprint({

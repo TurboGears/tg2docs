@@ -100,11 +100,6 @@ Rendering Engines
 .. autoclass:: tg.configurator.components.rendering.TemplateRenderingConfigurationComponent
     :members: register_engine
 
-Genshi
-------
-
-.. autoclass:: tg.renderers.genshi.GenshiRenderer
-
 Kajiki
 ------
 

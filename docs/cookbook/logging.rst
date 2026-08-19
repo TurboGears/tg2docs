@@ -125,7 +125,7 @@ When the ``.ini`` logging section is loaded
 
         from paste.deploy import loadapp
 
-        APP_CONFIG = "/var/www/myapp/myapp/production.ini"
+        APP_CONFIG = "/var/www/myapp/production.ini"
 
         logging.config.fileConfig(
             APP_CONFIG,

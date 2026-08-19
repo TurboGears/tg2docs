@@ -18,11 +18,11 @@ Installation
 ------------
 
 `TGScheduler` is registered on PyPI and therefore can be installed
-with `pip install`:
+with `python -m pip install`:
 
 .. code-block:: bash
 
-    $ pip install tgscheduler
+    $ python -m pip install tgscheduler
 
 
 Setup

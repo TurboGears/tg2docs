@@ -41,7 +41,7 @@ Application-level Caching
 
 TurboGears comes with application-level caching
 middleware enabled by default in QuickStarted projects.  The
-middleware, `Beaker <http://beaker.groovie.org>`_, is the cache framework used
+middleware, `Beaker <https://beaker.readthedocs.io/en/latest/>`_, is the cache framework used
 by TurboGears |version|. Beaker also underlies TurboGears session support, but
 current quickstarted projects store session data in signed cookies by default
 instead of one of the cache backends below.
@@ -137,7 +137,7 @@ The `Beaker` cache is a two-level namespace, with the keys at each level
 being string values.  The call to cache.get_cache() retrieves a cache
 namespace which will map a set of string keys to stored values.  Each value
 that is stored in the cache must be `pickle-able
-<http://docs.python.org/lib/module-pickle.html>`_.
+<https://docs.python.org/3/library/pickle.html>`_.
 
 Pay attention to the keys you are using to store your cached values.  You
 need to be sure that your keys encode all of the information that the
@@ -279,13 +279,9 @@ Beaker Cache abstraction, after all):
 References
 ^^^^^^^^^^
 
-    * `Beaker Caching <http://beaker.groovie.org/caching.html>`_ -- discussion of use of Beaker's caching services
-    * `Beaker Configuration <http://beaker.groovie.org/configuration.html>`_ -- the various parameters which can be used to configure Beaker in your config files
-    * `Memcached <http://www.danga.com/memcached/>`_ -- the memcached project
-    * `Python Memcached <http://www.tummy.com/Community/software/python-memcached/>`_ -- Python client-side binding for memcached
-    * `Caching for Performance <http://web.archive.org/web/20060424171425/http://www.webperformance.org/caching/caching_for_performance.pdf>`_
-      -- Stephen Pierzchala's general introduction to the concept of
-      caching in order to improve web-site performance
+    * `Beaker documentation <https://beaker.readthedocs.io/en/latest/>`_ -- reference for Beaker's caching services and configuration
+    * `Memcached <https://memcached.org/>`_ -- the memcached project
+    * `Python Memcached <https://pypi.org/project/python-memcached/>`_ -- Python client-side binding for memcached
 
 
 .. _template_cache:
@@ -296,23 +292,13 @@ Template Caching
 Template Loader Cache
 ^^^^^^^^^^^^^^^^^^^^^
 
-``Kajiki`` and ``Genshi`` will retrieve the templates from a cache if they have not changed.
+``Kajiki`` retrieves templates from a cache if they have not changed. The
+Kajiki cache is unlimited; every template loaded from the file system is cached
+in memory.
 
-On Kajiki the cache is unlimited, every template loaded from file system is cached in memory,
-while on Genshi this cache has a default size of 25, when there are more than 25,
-the least recently used templates will be removed from this cache.
-
-You can change this behavior by setting the ``genshi.max_cache_size`` option
-into the development.ini:
-
-.. code-block:: ini
-
-    [app:main]
-    genshi.max_cache_size=100    
-
-Another speed boost can be achieved by disabling template automatic reloading,
-this will avoid having Genshi and Kajiki compare the timestamp of files
-whenever they are rendered.
+Another speed boost for Kajiki can be achieved by disabling
+``auto_reload_templates``. This avoids comparing template file timestamps on
+each render:
 
 .. code-block:: ini
 
@@ -399,9 +385,9 @@ response to the browser. This will cause the browser to use its own
 locally-cached copy.
 
 ETag-based caching requires a single key which is sent in the ETag HTTP header
-back to the browser. The `RFC specification for HTTP headers
-<http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html>`_ indicates that an
-ETag header merely needs to be a string. This value of this string does not
+back to the browser. The `HTTP Semantics specification
+<https://httpwg.org/specs/rfc9110.html#field.etag>`_ defines the ETag response
+field; its value is a string. This value of this string does not
 need to be unique for every URL as the browser itself determines whether to use
 its own copy, this decision is based on the URL and the ETag key.
 
@@ -442,7 +428,7 @@ prompted to fetch a fresh copy of the page.
 .. glossary::
 
     ETag
-        `From Wikipedia <http://en.wikipedia.org/wiki/HTTP_ETag>`_ An ETag
+        `From Wikipedia <https://en.wikipedia.org/wiki/HTTP_ETag>`_ An ETag
         (entity tag) is an HTTP response header returned by an HTTP/1.1
         compliant web server used to determine change in content at a given
         URL.

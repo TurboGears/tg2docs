@@ -39,6 +39,16 @@ settings belong in the Apache configuration.
        $ source /var/tg2env/bin/activate
        (tg2env)$ cd /var/www/myapp
        (tg2env)$ python -m pip install -e .
+       (tg2env)$ cp development.ini production.ini
+
+    Edit ``production.ini`` and set ``debug = false`` in its ``[DEFAULT]``
+    section. The generated ``development.ini`` enables debug mode; do not use
+    that setting for a public deployment.
+
+    .. code-block:: ini
+
+        [DEFAULT]
+        debug = false
 
 #.  Within the application directory, create a script named ``app.wsgi``.
     Give it these contents:
@@ -95,5 +105,5 @@ settings belong in the Apache configuration.
 #.  Visit ``http://www.site1.com/`` in a browser to access the application.
 
 See the `mod_wsgi configuration documentation
-<https://modwsgi.readthedocs.io/en/develop/configuration-guidelines.html>`_ for
+<https://modwsgi.readthedocs.io/en/develop/configuration.html>`_ for
 more in-depth configuration information.

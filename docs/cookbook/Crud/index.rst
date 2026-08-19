@@ -106,12 +106,12 @@ The ``__form_options__`` dictionary will permit to tune the forms configuration.
 The specified options will be applied to both the form used to create new entities
 and to edit the existing ones.
 To have a look at the available options refer to
-`Sprox FormBase <http://sprox.org/modules/sprox.formbase.html#module-sprox.formbase>`_
+`Sprox FormBase <https://github.com/TurboGears/sprox>`_
 
 The ``__table_options__`` dictionary will permit to tune the forms configuration.
 To have a look at the available options refer to
-`Sprox TableBase <http://sprox.org/modules/sprox.tablebase.html#sprox.tablebase.TableBase>`_,
-`Sprox TableFiller <http://sprox.org/modules/sprox.fillerbase.html?highlight=tablefiller#sprox.fillerbase.TableFiller>`_,
+`Sprox TableBase <https://github.com/TurboGears/sprox>`_,
+`Sprox TableFiller <https://github.com/TurboGears/sprox>`_,
 and their parents as well.
 
 Enabling SubString Searches
@@ -159,7 +159,7 @@ if a new one is not provided instead of deleting it at all.
 
 Suppose we have a ``Photo`` model which has an ``image`` field using ``tgext.datahelpers``
 ``AttachedImage`` to provide an image field (pease refer to
-`tgext.datahelpers documentation <https://pypi.python.org/pypi/tgext.datahelpers#image-attachments-with-thumbnail>`_
+`tgext.datahelpers documentation <https://pypi.org/project/tgext.datahelpers/>`_
 for more details). By default each time the user submits the edit form without specifying a
 new image we would lose our previous image, to avoid this behavior and just keep our previous
 image when none is specified we can use the ``remember_values`` option::
@@ -227,7 +227,7 @@ First, lets get all of the Movies to display in a table.
 Sprox
 ~~~~~
 
-`Sprox <http://sprox.org>`_ is a library that can help you to generate
+`Sprox <https://github.com/TurboGears/sprox>`_ is a library that can help you to generate
 forms and filler data.  It utilizes metadata extracted from the
 database definitions to provide things like form fields, drop downs,
 and column header data for view widgets.  Sprox is also customizable,

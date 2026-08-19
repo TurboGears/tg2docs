@@ -388,11 +388,11 @@ it ends the request instead of returning a template.
 Display the rendered page
 =========================
 
-Replace ``wiki20/templates/page.xhtml`` with this ``html+genshi`` template.
+Replace ``wiki20/templates/page.xhtml`` with this Kajiki template.
 It inherits the generated master layout and receives ``wikipage`` and
 ``content`` from ``_display``:
 
-.. code-block:: html+genshi
+.. code-block:: html
 
     <html py:extends="master.xhtml" py:strip="True">
       <head py:block="head" py:strip="True">
@@ -422,9 +422,9 @@ a sanitizer and does not make untrusted content safe.
 Edit and save pages
 ===================
 
-Replace ``wiki20/templates/edit.xhtml``:
+Replace ``wiki20/templates/edit.xhtml`` with this Kajiki template:
 
-.. code-block:: html+genshi
+.. code-block:: html
 
     <html py:extends="master.xhtml" py:strip="True">
       <head py:block="head" py:strip="True">
@@ -478,9 +478,9 @@ created page.
 Page list
 =========
 
-Replace ``wiki20/templates/pagelist.xhtml``:
+Replace ``wiki20/templates/pagelist.xhtml`` with this Kajiki template:
 
-.. code-block:: html+genshi
+.. code-block:: html
 
     <html py:extends="master.xhtml" py:strip="True">
       <head py:block="head" py:strip="True">

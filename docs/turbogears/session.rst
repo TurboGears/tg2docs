@@ -37,7 +37,7 @@ the session, :ref:`Memcache <memcache>` is recommended.
     a regular basis yourself.
     Refer to the `Beaker documentation`_ for more details.
 
-.. _Beaker documentation: http://beaker.readthedocs.io/en/latest/sessions.html#removing-expired-old-sessions
+.. _Beaker documentation: https://beaker.readthedocs.io/en/latest/sessions.html#removing-expired-old-sessions
 
 For a complete reference of session configuration options, see
 :ref:`Sessions <config-options>`.

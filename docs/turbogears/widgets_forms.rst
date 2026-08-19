@@ -36,7 +36,7 @@ Add the packages your application uses to ``pyproject.toml``::
 
 Then install your project again::
 
-    $ pip install -e .
+    $ python -m pip install -e .
 
 Enable the extension in ``config/app_cfg.py`` after ``base_config`` is created
 and before the WSGI application is built:

@@ -6,7 +6,7 @@ documentation. Framework and extension dependencies follow the development
 branches listed in ``requirements.txt``, so builds reflect current source and
 can change over time.
 
-Build locally with Python 3::
+Build locally with Python 3.10 or newer::
 
     python3 -m venv .venv
     . .venv/bin/activate

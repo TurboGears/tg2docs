@@ -10,12 +10,12 @@ Kajiki provides a XML-based template language that is heavily inspired by Kid_,
 and Genshi_ which in turn was inspired by a number of existing template languages, namely
 XSLT_, TAL_, and PHP_.
 
-.. _kid: http://kid-templating.org/
+.. _kid: https://www.kid-templating.org/
 .. _genshi: https://genshi.edgewall.org/
-.. _python: http://www.python.org/
-.. _xslt: http://www.w3.org/TR/xslt
-.. _tal: http://www.zope.org/Wikis/DevSite/Projects/ZPT/TAL
-.. _php: http://www.php.net/
+.. _python: https://www.python.org/
+.. _xslt: https://www.w3.org/TR/xslt/
+.. _tal: https://zope.readthedocs.io/en/latest/zopebook/AppendixC.html
+.. _php: https://www.php.net/
 
 This document describes the template language and will be most useful as
 reference to those developing Kajiki XML templates. Templates are XML files of

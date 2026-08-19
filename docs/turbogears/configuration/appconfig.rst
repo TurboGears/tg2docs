@@ -96,7 +96,7 @@ individual sections are marked off with ``[]``'s.
 .. seealso::
         Configuration file format **and options** are described in
         great detail in the `Paste Deploy documentation
-        <http://pythonpaste.org/deploy/>`_.
+        <https://docs.pylonsproject.org/projects/pastedeploy/en/latest/>`_.
 
 If want to add some configuration option (let's say an administrator's
 email) here is how you would do so. First you would edit your

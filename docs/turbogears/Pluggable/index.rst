@@ -33,7 +33,7 @@ at the end the following lines::
 
 or through the *pluggable application* interface. Install ``tgext.pluggable`` first::
 
-    $ pip install tgext.pluggable
+    $ python -m pip install tgext.pluggable
 
 Then, with a :class:`tg.FullStackApplicationConfigurator`, use::
 
@@ -165,7 +165,7 @@ Mounting a pluggable application
 
 Install ``tgext.pluggable`` and the plugged package in your environment first::
 
-    $ pip install tgext.pluggable
+    $ python -m pip install tgext.pluggable
 
 In your ``FullStackApplicationConfigurator`` application ``config/app_cfg.py``,
 import ``plug`` from ``tgext.pluggable`` and call it for each pluggable
@@ -182,7 +182,7 @@ Creating Pluggable Applications
 Install ``tgext.pluggable`` before using its **quickstart-pluggable** command;
 the installed package registers the command with ``gearbox``::
 
-    $ pip install tgext.pluggable
+    $ python -m pip install tgext.pluggable
     $ gearbox quickstart-pluggable plugtest
     ...
 

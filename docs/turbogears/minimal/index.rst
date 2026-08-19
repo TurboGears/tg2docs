@@ -18,7 +18,7 @@ Installing TurboGears2
 ======================
 
 This tutorial takes for granted that you have a working Python 3.10 or newer
-environment, with `pip <https://pip.pypa.io/en/stable/installing/>`_
+environment, with `pip <https://pip.pypa.io/en/stable/installation/>`_
 installed and you have a working browser to look at the web application
 you are developing.
 
@@ -137,7 +137,7 @@ a template engine and enable it.
 The template engine used by TurboGears is :ref:`Kajiki-language` which is a fast and
 validated template engine with python3 support. To install Kajiki simply run::
 
-    (tgenv)$ pip install kajiki
+    (tgenv)$ python -m pip install kajiki
 
 Now that the template engine is available we need to enable it in our application,
 and we can do so by telling the application configurator to enable it by listing
@@ -155,7 +155,7 @@ Now our application is able to expose templates based on the Kajiki template eng
 to test them we are going to create an ``hello.xhtml`` file inside the same directory
 where our application is available:
 
-.. code-block:: html+genshi
+.. code-block:: html
 
     <html>
         <title>Hello</title>
@@ -195,7 +195,7 @@ full stack mode, but this can be easily made available in minimal mode too.
 
 First we are going to install the ``WebHelpers2`` package::
 
-    $ pip install webhelpers2
+    $ python -m pip install webhelpers2
 
 Then we are going to import webhelpers2 and register it in our configuration as the application
 helpers (any python module or object can be registered as the helpers)::
@@ -211,7 +211,7 @@ Now the helpers are available in all our templates as ``h.helpername`` and in th
 we are going to use the ``text.truncate`` helper to truncate strings longer than 5 characters
 in our ``hello.xhtml`` template:
 
-.. code-block:: html+genshi
+.. code-block:: html
 
     <html>
         <title>Hello</title>
@@ -355,4 +355,4 @@ The :ref:`Full Stack Tutorial <wiki20>` provides an introduction to more complex
 with all the TurboGears features enabled, follow it if you want to unleash all the features that
 TurboGears provides!
 
-.. _Python Documentation: http://www.python.org/doc
+.. _Python Documentation: https://docs.python.org/3/

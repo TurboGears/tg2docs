@@ -13,7 +13,7 @@ consistent across all of the data shared and manipulated in your
 application, RestController is probably worth a look.
 
 
-Unlike `TGController <objectdispatch>`_, RestController provides a mechanism to access the
+Unlike :ref:`TGController <objectdispatch>`, RestController provides a mechanism to access the
 request's method, not just the URL.  If you are not familiar with how
 HTTP requests work, think for a minute about the difference between
 sending a form with GET and POST.  Primarily, developers use POST to
@@ -163,7 +163,7 @@ don't respect the expected format.
 
 If you don't know how to test this controller, check for browser extension
 to make POST requests. Most browser have one, for Google Chrome you can try
-`PostMan <https://chrome.google.com/webstore/detail/postman-rest-client/fdmmgilgnpjigdojojpjoooidkmcomcm?hl=en>`_
+`Postman desktop <https://www.postman.com/downloads/>`_
 which does a good job.
 
 Validating The User's Input

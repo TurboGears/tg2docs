@@ -24,25 +24,19 @@ just provide the name of your project to the command to create a new one::
 
     $ gearbox quickstart myproject
 
-The quickstart command provides options to choose which template engine to use,
-which database engine to use, and various other project settings::
+The quickstart command uses Kajiki templates, SQLAlchemy, authentication, and
+migrations by default. Its current options are::
 
     options:
       -a, --auth            add authentication and authorization support
       -n, --noauth          No authorization support
-      -m, --mako            default templates mako
-      -j, --jinja           default templates jinja
-      -k, --kajiki          default templates kajiki
-      -g, --genshi          default templates genshi
-      -p PACKAGE, --package PACKAGE
+      -p, --package PACKAGE
                             package name for the code
       -s, --sqlalchemy      use SQLAlchemy as ORM
       -i, --ming            use Ming as ORM
       -x, --nosa            No SQLAlchemy
-      --disable-migrations  disable alembic model migrations
-      --skip-default-template
-                            Disables Kajiki default templates
-      --minimal-quickstart  Throw away example boilerplate from quickstart project
+      --disable-migrations
+                            disable alembic model migrations
 
 Current quickstarted projects use ``pyproject.toml`` packaging metadata.
 Before running project-aware commands such as ``setup-app``, ``serve``,
@@ -248,4 +242,4 @@ read-only project inspection, ``tgskills`` for installing Agent Skills, and
 the three Agent Skills themselves. Quickstarted projects receive an
 ``AGENTS.md`` pointing agents at them. See :ref:`tg-agent-tooling`.
 
-.. _setuptools: https://pythonhosted.org/setuptools/setuptools.html#dynamic-discovery-of-services-and-plugins
+.. _setuptools: https://setuptools.pypa.io/en/latest/userguide/entry_point.html
