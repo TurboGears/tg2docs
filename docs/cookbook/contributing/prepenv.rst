@@ -2,96 +2,77 @@
 Preparing Your Development Environment
 ======================================
 
-Installing and Using Git
-========================
+Install Git
+===========
 
-Please refer to the `Git`_ site for directions on how to install a
-current version of Git on your system. Note that we do not recommend
-using a version less than 1.5 for working with Git. Versions earlier
-than that seemed overly complex to use.
+Install a current version of `Git`_. The `Git documentation`_ contains
+installation and usage guidance.
 
-The best way to use a version control system (and especially a
-distributed version control system like `Git`_) is a subject that
-could span several books.
+Create a Python environment
+===========================
 
-Instead of going through all of the detail of the many ways to use
-`Git`_, we refer you to the `Git documentation`_ site for a long list
-of tutorials, online documentation, and books (both paper and ebook)
-for you to read that will teach you the many options you can use with
-`Git`_.
+TurboGears development uses Python 3.10 or newer. Create and activate an
+isolated virtual environment before installing the projects::
 
-.. _Git: http://www.git-scm.com/
-.. _Git documentation: http://www.git-scm.com/documentation
+    $ python3 -m venv .venv
+    $ . .venv/bin/activate
+    $ python -m pip install --upgrade pip
 
-Create A virtualenv
-===================
-
-A virtualenv is extremely recommended for development work.
-
-Make a new blank virtualenv and activate it.
-This way, you will have all of your work isolated, preventing
-conflicts with anything else on which you might be working.
-
-Do not do any easy_install's of any sort. We will cover that in the next step.
-
-Installing TurboGears2
+Clone the repositories
 ======================
 
-On the TurboGears2_ project pages, there are a bunch of repositories
-related to the turbogears project. The most important are:
+The main repositories are:
 
-`TG2.x Core`_
-    This is the actual core of TurboGears2. Unless you are working on
-    modifying a template or one of the Gearbox_ based tools, or even
-    the documentation, this is the repository you want.
+`TG2 Core`_
+    The TurboGears framework.
 
-`TG2.x Devtools`_
-    This repository is the add-on tools. It gets updated when you wish
-    to make a change to help an application developer (as opposed to
-    an application installer). It contains all the stock TurboGears2
-    templates, and references the Gearbox_ toolchain to provide an HTTP
-    server, along with other tools.
+`TG2 Devtools`_
+    The Gearbox-based development tools and application templates.
 
-`TG2.x Docs`_
-    This repository contains two versions of the documentation. The
-    first version (located in the docs directory) is the older docs,
-    and is gradually being phased out. The newer version (located
-    under the book directory) contains this file (and others) and is
-    gradually being brought on par with the old, and will eventually
-    replace the older version entirely.
+`TG2 Docs`_
+    This documentation project.
 
+Clone the repositories and use their current ``development`` branches::
 
-The best way to prepare your development environment is to take the
-following steps:
+    $ git clone https://github.com/TurboGears/tg2.git
+    $ git clone https://github.com/TurboGears/tg2devtools.git
+    $ git clone https://github.com/TurboGears/tg2docs.git
+    $ cd tg2
+    $ git switch development
+    $ cd ../tg2devtools
+    $ git switch development
+    $ cd ../tg2docs
+    $ git switch development
 
-#. Clone the first three repositories (`TG2.x Core`_,
-   `TG2.x Devtools`_, and `TG2.x Docs`_).
+Install the projects
+====================
 
-#. Enter the top level directory for your TG2.x Core clone, and run
-   ``python setup.py tgdevelop`` and ``python setup.py tgdeps``
+Install the documentation dependencies first. The requirements file includes
+TurboGears development checkouts, so install the local editable projects again
+afterward to ensure that local changes are the versions being used::
 
-#. Enter the top level directory for your TG2.x Devtools clone, and
-   run ``python setup.py tgdevelop`` and ``python setup.py tgdeps``
+    $ cd ../tg2docs
+    $ python -m pip install -r requirements.txt
 
-#. Enter the ``book`` directory for your TG2.x Docs clone, and
-   run ``python setup.py tgdevelop`` and ``python setup.py tgdeps``
+Install the framework and development tools from their working trees in
+editable mode. The ``testing`` extra installs their test dependencies::
 
-After you've done all this, you have a working copy of the code
-sitting in your system. You can explore the code and begin working
-through any of the tickets_ you wish, or even on your own new
-features that have not yet been submitted.
+    $ cd ../tg2
+    $ python -m pip install -e ".[testing]"
+    $ cd ../tg2devtools
+    $ python -m pip install -e ".[testing]"
 
-Note that, for all repositories, work is to be done off of the
-``development`` branch. Either work directly on that branch, or do the
-work on a branch made from the ``development`` branch. The ``master``
-branch is reserved for released code.
+Changes in those working trees are now available immediately to the
+environment. For a focused contribution, work in the repository that owns the
+change and add or update its tests.
 
-When working on your feature or ticket, make certain to add the test
-cases. Without them, the code will not be accepted.
+Repository links
+================
 
-.. _TurboGears2: https://github.com/TurboGears
+.. _Git: https://git-scm.com/
+.. _Git documentation: https://git-scm.com/docs
+.. _TG2 Core: https://github.com/TurboGears/tg2
+.. _TG2 Devtools: https://github.com/TurboGears/tg2devtools
+.. _TG2 Docs: https://github.com/TurboGears/tg2docs
 .. _Gearbox: https://github.com/TurboGears/gearbox
-.. _TG2.x Core: https://github.com/TurboGears/tg2
-.. _TG2.x Devtools: https://github.com/TurboGears/tg2devtools
-.. _TG2.x Docs: https://github.com/TurboGears/tg2docs
-.. _tickets: https://github.com/TurboGears/tg2/issues?state=open
+.. _tickets: https://github.com/TurboGears/tg2/issues

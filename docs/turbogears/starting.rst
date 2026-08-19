@@ -40,6 +40,7 @@ to them and some intermediate features.
     profiling
     api
     agent-tooling
+    agentic-development
     Pluggable/index
     restdispatch
     migrations

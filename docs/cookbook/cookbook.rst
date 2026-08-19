@@ -10,9 +10,7 @@ The CookBook is a collection of documentation and patterns common to TurboGears2
     :maxdepth: 2
 
     jsonp
-    datagrid
     Crud/index
-    admin
     Crud/restapi
     master-slave
     deploy/index
@@ -22,7 +20,6 @@ The CookBook is a collection of documentation and patterns common to TurboGears2
     advanced_caching
     multiple-databases
     ldap-auth
-    sprox
 
 Contributing to TurboGears
 ==========================

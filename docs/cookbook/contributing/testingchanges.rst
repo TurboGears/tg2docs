@@ -2,29 +2,37 @@
 Testing Your Changes
 ====================
 
-After doing your development work, before sending to the main
-repositories (or sending in a pull request), you must make sure that
-your code does not break anything.
+Run the tests before opening a pull request. Use the Python environment and
+editable installation described in :doc:`prepenv`.
 
-This process is actually rather painless. The first time you do it,
-you need to install the package together with its testing dependencies
-from the top of your working tree::
+TurboGears Core and Devtools
+============================
 
-     $ pip install -e ".[testing]"
+From the root of the repository you changed, install its testing dependencies
+once::
 
-After that, you may use ``pytest``, and all of the tests will be run::
+    $ python -m pip install -e ".[testing]"
 
-     $ pytest
+Run the complete test suite with pytest::
 
-In either case, you will be told about any failures. If you have any,
-either fix the code or (if the test case is wrong) fix the test. Then
-re-run the tests.
+    $ python -m pytest
 
-If you are interested, you can also see the current status of the
-tests, and how much of the core code is actually being tested. Run
-this command::
+TurboGears Core enables ``--cov=tg`` through its pytest configuration, so the
+standard command also reports Core coverage. If you need to override the
+project configuration, run the coverage option explicitly::
 
-     $ pytest --cov=tg
+    $ python -m pytest --cov=tg
 
-You will now see which lines are being tested, which ones are not, and
-have a thorough report on the status of the testing coverage.
+Documentation
+=============
+
+From the ``tg2docs`` repository root, build the HTML documentation with strict
+warning handling::
+
+    $ python -m sphinx -W --keep-going -b html docs docs/_build/html
+
+Check external links separately::
+
+    $ python -m sphinx -W --keep-going -b linkcheck docs docs/_build/linkcheck
+
+Fix failures and rerun the relevant command before submitting the change.

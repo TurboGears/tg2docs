@@ -1,151 +1,188 @@
 .. _sqla_master_slave:
 
-========================================
-SQLAlchemy Master Slave Load Balancing
-========================================
+===========================================
+SQLAlchemy Master and Read-Replica Routing
+===========================================
 
-Since version 2.2 TurboGears has basic support for Master/Slave load balancing
-and provides a set of utilities to use it.
+TurboGears 2.5 includes ``BalancedSession``, a SQLAlchemy session class that
+can route request-time reads to configured read replicas and route session
+flushes to a master database. The database replication, failover, health
+checking, and replication-lag policy remain outside TurboGears.
 
-TurboGears permits to declare a master server and any number of slave servers, all the
-writes will automatically redirected to the master node, while the other calls will
-be dispatched randomly to the slave nodes.
+The configuration names the primary database ``master`` and the read replicas
+``slaves``. These names are part of the TurboGears API, even when the database
+team uses ``primary`` and ``replica`` for the same roles.
 
-All the queries executed outside of TurboGears controllers will run only on the
-master node, those include the queries performed by the authentication stack to
-initially look up an already logged in user, its groups and permissions.
+Prerequisites
+=============
 
-Enabling Master Slave Balancing
-=================================
+This recipe applies to a full-stack TurboGears application with SQLAlchemy
+enabled. The application must use ``BalancedSession`` as the class for its
+scoped SQLAlchemy session. A configuration containing master and replica URLs
+is not sufficient by itself.
 
-To enable Master Slave load Balancing you just need to edit your `model/__init__.py`
-making the ``sessionmaker`` use the TurboGears BalancedSession:
+If the generated ``model/__init__.py`` contains a normal ``sessionmaker``,
+replace the session setup with the following current SQLAlchemy-compatible
+form. Keep the application's existing model imports and ``init_model``
+function.
 
 .. code-block:: python
+
+    import zope.sqlalchemy
+    from sqlalchemy.orm import declarative_base, scoped_session, sessionmaker
 
     from tg.configuration.sqla.balanced_session import BalancedSession
 
-    maker = sessionmaker(autoflush=True, autocommit=False,
-                         class_=BalancedSession,
-                         extension=ZopeTransactionExtension())
+    DBSession = scoped_session(sessionmaker(class_=BalancedSession))
+    zope.sqlalchemy.register(DBSession)
 
-Doing this by itself will suffice to make load balancing work, but still
-as there is only the standard database configuration the ``BalancedSession``
-will just be redirecting all the queries to the only available serve.
+    DeclarativeBase = declarative_base()
+    metadata = DeclarativeBase.metadata
 
-Configuring Balanced Nodes
-==============================
+``zope.sqlalchemy.register`` connects the scoped session to TurboGears'
+transaction manager. Do not add the obsolete ``autocommit`` argument or the
+old ``ZopeTransactionExtension`` session extension.
 
-To let load balancing work we must specify at least a master and slave server
-inside our application configuration. The master server can be specified
-using the `sqlalchemy.master` set of options, while any number of slaves
-can be configured using the `sqlalchemy.slaves` options:
+Configure the master and replicas
+==================================
+
+Set at least one master URL and one replica URL in the ``[app:main]`` section
+of the application's INI file. Use the connection URL and credentials supplied
+by the deployment environment; the example contains placeholders rather than
+real credentials.
 
 .. code-block:: ini
 
-    sqlalchemy.master.url = mysql://username:password@masterhost:port/databasename
-    sqlalchemy.master.pool_recycle = 3600
+    use_sqlalchemy = true
 
-    sqlalchemy.slaves.slave1.url = mysql://username:password@slavehost:port/databasename
-    sqlalchemy.slaves.slave1.pool_recycle = 3600
+    sqlalchemy.master.url = postgresql+psycopg://USER:PASSWORD@PRIMARY_HOST/DATABASE
+    sqlalchemy.slaves.replica1.url = postgresql+psycopg://USER:PASSWORD@REPLICA_HOST/DATABASE
 
-The master node can be configured also to be a slave, this is usually the
-case when we want the master to also handle some read queries.
+The ``sqlalchemy.slaves.<name>.url`` form creates a replica named ``<name>``.
+The name must not be ``master``. Other SQLAlchemy engine options can use the
+same prefixes, for example ``sqlalchemy.master.pool_recycle`` and
+``sqlalchemy.slaves.replica1.pool_recycle``.
 
-Driving the balancer
-========================
+When ``sqlalchemy.master.url`` is present, TurboGears creates the master engine,
+creates one engine for every configured ``sqlalchemy.slaves.<name>`` entry, and
+requires at least one replica. The regular ``sqlalchemy.url`` setting is used
+for a non-balanced application and is not needed for this configuration.
 
-TurboGears provides a set of utilities to let you change the default behavior
-of the load balancer. Those include the **@with_engine(engine_name)** decorator
-and the **DBSession().using_engine(engine_name)** context.
+How routing works
+=================
 
-The with_engine decorator
----------------------------
+``BalancedSession.get_bind`` applies these rules:
 
-The ``with_engine`` decorator permits to force a controller method to
-run on a specific node. It is a great tool for ensuring that some
-actions take place on the master node, like controllers that edit
-content.
+* Unless an explicit engine constraint is active, a session flush uses the
+  master engine.
+* During a request, an unconstrained non-flush operation uses a randomly chosen
+  configured replica.
+* An explicit engine constraint takes precedence over the default routing.
+* Outside a TurboGears request, or when balancing is not configured, the
+  application's normal SQLAlchemy engine is used. In a balanced application
+  that engine is the master.
 
-.. code-block:: python
+The implementation classifies a flush, not the intent of every SQL statement.
+Use an explicit master constraint for write paths that do not go through the
+session's normal flush operation. Replica selection also does not provide a
+read-after-write consistency guarantee; route a read to the master when its
+result must include a just-committed write.
 
-    from tg import with_engine
+Force an entire controller action to the master
+================================================
 
-    @expose('myproj.templates.about')
-    @with_engine('master')
-    def about(self):
-        DBSession.query(model.User).all()
-        return dict(page='about')
-
-The previous query will be executed on the master node, if the **@with_engine**
-decorator is removed it will get execute on any random slave.
-
-The ``with_engine`` decorator can also be used to force turbogears
-to use the master node when some parameters are passed by url:
-
-.. code-block:: python
-
-    @expose('myproj.templates.index')
-    @with_engine(master_params=['m'])
-    def index(self):
-        DBSession.query(model.User).all()
-        return dict(page='index')
-
-In this case calling *http://localhost:8080/index* will result in queries
-performed on a slave node, while calling *http://localhost:8080/index?m=1* will
-force the queries to be executed on the master node.
-
-Pay attention that the **m=1** parameter can actually have any value, it just
-has to be there. This is especially useful when redirecting after an action
-that just created a new item to a page that has to show the new item. Using
-a parameter specified in *master_params* we can force TurboGears to fetch
-the items from the master node so to avoid odd results due to data propagation
-delay.
-
-Keeping master_params around
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-By default parameters specified in ``with_engine`` master_params will be
-popped from the controller params. This is to avoid messing with validators
-or controller code that doesn't expect the parameter to exist.
-
-If the controller actually needs to access the parameter a dictionary can be
-passed to @with_engine instead of a list. The dictionary keys will be
-the parameters, while the value will be if to pop it from the
-parameters or not.
+Use ``with_engine`` when every SQLAlchemy operation in a controller action must
+use a particular configured engine. The decorator affects the current
+TurboGears request only.
 
 .. code-block:: python
 
-    @expose('myproj.templates.index')
-    @with_engine(master_params={'m':False})
-    def index(self, m=None):
-        DBSession.query(model.User).all()
-        return dict(page='index', m=m)
+    from sqlalchemy import select
+    from tg import expose, with_engine
 
-Forcing Single Queries on a node
-----------------------------------
+    from myapp.model import DBSession, User
 
-Single queries can be forced to execute on a specific node using the
-``using_engine`` method of the ``BalancedSession``. This method
-returns a context manager, until queries are executed inside this
-context they are run on the constrained engine:
+
+    class AccountController:
+        @expose()
+        @with_engine("master")
+        def current(self, user_id):
+            user = DBSession.scalar(select(User).where(User.id == user_id))
+            return {"user": user}
+
+Use the exact configured replica name when deliberately selecting one:
+``@with_engine("replica1")``. Prefer the master for actions that combine a
+write with a consistency-sensitive read instead of depending on replica
+propagation timing.
+
+Force selected reads with a request parameter
+==============================================
+
+``master_params`` selects the master when a named controller parameter is
+present and truthy. A list means that matching parameters are removed before
+the controller is called. A dictionary controls whether each parameter is
+removed.
 
 .. code-block:: python
 
-    with DBSession().using_engine('master'):
-        DBSession.query(model.User).all()
-        DBSession.query(model.Permission).all()
-    DBSession.query(model.Group).all()
+    @expose()
+    @with_engine(master_params={"after_write": False})
+    def detail(self, user_id, after_write=None):
+        user = DBSession.scalar(select(User).where(User.id == user_id))
+        return {"user": user, "after_write": after_write}
 
-In the previous example the Users and the Permissions will be
-fetched from the master node, while the Groups will be fetched
-from a random slave node.
+With this example, a truthy ``after_write`` value forces the master and remains
+available to ``detail`` because its dictionary value is ``False``. A false or
+missing value leaves the operation eligible for replica routing.
 
-Debugging Balancing
-=========================
+Force individual operations
+============================
 
-Setting the root logger of your application to *DEBUG* will let
-you see which node has been choose by the ``BalancedSession``
-to perform a specific query.
+For code that is not a controller action, use the session's
+``using_engine`` context manager. This is also useful for a small section of a
+controller that must use the master while other reads may use replicas.
+
+.. code-block:: python
+
+    from sqlalchemy import select
+
+    from myapp.model import DBSession, User
 
 
+    with DBSession().using_engine("master"):
+        users = DBSession.scalars(select(User).order_by(User.id)).all()
+
+The constraint is restored when the context exits. Use the context around the
+whole consistency-sensitive unit of work; changing the constraint does not
+turn a replica into a master and does not change the database's transaction
+semantics.
+
+Sessions, transactions, and background work
+============================================
+
+TurboGears removes the configured SQLAlchemy session at the end of each web
+request. Do not retain ``DBSession``'s request-local session object for use by a
+later request or background task.
+
+The full-stack configurator enables its transaction manager by default. With
+``zope.sqlalchemy.register(DBSession)``, a successful request commits the
+transaction and a failed request rolls it back. A SQLAlchemy transaction can
+also retain the connection selected for that transaction, so replica routing
+must not be treated as a per-statement consistency policy. Start a
+master-constrained unit of work when the operation requires master visibility.
+
+Code running outside a TurboGears request does not receive a request-local
+``with_engine`` constraint and falls back to the master. Background jobs that
+need a different explicit choice should use ``DBSession().using_engine(...)``.
+
+Operational limits and diagnostics
+==================================
+
+TurboGears chooses replicas randomly from the configured names. The current
+``BalancedSession`` does not perform replica health checks, failover, lag
+measurement, or load-aware selection. Configure those concerns in the
+infrastructure that provides the database endpoints.
+
+To inspect engine choices during development, enable ``DEBUG`` logging for
+``tg.configuration.sqla.balanced_session``. The session logs whether it chose
+the master, a replica, or an explicitly forced engine.
