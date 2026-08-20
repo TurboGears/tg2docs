@@ -1,0 +1,131 @@
+name: Publish text documentation
+
+on:
+  push:
+    branches:
+      - development
+    tags:
+      - '**'
+  schedule:
+    - cron: '0 3 * * 1'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-text-docs
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Select documentation target
+        id: target
+        env:
+          REF_NAME: ${{ github.ref_name }}
+        run: |
+          if [[ "$GITHUB_REF" == refs/tags/* ]]; then
+            docs_ref="$GITHUB_REF"
+            version="$REF_NAME"
+            tg2_ref="$REF_NAME"
+          else
+            docs_ref=development
+            version=development
+            tg2_ref=development
+          fi
+
+          echo "docs_ref=$docs_ref" >> "$GITHUB_OUTPUT"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "tg2_ref=$tg2_ref" >> "$GITHUB_OUTPUT"
+
+      - name: Check out documentation source
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.target.outputs.docs_ref }}
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install documentation dependencies
+        run: python -m pip install -r requirements.txt
+
+      - name: Match TurboGears to the documentation target
+        if: steps.target.outputs.tg2_ref != 'development'
+        env:
+          TG2_REF: ${{ steps.target.outputs.tg2_ref }}
+        run: python -m pip install --upgrade "git+https://github.com/TurboGears/tg2.git@$TG2_REF#egg=TurboGears2"
+
+      - name: Build text documentation archive
+        run: ./scripts/build-text-docs.sh
+
+      - name: Check out the Pages tree
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PAGES_DIR: ${{ runner.temp }}/tg2docs-pages
+        run: |
+          git init "$PAGES_DIR"
+          git -C "$PAGES_DIR" remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+
+          if git -C "$PAGES_DIR" fetch --depth=1 origin gh-pages; then
+            git -C "$PAGES_DIR" checkout -B gh-pages FETCH_HEAD
+          else
+            git -C "$PAGES_DIR" checkout --orphan gh-pages
+          fi
+
+      - name: Update the versioned archive
+        env:
+          PAGES_DIR: ${{ runner.temp }}/tg2docs-pages
+          VERSION: ${{ steps.target.outputs.version }}
+        run: |
+          mkdir -p "$PAGES_DIR/$VERSION"
+          cp tg2docs.txt.zip "$PAGES_DIR/$VERSION/tg2docs.txt.zip"
+
+          python - "$PAGES_DIR" <<'PY'
+          from html import escape
+          from pathlib import Path
+          from sys import argv
+
+          pages = Path(argv[1])
+          versions = sorted(
+              path.name
+              for path in pages.iterdir()
+              if path.is_dir() and not path.name.startswith('.')
+          )
+
+          links = '\n'.join(
+              f'<li><a href="{escape(version)}/tg2docs.txt.zip">'
+              f'{escape(version)}</a></li>'
+              for version in versions
+          )
+          (pages / 'index.html').write_text(
+              '<!doctype html>\n'
+              '<meta charset="utf-8">\n'
+              '<title>TurboGears text documentation</title>\n'
+              '<h1>TurboGears text documentation</h1>\n'
+              '<ul>\n' + links + '\n</ul>\n',
+              encoding='utf-8',
+          )
+          PY
+
+          touch "$PAGES_DIR/.nojekyll"
+
+      - name: Publish Pages tree
+        env:
+          PAGES_DIR: ${{ runner.temp }}/tg2docs-pages
+          VERSION: ${{ steps.target.outputs.version }}
+        run: |
+          git -C "$PAGES_DIR" config user.name github-actions[bot]
+          git -C "$PAGES_DIR" config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git -C "$PAGES_DIR" add -A
+
+          if git -C "$PAGES_DIR" diff --cached --quiet; then
+            echo "No Pages changes for $VERSION"
+          else
+            git -C "$PAGES_DIR" commit -m "Publish text docs for $VERSION"
+            git -C "$PAGES_DIR" push origin HEAD:gh-pages
+          fi
