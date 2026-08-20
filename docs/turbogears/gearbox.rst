@@ -24,6 +24,9 @@ just provide the name of your project to the command to create a new one::
 
     $ gearbox quickstart myproject
 
+A conflicting project name exits with status ``1`` and leaves the existing
+project untouched.
+
 The quickstart command uses Kajiki templates, SQLAlchemy, authentication, and
 migrations by default. Its current options are::
 
@@ -129,7 +132,8 @@ quickstart database for isolated checks::
 
     gearbox tgshell -c test.ini debug.py
 
-Omit ``debug.py`` for an interactive session. ``tgshell`` makes ``wsgiapp``
+A missing or failing script returns a nonzero exit status. Omit ``debug.py``
+for an interactive session. ``tgshell`` makes ``wsgiapp``
 and TurboGears globals including ``config`` and ``request`` available. It
 provides ``model`` only when the application has an importable
 ``<package>.model`` module. It provides ``app`` only when WebTest is installed;

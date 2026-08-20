@@ -81,3 +81,6 @@ If the generated controller exposes ``myapp.templates.photo``, update
 that exposure to the packaged template path::
 
     @expose('myapp.templates.photo.photo')
+
+Existing output files are refused with exit status ``1``; use ``--force`` to
+overwrite deliberately. Use ``--dry-run`` to report the output without writing.
