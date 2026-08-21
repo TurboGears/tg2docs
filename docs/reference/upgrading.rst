@@ -1,6 +1,72 @@
 Upgrading Your TurboGears Project
 =================================
 
+From 2.5.0 to 2.5.1
+-------------------
+
+Validation Errors
+~~~~~~~~~~~~~~~~~
+
+Validation errors now return HTTP **422 Unprocessable Content** instead of
+412 with a JSON body containing ``{"errors", "values"}``. Update clients
+that expect 412 responses.
+
+HTTP Method Restriction
+~~~~~~~~~~~~~~~~~~~~~~~
+
+The ``@expose`` decorator now supports an ``allowed_methods`` parameter to
+restrict exposed actions to specific HTTP methods. Requests with unsupported
+methods receive HTTP 405 with an ``Allow`` header listing the permitted methods::
+
+    from tg.decorators import expose
+
+    @expose(allowed_methods=['GET', 'POST'])
+    def my_controller(self, **kw):
+        ...
+
+JSON Request Bodies
+~~~~~~~~~~~~~~~~~~~~
+
+Exposed actions now support automatic JSON request-body decoding. Set
+``decode_json_params=True`` in ``@expose`` or ``base_config`` to merge JSON
+objects into request parameters, preserving native Python types. Invalid or
+non-object JSON bodies return HTTP 400::
+
+    @expose(decode_json_params=True)
+    def api_endpoint(self, **kw):
+        # kw contains parsed JSON fields with native types
+        ...
+
+Type-Hint Validation
+~~~~~~~~~~~~~~~~~~~~~~
+
+Exposed action parameters with type hints are now automatically validated
+from their annotations. For example, ``num: int`` validates that the
+parameter is an integer::
+
+    def my_action(self, num: int):
+        ...
+
+Convert Default Values
+~~~~~~~~~~~~~~~~~~~~~~~
+
+The ``Convert`` validator now supports explicit ``default=None`` to indicate
+that ``None`` is a valid default value. Previously, missing defaults implied
+``<required>``::
+
+    from tg.validation import Convert
+    age = Convert(int, default=None)  # None is now a valid default
+
+Deterministic Diagnostics
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Predicates and validators now use deterministic diagnostic representations
+without memory addresses, making them safe for logging and agent diagnostics::
+
+    # Old: <tg.predicates.is_user object at 0x...>
+    # New: tg.predicates.is_user(user_name='amol')
+
+
 From 2.4.3 to 2.5.0
 -------------------
 
