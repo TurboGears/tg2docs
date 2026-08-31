@@ -82,7 +82,6 @@ The interesting parts of the generated project:
 - ``<package>/model/movie.py`` — the ``Movie`` model with its
   ``__API_SCHEMA__`` (the OpenAPI schema of the resource) and ``__json__``
   (how the model is serialized);
-- ``<package>/templates/secure.xhtml`` — the protected HTML demo page;
 - ``<package>/websetup/`` — schema and bootstrap code for the generated
   database, demo users, and demo records;
 - ``<package>/tests/functional/`` — WebTest tests for the movie API, landing
@@ -185,14 +184,16 @@ files that apply to the selected project:
 - ``<package>/controllers/api/movies.py``;
 - ``<package>/controllers/demo.py``;
 - ``<package>/model/movie.py``;
+- ``<package>/websetup/bootstrap_movies.py``;
 - ``<package>/tests/functional/test_movies.py``;
-- ``<package>/tests/functional/test_auth.py``;
-- ``<package>/templates/secure.xhtml``.
+- ``<package>/tests/functional/test_auth.py``.
 
-Then remove the secure action and demo imports and registrations from
-``controllers/root.py``, and remove the movie imports and registrations from
-``controllers/api/__init__.py``, ``model/__init__.py``, and
-``websetup/bootstrap.py``. Keep the API controller, configuration, and OpenAPI
+The sample-movies bootstrap lives in its own module
+(``websetup/bootstrap_movies.py``), so removing the demo leaves no leftover
+references: the generated cleanup instructions delete the files above and
+use ``gearbox patch -d`` one-liners to drop the demo controller mount, the
+movie import/mount, the movie endpoint listing, the ``__all__`` entry, and the
+``bootstrap_movies`` import/call. No manual edits are needed. Keep the API controller, configuration, and OpenAPI
 routes if they are part of the application you are building. The generated
 ``README.rst`` contains the same cleanup intent; use package-qualified paths
 when applying it from the project root.
@@ -313,12 +314,12 @@ left untouched.
     $ curl -b cookies.txt http://127.0.0.1:8080/demo/admin
     {"message": "Welcome, admin!", "status": "ok", "user": "manager"}
 
-The same flow protects the generated HTML demo page. Open
-``http://127.0.0.1:8080/secure`` while logged out: TurboGears redirects to the
-login page. After signing in with ``manager``/``managepass``, the protected
-page shows the authenticated user. The ``secure`` action uses
-``predicates.not_anonymous`` as an example for login-protected HTML pages next
-to an API.
+The same cookie also unlocks the admin endpoint: open
+``http://127.0.0.1:8080/demo/admin`` while logged out and TurboGears
+redirects to the login page. After signing in with ``manager``/
+``managepass`` the endpoint responds. The ``admin`` action uses
+``predicates.has_permission`` as the example of a protected action next to
+the open movie catalog.
 
 The demo users are created by ``gearbox setup-app``: ``manager``
 (password ``managepass``, token ``abc123def456ghi789jkl012mno345``, has the
