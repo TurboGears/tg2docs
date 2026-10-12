@@ -8,91 +8,95 @@
    announcements are maintainer-only actions. Contributors should stop after
    preparing and validating a change, then submit it for maintainer review.
 
+Releases are prepared and published by the ``prepare_release.sh`` script in
+the `TG2 Core`_ repository. The script is the only supported release process:
+it validates the whole release before touching any remote repository and
+refuses to proceed when something is missing. Do not run the release steps
+by hand.
+
+Usage
+=====
+
+From the root of a `TG2 Core`_ checkout::
+
+    $ ./scripts/prepare_release.sh MAJOR.MINOR.PATCH[.devN] [--push]
+
+Without ``--push`` the script prepares and validates the release locally
+without touching any remote repository. It prints the path of the retained
+workspace together with the prepared release commits, ``master`` merges, and
+``tg<version>`` tags, so the result can be inspected before publishing.
+
+With ``--push`` the script publishes the release once the validation
+succeeds.
+
 Prerequisites
 =============
 
-Before preparing release material, you need:
+#. ``uv`` and ``twine`` on the command line, plus ``gh`` when using
+   ``--push``. The script checks them before doing any work.
+#. SSH access to GitHub and PyPI credentials for ``twine``.
 
-#. Python 3 and an isolated virtual environment.
-#. Working Git checkouts of `TG2 Core`_, `TG2 Devtools`_, and `TG2 Docs`_.
-#. The testing dependencies installed with the editable-install workflow in
-   :doc:`prepenv`.
-#. Familiarity with Git and the repository's current contribution workflow.
+Before running the script
+=========================
 
-Package publishing requires maintainer permission for `PyPI`_. The release
-process does not grant or describe permissions.
+#. Write the ``From <previous version> to <released version>`` chapter of
+   ``docs/reference/upgrading.rst`` in the `TG2 Docs`_ repository and push it
+   to the ``development`` branch. The script refuses to release without it.
+   ``.devN`` releases are covered by the chapter of their base version.
+#. Make sure the `TG2 Core`_ and `TG2 Devtools`_ ``development`` branches hold
+   everything the release should ship and pass their test suites.
 
-Release overview
-================
+What the script does
+====================
 
-A release normally requires these activities:
+The script clones `TG2 Core`_, `TG2 Devtools`_, and `TG2 Docs`_ into a
+temporary workspace and then:
 
-#. Review and validate the changes in the relevant repositories.
-#. Prepare version metadata, changelogs, and release documentation.
-#. Build and check the documentation and package distributions.
-#. Have maintainers perform the repository merge, release tagging, and package
-   or documentation publishing steps required by the project.
-#. Complete the release announcement and post-release repository cleanup.
+#. Verifies that the upgrading guide has a chapter for the released version.
+#. Bumps the version of both packages, which must already be aligned, updates
+   the ``TurboGears2 >=`` constraint of the devtools and of the quickstart
+   templates, fills the new change log section from the commit history since
+   the previous release, and opens it in your editor for review; the
+   reviewed section is committed together with the version bump.
+#. Builds the source distribution and wheel of both packages with ``uv``.
+#. Runs the devtools quickstart test suite against the built wheels and
+   checks that the tests really installed the candidate version.
+#. Prepares the release commits on ``development``, fast-forwards
+   ``master``, and creates the annotated ``tg<version>`` tags in both
+   repositories.
 
-The exact branch promotion and publishing order is maintained by the project
-maintainers. Do not infer a release branch or create release tags from this
-page alone.
+With ``--push`` the script additionally:
 
-Review and prepare the repositories
-===================================
+#. Re-checks the remote repositories, then pushes ``master``,
+   ``development``, and the tag of both repositories.
+#. Creates the GitHub releases of both repositories with auto-generated
+   notes.
+#. Publishes the wheels and source distributions to `PyPI`_ with ``twine``.
+#. Waits until PyPI lists the released version.
+#. Updates the latest release version, date, and download link of the
+   `TG2 website`_ and pushes the change, which deploys the site through
+   GitHub Pages. ``.devN`` releases skip the website.
 
-Review the changes since the previous release in `TG2 Core`_, `TG2 Devtools`_,
-and `TG2 Docs`_. Confirm that tests pass and that the documentation describes
-the released behavior. Work on the current integration branch, normally
-``development``, until maintainers give different release instructions.
+When something fails
+====================
 
-Prepare changelog entries from the relevant commit history. This command gives
-a starting point; review and edit the output rather than copying every commit::
+A validation failure aborts the script before the first Git release
+operation, so a failed run never leaves a half-published release behind.
+When a failure happens after publishing has started, the script keeps the
+workspace, reports what was already published, and prints the exact command
+to finish the remaining step by hand.
 
-    $ git log --no-merges --format="* %s" LAST_RELEASE_TAG..HEAD
+After the release
+=================
 
-Update each package's version metadata in its ``pyproject.toml`` and update
-any corresponding release notes or dependency constraints required by the
-maintainer-approved release plan. Use the packaging workflow configured by
-``pyproject.toml`` for package operations.
-
-Build and validate
-==================
-
-From the root of each Python package, install the package and its test
-extra in editable mode, then run pytest::
-
-    $ python -m pip install -e ".[testing]"
-    $ python -m pytest
-
-From the ``tg2docs`` repository root, build strict HTML documentation and check
-external links::
-
-    $ python -m sphinx -W --keep-going -b html docs docs/_build/html
-    $ python -m sphinx -W --keep-going -b linkcheck docs docs/_build/linkcheck
-
-Build source distributions and wheels with the packaging workflow configured
-by each project's ``pyproject.toml``. Inspect the resulting distributions
-before any maintainer publishes them.
-
-Maintainer publishing steps
-===========================
-
-After review and validation, maintainers perform the project-specific steps to
-merge approved release changes, create the release tag, publish package
-distributions to `PyPI`_, and publish the corresponding documentation. These
-steps depend on current project permissions and release infrastructure and are
-not specified here.
-
-Maintainers should also publish the approved release announcement, update the
-relevant `GitHub`_ milestone or issue tracking, and complete any repository
-cleanup required by the release plan.
+The maintainer curates the auto-generated GitHub release notes and publishes
+the release announcement.
 
 Repository links
 ================
 
-.. _GitHub: https://github.com/TurboGears/tg2/issues
 .. _PyPI: https://pypi.org/
 .. _TG2 Core: https://github.com/TurboGears/tg2
 .. _TG2 Devtools: https://github.com/TurboGears/tg2devtools
 .. _TG2 Docs: https://github.com/TurboGears/tg2docs
+.. _TG2 website: https://github.com/TurboGears/tgwebsite
