@@ -55,20 +55,25 @@ temporary workspace and then:
 #. Verifies that the upgrading guide has a chapter for the released version.
 #. Bumps the version of both packages, which must already be aligned, updates
    the ``TurboGears2 >=`` constraint of the devtools and of the quickstart
-   templates, fills the new change log section from the commit history since
-   the previous release, and opens it in your editor for review; the
-   reviewed section is committed together with the version bump.
-#. Builds the source distribution and wheel of both packages with ``uv``.
+   templates, fills the new change log section from the commit history of
+   both packages since their previous releases, and opens it in your
+   editor for review; the reviewed section is committed together with
+   the version bump.
+#. Builds the source distribution and wheel of both packages with ``uv`` and
+   validates them with ``twine check``, the same rendering validation PyPI
+   applies on upload.
 #. Runs the devtools quickstart test suite against the built wheels and
    checks that the tests really installed the candidate version.
 #. Prepares the release commits on ``development``, fast-forwards
-   ``master``, and creates the annotated ``tg<version>`` tags in both
-   repositories.
+   ``master``, and creates the annotated ``tg<version>`` tags in all
+   three repositories. The `TG2 Docs`_ repository gets no release commit;
+   its tag automatically triggers the workflow that publishes the
+   versioned text documentation.
 
 With ``--push`` the script additionally:
 
 #. Re-checks the remote repositories, then pushes ``master``,
-   ``development``, and the tag of both repositories.
+   ``development``, and the tag of all three repositories.
 #. Creates the GitHub releases of both repositories with auto-generated
    notes.
 #. Publishes the wheels and source distributions to `PyPI`_ with ``twine``.
